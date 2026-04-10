@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>KeTeteo - Todo en vivo, todo ahora</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0b0b0b;
+            color: #fff;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #0b0b0b;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: #ff2d55;
+        }
+
+        .logo-sub {
+            font-size: 9px;
+            color: #333;
+            letter-spacing: 3px;
+            margin-top: -2px;
+        }
+
+        .logout-btn {
+            background: #1a1a1a;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: #888;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Location bar */
+        .location-bar {
+            margin-top: 70px;
+            background: #1a1a2e;
+            margin: 75px 16px 12px 16px;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .location-text {
+            color: #ff2d55;
+            font-size: 12px;
+        }
+
+        /* Categories */
+        .cat-scroll {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 12px 16px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .cat-chip {
+            display: inline-block;
+            background: #181818;
+            border: 1px solid #252525;
+            border-radius: 20px;
+            padding: 8px 16px;
+            margin-right: 8px;
+            color: #666;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cat-chip.active {
+            background: #ff2d55;
+            color: #fff;
+            border-color: #ff2d55;
+        }
+
+        /* Cards */
+        .card {
+            background: #1a1a2e;
+            margin: 12px 16px;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid #ff2d5530;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+        }
+
+        .card-emoji {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .card-info {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .distance-badge {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: #ff2d5520;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .distance-text {
+            color: #ff2d55;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .live-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ff2d55;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .live-tag-text {
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        /* Bottom buttons */
+        .start-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff2d55;
+            padding: 14px 24px;
+            border-radius: 30px;
+            border: none;
+            color: #fff;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .map-btn {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            border: 1px solid #ff2d55;
+            padding: 14px 24px;
+            border-radius: 30px;
+            width: 90%;
+            text-align: center;
+            color: #ff2d55;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        /* Welcome screen */
+        .welcome {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-size: 42px;
+            font-weight: 900;
+            color: #ff2d55;
+        }
+
+        .sub {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #ff2d55;
+            padding: 16px;
+            border-radius: 14px;
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1.5px solid #1e1e1e;
+            padding: 16px;
+            border-radius: 14px;
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Live stream screen */
+        .live-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .live-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px 16px 16px 16px;
+        }
+
+        .close-btn {
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .live-name {
+            font-weight: 700;
+        }
+
+        .live-user {
+            color: #ccc;
+            font-size: 11px;
+        }
+
+        .viewers-badge {
+            display: flex;
+            background: rgba(0,0,0,0.6);
+            padding: 8px;
+            border-radius: 20px;
+            gap: 5px;
+        }
+
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 3px;
+            background: #ff2d55;
+        }
+
+        .video-box {
+            flex: 2;
+            background: #111;
+            margin: 16px;
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            min-height: 250px;
+        }
+
+        .video-emoji {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        .video-text {
+            color: #ff2d55;
+            font-weight: 800;
+        }
+
+        .video-title {
+            color: #fff;
+            font-size: 18px;
+            margin-top: 8px;
+        }
+
+        .video-location {
+            color: #ff2d55;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .chat-list {
+            flex: 1;
+            padding: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .chat-msg {
+            background: #1a1a1a;
+            padding: 8px;
+            border-radius: 12px;
+            margin-bottom: 6px;
+        }
+
+        .chat-user {
+            color: #ff2d55;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .chat-text {
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .bottom-bar {
+            display: flex;
+            padding: 16px;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .like-btn {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .comment-input {
+            flex: 1;
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 10px;
+            color: #fff;
+            border: none;
+        }
+
+        .send-btn {
+            background: #ff2d55;
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            border: none;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .nearby-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 16px 16px 8px 16px;
+        }
+
+        .greet-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 70px 16px 12px 16px;
+            background: #111;
+            border-radius: 14px;
+            padding: 12px;
+            border: 1px solid #1e1e1e;
+        }
+
+        .greet-text {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .ia-btn {
+            background: #0f1a0f;
+            border-radius: 10px;
+            padding: 6px 12px;
+            border: 1px solid #1a3a1a;
+            color: #30d158;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        /* Bottom navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            background: #0b0b0b;
+            border-top: 1px solid #1e1e1e;
+            padding: 10px 0 20px 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            cursor: pointer;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+
+        .nav-label {
+            font-size: 9px;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .nav-label.active {
+            color: #ff2d55;
+            font-weight: 700;
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Map screen */
+        .map-mock {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .map-pin {
+            background: #111;
+            border: 1px solid;
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        /* Alert card */
+        .alert-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #111;
+            border-radius: 14px;
+            padding: 14px;
+            margin: 8px 16px;
+            border-left-width: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Pantalla de bienvenida -->
+<div id="welcomeScreen" class="welcome">
+    <div class="emoji">📡</div>
+    <div class="title">KeTeteo</div>
+    <div class="sub">Todo en vivo, todo ahora</div>
+    <button class="btn-primary" onclick="login()">Crear cuenta</button>
+    <button class="btn-secondary" onclick="login()">Iniciar sesión</button>
+</div>
+
+<!-- Pantalla principal (home) -->
+<div id="mainScreen" class="screen">
+    <div class="header">
+        <div>
+            <div class="logo">KeTeteo</div>
+            <div class="logo-sub">TODO EN VIVO</div>
+        </div>
+        <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+
+    <div id="greetBanner" class="greet-banner hidden">
+        <span id="greetText" class="greet-text"></span>
+        <button class="ia-btn" onclick="alert('🤖 TeteoIA: Próximamente')">🤖 IA</button>
+    </div>
+
+    <div id="locationBar" class="location-bar">
+        <div class="location-text">📍 Buscando ubicación...</div>
+    </div>
+
+    <div class="nearby-title">📍 CERCA DE TI</div>
+    <div id="feedList"></div>
+
+    <button class="map-btn" onclick="showMapScreen()">🗺️ Ver mapa de Teteos</button>
+    <button class="start-btn" onclick="alert('🔴 Próximamente: podrás iniciar tu propia transmisión')">🔴 Iniciar KeTeteo</button>
+</div>
+
+<!-- Pantalla de mapa -->
+<div id="mapScreen" class="screen">
+    <div class="header">
+        <div class="logo">Mapa</div>
+        <button class="logout-btn" onclick="showHomeScreen()">← Volver</button>
+    </div>
+    <div style="flex:1; align-items:center; justify-content:center; padding:60px 20px; text-align:center;">
+        <div style="font-size:60px; margin-bottom:16px;">🗺️</div>
+        <div style="color:#fff; font-size:22px; font-weight:800; margin-bottom:8px;">Mapa en Vivo</div>
+        <div style="color:#666; font-size:14px; line-height:22px;">Aquí verás todos los teteos activos cerca de ti en el mapa en tiempo real.<br><br><span style="color:#ff2d55;">Google Maps + GPS</span> se integran aquí.</div>
+        <div class="map-mock">
+            <div class="map-pin" style="border-color:#ff2d55"><span style="font-size:20px;">🎉</span><br><span style="color:#ff2d55; font-size:11px;">Fiesta · 0.3km</span></div>
+            <div class="map-pin" style="border-color:#bf5af2"><span style="font-size:20px;">💒</span><br><span style="color:#bf5af2; font-size:11px;">Boda · 1.2km</span></div>
+            <div class="map-pin" style="border-color:#ff9f0a"><span style="font-size:20px;">🎵</span><br><span style="color:#ff9f0a; font-size:11px;">Concierto · 0.8km</span></div>
+            <div class="map-pin" style="border-color:#0a84ff"><span style="font-size:20px;">⚽</span><br><span style="color:#0a84ff; font-size:11px;">Deporte · 3.4km</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- Pantalla de alertas -->
+<div id="alertsScreen" class="screen">
+    <div class="header">
+        <div class="logo">Alertas</div>
+        <button class="logout-btn" onclick="showHomeScreen()">← Volver</button>
+    </div>
+    <div style="margin-top: 70px;">
+        <div class="nearby-title">🔔 NOTIFICACIONES</div>
+        <div id="alertsList"></div>
+    </div>
+</div>
+
+<!-- Pantalla de perfil -->
+<div id="profileScreen" class="screen">
+    <div class="header">
+        <div class="logo">Perfil</div>
+        <button class="logout-btn" onclick="showHomeScreen()">← Volver</button>
+    </div>
+    <div style="margin-top: 70px; padding: 20px;">
+        <div style="align-items:center; text-align:center;">
+            <div style="font-size:72px;">🧑</div>
+            <div id="profileName" style="color:#fff; font-size:20px; font-weight:800; margin-top:12px;"></div>
+            <div id="profileUser" style="color:#ff2d55; font-size:14px; margin-top:4px;"></div>
+            <div id="profileEmail" style="color:#444; font-size:12px; margin-top:4px;"></div>
+        </div>
+        <button class="btn-secondary" style="margin-top: 20px;" onclick="logout()">Cerrar sesión</button>
+    </div>
+</div>
+
+<!-- Pantalla de stream en vivo -->
+<div id="liveScreen" class="live-container hidden">
+    <div class="live-header">
+        <button class="close-btn" onclick="closeStream()">✕</button>
+        <div>
+            <div id="liveName" class="live-name">Maria Garcia</div>
+            <div id="liveUser" class="live-user">@maria</div>
+        </div>
+        <div class="viewers-badge">
+            <div class="live-dot"></div>
+            <div id="liveViewers">1247</div>
+        </div>
+    </div>
+    <div class="video-box">
+        <div class="video-emoji">📡</div>
+        <div class="video-text">EN VIVO</div>
+        <div id="liveTitle" class="video-title">🎵 Salsa en vivo</div>
+        <div id="liveDistance" class="video-location">📍 A 0.3 km de ti</div>
+    </div>
+    <div id="liveChat" class="chat-list"></div>
+    <div class="bottom-bar">
+        <div class="like-btn" onclick="addLike()">❤️ <span id="likeCount">0</span></div>
+        <input type="text" id="commentInput" class="comment-input" placeholder="Comenta...">
+        <button class="send-btn" onclick="sendComment()">Enviar</button>
+    </div>
+</div>
+
+<!-- Bottom navigation -->
+<div class="bottom-nav" id="bottomNav">
+    <div class="nav-item" onclick="showHomeScreen()">
+        <div class="nav-icon">🏠</div>
+        <div class="nav-label" id="navHome">Inicio</div>
+    </div>
+    <div class="nav-item" onclick="showMapScreen()">
+        <div class="nav-icon">🗺️</div>
+        <div class="nav-label" id="navMap">Mapa</div>
+    </div>
+    <div class="nav-item" onclick="showAlertsScreen()">
+        <div class="nav-icon">🔔</div>
+        <div class="nav-label" id="navAlerts">Alertas</div>
+    </div>
+    <div class="nav-item" onclick="showProfileScreen()">
+        <div class="nav-icon">👤</div>
+        <div class="nav-label" id="navProfile">Perfil</div>
+    </div>
+</div>
+
+<script>
+    // Estado
+    let loggedIn = false;
+    let selectedStream = null;
+    let comments = [];
+    let likes = 0;
+    let currentUser = null;
+
+    const streams = [
+        { id: 1, name: 'Maria Garcia', user: '@maria', title: '🎵 Salsa en vivo', viewers: 1247, distance: 0.3, type: '🎉', lugar: 'Gazcue, SD', estado: 'EN VIVO', color: '#ff2d55', bg: '#2a0010' },
+        { id: 2, name: 'Juan Carlos', user: '@juanc', title: '⚽ Final de futbol', viewers: 3452, distance: 1.2, type: '⚽', lugar: 'Cancha Los Prados', estado: 'EN VIVO', color: '#0a84ff', bg: '#001530' },
+        { id: 3, name: 'Cocina con Amor', user: '@cocina', title: '👩‍🍳 Paella en vivo', viewers: 892, distance: 2.5, type: '🍳', lugar: 'Centro Culinario', estado: 'EN VIVO', color: '#ff9f0a', bg: '#2a1500' },
+        { id: 4, name: 'Rosa Pérez', user: '@rosa', title: '🎂 Cumpleaños Rosa', viewers: 156, distance: 0.8, type: '🎂', lugar: 'Salón Las Palmas', estado: 'EN VIVO', color: '#ff2d55', bg: '#2a0010' },
+        { id: 5, name: 'Padre Luis', user: '@padreluis', title: '⛪ Misa Dominical', viewers: 0, distance: 2.1, type: '⛪', lugar: 'Iglesia Central', estado: 'EN 30 MIN', color: '#30d158', bg: '#001a0a' }
+    ];
+
+    const alerts = [
+        { icon: '🎉', text: 'Nuevo teteo a 300m de ti', sub: 'Fiesta en Gazcue', time: 'Hace 2 min', color: '#ff2d55' },
+        { icon: '💒', text: 'Boda comenzó en vivo', sub: 'María & Carlos · Hotel Jaragua', time: 'Hace 15 min', color: '#bf5af2' },
+        { icon: '🎵', text: 'Concierto a punto de empezar', sub: 'Juan Luis Guerra · Estadio Olímpico', time: 'Hace 1 hora', color: '#ff9f0a' }
+    ];
+
+    // Geolocalización
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    document.getElementById('locationBar').innerHTML = `<div class="location-text">📍 ${position.coords.latitude.toFixed(2)}, ${position.coords.longitude.toFixed(2)}</div>`;
+                },
+                () => {
+                    document.getElementById('locationBar').innerHTML = `<div class="location-text">📍 Ubicación no disponible</div>`;
+                }
+            );
+        }
+    }
+
+    // Renderizar feed
+    function renderFeed() {
+        const feedDiv = document.getElementById('feedList');
+        feedDiv.innerHTML = '';
+        streams.forEach(stream => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => openStream(stream);
+            card.innerHTML = `
+                <div class="card-emoji">${stream.type}</div>
+                <div class="card-title">${stream.title}</div>
+                <div class="card-info">${stream.name} · 👁 ${stream.viewers.toLocaleString()}</div>
+                <div class="distance-badge"><div class="distance-text">📍 A ${stream.distance} km</div></div>
+                <div class="live-tag"><div class="live-tag-text">${stream.estado}</div></div>
+            `;
+            feedDiv.appendChild(card);
+        });
+    }
+
+    function renderAlerts() {
+        const alertsDiv = document.getElementById('alertsList');
+        alertsDiv.innerHTML = '';
+        alerts.forEach(alert => {
+            const card = document.createElement('div');
+            card.className = 'alert-card';
+            card.style.borderLeftColor = alert.color;
+            card.innerHTML = `
+                <div style="font-size:24px;">${alert.icon}</div>
+                <div style="flex:1;">
+                    <div style="color:#fff; font-weight:700; font-size:13px;">${alert.text}</div>
+                    <div style="color:#666; font-size:11px; margin-top:2px;">${alert.sub}</div>
+                </div>
+                <div style="color:#444; font-size:10px;">${alert.time}</div>
+            `;
+            alertsDiv.appendChild(card);
+        });
+    }
+
+    function openStream(stream) {
+        selectedStream = stream;
+        document.getElementById('liveName').innerText = stream.name;
+        document.getElementById('liveUser').innerText = stream.user;
+        document.getElementById('liveViewers').innerText = stream.viewers;
+        document.getElementById('liveTitle').innerText = stream.title;
+        document.getElementById('liveDistance').innerText = `📍 A ${stream.distance} km de ti`;
+        renderChat();
+        document.getElementById('liveScreen').classList.remove('hidden');
+        document.getElementById('mainScreen').classList.add('hidden');
+        document.getElementById('welcomeScreen').classList.add('hidden');
+        document.getElementById('bottomNav').style.display = 'none';
+    }
+
+    function closeStream() {
+        document.getElementById('liveScreen').classList.add('hidden');
+        document.getElementById('mainScreen').classList.remove('hidden');
+        document.getElementById('bottomNav').style.display = 'flex';
+        selectedStream = null;
+    }
+
+    function renderChat() {
+        const chatDiv = document.getElementById('liveChat');
+        chatDiv.innerHTML = '';
+        comments.forEach(comment => {
+            const msg = document.createElement('div');
+            msg.className = 'chat-msg';
+            msg.innerHTML = `<div class="chat-user">${comment.user}</div><div class="chat-text">${comment.text}</div>`;
+            chatDiv.appendChild(msg);
+        });
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+    }
+
+    function sendComment() {
+        const input = document.getElementById('commentInput');
+        const text = input.value.trim();
+        if (text) {
+            comments.push({ id: Date.now(), user: 'Tú', text: text });
+            renderChat();
+            input.value = '';
+        }
+    }
+
+    function addLike() {
+        likes++;
+        document.getElementById('likeCount').innerText = likes;
+    }
+
+    function login() {
+        loggedIn = true;
+        currentUser = { name: 'Usuario', email: 'usuario@example.com', username: '@usuario' };
+        document.getElementById('welcomeScreen').classList.add('hidden');
+        document.getElementById('mainScreen').classList.remove('hidden');
+        document.getElementById('mainScreen').classList.add('active');
+        document.getElementById('bottomNav').style.display = 'flex';
+        document.getElementById('greetBanner').classList.remove('hidden');
+        document.getElementById('greetText').innerHTML = `👋 ¡Hola, <span style="color:#ff2d55;">Usuario</span>!`;
+        document.getElementById('profileName').innerText = currentUser.name;
+        document.getElementById('profileUser').innerText = currentUser.username;
+        document.getElementById('profileEmail').innerText = currentUser.email;
+        getLocation();
+        renderFeed();
+        renderAlerts();
+    }
+
+    function logout() {
+        loggedIn = false;
+        currentUser = null;
+        comments = [];
+        likes = 0;
+        document.getElementById('mainScreen').classList.remove('active');
+        document.getElementById('welcomeScreen').classList.remove('hidden');
+        document.getElementById('bottomNav').style.display = 'none';
+        showHomeScreen();
+    }
+
+    function showHomeScreen() {
+        document.getElementById('mainScreen').classList.add('active');
+        document.getElementById('mapScreen').classList.remove('active');
+        document.getElementById('alertsScreen').classList.remove('active');
+        document.getElementById('profileScreen').classList.remove('active');
+        document.getElementById('navHome').classList.add('active');
+        document.getElementById('navMap').classList.remove('active');
+        document.getElementById('navAlerts').classList.remove('active');
+        document.getElementById('navProfile').classList.remove('active');
+    }
+
+    function showMapScreen() {
+        document.getElementById('mainScreen').classList.remove('active');
+        document.getElementById('mapScreen').classList.add('active');
+        document.getElementById('alertsScreen').classList.remove('active');
+        document.getElementById('profileScreen').classList.remove('active');
+        document.getElementById('navHome').classList.remove('active');
+        document.getElementById('navMap').classList.add('active');
+        document.getElementById('navAlerts').classList.remove('active');
+        document.getElementById('navProfile').classList.remove('active');
+    }
+
+    function showAlertsScreen() {
+        document.getElementById('mainScreen').classList.remove('active');
+        document.getElementById('mapScreen').classList.remove('active');
+        document.getElementById('alertsScreen').classList.add('active');
+        document.getElementById('profileScreen').classList.remove('active');
+        document.getElementById('navHome').classList.remove('active');
+        document.getElementById('navMap').classList.remove('active');
+        document.getElementById('navAlerts').classList.add('active');
+        document.getElementById('navProfile').classList.remove('active');
+        renderAlerts();
+    }
+
+    function showProfileScreen() {
+        document.getElementById('mainScreen').classList.remove('active');
+        document.getElementById('mapScreen').classList.remove('active');
+        document.getElementById('alertsScreen').classList.remove('active');
+        document.getElementById('profileScreen').classList.add('active');
+        document.getElementById('navHome').classList.remove('active');
+        document.getElementById('navMap').classList.remove('active');
+        document.getElementById('navAlerts').classList.remove('active');
+        document.getElementById('navProfile').classList.add('active');
+    }
+
+    // Inicialización
+    document.getElementById('bottomNav').style.display = 'none';
+</script>
+
+</body>
+</html>
