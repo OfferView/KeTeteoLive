@@ -178,6 +178,39 @@
             cursor: pointer;
         }
 
+        /* Estilo para el contenedor de contraseña con ojito */
+        .password-wrapper {
+            position: relative;
+            margin-bottom: 12px;
+        }
+        
+        .password-wrapper input {
+            width: 100%;
+            padding: 12px;
+            padding-right: 45px;
+            background: var(--negro);
+            border: 1px solid var(--gris-medio);
+            border-radius: 12px;
+            color: var(--blanco);
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            cursor: pointer;
+            color: var(--gris-claro);
+            font-size: 18px;
+        }
+
+        .error-message {
+            color: var(--rojo);
+            font-size: 12px;
+            margin-bottom: 12px;
+            display: none;
+            text-align: center;
+        }
+
         .btn-rojo {
             background: var(--rojo);
             color: var(--blanco);
@@ -892,24 +925,42 @@
 </div>
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
-<!-- MODALES AUTH -->
+<!-- MODAL REGISTRO MEJORADO -->
 <div id="registerModal" class="modal">
     <div class="modal-content">
         <h3>Crear cuenta</h3>
         <input type="text" id="regName" placeholder="Nombre completo">
         <input type="text" id="regUser" placeholder="Usuario (@ejemplo)">
         <input type="email" id="regEmail" placeholder="Correo electrónico">
-        <input type="password" id="regPass" placeholder="Contraseña">
+        
+        <div class="password-wrapper">
+            <input type="password" id="regPass" placeholder="Contraseña">
+            <span class="toggle-password" onclick="togglePassword('regPass')">👁️</span>
+        </div>
+        
+        <div class="password-wrapper">
+            <input type="password" id="regConfirmPass" placeholder="Confirmar contraseña">
+            <span class="toggle-password" onclick="togglePassword('regConfirmPass')">👁️</span>
+        </div>
+        
+        <div id="passError" class="error-message">⚠️ Las contraseñas no coinciden</div>
+        
         <button class="btn-rojo" onclick="register()">Registrarse</button>
         <button class="btn-gris" onclick="closeModals()">Cancelar</button>
     </div>
 </div>
 
+<!-- MODAL LOGIN MEJORADO -->
 <div id="loginModal" class="modal">
     <div class="modal-content">
         <h3>Iniciar sesión</h3>
         <input type="email" id="loginEmail" placeholder="Correo electrónico">
-        <input type="password" id="loginPass" placeholder="Contraseña">
+        
+        <div class="password-wrapper">
+            <input type="password" id="loginPass" placeholder="Contraseña">
+            <span class="toggle-password" onclick="togglePassword('loginPass')">👁️</span>
+        </div>
+        
         <button class="btn-rojo" onclick="login()">Entrar</button>
         <button class="btn-gris" onclick="closeModals()">Cancelar</button>
     </div>
@@ -1181,12 +1232,23 @@
         document.getElementById('overlay').classList.remove('show');
     }
 
+    // ================= MOSTRAR/OCULTAR CONTRASEÑA =================
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+        } else {
+            input.type = 'password';
+        }
+    }
+
     // ================= AUTH =================
     function openRegister() { closeModals(); document.getElementById('registerModal').classList.add('show'); }
     function openLogin() { closeModals(); document.getElementById('loginModal').classList.add('show'); }
     function closeModals() {
         document.getElementById('registerModal').classList.remove('show');
         document.getElementById('loginModal').classList.remove('show');
+        document.getElementById('passError').style.display = 'none';
     }
 
     function register() {
@@ -1194,14 +1256,42 @@
         const user = document.getElementById('regUser').value;
         const email = document.getElementById('regEmail').value;
         const pass = document.getElementById('regPass').value;
-        if (name && user && email && pass) {
-            currentUser = { name, username: user.startsWith('@') ? user : '@'+user, email, bio: 'Amante de los eventos en vivo 🎉' };
-            loggedIn = true;
-            closeModals();
-            showMainScreen();
-            document.getElementById('logoutMenuBtn').style.display = 'block';
-            loadProfileData();
-        } else alert('Completa todos los campos');
+        const confirmPass = document.getElementById('regConfirmPass').value;
+        const errorDiv = document.getElementById('passError');
+        
+        if (!name || !user || !email || !pass || !confirmPass) {
+            alert('❌ Completa todos los campos');
+            return;
+        }
+        
+        if (pass !== confirmPass) {
+            errorDiv.style.display = 'block';
+            return;
+        } else {
+            errorDiv.style.display = 'none';
+        }
+        
+        if (pass.length < 6) {
+            alert('❌ La contraseña debe tener al menos 6 caracteres');
+            return;
+        }
+        
+        currentUser = { 
+            name: name, 
+            username: user.startsWith('@') ? user : '@' + user, 
+            email: email, 
+            bio: 'Amante de los eventos en vivo 🎉' 
+        };
+        loggedIn = true;
+        closeModals();
+        showMainScreen();
+        document.getElementById('logoutMenuBtn').style.display = 'block';
+        loadProfileData();
+        
+        document.getElementById('regPass').value = '';
+        document.getElementById('regConfirmPass').value = '';
+        
+        alert('✅ Cuenta creada con éxito');
     }
 
     function login() {
@@ -1214,7 +1304,9 @@
             showMainScreen();
             document.getElementById('logoutMenuBtn').style.display = 'block';
             loadProfileData();
-        } else alert('Ingresa email y contraseña');
+        } else {
+            alert('❌ Ingresa email y contraseña');
+        }
     }
 
     function logout() {
