@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>KeTeteo - Todo en vivo, todo ahora</title>
+    <title>KeTeteoLive - Tu vida ahora</title>
     <style>
         * {
             margin: 0;
@@ -13,101 +13,239 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0b0b0b;
-            color: #fff;
-            padding-bottom: 80px;
+            background: #0B0B0B;
+            color: #FFFFFF;
+            padding-bottom: 70px;
         }
 
-        /* Header */
+        /* ========== PALETA ESTRATÉGICA ========== */
+        :root {
+            --negro: #0B0B0B;
+            --rojo: #FF2D55;
+            --naranja: #FF6B00;
+            --blanco: #FFFFFF;
+            --gris-claro: #AAAAAA;
+            --gris-oscuro: #1A1A1A;
+            --gris-medio: #222222;
+            --azul: #007AFF;
+        }
+
+        /* ========== MENÚ HAMBURGUESA ========== */
         .header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: #0b0b0b;
+            background: var(--negro);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px solid var(--gris-medio);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
         }
 
         .logo {
             font-size: 24px;
             font-weight: 900;
-            color: #ff2d55;
+            color: var(--rojo);
         }
 
         .logo-sub {
             font-size: 9px;
-            color: #333;
-            letter-spacing: 3px;
-            margin-top: -2px;
+            color: var(--gris-claro);
+            letter-spacing: 2px;
         }
 
-        .logout-btn {
-            background: #1a1a1a;
-            padding: 8px 16px;
-            border-radius: 8px;
-            color: #888;
-            font-size: 14px;
+        .hamburger {
+            font-size: 28px;
             cursor: pointer;
+            background: none;
             border: none;
+            color: var(--blanco);
         }
 
-        /* Location bar */
-        .location-bar {
-            margin-top: 70px;
-            background: #1a1a2e;
-            margin: 75px 16px 12px 16px;
+        /* Menú lateral */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: var(--gris-oscuro);
+            z-index: 200;
+            transition: left 0.3s ease;
+            padding: 70px 20px 20px 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+        }
+
+        .side-menu.open {
+            left: 0;
+        }
+
+        .side-menu button {
+            display: block;
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--blanco);
+            padding: 14px;
+            text-align: left;
+            font-size: 16px;
+            border-bottom: 1px solid var(--gris-medio);
+            cursor: pointer;
+        }
+
+        .side-menu button:hover {
+            background: var(--rojo);
+            color: var(--blanco);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 150;
+            display: none;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* ========== MODALES AUTH ========== */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--gris-oscuro);
+            padding: 24px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 340px;
+            border: 1px solid var(--gris-medio);
+        }
+
+        .modal-content h3 {
+            color: var(--rojo);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            background: var(--negro);
+            border: 1px solid var(--gris-medio);
+            border-radius: 12px;
+            color: var(--blanco);
+        }
+
+        .modal-content button {
+            width: 100%;
             padding: 12px;
             border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-rojo {
+            background: var(--rojo);
+            color: var(--blanco);
+        }
+
+        .btn-gris {
+            background: var(--gris-medio);
+            color: var(--gris-claro);
+            margin-top: 10px;
+        }
+
+        /* ========== BUSCADOR ========== */
+        .search-container {
+            margin: 80px 16px 12px 16px;
+        }
+
+        .search-box {
+            display: flex;
+            background: var(--gris-oscuro);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--gris-medio);
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            color: var(--blanco);
+            font-size: 14px;
+        }
+
+        .search-box button {
+            background: var(--rojo);
+            border: none;
+            padding: 0 18px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* ========== UBICACIÓN ========== */
+        .location-bar {
+            background: var(--gris-oscuro);
+            margin: 8px 16px 16px 16px;
+            padding: 12px;
+            border-radius: 14px;
             text-align: center;
         }
 
         .location-text {
-            color: #ff2d55;
+            color: var(--rojo);
             font-size: 12px;
         }
 
-        /* Categories */
-        .cat-scroll {
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 12px 16px;
-            -webkit-overflow-scrolling: touch;
+        /* ========== FEED VERTICAL ========== */
+        .nearby-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 16px 16px 8px 16px;
         }
 
-        .cat-chip {
-            display: inline-block;
-            background: #181818;
-            border: 1px solid #252525;
-            border-radius: 20px;
-            padding: 8px 16px;
-            margin-right: 8px;
-            color: #666;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .cat-chip.active {
-            background: #ff2d55;
-            color: #fff;
-            border-color: #ff2d55;
-        }
-
-        /* Cards */
         .card {
-            background: #1a1a2e;
+            background: var(--gris-oscuro);
             margin: 12px 16px;
             padding: 20px;
-            border-radius: 16px;
-            border: 1px solid #ff2d5530;
+            border-radius: 20px;
             position: relative;
             cursor: pointer;
             transition: transform 0.2s;
+            border: 1px solid var(--gris-medio);
         }
 
         .card:active {
@@ -126,7 +264,7 @@
         }
 
         .card-info {
-            color: #888;
+            color: var(--gris-claro);
             font-size: 14px;
         }
 
@@ -134,13 +272,13 @@
             position: absolute;
             bottom: 12px;
             right: 12px;
-            background: #ff2d5520;
-            padding: 4px 8px;
-            border-radius: 12px;
+            background: rgba(255,45,85,0.15);
+            padding: 4px 10px;
+            border-radius: 20px;
         }
 
         .distance-text {
-            color: #ff2d55;
+            color: var(--rojo);
             font-size: 11px;
             font-weight: 600;
         }
@@ -149,51 +287,89 @@
             position: absolute;
             top: 12px;
             right: 12px;
-            background: #ff2d55;
-            padding: 4px 8px;
-            border-radius: 12px;
+            background: var(--rojo);
+            padding: 4px 10px;
+            border-radius: 20px;
         }
 
         .live-tag-text {
-            color: #fff;
+            color: var(--blanco);
             font-size: 10px;
             font-weight: 800;
         }
 
-        /* Bottom buttons */
-        .start-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ff2d55;
-            padding: 14px 24px;
-            border-radius: 30px;
-            border: none;
-            color: #fff;
-            font-weight: 800;
-            cursor: pointer;
-            z-index: 100;
+        /* ========== FRANJA DIVISORIA ========== */
+        .etapa-divider {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--rojo) 20%, var(--rojo) 80%, transparent 100%);
+            margin: 8px 0 16px 0;
+            box-shadow: 0 0 6px rgba(255,45,85,0.4);
         }
 
-        .map-btn {
+        /* ========== BOTÓN FLOTANTE ========== */
+        .start-btn {
             position: fixed;
             bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
-            background: #1a1a2e;
-            border: 1px solid #ff2d55;
-            padding: 14px 24px;
-            border-radius: 30px;
-            width: 90%;
-            text-align: center;
-            color: #ff2d55;
-            font-weight: 700;
+            background: var(--rojo);
+            padding: 14px 28px;
+            border-radius: 40px;
+            border: none;
+            color: var(--blanco);
+            font-weight: 800;
             cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(255,45,85,0.4);
+        }
+
+        /* ========== BOTTOM NAV ========== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            background: var(--negro);
+            border-top: 1px solid var(--gris-medio);
+            padding: 8px 0 16px 0;
             z-index: 100;
         }
 
-        /* Welcome screen */
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            color: var(--gris-claro);
+        }
+
+        .nav-label.active {
+            color: var(--rojo);
+            font-weight: 700;
+        }
+
+        /* ========== PANTALLAS ========== */
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* ========== BIENVENIDA ========== */
         .welcome {
             display: flex;
             flex-direction: column;
@@ -211,25 +387,23 @@
         .title {
             font-size: 42px;
             font-weight: 900;
-            color: #ff2d55;
+            color: var(--rojo);
         }
 
         .sub {
             font-size: 16px;
-            color: #666;
+            color: var(--gris-claro);
             margin-bottom: 40px;
-            margin-top: 5px;
             text-align: center;
         }
 
         .btn-primary {
-            background: #ff2d55;
+            background: var(--rojo);
             padding: 16px;
             border-radius: 14px;
             width: 100%;
-            margin-bottom: 10px;
             text-align: center;
-            color: #fff;
+            color: var(--blanco);
             font-weight: 700;
             cursor: pointer;
             border: none;
@@ -237,25 +411,26 @@
 
         .btn-secondary {
             background: transparent;
-            border: 1.5px solid #1e1e1e;
+            border: 1.5px solid var(--gris-medio);
             padding: 16px;
             border-radius: 14px;
             width: 100%;
             text-align: center;
-            color: #888;
+            color: var(--gris-claro);
             font-weight: 700;
             cursor: pointer;
+            margin-top: 10px;
         }
 
-        /* Live stream screen */
+        /* ========== STREAM EN VIVO ========== */
         .live-container {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: #000;
-            z-index: 200;
+            background: var(--negro);
+            z-index: 400;
             display: flex;
             flex-direction: column;
         }
@@ -268,76 +443,29 @@
         }
 
         .close-btn {
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             width: 40px;
             height: 40px;
-            border-radius: 20px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             border: none;
-            color: #fff;
+            color: var(--blanco);
             font-size: 24px;
-        }
-
-        .live-name {
-            font-weight: 700;
-        }
-
-        .live-user {
-            color: #ccc;
-            font-size: 11px;
-        }
-
-        .viewers-badge {
-            display: flex;
-            background: rgba(0,0,0,0.6);
-            padding: 8px;
-            border-radius: 20px;
-            gap: 5px;
-        }
-
-        .live-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 3px;
-            background: #ff2d55;
         }
 
         .video-box {
             flex: 2;
-            background: #111;
+            background: var(--gris-oscuro);
             margin: 16px;
-            border-radius: 24px;
+            border-radius: 28px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 40px;
-            min-height: 250px;
-        }
-
-        .video-emoji {
-            font-size: 60px;
-            margin-bottom: 10px;
-        }
-
-        .video-text {
-            color: #ff2d55;
-            font-weight: 800;
-        }
-
-        .video-title {
-            color: #fff;
-            font-size: 18px;
-            margin-top: 8px;
-        }
-
-        .video-location {
-            color: #ff2d55;
-            font-size: 12px;
-            margin-top: 4px;
         }
 
         .chat-list {
@@ -348,271 +476,137 @@
         }
 
         .chat-msg {
-            background: #1a1a1a;
-            padding: 8px;
-            border-radius: 12px;
-            margin-bottom: 6px;
+            background: var(--gris-oscuro);
+            padding: 10px;
+            border-radius: 16px;
+            margin-bottom: 8px;
         }
 
         .chat-user {
-            color: #ff2d55;
-            font-size: 11px;
+            color: var(--rojo);
+            font-size: 12px;
             font-weight: 700;
-        }
-
-        .chat-text {
-            color: #fff;
-            font-size: 13px;
         }
 
         .bottom-bar {
             display: flex;
             padding: 16px;
             gap: 10px;
-            align-items: center;
-        }
-
-        .like-btn {
-            font-size: 20px;
-            cursor: pointer;
         }
 
         .comment-input {
             flex: 1;
-            background: #1a1a1a;
-            border-radius: 20px;
-            padding: 10px;
-            color: #fff;
+            background: var(--gris-oscuro);
+            border-radius: 30px;
+            padding: 12px;
+            color: var(--blanco);
             border: none;
         }
 
         .send-btn {
-            background: #ff2d55;
-            padding: 10px 16px;
-            border-radius: 20px;
-            cursor: pointer;
+            background: var(--rojo);
+            padding: 12px 20px;
+            border-radius: 30px;
             border: none;
-            color: #fff;
+            color: var(--blanco);
             font-weight: 700;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .nearby-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 16px 16px 8px 16px;
-        }
-
-        .greet-banner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 70px 16px 12px 16px;
-            background: #111;
-            border-radius: 14px;
-            padding: 12px;
-            border: 1px solid #1e1e1e;
-        }
-
-        .greet-text {
-            color: #fff;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .ia-btn {
-            background: #0f1a0f;
-            border-radius: 10px;
-            padding: 6px 12px;
-            border: 1px solid #1a3a1a;
-            color: #30d158;
-            font-size: 11px;
-            cursor: pointer;
-        }
-
-        /* Bottom navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            background: #0b0b0b;
-            border-top: 1px solid #1e1e1e;
-            padding: 10px 0 20px 0;
-            z-index: 100;
-        }
-
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            cursor: pointer;
-        }
-
-        .nav-icon {
-            font-size: 20px;
-        }
-
-        .nav-label {
-            font-size: 9px;
-            color: #444;
-            font-weight: 500;
-        }
-
-        .nav-label.active {
-            color: #ff2d55;
-            font-weight: 700;
-        }
-
-        /* Screens */
-        .screen {
-            display: none;
-        }
-
-        .screen.active {
-            display: block;
-        }
-
-        /* Map screen */
-        .map-mock {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 24px;
-        }
-
-        .map-pin {
-            background: #111;
-            border: 1px solid;
-            border-radius: 14px;
-            padding: 12px;
-            text-align: center;
-            min-width: 100px;
-        }
-
-        /* Alert card */
-        .alert-card {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #111;
-            border-radius: 14px;
-            padding: 14px;
-            margin: 8px 16px;
-            border-left-width: 3px;
         }
     </style>
 </head>
 <body>
 
-<!-- Pantalla de bienvenida -->
+<!-- BIENVENIDA -->
 <div id="welcomeScreen" class="welcome">
     <div class="emoji">📡</div>
-    <div class="title">KeTeteo</div>
-    <div class="sub">Todo en vivo, todo ahora</div>
-    <button class="btn-primary" onclick="login()">Crear cuenta</button>
-    <button class="btn-secondary" onclick="login()">Iniciar sesión</button>
+    <div class="title">KeTeteoLive</div>
+    <div class="sub">Tu vida ahora</div>
+    <button class="btn-primary" onclick="openRegister()">Crear cuenta</button>
+    <button class="btn-secondary" onclick="openLogin()">Iniciar sesión</button>
 </div>
 
-<!-- Pantalla principal (home) -->
+<!-- PANTALLA PRINCIPAL (HOME) -->
 <div id="mainScreen" class="screen">
     <div class="header">
-        <div>
-            <div class="logo">KeTeteo</div>
-            <div class="logo-sub">TODO EN VIVO</div>
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+        <div class="logo-area">
+            <div class="logo">KeTeteoLive</div>
+            <div class="logo-sub">LIVE</div>
         </div>
-        <button class="logout-btn" onclick="logout()">Salir</button>
+        <div style="width: 30px;"></div>
     </div>
 
-    <div id="greetBanner" class="greet-banner hidden">
-        <span id="greetText" class="greet-text"></span>
-        <button class="ia-btn" onclick="alert('🤖 TeteoIA: Próximamente')">🤖 IA</button>
+    <!-- BUSCADOR -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Buscar eventos o usuarios...">
+            <button onclick="searchEvents()">🔍</button>
+        </div>
     </div>
 
+    <!-- UBICACIÓN -->
     <div id="locationBar" class="location-bar">
         <div class="location-text">📍 Buscando ubicación...</div>
     </div>
 
-    <div class="nearby-title">📍 CERCA DE TI</div>
+    <!-- FEED -->
+    <div class="nearby-title">🎯 CERCA DE TI</div>
     <div id="feedList"></div>
 
-    <button class="map-btn" onclick="showMapScreen()">🗺️ Ver mapa de Teteos</button>
-    <button class="start-btn" onclick="alert('🔴 Próximamente: podrás iniciar tu propia transmisión')">🔴 Iniciar KeTeteo</button>
+    <!-- FRANJA DIVISORIA (PREPARANDO ETAPA 2) -->
+    <div class="etapa-divider"></div>
+    <div class="nearby-title" style="color: var(--gris-claro);">📺 CARRUSEL INFINITO (ETAPA 2)</div>
+
+    <!-- BOTÓN FLOTANTE -->
+    <button class="start-btn" onclick="alert('🔴 Transmisión en vivo (Etapa 3)')">🔴 Iniciar KeTeteo</button>
 </div>
 
-<!-- Pantalla de mapa -->
-<div id="mapScreen" class="screen">
-    <div class="header">
-        <div class="logo">Mapa</div>
-        <button class="logout-btn" onclick="showHomeScreen()">← Volver</button>
-    </div>
-    <div style="flex:1; align-items:center; justify-content:center; padding:60px 20px; text-align:center;">
-        <div style="font-size:60px; margin-bottom:16px;">🗺️</div>
-        <div style="color:#fff; font-size:22px; font-weight:800; margin-bottom:8px;">Mapa en Vivo</div>
-        <div style="color:#666; font-size:14px; line-height:22px;">Aquí verás todos los teteos activos cerca de ti en el mapa en tiempo real.<br><br><span style="color:#ff2d55;">Google Maps + GPS</span> se integran aquí.</div>
-        <div class="map-mock">
-            <div class="map-pin" style="border-color:#ff2d55"><span style="font-size:20px;">🎉</span><br><span style="color:#ff2d55; font-size:11px;">Fiesta · 0.3km</span></div>
-            <div class="map-pin" style="border-color:#bf5af2"><span style="font-size:20px;">💒</span><br><span style="color:#bf5af2; font-size:11px;">Boda · 1.2km</span></div>
-            <div class="map-pin" style="border-color:#ff9f0a"><span style="font-size:20px;">🎵</span><br><span style="color:#ff9f0a; font-size:11px;">Concierto · 0.8km</span></div>
-            <div class="map-pin" style="border-color:#0a84ff"><span style="font-size:20px;">⚽</span><br><span style="color:#0a84ff; font-size:11px;">Deporte · 3.4km</span></div>
-        </div>
-    </div>
+<!-- MENÚ LATERAL -->
+<div id="sideMenu" class="side-menu">
+    <button onclick="openRegister(); closeMenu()">📝 Registrarse</button>
+    <button onclick="openLogin(); closeMenu()">🔑 Iniciar sesión</button>
+    <button onclick="alert('Mi perfil (próximamente)'); closeMenu()">👤 Mi perfil</button>
+    <button onclick="alert('Mis transmisiones (próximamente)'); closeMenu()">📡 Mis transmisiones</button>
+    <button onclick="alert('Configuración (próximamente)'); closeMenu()">⚙️ Configuración</button>
+    <button onclick="alert('Idioma (próximamente)'); closeMenu()">🌐 Idioma</button>
+    <button onclick="logout(); closeMenu()" id="logoutMenuBtn" style="display:none;">🚪 Cerrar sesión</button>
 </div>
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
-<!-- Pantalla de alertas -->
-<div id="alertsScreen" class="screen">
-    <div class="header">
-        <div class="logo">Alertas</div>
-        <button class="logout-btn" onclick="showHomeScreen()">← Volver</button>
-    </div>
-    <div style="margin-top: 70px;">
-        <div class="nearby-title">🔔 NOTIFICACIONES</div>
-        <div id="alertsList"></div>
-    </div>
-</div>
-
-<!-- Pantalla de perfil -->
-<div id="profileScreen" class="screen">
-    <div class="header">
-        <div class="logo">Perfil</div>
-        <button class="logout-btn" onclick="showHomeScreen()">← Volver</button>
-    </div>
-    <div style="margin-top: 70px; padding: 20px;">
-        <div style="align-items:center; text-align:center;">
-            <div style="font-size:72px;">🧑</div>
-            <div id="profileName" style="color:#fff; font-size:20px; font-weight:800; margin-top:12px;"></div>
-            <div id="profileUser" style="color:#ff2d55; font-size:14px; margin-top:4px;"></div>
-            <div id="profileEmail" style="color:#444; font-size:12px; margin-top:4px;"></div>
-        </div>
-        <button class="btn-secondary" style="margin-top: 20px;" onclick="logout()">Cerrar sesión</button>
+<!-- MODAL REGISTRO -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <h3>Crear cuenta</h3>
+        <input type="text" id="regName" placeholder="Nombre">
+        <input type="text" id="regUser" placeholder="Usuario (@ejemplo)">
+        <input type="email" id="regEmail" placeholder="Correo electrónico">
+        <input type="password" id="regPass" placeholder="Contraseña">
+        <button class="btn-rojo" onclick="register()">Registrarse</button>
+        <button class="btn-gris" onclick="closeModals()">Cancelar</button>
     </div>
 </div>
 
-<!-- Pantalla de stream en vivo -->
-<div id="liveScreen" class="live-container hidden">
+<!-- MODAL LOGIN -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h3>Iniciar sesión</h3>
+        <input type="email" id="loginEmail" placeholder="Correo electrónico">
+        <input type="password" id="loginPass" placeholder="Contraseña">
+        <button class="btn-rojo" onclick="login()">Entrar</button>
+        <button class="btn-gris" onclick="closeModals()">Cancelar</button>
+    </div>
+</div>
+
+<!-- PANTALLA DE STREAM -->
+<div id="liveScreen" class="live-container" style="display:none;">
     <div class="live-header">
         <button class="close-btn" onclick="closeStream()">✕</button>
-        <div>
-            <div id="liveName" class="live-name">Maria Garcia</div>
-            <div id="liveUser" class="live-user">@maria</div>
-        </div>
-        <div class="viewers-badge">
-            <div class="live-dot"></div>
-            <div id="liveViewers">1247</div>
-        </div>
+        <div id="liveName" style="color:#fff;">Maria Garcia</div>
+        <div id="liveViewers" style="color:#aaa;">👁️ 1,247</div>
     </div>
     <div class="video-box">
         <div class="video-emoji">📡</div>
         <div class="video-text">EN VIVO</div>
-        <div id="liveTitle" class="video-title">🎵 Salsa en vivo</div>
-        <div id="liveDistance" class="video-location">📍 A 0.3 km de ti</div>
+        <div id="liveTitle" style="color:#fff; margin-top:10px;">🎵 Salsa en vivo</div>
     </div>
     <div id="liveChat" class="chat-list"></div>
     <div class="bottom-bar">
@@ -622,54 +616,26 @@
     </div>
 </div>
 
-<!-- Bottom navigation -->
-<div class="bottom-nav" id="bottomNav">
-    <div class="nav-item" onclick="showHomeScreen()">
-        <div class="nav-icon">🏠</div>
-        <div class="nav-label" id="navHome">Inicio</div>
-    </div>
-    <div class="nav-item" onclick="showMapScreen()">
-        <div class="nav-icon">🗺️</div>
-        <div class="nav-label" id="navMap">Mapa</div>
-    </div>
-    <div class="nav-item" onclick="showAlertsScreen()">
-        <div class="nav-icon">🔔</div>
-        <div class="nav-label" id="navAlerts">Alertas</div>
-    </div>
-    <div class="nav-item" onclick="showProfileScreen()">
-        <div class="nav-icon">👤</div>
-        <div class="nav-label" id="navProfile">Perfil</div>
-    </div>
-</div>
-
 <script>
-    // Estado
+    // ================= DATOS SIMULADOS =================
     let loggedIn = false;
-    let selectedStream = null;
+    let currentUser = null;
     let comments = [];
     let likes = 0;
-    let currentUser = null;
+    let selectedStream = null;
 
     const streams = [
-        { id: 1, name: 'Maria Garcia', user: '@maria', title: '🎵 Salsa en vivo', viewers: 1247, distance: 0.3, type: '🎉', lugar: 'Gazcue, SD', estado: 'EN VIVO', color: '#ff2d55', bg: '#2a0010' },
-        { id: 2, name: 'Juan Carlos', user: '@juanc', title: '⚽ Final de futbol', viewers: 3452, distance: 1.2, type: '⚽', lugar: 'Cancha Los Prados', estado: 'EN VIVO', color: '#0a84ff', bg: '#001530' },
-        { id: 3, name: 'Cocina con Amor', user: '@cocina', title: '👩‍🍳 Paella en vivo', viewers: 892, distance: 2.5, type: '🍳', lugar: 'Centro Culinario', estado: 'EN VIVO', color: '#ff9f0a', bg: '#2a1500' },
-        { id: 4, name: 'Rosa Pérez', user: '@rosa', title: '🎂 Cumpleaños Rosa', viewers: 156, distance: 0.8, type: '🎂', lugar: 'Salón Las Palmas', estado: 'EN VIVO', color: '#ff2d55', bg: '#2a0010' },
-        { id: 5, name: 'Padre Luis', user: '@padreluis', title: '⛪ Misa Dominical', viewers: 0, distance: 2.1, type: '⛪', lugar: 'Iglesia Central', estado: 'EN 30 MIN', color: '#30d158', bg: '#001a0a' }
+        { id: 1, name: 'Maria Garcia', user: '@maria', title: '🎵 Salsa en vivo', viewers: 1247, distance: 0.3, type: '🎉', estado: 'EN VIVO' },
+        { id: 2, name: 'Juan Carlos', user: '@juanc', title: '⚽ Final de futbol', viewers: 3452, distance: 1.2, type: '⚽', estado: 'EN VIVO' },
+        { id: 3, name: 'Cocina con Amor', user: '@cocina', title: '👩‍🍳 Paella en vivo', viewers: 892, distance: 2.5, type: '🍳', estado: 'EN VIVO' }
     ];
 
-    const alerts = [
-        { icon: '🎉', text: 'Nuevo teteo a 300m de ti', sub: 'Fiesta en Gazcue', time: 'Hace 2 min', color: '#ff2d55' },
-        { icon: '💒', text: 'Boda comenzó en vivo', sub: 'María & Carlos · Hotel Jaragua', time: 'Hace 15 min', color: '#bf5af2' },
-        { icon: '🎵', text: 'Concierto a punto de empezar', sub: 'Juan Luis Guerra · Estadio Olímpico', time: 'Hace 1 hora', color: '#ff9f0a' }
-    ];
-
-    // Geolocalización
+    // ================= GEOLOCALIZACIÓN =================
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    document.getElementById('locationBar').innerHTML = `<div class="location-text">📍 ${position.coords.latitude.toFixed(2)}, ${position.coords.longitude.toFixed(2)}</div>`;
+                (pos) => {
+                    document.getElementById('locationBar').innerHTML = `<div class="location-text">📍 ${pos.coords.latitude.toFixed(2)}, ${pos.coords.longitude.toFixed(2)}</div>`;
                 },
                 () => {
                     document.getElementById('locationBar').innerHTML = `<div class="location-text">📍 Ubicación no disponible</div>`;
@@ -678,82 +644,122 @@
         }
     }
 
-    // Renderizar feed
+    // ================= RENDER FEED =================
     function renderFeed() {
-        const feedDiv = document.getElementById('feedList');
-        feedDiv.innerHTML = '';
-        streams.forEach(stream => {
+        const container = document.getElementById('feedList');
+        container.innerHTML = '';
+        streams.forEach(s => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.onclick = () => openStream(stream);
+            card.onclick = () => openStream(s);
             card.innerHTML = `
-                <div class="card-emoji">${stream.type}</div>
-                <div class="card-title">${stream.title}</div>
-                <div class="card-info">${stream.name} · 👁 ${stream.viewers.toLocaleString()}</div>
-                <div class="distance-badge"><div class="distance-text">📍 A ${stream.distance} km</div></div>
-                <div class="live-tag"><div class="live-tag-text">${stream.estado}</div></div>
+                <div class="card-emoji">${s.type}</div>
+                <div class="card-title">${s.title}</div>
+                <div class="card-info">${s.name} · 👁 ${s.viewers}</div>
+                <div class="distance-badge"><div class="distance-text">📍 A ${s.distance} km</div></div>
+                <div class="live-tag"><div class="live-tag-text">${s.estado}</div></div>
             `;
-            feedDiv.appendChild(card);
+            container.appendChild(card);
         });
     }
 
-    function renderAlerts() {
-        const alertsDiv = document.getElementById('alertsList');
-        alertsDiv.innerHTML = '';
-        alerts.forEach(alert => {
-            const card = document.createElement('div');
-            card.className = 'alert-card';
-            card.style.borderLeftColor = alert.color;
-            card.innerHTML = `
-                <div style="font-size:24px;">${alert.icon}</div>
-                <div style="flex:1;">
-                    <div style="color:#fff; font-weight:700; font-size:13px;">${alert.text}</div>
-                    <div style="color:#666; font-size:11px; margin-top:2px;">${alert.sub}</div>
-                </div>
-                <div style="color:#444; font-size:10px;">${alert.time}</div>
-            `;
-            alertsDiv.appendChild(card);
-        });
+    // ================= MENÚ HAMBURGUESA =================
+    function toggleMenu() {
+        const menu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('overlay');
+        menu.classList.toggle('open');
+        overlay.classList.toggle('show');
+    }
+    function closeMenu() {
+        document.getElementById('sideMenu').classList.remove('open');
+        document.getElementById('overlay').classList.remove('show');
     }
 
+    // ================= MODALES =================
+    function openRegister() { closeModals(); document.getElementById('registerModal').classList.add('show'); }
+    function openLogin() { closeModals(); document.getElementById('loginModal').classList.add('show'); }
+    function closeModals() {
+        document.getElementById('registerModal').classList.remove('show');
+        document.getElementById('loginModal').classList.remove('show');
+    }
+
+    // ================= AUTH SIMULADA =================
+    function register() {
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const pass = document.getElementById('regPass').value;
+        if (name && email && pass) {
+            currentUser = { name, email, username: '@' + name.split(' ')[0].toLowerCase() };
+            loggedIn = true;
+            closeModals();
+            showMainScreen();
+            document.getElementById('logoutMenuBtn').style.display = 'block';
+        } else alert('Completa todos los campos');
+    }
+
+    function login() {
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPass').value;
+        if (email && pass) {
+            currentUser = { name: 'Usuario', email, username: '@user' };
+            loggedIn = true;
+            closeModals();
+            showMainScreen();
+            document.getElementById('logoutMenuBtn').style.display = 'block';
+        } else alert('Ingresa email y contraseña');
+    }
+
+    function logout() {
+        loggedIn = false;
+        currentUser = null;
+        document.getElementById('welcomeScreen').style.display = 'flex';
+        document.getElementById('mainScreen').classList.remove('active');
+        document.getElementById('logoutMenuBtn').style.display = 'none';
+        closeMenu();
+    }
+
+    function showMainScreen() {
+        document.getElementById('welcomeScreen').style.display = 'none';
+        document.getElementById('mainScreen').classList.add('active');
+        getLocation();
+        renderFeed();
+    }
+
+    // ================= STREAM EN VIVO =================
     function openStream(stream) {
         selectedStream = stream;
         document.getElementById('liveName').innerText = stream.name;
-        document.getElementById('liveUser').innerText = stream.user;
-        document.getElementById('liveViewers').innerText = stream.viewers;
         document.getElementById('liveTitle').innerText = stream.title;
-        document.getElementById('liveDistance').innerText = `📍 A ${stream.distance} km de ti`;
+        document.getElementById('liveViewers').innerHTML = `👁️ ${stream.viewers}`;
+        document.getElementById('liveScreen').style.display = 'flex';
+        document.getElementById('mainScreen').classList.remove('active');
         renderChat();
-        document.getElementById('liveScreen').classList.remove('hidden');
-        document.getElementById('mainScreen').classList.add('hidden');
-        document.getElementById('welcomeScreen').classList.add('hidden');
-        document.getElementById('bottomNav').style.display = 'none';
     }
 
     function closeStream() {
-        document.getElementById('liveScreen').classList.add('hidden');
-        document.getElementById('mainScreen').classList.remove('hidden');
-        document.getElementById('bottomNav').style.display = 'flex';
-        selectedStream = null;
+        document.getElementById('liveScreen').style.display = 'none';
+        document.getElementById('mainScreen').classList.add('active');
+        comments = [];
+        likes = 0;
+        renderChat();
+        document.getElementById('likeCount').innerText = '0';
     }
 
     function renderChat() {
         const chatDiv = document.getElementById('liveChat');
         chatDiv.innerHTML = '';
-        comments.forEach(comment => {
+        comments.forEach(c => {
             const msg = document.createElement('div');
             msg.className = 'chat-msg';
-            msg.innerHTML = `<div class="chat-user">${comment.user}</div><div class="chat-text">${comment.text}</div>`;
+            msg.innerHTML = `<div class="chat-user">${c.user}</div><div class="chat-text">${c.text}</div>`;
             chatDiv.appendChild(msg);
         });
-        chatDiv.scrollTop = chatDiv.scrollHeight;
     }
 
     function sendComment() {
         const input = document.getElementById('commentInput');
-        const text = input.value.trim();
-        if (text) {
-            comments.push({ id: Date.now(), user: 'Tú', text: text });
+        if (input.value.trim()) {
+            comments.push({ user: 'Tú', text: input.value });
             renderChat();
             input.value = '';
         }
@@ -764,81 +770,29 @@
         document.getElementById('likeCount').innerText = likes;
     }
 
-    function login() {
-        loggedIn = true;
-        currentUser = { name: 'Usuario', email: 'usuario@example.com', username: '@usuario' };
-        document.getElementById('welcomeScreen').classList.add('hidden');
-        document.getElementById('mainScreen').classList.remove('hidden');
-        document.getElementById('mainScreen').classList.add('active');
-        document.getElementById('bottomNav').style.display = 'flex';
-        document.getElementById('greetBanner').classList.remove('hidden');
-        document.getElementById('greetText').innerHTML = `👋 ¡Hola, <span style="color:#ff2d55;">Usuario</span>!`;
-        document.getElementById('profileName').innerText = currentUser.name;
-        document.getElementById('profileUser').innerText = currentUser.username;
-        document.getElementById('profileEmail').innerText = currentUser.email;
-        getLocation();
-        renderFeed();
-        renderAlerts();
+    function searchEvents() {
+        const term = document.getElementById('searchInput').value.toLowerCase();
+        if (!term) return;
+        const filtered = streams.filter(s => s.title.toLowerCase().includes(term) || s.name.toLowerCase().includes(term));
+        const container = document.getElementById('feedList');
+        container.innerHTML = '';
+        filtered.forEach(s => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => openStream(s);
+            card.innerHTML = `
+                <div class="card-emoji">${s.type}</div>
+                <div class="card-title">${s.title}</div>
+                <div class="card-info">${s.name} · 👁 ${s.viewers}</div>
+                <div class="distance-badge"><div class="distance-text">📍 A ${s.distance} km</div></div>
+                <div class="live-tag"><div class="live-tag-text">${s.estado}</div></div>
+            `;
+            container.appendChild(card);
+        });
     }
 
-    function logout() {
-        loggedIn = false;
-        currentUser = null;
-        comments = [];
-        likes = 0;
-        document.getElementById('mainScreen').classList.remove('active');
-        document.getElementById('welcomeScreen').classList.remove('hidden');
-        document.getElementById('bottomNav').style.display = 'none';
-        showHomeScreen();
-    }
-
-    function showHomeScreen() {
-        document.getElementById('mainScreen').classList.add('active');
-        document.getElementById('mapScreen').classList.remove('active');
-        document.getElementById('alertsScreen').classList.remove('active');
-        document.getElementById('profileScreen').classList.remove('active');
-        document.getElementById('navHome').classList.add('active');
-        document.getElementById('navMap').classList.remove('active');
-        document.getElementById('navAlerts').classList.remove('active');
-        document.getElementById('navProfile').classList.remove('active');
-    }
-
-    function showMapScreen() {
-        document.getElementById('mainScreen').classList.remove('active');
-        document.getElementById('mapScreen').classList.add('active');
-        document.getElementById('alertsScreen').classList.remove('active');
-        document.getElementById('profileScreen').classList.remove('active');
-        document.getElementById('navHome').classList.remove('active');
-        document.getElementById('navMap').classList.add('active');
-        document.getElementById('navAlerts').classList.remove('active');
-        document.getElementById('navProfile').classList.remove('active');
-    }
-
-    function showAlertsScreen() {
-        document.getElementById('mainScreen').classList.remove('active');
-        document.getElementById('mapScreen').classList.remove('active');
-        document.getElementById('alertsScreen').classList.add('active');
-        document.getElementById('profileScreen').classList.remove('active');
-        document.getElementById('navHome').classList.remove('active');
-        document.getElementById('navMap').classList.remove('active');
-        document.getElementById('navAlerts').classList.add('active');
-        document.getElementById('navProfile').classList.remove('active');
-        renderAlerts();
-    }
-
-    function showProfileScreen() {
-        document.getElementById('mainScreen').classList.remove('active');
-        document.getElementById('mapScreen').classList.remove('active');
-        document.getElementById('alertsScreen').classList.remove('active');
-        document.getElementById('profileScreen').classList.add('active');
-        document.getElementById('navHome').classList.remove('active');
-        document.getElementById('navMap').classList.remove('active');
-        document.getElementById('navAlerts').classList.remove('active');
-        document.getElementById('navProfile').classList.add('active');
-    }
-
-    // Inicialización
-    document.getElementById('bottomNav').style.display = 'none';
+    // ================= INICIALIZACIÓN =================
+    document.getElementById('welcomeScreen').style.display = 'flex';
 </script>
 
 </body>
