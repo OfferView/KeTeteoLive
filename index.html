@@ -154,7 +154,7 @@
             text-align: center;
         }
 
-        .modal-content input, .modal-content select {
+        .modal-content input, .modal-content select, .modal-content textarea {
             width: 100%;
             padding: 12px;
             margin-bottom: 12px;
@@ -162,6 +162,11 @@
             border: 1px solid var(--gris-medio);
             border-radius: 12px;
             color: var(--blanco);
+        }
+
+        .modal-content textarea {
+            resize: none;
+            font-family: inherit;
         }
 
         .modal-content button {
@@ -412,15 +417,281 @@
             font-weight: 700;
         }
 
-        /* Pantalla de perfil */
-        .profile-header {
-            margin-top: 80px;
-            text-align: center;
-            padding: 20px;
+        /* ========== PERFIL MODERNO ========== */
+        .profile-modern {
+            margin-top: 70px;
+            padding: 24px 20px 40px 20px;
         }
 
-        .profile-avatar {
-            font-size: 72px;
+        .avatar-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            cursor: pointer;
+        }
+
+        .avatar-ring {
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rojo), var(--naranja));
+            z-index: 0;
+        }
+
+        .avatar-modern {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--gris-oscuro);
+            z-index: 1;
+        }
+
+        .avatar-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: var(--negro);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            z-index: 2;
+            border: 2px solid var(--negro);
+        }
+
+        .user-info {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .user-name {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #fff, var(--gris-claro));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .user-handle {
+            font-size: 14px;
+            color: var(--gris-claro);
+            margin-top: 4px;
+        }
+
+        .user-bio {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #E5E5E5;
+        }
+
+        .user-link a {
+            font-size: 13px;
+            color: var(--azul);
+            text-decoration: none;
+        }
+
+        .stats-modern {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 28px;
+            padding: 16px 0;
+            background: rgba(28, 28, 30, 0.6);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .stat-card:active {
+            transform: scale(0.95);
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--gris-claro);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .btn-modern {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 0;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-modern.primary {
+            background: linear-gradient(135deg, var(--rojo), #FF4466);
+            color: white;
+        }
+
+        .btn-modern.secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-modern:active {
+            transform: scale(0.97);
+        }
+
+        .contact-modern {
+            background: rgba(28, 28, 30, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 16px;
+            border: 0.5px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-header {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gris-claro);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .contact-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-icon {
+            font-size: 18px;
+            width: 32px;
+        }
+
+        .contact-value {
+            flex: 1;
+            font-size: 14px;
+            color: #E5E5E5;
+        }
+
+        .contact-copy {
+            font-size: 11px;
+            color: var(--gris-claro);
+            opacity: 0.6;
+        }
+
+        /* Modal moderno */
+        .modern-modal {
+            background: #1C1C1E !important;
+            border-radius: 28px !important;
+            padding: 0 !important;
+            overflow: hidden;
+            max-width: 380px !important;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header h3 {
+            color: var(--rojo);
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--gris-claro);
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px 24px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--gris-claro);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 14px;
+            background: #0B0B0B;
+            border: 1px solid #2C2C2E;
+            border-radius: 14px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--rojo);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            padding: 20px 24px;
+            border-top: 0.5px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Pantalla de transmisiones */
@@ -494,6 +765,16 @@
             padding: 40px;
         }
 
+        .video-emoji {
+            font-size: 60px;
+        }
+
+        .video-text {
+            color: var(--rojo);
+            font-weight: 800;
+            margin-top: 10px;
+        }
+
         .chat-list {
             flex: 1;
             padding: 16px;
@@ -514,10 +795,23 @@
             font-weight: 700;
         }
 
+        .chat-text {
+            color: var(--blanco);
+            font-size: 13px;
+        }
+
         .bottom-bar {
             display: flex;
             padding: 16px;
             gap: 10px;
+        }
+
+        .like-btn {
+            font-size: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--blanco);
         }
 
         .comment-input {
@@ -536,6 +830,11 @@
             border: none;
             color: var(--blanco);
             font-weight: 700;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -616,21 +915,124 @@
     </div>
 </div>
 
-<!-- PANTALLA DE PERFIL -->
+<!-- PANTALLA DE PERFIL MODERNO -->
 <div id="profileScreen" class="screen">
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()">☰</button>
-        <div class="logo">Mi Perfil</div>
+        <div class="logo">Perfil</div>
         <button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button>
     </div>
-    <div class="profile-header">
-        <div class="profile-avatar">🧑</div>
-        <div id="profileName" style="font-size:24px; font-weight:800; margin-top:12px;">Usuario</div>
-        <div id="profileUser" style="color:var(--rojo); margin-top:4px;">@usuario</div>
-        <div id="profileEmail" style="color:var(--gris-claro); margin-top:4px;">correo@ejemplo.com</div>
-        <div id="profileBio" style="color:var(--gris-claro); margin-top:16px; padding:16px; background:var(--gris-oscuro); border-radius:16px;">Amante de los eventos en vivo 🎉</div>
+
+    <div class="profile-modern">
+        <div class="avatar-wrapper" onclick="uploadProfilePhoto()">
+            <div class="avatar-ring"></div>
+            <img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7" alt="foto">
+            <div class="avatar-badge">📷</div>
+        </div>
+
+        <div class="user-info">
+            <div class="user-name" id="profileName">Jomani</div>
+            <div class="user-handle" id="profileUsername">@jomani</div>
+            <div class="user-bio" id="profileBio">Amante de los eventos en vivo 🎉</div>
+            <div class="user-link" id="profileLink">
+                <a href="#" onclick="openProfileLink()">linktr.ee/jomani</a>
+            </div>
+        </div>
+
+        <div class="stats-modern">
+            <div class="stat-card" onclick="alert('Seguidores: ' + document.getElementById('followersCount').innerText)">
+                <div class="stat-value" id="followersCount">1.2K</div>
+                <div class="stat-label">seguidores</div>
+            </div>
+            <div class="stat-card" onclick="alert('Siguiendo: ' + document.getElementById('followingCount').innerText)">
+                <div class="stat-value" id="followingCount">567</div>
+                <div class="stat-label">siguiendo</div>
+            </div>
+            <div class="stat-card" onclick="showMyStreamsScreen()">
+                <div class="stat-value" id="teteosCount">12</div>
+                <div class="stat-label">teteos</div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-modern primary" onclick="openEditProfile()">
+                <span>✏️</span> Editar perfil
+            </button>
+            <button class="btn-modern secondary" onclick="shareProfile()">
+                <span>🔗</span> Compartir
+            </button>
+        </div>
+
+        <div class="contact-modern">
+            <div class="contact-header">
+                <span>📞</span> Contacto
+            </div>
+            <div class="contact-list">
+                <div class="contact-row" onclick="copyEmail()">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-value" id="userEmail">jomani@gmail.com</div>
+                    <div class="contact-copy">copiar</div>
+                </div>
+                <div class="contact-row" onclick="copyPhone()">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-value" id="userPhone">+1 809 555 1234</div>
+                    <div class="contact-copy">copiar</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <button class="btn-secondary" style="margin:20px;" onclick="logout()">Cerrar sesión</button>
+</div>
+
+<!-- MODAL EDITAR PERFIL MODERNO -->
+<div id="editProfileModal" class="modal">
+    <div class="modal-content modern-modal">
+        <div class="modal-header">
+            <h3>Editar perfil</h3>
+            <button class="modal-close" onclick="closeEditModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group">
+                <label>Nombre</label>
+                <input type="text" id="editName" placeholder="Tu nombre">
+            </div>
+            <div class="input-group">
+                <label>Usuario</label>
+                <input type="text" id="editUsername" placeholder="@usuario">
+            </div>
+            <div class="input-group">
+                <label>Biografía</label>
+                <textarea id="editBio" placeholder="Cuéntanos sobre ti..." rows="2" maxlength="150"></textarea>
+            </div>
+            <div class="input-group">
+                <label>Enlace</label>
+                <input type="url" id="editLink" placeholder="https://tusitio.com">
+            </div>
+            <div class="input-group">
+                <label>Correo electrónico</label>
+                <input type="email" id="editEmail" placeholder="correo@ejemplo.com">
+            </div>
+            <div class="input-group">
+                <label>Teléfono</label>
+                <input type="tel" id="editPhone" placeholder="+1 809 555 1234">
+            </div>
+            <div class="input-group">
+                <label>Seguidores</label>
+                <input type="text" id="editFollowers" placeholder="Ej: 1.2K">
+            </div>
+            <div class="input-group">
+                <label>Siguiendo</label>
+                <input type="text" id="editFollowing" placeholder="Ej: 567">
+            </div>
+            <div class="input-group">
+                <label>Teteos</label>
+                <input type="text" id="editTeteos" placeholder="Ej: 12">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-modern primary" onclick="saveProfile()">Guardar cambios</button>
+            <button class="btn-modern secondary" onclick="closeEditModal()">Cancelar</button>
+        </div>
+    </div>
 </div>
 
 <!-- PANTALLA MIS TRANSMISIONES -->
@@ -686,6 +1088,9 @@
     </div>
 </div>
 
+<!-- INPUT OCULTO PARA SUBIR FOTO -->
+<input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
+
 <!-- STREAM EN VIVO -->
 <div id="liveScreen" class="live-container" style="display:none;">
     <div class="live-header">
@@ -700,7 +1105,7 @@
     </div>
     <div id="liveChat" class="chat-list"></div>
     <div class="bottom-bar">
-        <div class="like-btn" onclick="addLike()">❤️ <span id="likeCount">0</span></div>
+        <button class="like-btn" onclick="addLike()">❤️ <span id="likeCount">0</span></button>
         <input type="text" id="commentInput" class="comment-input" placeholder="Comenta...">
         <button class="send-btn" onclick="sendComment()">Enviar</button>
     </div>
@@ -795,7 +1200,7 @@
             closeModals();
             showMainScreen();
             document.getElementById('logoutMenuBtn').style.display = 'block';
-            updateProfileUI();
+            loadProfileData();
         } else alert('Completa todos los campos');
     }
 
@@ -808,7 +1213,7 @@
             closeModals();
             showMainScreen();
             document.getElementById('logoutMenuBtn').style.display = 'block';
-            updateProfileUI();
+            loadProfileData();
         } else alert('Ingresa email y contraseña');
     }
 
@@ -822,13 +1227,108 @@
         showHomeScreen();
     }
 
-    function updateProfileUI() {
-        if (currentUser) {
-            document.getElementById('profileName').innerText = currentUser.name;
-            document.getElementById('profileUser').innerText = currentUser.username;
-            document.getElementById('profileEmail').innerText = currentUser.email;
-            document.getElementById('profileBio').innerText = currentUser.bio;
+    // ================= PERFIL MODERNO =================
+    function uploadProfilePhoto() {
+        document.getElementById('photoUpload').click();
+    }
+
+    function handlePhotoUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profileImg').src = e.target.result;
+                localStorage.setItem('profilePhoto', e.target.result);
+            };
+            reader.readAsDataURL(file);
         }
+    }
+
+    function openEditProfile() {
+        document.getElementById('editName').value = localStorage.getItem('userName') || 'Jomani';
+        document.getElementById('editUsername').value = localStorage.getItem('userUsername') || '@jomani';
+        document.getElementById('editBio').value = localStorage.getItem('userBio') || 'Amante de los eventos en vivo 🎉';
+        document.getElementById('editLink').value = localStorage.getItem('userLink') || 'https://linktr.ee/jomani';
+        document.getElementById('editEmail').value = localStorage.getItem('userEmail') || 'jomani@gmail.com';
+        document.getElementById('editPhone').value = localStorage.getItem('userPhone') || '+1 809 555 1234';
+        document.getElementById('editFollowers').value = localStorage.getItem('userFollowers') || '1.2K';
+        document.getElementById('editFollowing').value = localStorage.getItem('userFollowing') || '567';
+        document.getElementById('editTeteos').value = localStorage.getItem('userTeteos') || '12';
+        document.getElementById('editProfileModal').classList.add('show');
+    }
+
+    function saveProfile() {
+        const name = document.getElementById('editName').value;
+        const username = document.getElementById('editUsername').value;
+        const bio = document.getElementById('editBio').value;
+        const link = document.getElementById('editLink').value;
+        const email = document.getElementById('editEmail').value;
+        const phone = document.getElementById('editPhone').value;
+        const followers = document.getElementById('editFollowers').value;
+        const following = document.getElementById('editFollowing').value;
+        const teteos = document.getElementById('editTeteos').value;
+        
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userUsername', username);
+        localStorage.setItem('userBio', bio);
+        localStorage.setItem('userLink', link);
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userPhone', phone);
+        localStorage.setItem('userFollowers', followers);
+        localStorage.setItem('userFollowing', following);
+        localStorage.setItem('userTeteos', teteos);
+        
+        updateProfileUI();
+        closeEditModal();
+        alert('✅ Perfil actualizado');
+    }
+
+    function closeEditModal() {
+        document.getElementById('editProfileModal').classList.remove('show');
+    }
+
+    function updateProfileUI() {
+        document.getElementById('profileName').innerText = localStorage.getItem('userName') || 'Jomani';
+        document.getElementById('profileUsername').innerText = localStorage.getItem('userUsername') || '@jomani';
+        document.getElementById('profileBio').innerText = localStorage.getItem('userBio') || 'Amante de los eventos en vivo 🎉';
+        document.getElementById('userEmail').innerText = localStorage.getItem('userEmail') || 'jomani@gmail.com';
+        document.getElementById('userPhone').innerText = localStorage.getItem('userPhone') || '+1 809 555 1234';
+        document.getElementById('followersCount').innerText = localStorage.getItem('userFollowers') || '1.2K';
+        document.getElementById('followingCount').innerText = localStorage.getItem('userFollowing') || '567';
+        document.getElementById('teteosCount').innerText = localStorage.getItem('userTeteos') || '12';
+        
+        const link = localStorage.getItem('userLink') || 'https://linktr.ee/jomani';
+        const linkElement = document.querySelector('#profileLink a');
+        if (linkElement) linkElement.innerText = link.replace('https://', '').replace('http://', '');
+    }
+
+    function loadProfileData() {
+        const savedPhoto = localStorage.getItem('profilePhoto');
+        if (savedPhoto) document.getElementById('profileImg').src = savedPhoto;
+        updateProfileUI();
+    }
+
+    function copyEmail() {
+        const email = document.getElementById('userEmail').innerText;
+        navigator.clipboard.writeText(email);
+        alert('📧 Correo copiado');
+    }
+
+    function copyPhone() {
+        const phone = document.getElementById('userPhone').innerText;
+        navigator.clipboard.writeText(phone);
+        alert('📱 Teléfono copiado');
+    }
+
+    function shareProfile() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url);
+        alert('🔗 Perfil copiado para compartir');
+    }
+
+    function openProfileLink() {
+        const link = localStorage.getItem('userLink') || 'https://linktr.ee/jomani';
+        window.open(link, '_blank');
     }
 
     // ================= PANTALLAS =================
@@ -857,7 +1357,7 @@
         document.getElementById('myStreamsScreen').classList.remove('active');
         document.getElementById('configScreen').classList.remove('active');
         document.getElementById('languageScreen').classList.remove('active');
-        updateProfileUI();
+        loadProfileData();
     }
 
     function showMyStreamsScreen() {
@@ -988,6 +1488,7 @@
     // ================= INICIALIZACIÓN =================
     document.getElementById('welcomeScreen').style.display = 'flex';
     document.getElementById('bottomNav').style.display = 'flex';
+    loadProfileData();
 </script>
 
 </body>
