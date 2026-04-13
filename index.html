@@ -65,43 +65,44 @@
         }
         
         .logo-img {
-            max-height: 70px;
-            width: auto;
-            object-fit: contain;
-        }
+        max-height: 120px;  /* Cambia este valor */
+       width: auto;
+       object-fit: contain;
+       }
         
         .header-right {
             width: 40px;
         }
         
-        /* Botón Iniciar Mi KeTeteo (pequeño, arriba derecha) */
-        .start-live-btn {
-            background: var(--rojo-logo);
-            border: none;
-            border-radius: 25px;
-            padding: 6px 12px;
-            color: var(--blanco);
-            font-weight: 700;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
-            position: fixed;
-            top: 18px;
-            right: 16px;
-            z-index: 101;
-            box-shadow: 0 2px 6px rgba(255,45,85,0.3);
-        }
-        
-        .start-live-btn:active {
-            transform: scale(0.96);
-        }
+       
+/* Botón Iniciar Mi KeTeteo (más pequeño, arriba derecha) */
+.start-live-btn {
+    background: var(--rojo-logo);
+    border: none;
+    border-radius: 16px;
+    padding: 3px 8px;
+    color: var(--blanco);
+    font-weight: 500;
+    font-size: 9px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: fixed;
+    top: 22px;
+    right: 16px;
+    z-index: 101;
+    box-shadow: 0 1px 3px rgba(255,45,85,0.2);
+}
 
-        /* ========== BUSCADOR DEBAJO DEL HEADER ========== */
-        .search-container {
-            margin: 95px 16px 12px 16px;
-        }
+.start-live-btn:active {
+    transform: scale(0.96);
+}
         
+        /* ========== BUSCADOR DEBAJO DEL HEADER ========== */
+       .search-container {
+    margin: 130px 16px 12px 16px;  /* Aumenta según el tamaño del logo */
+   }
+     
         .search-box {
             display: flex;
             background: var(--gris-oscuro);
@@ -1282,13 +1283,14 @@
     let autoScrollTimeout = null;
 
     // Datos de patrocinios
-    const patrocinios = [
-        { id: 1, imagen: "https://placehold.co/130x100/FF2D55/white?text=Super", link: "https://supermercado.com", texto: "🔥 Oferta Super" },
-        { id: 2, imagen: "https://placehold.co/130x100/007AFF/white?text=Banco", link: "https://banco.com", texto: "🏦 Banco Popular" },
-        { id: 3, imagen: "https://placehold.co/130x100/30D158/white?text=Concierto", link: "https://concierto.com", texto: "🎵 Concierto" },
-        { id: 4, imagen: "https://placehold.co/130x100/FF9F0A/white?text=Comida", link: "https://comida.com", texto: "🍔 Comida Rápida" },
-        { id: 5, imagen: "https://placehold.co/130x100/BF5AF2/white?text=Ropa", link: "https://ropa.com", texto: "👕 Ropa" }
-    ];
+    
+     const patrocinios = [
+    { id: 1, imagen: "https://placehold.co/130x100/FF2D55/white?text=Disponible", link: "https://supermercado.com", texto: "🔥 Disponible anucinates aquí" },
+    { id: 2, imagen: "https://placehold.co/130x100/007AFF/white?text=Disponible", link: "https://banco.com", texto: "🏦 Disponible anucinates aquí" },
+    { id: 3, imagen: "https://placehold.co/130x100/30D158/white?text=Disponible", link: "https://concierto.com", texto: "🎵 Disponible anucinates aquí" },
+    { id: 4, imagen: "https://placehold.co/130x100/FF9F0A/white?text=Disponible", link: "https://comida.com", texto: "🍔 Disponible anucinates aquí" },
+    { id: 5, imagen: "https://placehold.co/130x100/BF5AF2/white?text=Disponible", link: "https://ropa.com", texto: "👕 Disponible anucinates aquí" }
+];
 
     // Datos de próximos eventos
     const proximosEventos = [
