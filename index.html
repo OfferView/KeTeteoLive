@@ -30,76 +30,77 @@
             --azul: #007AFF;
         }
 
-     /* ========== HEADER CON LOGO GRANDE Y CENTRADO ========== */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: var(--negro);
-    padding: 15px 20px;
-    display: flex;
-    flex-direction: column;
-    z-index: 100;
-    border-bottom: 1px solid var(--gris-medio);
-}
+        /* ========== HEADER CON LOGO GRANDE Y CENTRADO ========== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--negro);
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            border-bottom: 1px solid var(--gris-medio);
+        }
 
-/* Fila superior: hamburguesa + botón iniciar */
-.header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 15px;
-}
+        /* Fila superior: hamburguesa + botón iniciar */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 15px;
+        }
 
-.hamburger {
-    font-size: 28px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: var(--blanco);
-}
+        .hamburger {
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--blanco);
+        }
 
-/* Logo grande centrado */
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 15px;
-}
+        /* Logo grande centrado */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
-.logo-img {
-    max-height: 150px;
-    width: auto;
-    object-fit: contain;
-}
+        .logo-img {
+            max-height: 150px;
+            width: auto;
+            object-fit: contain;
+        }
 
-/* Botón Iniciar Mi KeTeteo (pequeño) */
-.start-live-btn {
-    background: var(--rojo-logo);
-    border: none;
-    border-radius: 16px;
-    padding: 3px 8px;
-    color: var(--blanco);
-    font-weight: 500;
-    font-size: 9px;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-    box-shadow: 0 1px 3px rgba(255,45,85,0.2);
-}
+        /* Botón Iniciar Mi KeTeteo (pequeño) */
+        .start-live-btn {
+            background: var(--rojo-logo);
+            border: none;
+            border-radius: 16px;
+            padding: 3px 8px;
+            color: var(--blanco);
+            font-weight: 500;
+            font-size: 9px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(255,45,85,0.2);
+        }
 
-.start-live-btn:active {
-    transform: scale(0.96);
-}
+        .start-live-btn:active {
+            transform: scale(0.96);
+        }
 
-/* Buscador debajo del logo */
-.search-container {
-    margin-top: 5px;
-    margin-bottom: 12px;
-    padding: 0 16px;
-}
+        /* Buscador debajo del logo */
+        .search-container {
+            margin-top: 5px;
+            margin-bottom: 12px;
+            padding: 0 16px;
+        }
+        
         .search-box {
             display: flex;
             background: var(--gris-oscuro);
@@ -1070,33 +1071,20 @@
 <!-- PANTALLA PRINCIPAL -->
 <div id="mainScreen" class="screen">
     <div class="header">
-        <div class="header-left">
+        <div class="header-top">
             <button class="hamburger" onclick="toggleMenu()">☰</button>
+            <button class="start-live-btn" onclick="openCreateKeTeteoModal()">🔴 Iniciar Mi KeTeteo</button>
         </div>
         <div class="logo-container">
-            <img src="keteteologologo.jpg" alt="KeTeteoLive" class="logo-img" onerror="this.src='https://placehold.co/200x70/FF2D55/white?text=KeTeteoLive'">
+            <img src="keteteologologo.jpg" alt="KeTeteoLive" class="logo-img" onerror="this.src='https://placehold.co/300x150/FF2D55/white?text=KeTeteoLive'">
         </div>
-        <div class="header-right"></div>
-    </div>
-    
-    <!-- Botón Iniciar Mi KeTeteo (pequeño, arriba derecha) -->
-    <button class="start-live-btn" onclick="openCreateKeTeteoModal()">🔴 Iniciar Mi KeTeteo</button>
-
-<div class="header">
-    <div class="header-top">
-        <button class="hamburger" onclick="toggleMenu()">☰</button>
-        <button class="start-live-btn" onclick="openCreateKeTeteoModal()">🔴 Iniciar Mi KeTeteo</button>
-    </div>
-    <div class="logo-container">
-        <img src="keteteologologo.jpg" alt="KeTeteoLive" class="logo-img" onerror="this.src='https://placehold.co/300x150/FF2D55/white?text=KeTeteoLive'">
-    </div>
-    <div class="search-container">
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Buscar eventos...">
-            <button onclick="searchEvents()">🔍</button>
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar eventos...">
+                <button onclick="searchEvents()">🔍</button>
+            </div>
         </div>
     </div>
-</div>
     
     <div id="locationBar" class="location-bar">
         <div class="location-text">📍 Buscando ubicación...</div>
@@ -1289,14 +1277,13 @@
     let autoScrollTimeout = null;
 
     // Datos de patrocinios
-    
-     const patrocinios = [
-    { id: 1, imagen: "https://placehold.co/130x100/FF2D55/white?text=Disponible", link: "https://supermercado.com", texto: "🔥 Disponible anucinates aquí" },
-    { id: 2, imagen: "https://placehold.co/130x100/007AFF/white?text=Disponible", link: "https://banco.com", texto: "🏦 Disponible anucinates aquí" },
-    { id: 3, imagen: "https://placehold.co/130x100/30D158/white?text=Disponible", link: "https://concierto.com", texto: "🎵 Disponible anucinates aquí" },
-    { id: 4, imagen: "https://placehold.co/130x100/FF9F0A/white?text=Disponible", link: "https://comida.com", texto: "🍔 Disponible anucinates aquí" },
-    { id: 5, imagen: "https://placehold.co/130x100/BF5AF2/white?text=Disponible", link: "https://ropa.com", texto: "👕 Disponible anucinates aquí" }
-];
+    const patrocinios = [
+        { id: 1, imagen: "https://placehold.co/130x100/FF2D55/white?text=Disponible", link: "https://supermercado.com", texto: "🔥 Disponible anucinates aquí" },
+        { id: 2, imagen: "https://placehold.co/130x100/007AFF/white?text=Disponible", link: "https://banco.com", texto: "🏦 Disponible anucinates aquí" },
+        { id: 3, imagen: "https://placehold.co/130x100/30D158/white?text=Disponible", link: "https://concierto.com", texto: "🎵 Disponible anucinates aquí" },
+        { id: 4, imagen: "https://placehold.co/130x100/FF9F0A/white?text=Disponible", link: "https://comida.com", texto: "🍔 Disponible anucinates aquí" },
+        { id: 5, imagen: "https://placehold.co/130x100/BF5AF2/white?text=Disponible", link: "https://ropa.com", texto: "👕 Disponible anucinates aquí" }
+    ];
 
     // Datos de próximos eventos
     const proximosEventos = [
@@ -1806,6 +1793,47 @@
         alert(content);
     }
 
+    // ================= KE TETEO ADM - 7 TOQUES + CONTRASEÑA =================
+    let logoClickCount = 0;
+    let logoTimer = null;
+    const ADMIN_PASSWORD = "KeTeteoAdmin2025";
+    
+    function iniciarContadorAdmin() {
+        logoClickCount++;
+        clearTimeout(logoTimer);
+        if (logoClickCount >= 7) {
+            logoClickCount = 0;
+            pedirContraseñaAdmin();
+        }
+        logoTimer = setTimeout(() => {
+            logoClickCount = 0;
+        }, 1000);
+    }
+    
+    function pedirContraseñaAdmin() {
+        const password = prompt("🔐 VERIFICACIÓN DE ADMINISTRADOR\n\nIngresa la contraseña para acceder a KeTeteoAdm:");
+        if (password === ADMIN_PASSWORD) {
+            alert("✅ Acceso concedido. Abriendo KeTeteoAdm...");
+            abrirKeTeteoAdm();
+        } else if (password !== null) {
+            alert("❌ Contraseña incorrecta. Acceso denegado.");
+        }
+    }
+    
+    function abrirKeTeteoAdm() {
+        const userEmail = currentUser?.email;
+        const adminEmail = "keteteoadm@gmail.com";
+        if (!loggedIn) {
+            alert("⚠️ Debes iniciar sesión primero.");
+            return;
+        }
+        if (userEmail !== adminEmail) {
+            alert("❌ Acceso denegado. Solo el administrador puede acceder.");
+            return;
+        }
+        alert("👑 Bienvenido a KeTeteoAdm. Panel de administración (próximamente)");
+    }
+
     // ================= INICIALIZACIÓN =================
     window.onload = () => {
         loadKeTeteos();
@@ -1824,6 +1852,14 @@
             if (savedComments) currentComments[k.id] = JSON.parse(savedComments);
             else currentComments[k.id] = [];
         });
+        
+        // Activar 7 toques en el logo
+        const logoImg = document.querySelector('.logo-img');
+        if (logoImg) {
+            logoImg.addEventListener('click', iniciarContadorAdmin);
+            logoImg.addEventListener('touchstart', iniciarContadorAdmin);
+            console.log("✅ KeTeteoAdm: 7 toques en el logo activado");
+        }
     };
 </script>
 </body>
