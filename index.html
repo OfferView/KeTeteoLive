@@ -30,7 +30,7 @@
             --azul: #007AFF;
         }
 
-        /* ========== HEADER CON LOGO CENTRADO ========== */
+        /* ========== HEADER CON LOGO GRANDE Y CENTRADO ========== */
         .header {
             position: fixed;
             top: 0;
@@ -56,7 +56,6 @@
             background: none;
             border: none;
             color: var(--blanco);
-            margin-right: 16px;
         }
         
         .logo-container {
@@ -66,7 +65,7 @@
         }
         
         .logo-img {
-            max-height: 45px;
+            max-height: 70px;
             width: auto;
             object-fit: contain;
         }
@@ -75,22 +74,23 @@
             width: 40px;
         }
         
+        /* Botón Iniciar Mi KeTeteo (pequeño, arriba derecha) */
         .start-live-btn {
             background: var(--rojo-logo);
             border: none;
-            border-radius: 30px;
-            padding: 8px 16px;
+            border-radius: 25px;
+            padding: 6px 12px;
             color: var(--blanco);
             font-weight: 700;
-            font-size: 13px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.2s;
             white-space: nowrap;
             position: fixed;
-            top: 12px;
+            top: 18px;
             right: 16px;
             z-index: 101;
-            box-shadow: 0 2px 8px rgba(255,45,85,0.3);
+            box-shadow: 0 2px 6px rgba(255,45,85,0.3);
         }
         
         .start-live-btn:active {
@@ -99,7 +99,7 @@
 
         /* ========== BUSCADOR DEBAJO DEL HEADER ========== */
         .search-container {
-            margin: 85px 16px 12px 16px;
+            margin: 95px 16px 12px 16px;
         }
         
         .search-box {
@@ -1017,6 +1017,45 @@
             border: none;
             color: var(--blanco);
         }
+
+        /* Menú lateral */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: var(--gris-oscuro);
+            z-index: 200;
+            transition: left 0.3s ease;
+            padding: 70px 20px 20px 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+        }
+        .side-menu.open { left: 0; }
+        .side-menu button {
+            display: block;
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--blanco);
+            padding: 14px;
+            text-align: left;
+            font-size: 16px;
+            border-bottom: 1px solid var(--gris-medio);
+            cursor: pointer;
+        }
+        .side-menu button:hover { background: var(--rojo-logo); }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 150;
+            display: none;
+        }
+        .overlay.show { display: block; }
     </style>
 </head>
 <body>
@@ -1037,12 +1076,12 @@
             <button class="hamburger" onclick="toggleMenu()">☰</button>
         </div>
         <div class="logo-container">
-            <img src="keteteologologo.jpg" alt="KeTeteoLive" class="logo-img" onerror="this.src='https://placehold.co/120x45/FF2D55/white?text=KeTeteoLive'">
+            <img src="keteteologologo.jpg" alt="KeTeteoLive" class="logo-img" onerror="this.src='https://placehold.co/200x70/FF2D55/white?text=KeTeteoLive'">
         </div>
         <div class="header-right"></div>
     </div>
     
-    <!-- Botón Iniciar Mi KeTeteo (fijo arriba derecha) -->
+    <!-- Botón Iniciar Mi KeTeteo (pequeño, arriba derecha) -->
     <button class="start-live-btn" onclick="openCreateKeTeteoModal()">🔴 Iniciar Mi KeTeteo</button>
 
     <div class="search-container">
@@ -1074,11 +1113,11 @@
     </div>
 </div>
 
-<!-- MENÚ LATERAL -->
+<!-- MENÚ LATERAL (TODAS LAS OPCIONES AQUÍ) -->
 <div id="sideMenu" class="side-menu">
     <button onclick="openRegister(); closeMenu()">📝 Registrarse</button>
     <button onclick="openLogin(); closeMenu()">🔑 Iniciar sesión</button>
-    <button id="createKeTeteoBtn" onclick="openCreateKeTeteoModal(); closeMenu()" style="display: none;">➕ Crear KeTeteo</button>
+    <button id="createKeTeteoBtn" onclick="openCreateKeTeteoModal(); closeMenu()">➕ Crear KeTeteo</button>
     <button onclick="showProfileScreen(); closeMenu()">👤 Mi perfil</button>
     <button onclick="showMyStreamsScreen(); closeMenu()">📡 Mis transmisiones</button>
     <button onclick="showConfigScreen(); closeMenu()">⚙️ Configuración</button>
