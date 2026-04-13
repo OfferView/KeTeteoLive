@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <title>KeTeteoLive | KeTeteos Activos</title>
+    <title>KeTeteoLive | KETETEO ACTIVOS</title>
     <style>
         * {
             margin: 0;
@@ -149,17 +149,68 @@
         .location-bar { background: var(--gris-oscuro); margin: 8px 16px 16px 16px; padding: 12px; border-radius: 14px; text-align: center; }
         .location-text { color: var(--rojo); font-size: 12px; }
 
+        /* ========== BARRA HORIZONTAL (6 BOTONES) ========== */
+        .horizontal-bar {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding: 12px 16px;
+            margin: 8px 0;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .horizontal-bar::-webkit-scrollbar { display: none; }
+        .horiz-btn {
+            flex: 0 0 auto;
+            background: var(--gris-oscuro);
+            border: 1px solid var(--gris-medio);
+            border-radius: 40px;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--blanco);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .horiz-btn:active { transform: scale(0.96); background: var(--rojo); }
+        .horiz-btn.primary { background: var(--rojo); border-color: var(--rojo); }
+
         /* ========== CARRUSEL DE KE TETEOS ACTIVOS ========== */
         .carousel-container {
             height: auto;
             width: 100%;
-            margin-top: 16px;
+            margin-top: 8px;
             margin-bottom: 16px;
         }
         .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 16px 16px 8px 16px;
+            text-align: center;
+            font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin: 20px 0 16px 0;
+            background: linear-gradient(135deg, #FF2D55, #FF6B00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+        }
+        .section-title::before {
+            content: "⚡";
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: #FF2D55;
+            margin-right: 12px;
+        }
+        .section-title::after {
+            content: "⚡";
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: #FF2D55;
+            margin-left: 12px;
         }
         .ke-teteo-card {
             background: var(--gris-oscuro);
@@ -206,10 +257,59 @@
             cursor: pointer;
         }
         .action-btn:active { transform: scale(0.96); background: var(--rojo); }
+        .delete-btn {
+            background: rgba(255,45,85,0.2);
+            border: 1px solid var(--rojo);
+            color: var(--rojo);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: auto;
+        }
         .comment-row { display: flex; gap: 8px; margin-top: 8px; }
         .comment-input { flex: 1; background: var(--negro); border: 1px solid var(--gris-medio); border-radius: 30px; padding: 8px 12px; color: white; outline: none; font-size: 12px; }
         .send-comment { background: var(--rojo); border: none; border-radius: 30px; padding: 6px 14px; color: white; font-weight: 600; cursor: pointer; }
         .comments-list { margin-top: 10px; font-size: 12px; color: #ccc; max-height: 120px; overflow-y: auto; }
+
+        /* ========== CARRUSEL HORIZONTAL DE PATROCINIOS ========== */
+        .patrocinios-carousel {
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 16px 0;
+            margin: 8px 0;
+        }
+        .patrocinios-track {
+            display: flex;
+            gap: 12px;
+            padding: 0 16px;
+        }
+        .patrocinio-card {
+            flex: 0 0 auto;
+            width: 130px;
+            scroll-snap-align: start;
+            background: var(--gris-oscuro);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 1px solid var(--gris-medio);
+        }
+        .patrocinio-card:active { transform: scale(0.96); }
+        .patrocinio-card img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+        .patrocinio-card .patro-text {
+            padding: 8px;
+            font-size: 11px;
+            text-align: center;
+            color: var(--blanco);
+            font-weight: 600;
+        }
 
         /* Pantalla completa */
         .fullscreen-stream {
@@ -256,7 +356,7 @@
             box-shadow: 0 4px 15px rgba(255,45,85,0.4);
         }
 
-        /* ========== BOTTOM NAVIGATION (4 OPCIONES) ========== */
+        /* ========== BOTTOM NAVIGATION (3 OPCIONES) ========== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -272,6 +372,50 @@
         .nav-icon { font-size: 22px; }
         .nav-label { font-size: 10px; color: var(--gris-claro); }
         .nav-label.active { color: var(--rojo); font-weight: 700; }
+
+        /* Footer legal */
+        .footer-legal {
+            background: #111;
+            padding: 20px 16px;
+            margin-top: 20px;
+            border-top: 1px solid var(--gris-medio);
+        }
+        .footer-content {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .footer-description {
+            font-size: 11px;
+            color: var(--gris-claro);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .footer-contact {
+            font-size: 11px;
+            color: var(--gris-claro);
+            margin-bottom: 16px;
+        }
+        .footer-contact a {
+            color: var(--rojo);
+            text-decoration: none;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .footer-links a {
+            font-size: 11px;
+            color: var(--gris-claro);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--rojo); }
+        .separator { font-size: 11px; color: var(--gris-medio); }
+        .footer-copyright { font-size: 10px; color: #555; }
 
         /* Perfil */
         .profile-modern { margin-top: 70px; padding: 24px 20px; }
@@ -299,7 +443,7 @@
         .contact-value { flex: 1; font-size: 14px; }
         .contact-copy { font-size: 11px; opacity: 0.6; }
         .streams-list { margin-top: 80px; padding: 16px; }
-        .my-stream-card { background: var(--gris-oscuro); padding: 16px; border-radius: 16px; margin-bottom: 12px; border-left: 4px solid var(--rojo); }
+        .my-stream-card { background: var(--gris-oscuro); padding: 16px; border-radius: 16px; margin-bottom: 12px; border-left: 4px solid var(--rojo); display: flex; justify-content: space-between; align-items: center; }
         .config-option { background: var(--gris-oscuro); padding: 16px; border-radius: 16px; margin: 8px 16px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
@@ -336,9 +480,26 @@
         <div class="location-text">📍 Buscando ubicación...</div>
     </div>
 
-    <!-- CARRUSEL: KE TETEOS ACTIVOS -->
-    <div class="section-title">🟢 KeTeteos Activos</div>
+    <!-- BARRA HORIZONTAL (6 BOTONES) -->
+    <div class="horizontal-bar">
+        <button class="horiz-btn primary" onclick="filtrarPorCercania()">🎯 KeTeteo Cerca de Mí</button>
+        <button class="horiz-btn" onclick="openProximosEventos()">📅 Próximos Eventos</button>
+        <button class="horiz-btn" onclick="filtrarPorCategoria('Fiesta')">🎉 Fiestas</button>
+        <button class="horiz-btn" onclick="filtrarPorCategoria('Concierto')">🎵 Conciertos</button>
+        <button class="horiz-btn" onclick="filtrarPorCategoria('Deporte')">⚽ Deportes</button>
+        <button class="horiz-btn" onclick="openMasCategorias()">➕ Más</button>
+    </div>
+
+    <!-- TÍTULO KETETEO ACTIVOS -->
+    <div class="section-title">KETETEO ACTIVOS</div>
+
+    <!-- CARRUSEL DE KE TETEOS -->
     <div id="carouselContainer"></div>
+
+    <!-- CARRUSEL HORIZONTAL DE PATROCINIOS -->
+    <div class="patrocinios-carousel" id="patrociniosCarousel">
+        <div class="patrocinios-track" id="patrociniosTrack"></div>
+    </div>
 
     <button class="start-btn" onclick="alert('🔴 Transmisión en vivo (Etapa 3)')">🔴 Iniciar KeTeteo</button>
 </div>
@@ -399,6 +560,44 @@
     </div>
 </div>
 
+<!-- MODAL PRÓXIMOS EVENTOS -->
+<div id="proximosEventosModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <h3>📅 PRÓXIMOS EVENTOS</h3>
+        <div id="proximosEventosList" style="max-height: 400px; overflow-y: auto;"></div>
+        <button class="btn-gris" onclick="closeProximosEventos()">Cerrar</button>
+    </div>
+</div>
+
+<!-- MODAL MÁS CATEGORÍAS -->
+<div id="masCategoriasModal" class="modal">
+    <div class="modal-content" style="max-width: 350px;">
+        <h3>📌 MÁS CATEGORÍAS</h3>
+        <div id="categoriasList">
+            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Boda'); closeMasCategorias();">💒 Bodas</button>
+            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Cumpleaños'); closeMasCategorias();">🎂 Cumpleaños</button>
+            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Actividad'); closeMasCategorias();">🎪 Actividades</button>
+            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Gaming'); closeMasCategorias();">🎮 Gaming</button>
+            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Religioso'); closeMasCategorias();">⛪ Religiosos</button>
+            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Trabajo'); closeMasCategorias();">💼 Trabajo</button>
+            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Aire Libre'); closeMasCategorias();">🏃‍♂️ Aire Libre</button>
+            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Cocina'); closeMasCategorias();">🍳 Cocina</button>
+        </div>
+        <button class="btn-gris" onclick="closeMasCategorias()">Cerrar</button>
+    </div>
+</div>
+
+<!-- MODAL CONFIRMAR ELIMINACIÓN -->
+<div id="confirmarEliminarModal" class="modal">
+    <div class="modal-content">
+        <h3>⚠️ ELIMINAR KE TETEO</h3>
+        <p style="text-align:center; margin-bottom:16px;">¿Estás seguro de que quieres eliminar este KeTeteo?<br>Esta acción no se puede deshacer.</p>
+        <div id="eliminarInfo" style="background: var(--negro); padding: 12px; border-radius: 12px; margin-bottom: 16px;"></div>
+        <button class="btn-rojo" onclick="confirmarEliminar()">✅ ELIMINAR</button>
+        <button class="btn-gris" onclick="cerrarConfirmarEliminar()">❌ CANCELAR</button>
+    </div>
+</div>
+
 <!-- PANTALLA DE PERFIL -->
 <div id="profileScreen" class="screen">
     <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo">Perfil</div><button class="close-btn" style="background:transparent; font-size:24px; cursor:pointer;" onclick="showHomeScreen()">✕</button></div>
@@ -414,8 +613,14 @@
 <!-- MODAL EDITAR PERFIL -->
 <div id="editProfileModal" class="modal"><div class="modal-content modern-modal"><div class="modal-header"><h3>Editar perfil</h3><button class="modal-close" onclick="closeEditModal()">✕</button></div><div class="modal-body"><div class="input-group"><label>Nombre</label><input type="text" id="editName"></div><div class="input-group"><label>Usuario</label><input type="text" id="editUsername"></div><div class="input-group"><label>Biografía</label><textarea id="editBio" rows="2"></textarea></div><div class="input-group"><label>Enlace</label><input type="url" id="editLink"></div><div class="input-group"><label>Correo</label><input type="email" id="editEmail"></div><div class="input-group"><label>Teléfono</label><input type="tel" id="editPhone"></div><div class="input-group"><label>Seguidores</label><input type="text" id="editFollowers"></div><div class="input-group"><label>Siguiendo</label><input type="text" id="editFollowing"></div><div class="input-group"><label>Teteos</label><input type="text" id="editTeteos"></div></div><div class="modal-footer"><button class="btn-modern primary" onclick="saveProfile()">Guardar</button><button class="btn-modern secondary" onclick="closeEditModal()">Cancelar</button></div></div></div>
 
+<!-- PANTALLA MIS TRANSMISIONES -->
+<div id="myStreamsScreen" class="screen">
+    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo">Mis Transmisiones</div><button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button></div>
+    <div id="myStreamsList" class="streams-list"></div>
+    <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()">➕ Nueva transmisión</button>
+</div>
+
 <!-- OTRAS PANTALLAS -->
-<div id="myStreamsScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo">Mis Transmisiones</div><button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button></div><div id="myStreamsList" class="streams-list"></div><button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="alert('🔴 Nueva transmisión (Etapa 3)')">+ Nueva transmisión</button></div>
 <div id="configScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo">Configuración</div><button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button></div><div class="config-option"><span>🌙 Modo oscuro</span><span>✅ Activado</span></div><div class="config-option"><span>🔔 Notificaciones</span><button onclick="alert('Notificaciones activadas')">Activar</button></div><div class="config-option"><span>🔒 Privacidad</span><button onclick="alert('Privacidad: solo seguidores')">Configurar</button></div></div>
 <div id="languageScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo">Idioma</div><button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button></div><div class="config-option" onclick="setLanguage('es')"><span>🇪🇸 Español</span><span id="langEs">✅</span></div><div class="config-option" onclick="setLanguage('en')"><span>🇺🇸 English</span><span id="langEn"></span></div><div class="config-option" onclick="setLanguage('pt')"><span>🇵🇹 Português</span><span id="langPt"></span></div></div>
 
@@ -429,15 +634,27 @@
     <div class="bottom-bar"><button class="like-btn" onclick="addLike()">❤️ <span id="likeCount">0</span></button><input type="text" id="commentInput" class="comment-input" placeholder="Comenta..."><button class="send-btn" onclick="sendComment()">Enviar</button></div>
 </div>
 
-<!-- BOTTOM NAVIGATION (4 OPCIONES) -->
+<!-- FOOTER LEGAL -->
+<footer class="footer-legal">
+    <div class="footer-content">
+        <p class="footer-description">KeTeteoLive - Transmisiones en vivo geolocalizadas. Todo en vivo, todo ahora.</p>
+        <p class="footer-contact">📧 Contacto: <a href="mailto:soporte.keteteolive@gmail.com">soporte.keteteolive@gmail.com</a></p>
+        <div class="footer-links">
+            <a href="#" onclick="openLegal('terms')">⚖️ Términos y Condiciones</a>
+            <span class="separator">|</span>
+            <a href="#" onclick="openLegal('privacy')">🔒 Política de Privacidad</a>
+            <span class="separator">|</span>
+            <a href="#" onclick="openLegal('cookies')">🍪 Política de Cookies</a>
+        </div>
+        <p class="footer-copyright">© 2025 KeTeteoLive. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<!-- BOTTOM NAVIGATION (3 OPCIONES) -->
 <div class="bottom-nav" id="bottomNav">
     <div class="nav-item" onclick="showHomeScreen()">
         <div class="nav-icon">🏠</div>
         <div class="nav-label" id="navHome">Inicio</div>
-    </div>
-    <div class="nav-item" onclick="filtrarPorCercania()">
-        <div class="nav-icon">🎯</div>
-        <div class="nav-label">KeTeteo Cerca de Mí</div>
     </div>
     <div class="nav-item" onclick="showAlertsScreen()">
         <div class="nav-icon">🔔</div>
@@ -456,14 +673,31 @@
     let allKeTeteos = [];
     let currentLikes = {};
     let currentComments = {};
-    let userLocation = null; // Guardar ubicación del usuario
+    let userLocation = null;
+    let eliminarId = null;
+
+    // Datos de patrocinios
+    const patrocinios = [
+        { id: 1, imagen: "https://placehold.co/130x100/FF2D55/white?text=Super", link: "https://supermercado.com", texto: "🔥 Oferta Super" },
+        { id: 2, imagen: "https://placehold.co/130x100/007AFF/white?text=Banco", link: "https://banco.com", texto: "🏦 Banco Popular" },
+        { id: 3, imagen: "https://placehold.co/130x100/30D158/white?text=Concierto", link: "https://concierto.com", texto: "🎵 Concierto" },
+        { id: 4, imagen: "https://placehold.co/130x100/FF9F0A/white?text=Comida", link: "https://comida.com", texto: "🍔 Comida Rápida" },
+        { id: 5, imagen: "https://placehold.co/130x100/BF5AF2/white?text=Ropa", link: "https://ropa.com", texto: "👕 Ropa" }
+    ];
+
+    // Datos de próximos eventos
+    const proximosEventos = [
+        { titulo: "🎵 Concierto Juan Luis Guerra", ubicacion: "Estadio Olímpico", fecha: "15/05/2025", destacado: true },
+        { titulo: "🎉 Fiesta 90's en Azotea", ubicacion: "Gazcue", fecha: "20/05/2025", destacado: false },
+        { titulo: "💒 Boda María y Carlos", ubicacion: "Hotel Jaragua", fecha: "22/05/2025", destacado: false }
+    ];
 
     // Datos iniciales simulados
     const initialKeTeteos = [
-        { id: 1, titulo: "Concierto Bachata en Vivo", nombreCreador: "Juan Luis Guerra", usuario: "@juanluis", ubicacion: "Estadio Olímpico", distancia: "0.8 km", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, imagen: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&h=900&fit=crop" },
-        { id: 2, titulo: "Fiesta 90's en Azotea", nombreCreador: "Maria Garcia", usuario: "@maria_garcia", ubicacion: "Gazcue", distancia: "0.3 km", lat: 18.47, lng: -69.91, viewers: 3452, likes: 567, imagen: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&h=900&fit=crop" },
-        { id: 3, titulo: "Boda en la Catedral", nombreCreador: "Carlos y Ana", usuario: "@carlos_y_ana", ubicacion: "Zona Colonial", distancia: "1.2 km", lat: 18.466, lng: -69.9, viewers: 892, likes: 412, imagen: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=900&fit=crop" },
-        { id: 4, titulo: "Partido de Voleibol Final", nombreCreador: "Club Deportivo", usuario: "@clubdeportivo", ubicacion: "Palacio de los Deportes", distancia: "3.4 km", lat: 18.5, lng: -69.88, viewers: 2156, likes: 890, imagen: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&h=900&fit=crop" }
+        { id: 1, titulo: "Concierto Bachata en Vivo", nombreCreador: "Juan Luis Guerra", usuario: "@juanluis", ubicacion: "Estadio Olímpico", distancia: "0.8 km", categoria: "Concierto", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, imagen: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&h=900&fit=crop" },
+        { id: 2, titulo: "Fiesta 90's en Azotea", nombreCreador: "Maria Garcia", usuario: "@maria_garcia", ubicacion: "Gazcue", distancia: "0.3 km", categoria: "Fiesta", lat: 18.47, lng: -69.91, viewers: 3452, likes: 567, imagen: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&h=900&fit=crop" },
+        { id: 3, titulo: "Boda en la Catedral", nombreCreador: "Carlos y Ana", usuario: "@carlos_y_ana", ubicacion: "Zona Colonial", distancia: "1.2 km", categoria: "Boda", lat: 18.466, lng: -69.9, viewers: 892, likes: 412, imagen: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=900&fit=crop" },
+        { id: 4, titulo: "Partido de Voleibol Final", nombreCreador: "Club Deportivo", usuario: "@clubdeportivo", ubicacion: "Palacio de los Deportes", distancia: "3.4 km", categoria: "Deporte", lat: 18.5, lng: -69.88, viewers: 2156, likes: 890, imagen: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&h=900&fit=crop" }
     ];
 
     // Cargar KeTeteos desde localStorage
@@ -506,44 +740,45 @@
         });
     }
 
-    // Calcular distancia entre dos coordenadas (fórmula de Haversine)
     function calcularDistancia(lat1, lng1, lat2, lng2) {
-        const R = 6371; // Radio de la Tierra en km
+        const R = 6371;
         const dLat = (lat2 - lat1) * Math.PI / 180;
         const dLng = (lng2 - lng1) * Math.PI / 180;
-        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                  Math.sin(dLng/2) * Math.sin(dLng/2);
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         return R * c;
     }
 
-    // Filtrar KeTeteos por cercanía (menos de 10 km)
+    // Filtrar por categoría
+    function filtrarPorCategoria(categoria) {
+        const filtrados = allKeTeteos.filter(ke => ke.categoria === categoria);
+        if (filtrados.length === 0) {
+            alert(`No hay KeTeteos en la categoría "${categoria}"`);
+            return;
+        }
+        mostrarKeTeteosFiltrados(filtrados);
+    }
+
+    // Filtrar por cercanía
     async function filtrarPorCercania() {
         if (!loggedIn) {
             alert('Debes iniciar sesión para ver KeTeteos cerca de ti');
             return;
         }
-        
         const location = await getUserLocation();
         if (!location) {
             alert('No se pudo obtener tu ubicación');
             return;
         }
-        
         const keTeteosConDistancia = allKeTeteos.map(ke => {
             const distanciaKm = calcularDistancia(location.lat, location.lng, ke.lat || 18.48, ke.lng || -69.9);
             return { ...ke, distanciaReal: distanciaKm };
         });
-        
         const filtrados = keTeteosConDistancia.filter(ke => ke.distanciaReal <= 10);
-        
         if (filtrados.length === 0) {
             alert('No hay KeTeteos activos cerca de ti (menos de 10 km)');
             return;
         }
-        
-        // Mostrar solo los filtrados
         mostrarKeTeteosFiltrados(filtrados);
         alert(`🎯 Se encontraron ${filtrados.length} KeTeteos cerca de ti`);
     }
@@ -687,38 +922,112 @@
         fullDiv.addEventListener('click', (e) => { if (e.target === fullDiv) fullDiv.remove(); });
     }
 
+    // ================= PATROCINIOS =================
+    function renderPatrocinios() {
+        const track = document.getElementById('patrociniosTrack');
+        track.innerHTML = '';
+        // Duplicar para efecto infinito
+        const patrociniosInfinitos = [...patrocinios, ...patrocinios, ...patrocinios];
+        patrociniosInfinitos.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'patrocinio-card';
+            card.onclick = () => window.open(p.link, '_blank');
+            card.innerHTML = `
+                <img src="${p.imagen}" alt="${p.texto}">
+                <div class="patro-text">${p.texto}</div>
+            `;
+            track.appendChild(card);
+        });
+    }
+
+    // ================= MODALES =================
+    function openProximosEventos() {
+        const container = document.getElementById('proximosEventosList');
+        container.innerHTML = '';
+        proximosEventos.forEach(e => {
+            const div = document.createElement('div');
+            div.style.background = 'var(--negro)';
+            div.style.padding = '12px';
+            div.style.borderRadius = '12px';
+            div.style.marginBottom = '12px';
+            div.innerHTML = `
+                <div style="font-weight:700;">${e.titulo}</div>
+                <div style="font-size:12px; color:var(--gris-claro);">📍 ${e.ubicacion} · 📅 ${e.fecha}</div>
+                ${e.destacado ? '<div style="color:var(--rojo); font-size:11px; margin-top:4px;">⭐ PROMOCIONADO</div>' : ''}
+                <button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert('Próximamente podrás añadir este evento a KeTeteo')">➕ Añadir a KeTeteo</button>
+            `;
+            container.appendChild(div);
+        });
+        document.getElementById('proximosEventosModal').classList.add('show');
+    }
+
+    function closeProximosEventos() {
+        document.getElementById('proximosEventosModal').classList.remove('show');
+    }
+
+    function openMasCategorias() {
+        document.getElementById('masCategoriasModal').classList.add('show');
+    }
+
+    function closeMasCategorias() {
+        document.getElementById('masCategoriasModal').classList.remove('show');
+    }
+
+    // ================= ELIMINAR KE TETEO =================
+    function abrirConfirmarEliminar(id, titulo) {
+        eliminarId = id;
+        document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`;
+        document.getElementById('confirmarEliminarModal').classList.add('show');
+    }
+
+    function confirmarEliminar() {
+        if (eliminarId) {
+            const index = allKeTeteos.findIndex(k => k.id == eliminarId);
+            if (index !== -1) {
+                allKeTeteos.splice(index, 1);
+                saveKeTeteos();
+                renderCarousel();
+                renderMyStreams();
+                alert('✅ KeTeteo eliminado correctamente');
+            }
+        }
+        cerrarConfirmarEliminar();
+    }
+
+    function cerrarConfirmarEliminar() {
+        eliminarId = null;
+        document.getElementById('confirmarEliminarModal').classList.remove('show');
+    }
+
+    // ================= MIS TRANSMISIONES =================
+    function renderMyStreams() {
+        const container = document.getElementById('myStreamsList');
+        const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username);
+        if (misKeTeteos.length === 0) {
+            container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Aún no has creado ninguna transmisión.<br>¡Comienza la primera!</div>';
+            return;
+        }
+        container.innerHTML = '';
+        misKeTeteos.forEach(ke => {
+            const div = document.createElement('div');
+            div.className = 'my-stream-card';
+            div.innerHTML = `
+                <div>
+                    <strong>${ke.titulo}</strong><br>
+                    📅 Publicado recientemente · 👁️ ${ke.viewers || 0} vistas
+                </div>
+                <button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">🗑️ ELIMINAR</button>
+            `;
+            container.appendChild(div);
+        });
+    }
+
     // ================= FUNCIONES DE BÚSQUEDA =================
     function searchEvents() {
         const term = document.getElementById('searchInput').value.toLowerCase();
         if (!term) return renderCarousel();
         const filtered = allKeTeteos.filter(k => k.titulo.toLowerCase().includes(term) || k.nombreCreador.toLowerCase().includes(term));
-        const container = document.getElementById('carouselContainer');
-        container.innerHTML = '';
-        filtered.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'ke-teteo-card';
-            card.innerHTML = `
-                <div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div>
-                <div class="card-content">
-                    <div class="live-badge"><div class="live-dot"></div>EN VIVO</div>
-                    <div class="event-title">${item.titulo}</div>
-                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
-                    <div class="event-meta"><span>📍 ${item.ubicacion} · ${item.distancia}</span></div>
-                    <div class="action-buttons">
-                        <button class="action-btn like-btn" data-id="${item.id}">❤️ <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}">💬 Comentar</button>
-                        <button class="action-btn share-btn" data-id="${item.id}">🔄 Reenviar</button>
-                    </div>
-                    <div class="comment-row" id="comment-row-${item.id}" style="display: none;">
-                        <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Escribe un comentario...">
-                        <button class="send-comment" data-id="${item.id}">Enviar</button>
-                    </div>
-                    <div class="comments-list" id="comments-list-${item.id}"></div>
-                </div>
-            `;
-            container.appendChild(card);
-            attachCardEvents(card, item.id);
-        });
+        mostrarKeTeteosFiltrados(filtered);
     }
 
     // ================= AUTENTICACIÓN =================
@@ -799,7 +1108,8 @@
             usuario: currentUser.username,
             ubicacion: ubicacion,
             distancia: distancia,
-            lat: 18.48, // Coordenada por defecto (se puede mejorar con geolocalización)
+            categoria: "Otros",
+            lat: 18.48,
             lng: -69.91,
             viewers: 0,
             likes: 0,
@@ -824,7 +1134,7 @@
     function showHomeScreen() { document.getElementById('mainScreen').classList.add('active'); document.getElementById('profileScreen').classList.remove('active'); renderCarousel(); }
     function showProfileScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
     function showAlertsScreen() { alert('🔔 Alertas (Próximamente)'); }
-    function showMyStreamsScreen() { alert('Mis transmisiones (Próximamente)'); }
+    function showMyStreamsScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('myStreamsScreen').classList.add('active'); renderMyStreams(); }
     function showConfigScreen() { alert('Configuración (Próximamente)'); }
     function showLanguageScreen() { alert('Idioma (Próximamente)'); }
     function setLanguage(lang) { alert('Idioma cambiado a ' + lang); }
@@ -841,10 +1151,20 @@
     function shareProfile() { navigator.clipboard.writeText(window.location.href); alert('Perfil copiado'); }
     function openProfileLink() { window.open('https://linktr.ee/jomani', '_blank'); }
 
+    // ================= LEGAL =================
+    function openLegal(type) {
+        let content = '';
+        if (type === 'terms') content = '<h2>Términos y Condiciones</h2><p>Al usar KeTeteoLive aceptas nuestras normas...</p>';
+        else if (type === 'privacy') content = '<h2>Política de Privacidad</h2><p>Protegemos tus datos personales...</p>';
+        else if (type === 'cookies') content = '<h2>Política de Cookies</h2><p>Usamos cookies para mejorar tu experiencia...</p>';
+        alert(content.replace(/<[^>]*>/g, ''));
+    }
+
     // ================= INICIALIZACIÓN =================
     window.onload = () => {
         loadKeTeteos();
         renderCarousel();
+        renderPatrocinios();
         document.getElementById('welcomeScreen').style.display = 'flex';
         if (localStorage.getItem('user')) {
             currentUser = JSON.parse(localStorage.getItem('user'));
