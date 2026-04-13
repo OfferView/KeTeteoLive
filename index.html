@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <title>KeTeteoLive | KETETEO ACTIVOS</title>
+    <title>KeTeteoLive | Transmisiones en vivo geolocalizadas</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,7 @@
 
         :root {
             --negro: #0B0B0B;
-            --rojo: #FF2D55;
+            --rojo-logo: #FF2D55;
             --naranja: #FF6B00;
             --blanco: #FFFFFF;
             --gris-claro: #AAAAAA;
@@ -30,7 +30,7 @@
             --azul: #007AFF;
         }
 
-        /* ========== HEADER Y MENÚS ========== */
+        /* ========== HEADER CON LOGO CENTRADO ========== */
         .header {
             position: fixed;
             top: 0;
@@ -44,145 +44,141 @@
             z-index: 100;
             border-bottom: 1px solid var(--gris-medio);
         }
-        .logo-area { display: flex; align-items: baseline; gap: 4px; }
-        .logo { font-size: 24px; font-weight: 900; color: var(--rojo); }
-        .logo-sub { font-size: 9px; color: var(--gris-claro); letter-spacing: 2px; }
-        .hamburger { font-size: 28px; cursor: pointer; background: none; border: none; color: var(--blanco); }
-
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 280px;
-            height: 100%;
-            background: var(--gris-oscuro);
-            z-index: 200;
-            transition: left 0.3s ease;
-            padding: 70px 20px 20px 20px;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+        
+        .header-left {
+            display: flex;
+            align-items: center;
         }
-        .side-menu.open { left: 0; }
-        .side-menu button {
-            display: block;
-            width: 100%;
+        
+        .hamburger {
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--blanco);
+            margin-right: 16px;
+        }
+        
+        .logo-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .logo-img {
+            max-height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .header-right {
+            width: 40px;
+        }
+        
+        .start-live-btn {
+            background: var(--rojo-logo);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 16px;
+            color: var(--blanco);
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            position: fixed;
+            top: 12px;
+            right: 16px;
+            z-index: 101;
+            box-shadow: 0 2px 8px rgba(255,45,85,0.3);
+        }
+        
+        .start-live-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* ========== BUSCADOR DEBAJO DEL HEADER ========== */
+        .search-container {
+            margin: 85px 16px 12px 16px;
+        }
+        
+        .search-box {
+            display: flex;
+            background: var(--gris-oscuro);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--gris-medio);
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 14px 18px;
             background: transparent;
             border: none;
             color: var(--blanco);
-            padding: 14px;
-            text-align: left;
-            font-size: 16px;
-            border-bottom: 1px solid var(--gris-medio);
+            font-size: 15px;
+        }
+        
+        .search-box input::placeholder {
+            color: var(--gris-claro);
+        }
+        
+        .search-box button {
+            background: var(--rojo-logo);
+            border: none;
+            padding: 0 20px;
             cursor: pointer;
+            font-size: 18px;
         }
-        .side-menu button:hover { background: var(--rojo); }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 150;
-            display: none;
-        }
-        .overlay.show { display: block; }
 
-        /* Modales */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 300;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            display: none;
-        }
-        .modal.show { display: flex; }
-        .modal-content {
+        /* ========== UBICACIÓN ========== */
+        .location-bar {
             background: var(--gris-oscuro);
-            padding: 24px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 340px;
-            border: 1px solid var(--gris-medio);
-        }
-        .modal-content h3 { color: var(--rojo); margin-bottom: 20px; text-align: center; }
-        .modal-content input, .modal-content select, .modal-content textarea {
-            width: 100%;
+            margin: 8px 16px 16px 16px;
             padding: 12px;
-            margin-bottom: 12px;
-            background: var(--negro);
-            border: 1px solid var(--gris-medio);
-            border-radius: 12px;
-            color: var(--blanco);
+            border-radius: 14px;
+            text-align: center;
         }
-        .password-wrapper { position: relative; margin-bottom: 12px; }
-        .password-wrapper input { padding-right: 45px; }
-        .toggle-password { position: absolute; right: 12px; top: 12px; cursor: pointer; color: var(--gris-claro); }
-        .btn-rojo { background: var(--rojo); color: var(--blanco); padding: 12px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; width: 100%; }
-        .btn-gris { background: var(--gris-medio); color: var(--gris-claro); margin-top: 10px; padding: 12px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; width: 100%; }
-        .small-note { color: var(--gris-claro); font-size: 10px; margin-bottom: 12px; display: block; }
-        .error-message { color: var(--rojo); font-size: 12px; margin-bottom: 12px; display: none; text-align: center; }
+        
+        .location-text {
+            color: var(--rojo-logo);
+            font-size: 13px;
+            font-weight: 500;
+        }
 
-        /* Pantallas */
-        .screen { display: none; }
-        .screen.active { display: block; }
-
-        /* Bienvenida */
-        .welcome { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
-        .emoji { font-size: 80px; margin-bottom: 10px; }
-        .title { font-size: 42px; font-weight: 900; color: var(--rojo); }
-        .sub { font-size: 16px; color: var(--gris-claro); margin-bottom: 40px; text-align: center; }
-        .btn-primary, .btn-secondary { padding: 16px; border-radius: 14px; width: 100%; text-align: center; font-weight: 700; cursor: pointer; }
-        .btn-primary { background: var(--rojo); color: var(--blanco); border: none; }
-        .btn-secondary { background: transparent; border: 1.5px solid var(--gris-medio); color: var(--gris-claro); margin-top: 10px; }
-
-        /* Barra de búsqueda */
-        .search-container { margin: 80px 16px 12px 16px; }
-        .search-box { display: flex; background: var(--gris-oscuro); border-radius: 30px; overflow: hidden; border: 1px solid var(--gris-medio); }
-        .search-box input { flex: 1; padding: 12px 16px; background: transparent; border: none; color: var(--blanco); }
-        .search-box button { background: var(--rojo); border: none; padding: 0 18px; cursor: pointer; }
-        .location-bar { background: var(--gris-oscuro); margin: 8px 16px 16px 16px; padding: 12px; border-radius: 14px; text-align: center; }
-        .location-text { color: var(--rojo); font-size: 12px; }
-
-        /* ========== BARRA HORIZONTAL (6 BOTONES) ========== */
+        /* ========== BARRA HORIZONTAL (2 BOTONES) ========== */
         .horizontal-bar {
             display: flex;
-            overflow-x: auto;
-            gap: 8px;
+            gap: 12px;
             padding: 12px 16px;
             margin: 8px 0;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
         }
-        .horizontal-bar::-webkit-scrollbar { display: none; }
+        
         .horiz-btn {
-            flex: 0 0 auto;
+            flex: 1;
             background: var(--gris-oscuro);
             border: 1px solid var(--gris-medio);
             border-radius: 40px;
-            padding: 10px 18px;
+            padding: 12px 16px;
             font-size: 14px;
             font-weight: 600;
             color: var(--blanco);
             cursor: pointer;
             transition: all 0.2s;
-            white-space: nowrap;
+            text-align: center;
         }
-        .horiz-btn:active { transform: scale(0.96); background: var(--rojo); }
-        .horiz-btn.primary { background: var(--rojo); border-color: var(--rojo); }
+        
+        .horiz-btn:active {
+            transform: scale(0.97);
+            background: var(--rojo-logo);
+        }
+        
+        .horiz-btn.primary {
+            background: var(--rojo-logo);
+            border-color: var(--rojo-logo);
+        }
 
         /* ========== CARRUSEL DE KE TETEOS ACTIVOS ========== */
-        .carousel-container {
-            height: auto;
-            width: 100%;
-            margin-top: 8px;
-            margin-bottom: 16px;
-        }
         .section-title {
             text-align: center;
             font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
@@ -190,28 +186,38 @@
             font-weight: 800;
             letter-spacing: 2px;
             margin: 20px 0 16px 0;
-            background: linear-gradient(135deg, #FF2D55, #FF6B00);
+            background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-transform: uppercase;
         }
+        
         .section-title::before {
             content: "⚡";
             background: none;
             -webkit-background-clip: unset;
             background-clip: unset;
-            color: #FF2D55;
+            color: var(--rojo-logo);
             margin-right: 12px;
         }
+        
         .section-title::after {
             content: "⚡";
             background: none;
             -webkit-background-clip: unset;
             background-clip: unset;
-            color: #FF2D55;
+            color: var(--rojo-logo);
             margin-left: 12px;
         }
+        
+        .carousel-container {
+            height: auto;
+            width: 100%;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+        
         .ke-teteo-card {
             background: var(--gris-oscuro);
             margin: 12px 16px;
@@ -221,57 +227,157 @@
             transition: transform 0.2s;
             border: 1px solid var(--gris-medio);
         }
-        .ke-teteo-card:active { transform: scale(0.98); }
-        .stream-media { width: 100%; height: 260px; overflow: hidden; background: #000; }
-        .stream-media img { width: 100%; height: 100%; object-fit: cover; }
-        .card-content { padding: 16px; }
+        
+        .ke-teteo-card:active {
+            transform: scale(0.98);
+        }
+        
+        .stream-media {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .stream-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 16px;
+        }
+        
         .live-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: var(--rojo);
-            padding: 4px 10px;
+            background: var(--rojo-logo);
+            padding: 4px 12px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            animation: pulse 1.2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .event-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .event-creator {
+            font-size: 13px;
+            color: var(--gris-claro);
             margin-bottom: 8px;
         }
-        .live-dot { width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: pulse 1.2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        .event-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-        .event-creator { font-size: 13px; color: var(--gris-claro); margin-bottom: 8px; }
-        .event-creator span { color: #aaa; }
-        .event-meta { display: flex; gap: 12px; font-size: 12px; color: var(--gris-claro); margin-bottom: 12px; flex-wrap: wrap; }
-        .action-buttons { display: flex; gap: 16px; margin-bottom: 12px; }
+        
+        .event-creator span {
+            color: #aaa;
+        }
+        
+        .event-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--gris-claro);
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        
         .action-btn {
             background: rgba(30,30,35,0.8);
             border: none;
             color: white;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 30px;
             font-size: 13px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             cursor: pointer;
+            transition: all 0.2s;
         }
-        .action-btn:active { transform: scale(0.96); background: var(--rojo); }
+        
+        .action-btn:active {
+            transform: scale(0.96);
+            background: var(--rojo-logo);
+        }
+        
         .delete-btn {
-            background: rgba(255,45,85,0.2);
-            border: 1px solid var(--rojo);
-            color: var(--rojo);
+            background: rgba(255,45,85,0.15);
+            border: 1px solid var(--rojo-logo);
+            color: var(--rojo-logo);
             padding: 6px 14px;
             border-radius: 30px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             margin-left: auto;
+            transition: all 0.2s;
         }
-        .comment-row { display: flex; gap: 8px; margin-top: 8px; }
-        .comment-input { flex: 1; background: var(--negro); border: 1px solid var(--gris-medio); border-radius: 30px; padding: 8px 12px; color: white; outline: none; font-size: 12px; }
-        .send-comment { background: var(--rojo); border: none; border-radius: 30px; padding: 6px 14px; color: white; font-weight: 600; cursor: pointer; }
-        .comments-list { margin-top: 10px; font-size: 12px; color: #ccc; max-height: 120px; overflow-y: auto; }
+        
+        .delete-btn:active {
+            background: var(--rojo-logo);
+            color: white;
+        }
+        
+        .comment-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .comment-input {
+            flex: 1;
+            background: var(--negro);
+            border: 1px solid var(--gris-medio);
+            border-radius: 30px;
+            padding: 10px 16px;
+            color: white;
+            outline: none;
+            font-size: 13px;
+        }
+        
+        .send-comment {
+            background: var(--rojo-logo);
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .comments-list {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #ccc;
+            max-height: 120px;
+            overflow-y: auto;
+        }
 
         /* ========== CARRUSEL HORIZONTAL DE PATROCINIOS ========== */
         .patrocinios-carousel {
@@ -283,17 +389,21 @@
             scroll-behavior: smooth;
             cursor: grab;
         }
+        
         .patrocinios-carousel:active {
             cursor: grabbing;
         }
+        
         .patrocinios-carousel::-webkit-scrollbar {
             display: none;
         }
+        
         .patrocinios-track {
             display: flex;
             gap: 12px;
             padding: 0 16px;
         }
+        
         .patrocinio-card {
             flex: 0 0 auto;
             width: 130px;
@@ -305,12 +415,17 @@
             transition: transform 0.2s;
             border: 1px solid var(--gris-medio);
         }
-        .patrocinio-card:active { transform: scale(0.96); }
+        
+        .patrocinio-card:active {
+            transform: scale(0.96);
+        }
+        
         .patrocinio-card img {
             width: 100%;
             height: 100px;
             object-fit: cover;
         }
+        
         .patrocinio-card .patro-text {
             padding: 8px;
             font-size: 11px;
@@ -334,7 +449,14 @@
             align-items: center;
             cursor: pointer;
         }
-        .fullscreen-stream img { width: 100%; height: 100%; object-fit: contain; background: black; }
+        
+        .fullscreen-stream img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: black;
+        }
+        
         .close-fullscreen {
             position: absolute;
             top: 50px;
@@ -348,22 +470,6 @@
             z-index: 1001;
         }
 
-        .start-btn {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--rojo);
-            padding: 14px 28px;
-            border-radius: 40px;
-            border: none;
-            color: var(--blanco);
-            font-weight: 800;
-            cursor: pointer;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(255,45,85,0.4);
-        }
-
         /* ========== BOTTOM NAVIGATION (3 OPCIONES) ========== */
         .bottom-nav {
             position: fixed;
@@ -373,13 +479,32 @@
             display: flex;
             background: var(--negro);
             border-top: 1px solid var(--gris-medio);
-            padding: 8px 0 16px 0;
+            padding: 10px 0 20px 0;
             z-index: 100;
         }
-        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
-        .nav-icon { font-size: 22px; }
-        .nav-label { font-size: 10px; color: var(--gris-claro); }
-        .nav-label.active { color: var(--rojo); font-weight: 700; }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            color: var(--gris-claro);
+        }
+        
+        .nav-label.active {
+            color: var(--rojo-logo);
+            font-weight: 700;
+        }
 
         /* Footer legal */
         .footer-legal {
@@ -388,71 +513,510 @@
             margin-top: 20px;
             border-top: 1px solid var(--gris-medio);
         }
+        
         .footer-content {
             max-width: 500px;
             margin: 0 auto;
             text-align: center;
         }
+        
         .footer-description {
             font-size: 11px;
             color: var(--gris-claro);
             margin-bottom: 12px;
             line-height: 1.4;
         }
+        
         .footer-contact {
             font-size: 11px;
             color: var(--gris-claro);
             margin-bottom: 16px;
         }
+        
         .footer-contact a {
-            color: var(--rojo);
+            color: var(--rojo-logo);
             text-decoration: none;
         }
+        
         .footer-links {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 8px;
+            gap: 12px;
             margin-bottom: 16px;
         }
+        
         .footer-links a {
             font-size: 11px;
             color: var(--gris-claro);
             text-decoration: none;
             transition: color 0.2s;
         }
-        .footer-links a:hover { color: var(--rojo); }
-        .separator { font-size: 11px; color: var(--gris-medio); }
-        .footer-copyright { font-size: 10px; color: #555; }
+        
+        .footer-links a:hover {
+            color: var(--rojo-logo);
+        }
+        
+        .footer-copyright {
+            font-size: 10px;
+            color: #555;
+        }
+
+        /* ========== MODALES ========== */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--gris-oscuro);
+            padding: 24px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 380px;
+            border: 1px solid var(--gris-medio);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-content h3 {
+            color: var(--rojo-logo);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 20px;
+        }
+        
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: var(--negro);
+            border: 1px solid var(--gris-medio);
+            border-radius: 14px;
+            color: var(--blanco);
+            font-size: 14px;
+        }
+        
+        .password-wrapper {
+            position: relative;
+            margin-bottom: 12px;
+        }
+        
+        .password-wrapper input {
+            padding-right: 45px;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 14px;
+            cursor: pointer;
+            color: var(--gris-claro);
+            font-size: 18px;
+        }
+        
+        .btn-rojo {
+            background: var(--rojo-logo);
+            color: var(--blanco);
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+        .btn-gris {
+            background: var(--gris-medio);
+            color: var(--gris-claro);
+            margin-top: 12px;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+        .small-note {
+            color: var(--gris-claro);
+            font-size: 10px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        
+        .error-message {
+            color: var(--rojo-logo);
+            font-size: 12px;
+            margin-bottom: 12px;
+            display: none;
+            text-align: center;
+        }
 
         /* Perfil */
-        .profile-modern { margin-top: 70px; padding: 24px 20px; }
-        .avatar-wrapper { position: relative; width: 100px; height: 100px; margin: 0 auto 20px; cursor: pointer; }
-        .avatar-ring { position: absolute; inset: -3px; border-radius: 50%; background: linear-gradient(135deg, var(--rojo), var(--naranja)); }
-        .avatar-modern { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; position: relative; z-index: 1; }
-        .avatar-badge { position: absolute; bottom: 2px; right: 2px; background: var(--negro); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid var(--negro); }
-        .user-info { text-align: center; margin-bottom: 24px; }
-        .user-name { font-size: 24px; font-weight: 700; background: linear-gradient(135deg, #fff, var(--gris-claro)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .user-handle { font-size: 14px; color: var(--gris-claro); }
-        .user-bio { font-size: 14px; margin-top: 10px; color: #E5E5E5; }
-        .stats-modern { display: flex; justify-content: center; gap: 32px; margin-bottom: 28px; padding: 16px 0; background: rgba(28,28,30,0.6); border-radius: 30px; backdrop-filter: blur(10px); }
-        .stat-card { text-align: center; cursor: pointer; }
-        .stat-value { font-size: 20px; font-weight: 800; }
-        .stat-label { font-size: 11px; color: var(--gris-claro); text-transform: uppercase; }
-        .action-buttons { display: flex; gap: 12px; margin-bottom: 24px; }
-        .btn-modern { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 0; border-radius: 40px; font-weight: 600; cursor: pointer; }
-        .btn-modern.primary { background: linear-gradient(135deg, var(--rojo), #FF4466); color: white; border: none; }
-        .btn-modern.secondary { background: rgba(255,255,255,0.08); color: white; border: 0.5px solid rgba(255,255,255,0.1); }
-        .contact-modern { background: rgba(28,28,30,0.6); backdrop-filter: blur(10px); border-radius: 24px; padding: 16px; }
-        .contact-header { font-size: 13px; font-weight: 600; color: var(--gris-claro); margin-bottom: 12px; }
-        .contact-row { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 16px; cursor: pointer; }
-        .contact-row:hover { background: rgba(255,255,255,0.05); }
-        .contact-icon { font-size: 18px; width: 32px; }
-        .contact-value { flex: 1; font-size: 14px; }
-        .contact-copy { font-size: 11px; opacity: 0.6; }
-        .streams-list { margin-top: 80px; padding: 16px; }
-        .my-stream-card { background: var(--gris-oscuro); padding: 16px; border-radius: 16px; margin-bottom: 12px; border-left: 4px solid var(--rojo); display: flex; justify-content: space-between; align-items: center; }
-        .config-option { background: var(--gris-oscuro); padding: 16px; border-radius: 16px; margin: 8px 16px; display: flex; justify-content: space-between; align-items: center; }
+        .profile-modern {
+            margin-top: 70px;
+            padding: 24px 20px;
+        }
+        
+        .avatar-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            cursor: pointer;
+        }
+        
+        .avatar-ring {
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
+        }
+        
+        .avatar-modern {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .avatar-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: var(--negro);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border: 2px solid var(--negro);
+        }
+        
+        .user-info {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .user-name {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, var(--gris-claro));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .user-handle {
+            font-size: 14px;
+            color: var(--gris-claro);
+            margin-top: 4px;
+        }
+        
+        .user-bio {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #E5E5E5;
+        }
+        
+        .stats-modern {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 28px;
+            padding: 16px 0;
+            background: rgba(28,28,30,0.6);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-card {
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: 800;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: var(--gris-claro);
+            text-transform: uppercase;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .btn-modern {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 0;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .btn-modern.primary {
+            background: linear-gradient(135deg, var(--rojo-logo), #FF4466);
+            color: white;
+            border: none;
+        }
+        
+        .btn-modern.secondary {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            border: 0.5px solid rgba(255,255,255,0.1);
+        }
+        
+        .contact-modern {
+            background: rgba(28,28,30,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 16px;
+        }
+        
+        .contact-header {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gris-claro);
+            margin-bottom: 12px;
+        }
+        
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+        
+        .contact-row:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .contact-icon {
+            font-size: 18px;
+            width: 32px;
+        }
+        
+        .contact-value {
+            flex: 1;
+            font-size: 14px;
+        }
+        
+        .contact-copy {
+            font-size: 11px;
+            opacity: 0.6;
+        }
+        
+        .streams-list {
+            margin-top: 80px;
+            padding: 16px;
+        }
+        
+        .my-stream-card {
+            background: var(--gris-oscuro);
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--rojo-logo);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .config-option {
+            background: var(--gris-oscuro);
+            padding: 16px;
+            border-radius: 16px;
+            margin: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        .welcome {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--rojo-logo);
+        }
+        
+        .sub {
+            font-size: 16px;
+            color: var(--gris-claro);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: var(--rojo-logo);
+            padding: 16px;
+            border-radius: 14px;
+            width: 100%;
+            text-align: center;
+            color: var(--blanco);
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1.5px solid var(--gris-medio);
+            padding: 16px;
+            border-radius: 14px;
+            width: 100%;
+            text-align: center;
+            color: var(--gris-claro);
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .live-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--negro);
+            z-index: 400;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .live-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px 16px 16px 16px;
+        }
+        
+        .close-btn {
+            background: rgba(0,0,0,0.6);
+            width: 40px;
+            height: 40px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            color: var(--blanco);
+            font-size: 24px;
+        }
+        
+        .video-box {
+            flex: 2;
+            background: var(--gris-oscuro);
+            margin: 16px;
+            border-radius: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        
+        .video-emoji {
+            font-size: 60px;
+        }
+        
+        .video-text {
+            color: var(--rojo-logo);
+            font-weight: 800;
+            margin-top: 10px;
+        }
+        
+        .chat-list {
+            flex: 1;
+            padding: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .chat-msg {
+            background: var(--gris-oscuro);
+            padding: 10px;
+            border-radius: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .chat-user {
+            color: var(--rojo-logo);
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .chat-text {
+            color: var(--blanco);
+            font-size: 13px;
+        }
+        
+        .bottom-bar {
+            display: flex;
+            padding: 16px;
+            gap: 10px;
+        }
+        
+        .like-btn {
+            font-size: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--blanco);
+        }
     </style>
 </head>
 <body>
@@ -469,13 +1033,17 @@
 <!-- PANTALLA PRINCIPAL -->
 <div id="mainScreen" class="screen">
     <div class="header">
-        <button class="hamburger" onclick="toggleMenu()">☰</button>
-        <div class="logo-area">
-            <div class="logo">KeTeteoLive</div>
-            <div class="logo-sub">LIVE</div>
+        <div class="header-left">
+            <button class="hamburger" onclick="toggleMenu()">☰</button>
         </div>
-        <div style="width:30px;"></div>
+        <div class="logo-container">
+            <img src="keteteologologo.jpg" alt="KeTeteoLive" class="logo-img" onerror="this.src='https://placehold.co/120x45/FF2D55/white?text=KeTeteoLive'">
+        </div>
+        <div class="header-right"></div>
     </div>
+    
+    <!-- Botón Iniciar Mi KeTeteo (fijo arriba derecha) -->
+    <button class="start-live-btn" onclick="openCreateKeTeteoModal()">🔴 Iniciar Mi KeTeteo</button>
 
     <div class="search-container">
         <div class="search-box">
@@ -488,14 +1056,10 @@
         <div class="location-text">📍 Buscando ubicación...</div>
     </div>
 
-    <!-- BARRA HORIZONTAL (6 BOTONES) -->
+    <!-- BARRA HORIZONTAL (2 BOTONES) -->
     <div class="horizontal-bar">
         <button class="horiz-btn primary" onclick="filtrarPorCercania()">🎯 KeTeteo Cerca de Mí</button>
-        <button class="horiz-btn" onclick="openProximosEventos()">📅 Próximos Eventos</button>
-        <button class="horiz-btn" onclick="filtrarPorCategoria('Fiesta')">🎉 Fiestas</button>
-        <button class="horiz-btn" onclick="filtrarPorCategoria('Concierto')">🎵 Conciertos</button>
-        <button class="horiz-btn" onclick="filtrarPorCategoria('Deporte')">⚽ Deportes</button>
-        <button class="horiz-btn" onclick="openMasCategorias()">➕ Más</button>
+        <button class="horiz-btn" onclick="openProximosEventos()">📅 Próximos Eventos +</button>
     </div>
 
     <!-- TÍTULO KETETEO ACTIVOS -->
@@ -508,8 +1072,6 @@
     <div class="patrocinios-carousel" id="patrociniosCarousel">
         <div class="patrocinios-track" id="patrociniosTrack"></div>
     </div>
-
-    <button class="start-btn" onclick="alert('🔴 Transmisión en vivo (Etapa 3)')">🔴 Iniciar KeTeteo</button>
 </div>
 
 <!-- MENÚ LATERAL -->
@@ -568,30 +1130,25 @@
     </div>
 </div>
 
-<!-- MODAL PRÓXIMOS EVENTOS -->
+<!-- MODAL PRÓXIMOS EVENTOS + -->
 <div id="proximosEventosModal" class="modal">
     <div class="modal-content" style="max-width: 400px;">
-        <h3>📅 PRÓXIMOS EVENTOS</h3>
+        <h3>📅 PRÓXIMOS EVENTOS Y CATEGORÍAS</h3>
         <div id="proximosEventosList" style="max-height: 400px; overflow-y: auto;"></div>
-        <button class="btn-gris" onclick="closeProximosEventos()">Cerrar</button>
-    </div>
-</div>
-
-<!-- MODAL MÁS CATEGORÍAS -->
-<div id="masCategoriasModal" class="modal">
-    <div class="modal-content" style="max-width: 350px;">
-        <h3>📌 MÁS CATEGORÍAS</h3>
-        <div id="categoriasList">
-            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Boda'); closeMasCategorias();">💒 Bodas</button>
-            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Cumpleaños'); closeMasCategorias();">🎂 Cumpleaños</button>
-            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Actividad'); closeMasCategorias();">🎪 Actividades</button>
-            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Gaming'); closeMasCategorias();">🎮 Gaming</button>
-            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Religioso'); closeMasCategorias();">⛪ Religiosos</button>
-            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Trabajo'); closeMasCategorias();">💼 Trabajo</button>
-            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Aire Libre'); closeMasCategorias();">🏃‍♂️ Aire Libre</button>
-            <button class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Cocina'); closeMasCategorias();">🍳 Cocina</button>
+        <div style="margin-top: 16px;">
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px; background:var(--rojo-logo);" onclick="filtrarPorCategoria('Fiesta'); closeProximosEventos();">🎉 Fiestas</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Concierto'); closeProximosEventos();">🎵 Conciertos</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Deporte'); closeProximosEventos();">⚽ Deportes</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Boda'); closeProximosEventos();">💒 Bodas</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Cumpleaños'); closeProximosEventos();">🎂 Cumpleaños</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Actividad'); closeProximosEventos();">🎪 Actividades</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Gaming'); closeProximosEventos();">🎮 Gaming</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Religioso'); closeProximosEventos();">⛪ Religiosos</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Trabajo'); closeProximosEventos();">💼 Trabajo</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Aire Libre'); closeProximosEventos();">🏃‍♂️ Aire Libre</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Cocina'); closeProximosEventos();">🍳 Cocina</div>
         </div>
-        <button class="btn-gris" onclick="closeMasCategorias()">Cerrar</button>
+        <button class="btn-gris" onclick="closeProximosEventos()">Cerrar</button>
     </div>
 </div>
 
@@ -608,7 +1165,7 @@
 
 <!-- PANTALLA DE PERFIL -->
 <div id="profileScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo">Perfil</div><button class="close-btn" style="background:transparent; font-size:24px; cursor:pointer;" onclick="showHomeScreen()">✕</button></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo" style="font-size:20px;">Perfil</div><button class="close-btn" style="background:transparent; font-size:24px; cursor:pointer;" onclick="showHomeScreen()">✕</button></div>
     <div class="profile-modern">
         <div class="avatar-wrapper" onclick="uploadProfilePhoto()"><div class="avatar-ring"></div><img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7"><div class="avatar-badge">📷</div></div>
         <div class="user-info"><div class="user-name" id="profileName">Jomani</div><div class="user-handle" id="profileUsername">@jomani</div><div class="user-bio" id="profileBio">Amante de los eventos en vivo 🎉</div><div class="user-link"><a href="#" onclick="openProfileLink()">linktr.ee/jomani</a></div></div>
@@ -623,14 +1180,14 @@
 
 <!-- PANTALLA MIS TRANSMISIONES -->
 <div id="myStreamsScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo">Mis Transmisiones</div><button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo" style="font-size:20px;">Mis Transmisiones</div><button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button></div>
     <div id="myStreamsList" class="streams-list"></div>
     <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()">➕ Nueva transmisión</button>
 </div>
 
 <!-- OTRAS PANTALLAS -->
-<div id="configScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo">Configuración</div><button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button></div><div class="config-option"><span>🌙 Modo oscuro</span><span>✅ Activado</span></div><div class="config-option"><span>🔔 Notificaciones</span><button onclick="alert('Notificaciones activadas')">Activar</button></div><div class="config-option"><span>🔒 Privacidad</span><button onclick="alert('Privacidad: solo seguidores')">Configurar</button></div></div>
-<div id="languageScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo">Idioma</div><button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button></div><div class="config-option" onclick="setLanguage('es')"><span>🇪🇸 Español</span><span id="langEs">✅</span></div><div class="config-option" onclick="setLanguage('en')"><span>🇺🇸 English</span><span id="langEn"></span></div><div class="config-option" onclick="setLanguage('pt')"><span>🇵🇹 Português</span><span id="langPt"></span></div></div>
+<div id="configScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo" style="font-size:20px;">Configuración</div><button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button></div><div class="config-option"><span>🌙 Modo oscuro</span><span>✅ Activado</span></div><div class="config-option"><span>🔔 Notificaciones</span><button onclick="alert('Notificaciones activadas')">Activar</button></div><div class="config-option"><span>🔒 Privacidad</span><button onclick="alert('Privacidad: solo seguidores')">Configurar</button></div></div>
+<div id="languageScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo" style="font-size:20px;">Idioma</div><button class="close-btn" style="background:transparent;" onclick="showHomeScreen()">✕</button></div><div class="config-option" onclick="setLanguage('es')"><span>🇪🇸 Español</span><span id="langEs">✅</span></div><div class="config-option" onclick="setLanguage('en')"><span>🇺🇸 English</span><span id="langEn"></span></div><div class="config-option" onclick="setLanguage('pt')"><span>🇵🇹 Português</span><span id="langPt"></span></div></div>
 
 <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
@@ -649,9 +1206,7 @@
         <p class="footer-contact">📧 Contacto: <a href="mailto:soporte.keteteolive@gmail.com">soporte.keteteolive@gmail.com</a></p>
         <div class="footer-links">
             <a href="#" onclick="openLegal('terms')">⚖️ Términos y Condiciones</a>
-            <span class="separator">|</span>
             <a href="#" onclick="openLegal('privacy')">🔒 Política de Privacidad</a>
-            <span class="separator">|</span>
             <a href="#" onclick="openLegal('cookies')">🍪 Política de Cookies</a>
         </div>
         <p class="footer-copyright">© 2025 KeTeteoLive. Todos los derechos reservados.</p>
@@ -937,7 +1492,6 @@
     function renderPatrocinios() {
         const track = document.getElementById('patrociniosTrack');
         track.innerHTML = '';
-        // Duplicar muchas veces para efecto infinito real
         const patrociniosInfinitos = [...patrocinios, ...patrocinios, ...patrocinios, ...patrocinios, ...patrocinios];
         patrociniosInfinitos.forEach(p => {
             const card = document.createElement('div');
@@ -950,7 +1504,6 @@
             track.appendChild(card);
         });
         
-        // Configurar auto-scroll después de renderizar
         setTimeout(() => {
             configurarEventosPatrocinios();
             iniciarAutoScrollPatrocinios();
@@ -960,14 +1513,10 @@
     function iniciarAutoScrollPatrocinios() {
         const carousel = document.querySelector('.patrocinios-carousel');
         if (!carousel) return;
-        
         if (autoScrollInterval) clearInterval(autoScrollInterval);
-        
         autoScrollInterval = setInterval(() => {
             if (!isUserInteracting && carousel) {
                 carousel.scrollBy({ left: 140, behavior: 'smooth' });
-                
-                // Si llegó al final, volver al inicio suavemente
                 if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 80) {
                     setTimeout(() => {
                         carousel.scrollTo({ left: 0, behavior: 'smooth' });
@@ -980,7 +1529,6 @@
     function detenerAutoScrollPatrocinios() {
         isUserInteracting = true;
         if (autoScrollTimeout) clearTimeout(autoScrollTimeout);
-        
         autoScrollTimeout = setTimeout(() => {
             isUserInteracting = false;
         }, 5000);
@@ -989,7 +1537,6 @@
     function configurarEventosPatrocinios() {
         const carousel = document.querySelector('.patrocinios-carousel');
         if (!carousel) return;
-        
         carousel.addEventListener('touchstart', () => detenerAutoScrollPatrocinios());
         carousel.addEventListener('mousedown', () => detenerAutoScrollPatrocinios());
         carousel.addEventListener('scroll', () => {
@@ -1023,14 +1570,6 @@
 
     function closeProximosEventos() {
         document.getElementById('proximosEventosModal').classList.remove('show');
-    }
-
-    function openMasCategorias() {
-        document.getElementById('masCategoriasModal').classList.add('show');
-    }
-
-    function closeMasCategorias() {
-        document.getElementById('masCategoriasModal').classList.remove('show');
     }
 
     // ================= ELIMINAR KE TETEO =================
@@ -1214,10 +1753,10 @@
     // ================= LEGAL =================
     function openLegal(type) {
         let content = '';
-        if (type === 'terms') content = '<h2>Términos y Condiciones</h2><p>Al usar KeTeteoLive aceptas nuestras normas...</p>';
-        else if (type === 'privacy') content = '<h2>Política de Privacidad</h2><p>Protegemos tus datos personales...</p>';
-        else if (type === 'cookies') content = '<h2>Política de Cookies</h2><p>Usamos cookies para mejorar tu experiencia...</p>';
-        alert(content.replace(/<[^>]*>/g, ''));
+        if (type === 'terms') content = 'Términos y Condiciones: Al usar KeTeteoLive aceptas nuestras normas...';
+        else if (type === 'privacy') content = 'Política de Privacidad: Protegemos tus datos personales...';
+        else if (type === 'cookies') content = 'Política de Cookies: Usamos cookies para mejorar tu experiencia...';
+        alert(content);
     }
 
     // ================= INICIALIZACIÓN =================
