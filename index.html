@@ -280,6 +280,14 @@
             -webkit-overflow-scrolling: touch;
             padding: 16px 0;
             margin: 8px 0;
+            scroll-behavior: smooth;
+            cursor: grab;
+        }
+        .patrocinios-carousel:active {
+            cursor: grabbing;
+        }
+        .patrocinios-carousel::-webkit-scrollbar {
+            display: none;
         }
         .patrocinios-track {
             display: flex;
@@ -675,6 +683,9 @@
     let currentComments = {};
     let userLocation = null;
     let eliminarId = null;
+    let autoScrollInterval = null;
+    let isUserInteracting = false;
+    let autoScrollTimeout = null;
 
     // Datos de patrocinios
     const patrocinios = [
@@ -922,12 +933,12 @@
         fullDiv.addEventListener('click', (e) => { if (e.target === fullDiv) fullDiv.remove(); });
     }
 
-    // ================= PATROCINIOS =================
+    // ================= PATROCINIOS CON AUTO-GIRO =================
     function renderPatrocinios() {
         const track = document.getElementById('patrociniosTrack');
         track.innerHTML = '';
-        // Duplicar para efecto infinito
-        const patrociniosInfinitos = [...patrocinios, ...patrocinios, ...patrocinios];
+        // Duplicar muchas veces para efecto infinito real
+        const patrociniosInfinitos = [...patrocinios, ...patrocinios, ...patrocinios, ...patrocinios, ...patrocinios];
         patrociniosInfinitos.forEach(p => {
             const card = document.createElement('div');
             card.className = 'patrocinio-card';
@@ -937,6 +948,55 @@
                 <div class="patro-text">${p.texto}</div>
             `;
             track.appendChild(card);
+        });
+        
+        // Configurar auto-scroll después de renderizar
+        setTimeout(() => {
+            configurarEventosPatrocinios();
+            iniciarAutoScrollPatrocinios();
+        }, 100);
+    }
+
+    function iniciarAutoScrollPatrocinios() {
+        const carousel = document.querySelector('.patrocinios-carousel');
+        if (!carousel) return;
+        
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        
+        autoScrollInterval = setInterval(() => {
+            if (!isUserInteracting && carousel) {
+                carousel.scrollBy({ left: 140, behavior: 'smooth' });
+                
+                // Si llegó al final, volver al inicio suavemente
+                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 80) {
+                    setTimeout(() => {
+                        carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+        }, 4000);
+    }
+
+    function detenerAutoScrollPatrocinios() {
+        isUserInteracting = true;
+        if (autoScrollTimeout) clearTimeout(autoScrollTimeout);
+        
+        autoScrollTimeout = setTimeout(() => {
+            isUserInteracting = false;
+        }, 5000);
+    }
+
+    function configurarEventosPatrocinios() {
+        const carousel = document.querySelector('.patrocinios-carousel');
+        if (!carousel) return;
+        
+        carousel.addEventListener('touchstart', () => detenerAutoScrollPatrocinios());
+        carousel.addEventListener('mousedown', () => detenerAutoScrollPatrocinios());
+        carousel.addEventListener('scroll', () => {
+            if (autoScrollTimeout) clearTimeout(autoScrollTimeout);
+            autoScrollTimeout = setTimeout(() => {
+                isUserInteracting = false;
+            }, 3000);
         });
     }
 
