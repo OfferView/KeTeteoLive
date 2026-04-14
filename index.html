@@ -177,13 +177,13 @@
         .patrocinios-superior::-webkit-scrollbar { display: none; }
         .patrocinios-track-superior {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             padding: 0 16px;
             width: max-content;
         }
         .patrocinio-card-superior {
             flex: 0 0 auto;
-            width: 180px;
+            width: 250px;
             background: var(--gris-oscuro);
             border-radius: 16px;
             overflow: hidden;
@@ -194,7 +194,7 @@
         .patrocinio-card-superior:active { transform: scale(0.96); }
         .patrocinio-card-superior img {
             width: 100%;
-            height: 100px;
+            height: 140px;
             object-fit: cover;
         }
         .patrocinio-card-superior .patro-text {
@@ -419,7 +419,7 @@
             overflow-y: auto;
         }
 
-        /* ========== CARRUSEL 3: PATROCINIOS INFERIOR ========== */
+        /* ========== CARRUSEL 3: PATROCINIOS INFERIOR (MÁS RÁPIDO) ========== */
         .patrocinios-inferior {
             overflow-x: auto;
             scroll-behavior: smooth;
@@ -431,13 +431,13 @@
         .patrocinios-inferior::-webkit-scrollbar { display: none; }
         .patrocinios-track-inferior {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             padding: 0 16px;
             width: max-content;
         }
         .patrocinio-card-inferior {
             flex: 0 0 auto;
-            width: 180px;
+            width: 250px;
             background: var(--gris-oscuro);
             border-radius: 16px;
             overflow: hidden;
@@ -448,7 +448,7 @@
         .patrocinio-card-inferior:active { transform: scale(0.96); }
         .patrocinio-card-inferior img {
             width: 100%;
-            height: 100px;
+            height: 140px;
             object-fit: cover;
         }
         .patrocinio-card-inferior .patro-text {
@@ -495,7 +495,7 @@
             z-index: 1001;
         }
 
-        /* ========== BOTTOM NAVIGATION (4 OPCIONES) ========== */
+        /* ========== BOTTOM NAVIGATION (3 OPCIONES) ========== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -659,6 +659,29 @@
             width: 100%;
             font-size: 16px;
         }
+
+        /* ========== ESTADO DEL USUARIO ========== */
+        .user-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(28,28,30,0.6);
+            backdrop-filter: blur(10px);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin: 8px auto;
+            width: fit-content;
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-online { background-color: #30D158; box-shadow: 0 0 6px #30D158; }
+        .status-away { background-color: #FF9F0A; box-shadow: 0 0 6px #FF9F0A; }
+        .status-offline { background-color: #8E8E93; }
+        .status-text { font-size: 12px; color: var(--gris-claro); }
 
         /* Perfil */
         .profile-modern {
@@ -952,7 +975,7 @@
         <button class="horiz-btn" onclick="openProximosEventos()">📅 Próximos Eventos +</button>
     </div>
 
-    <!-- CARRUSEL 1: PATROCINIOS SUPERIOR (estilo craftmktgroup) -->
+    <!-- CARRUSEL 1: PATROCINIOS SUPERIOR -->
     <div class="patrocinios-superior" id="patrociniosSuperior">
         <div class="patrocinios-track-superior" id="patrociniosTrackSuperior"></div>
     </div>
@@ -1073,12 +1096,21 @@
     </div>
 </div>
 
-<!-- PANTALLA DE PERFIL -->
+<!-- PANTALLA DE PERFIL CON ESTADO -->
 <div id="profileScreen" class="screen">
     <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo" style="font-size:20px;">Perfil</div><button class="close-btn" style="background:transparent; font-size:24px; cursor:pointer;" onclick="showHomeScreen()">✕</button></div>
     <div class="profile-modern">
         <div class="avatar-wrapper" onclick="uploadProfilePhoto()"><div class="avatar-ring"></div><img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7"><div class="avatar-badge">📷</div></div>
-        <div class="user-info"><div class="user-name" id="profileName">Jomani</div><div class="user-handle" id="profileUsername">@jomani</div><div class="user-bio" id="profileBio">Amante de los eventos en vivo 🎉</div><div class="user-link"><a href="#" onclick="openProfileLink()">linktr.ee/jomani</a></div></div>
+        <div class="user-info">
+            <div class="user-name" id="profileName">Jomani</div>
+            <div class="user-handle" id="profileUsername">@jomani</div>
+            <div class="user-status" id="userStatus">
+                <div class="status-dot status-online"></div>
+                <span class="status-text" id="statusText">En línea</span>
+            </div>
+            <div class="user-bio" id="profileBio">Amante de los eventos en vivo 🎉</div>
+            <div class="user-link"><a href="#" onclick="openProfileLink()">linktr.ee/jomani</a></div>
+        </div>
         <div class="stats-modern"><div class="stat-card"><div class="stat-value" id="followersCount">1.2K</div><div class="stat-label">seguidores</div></div><div class="stat-card"><div class="stat-value" id="followingCount">567</div><div class="stat-label">siguiendo</div></div><div class="stat-card"><div class="stat-value" id="teteosCount">12</div><div class="stat-label">teteos</div></div></div>
         <div class="action-buttons"><button class="btn-modern primary" onclick="openEditProfile()">✏️ Editar perfil</button><button class="btn-modern secondary" onclick="shareProfile()">🔗 Compartir</button></div>
         <div class="contact-modern"><div class="contact-header">📞 Contacto</div><div class="contact-list"><div class="contact-row" onclick="copyEmail()"><div class="contact-icon">📧</div><div class="contact-value" id="userEmail">jomani@gmail.com</div><div class="contact-copy">copiar</div></div><div class="contact-row" onclick="copyPhone()"><div class="contact-icon">📱</div><div class="contact-value" id="userPhone">+1 809 555 1234</div><div class="contact-copy">copiar</div></div></div></div>
@@ -1115,7 +1147,7 @@
     </div>
 </footer>
 
-<!-- BOTTOM NAVIGATION (4 OPCIONES) -->
+<!-- BOTTOM NAVIGATION (3 OPCIONES) -->
 <div class="bottom-nav" id="bottomNav">
     <div class="nav-item" onclick="showHomeScreen()">
         <div class="nav-icon">🏠</div>
@@ -1128,10 +1160,6 @@
     <div class="nav-item" onclick="showProfileScreen()">
         <div class="nav-icon">👤</div>
         <div class="nav-label" id="navProfile">Perfil</div>
-    </div>
-    <div class="nav-item" onclick="abrirKeTeteoAdmDesdeMenu()">
-        <div class="nav-icon">👑</div>
-        <div class="nav-label">KeTeteoAdm</div>
     </div>
 </div>
 
@@ -1152,13 +1180,82 @@
     let autoScrollTimeoutInferior = null;
     let reporteKeTeteoId = null;
 
+    // ================= ESTADO DEL USUARIO =================
+    let userStatusInterval = null;
+    let lastActivity = Date.now();
+    let userStatus = "online";
+
+    function actualizarEstadoUsuario() {
+        if (!loggedIn) return;
+        
+        const now = Date.now();
+        const timeSinceLastActivity = now - lastActivity;
+        
+        if (timeSinceLastActivity < 30000) { // 30 segundos
+            userStatus = "online";
+            document.querySelector('.status-dot').className = 'status-dot status-online';
+            document.getElementById('statusText').innerText = 'En línea';
+        } else if (timeSinceLastActivity < 300000) { // 5 minutos
+            userStatus = "away";
+            document.querySelector('.status-dot').className = 'status-dot status-away';
+            document.getElementById('statusText').innerText = 'Ausente';
+        } else {
+            userStatus = "offline";
+            document.querySelector('.status-dot').className = 'status-dot status-offline';
+            document.getElementById('statusText').innerText = 'Desconectado';
+        }
+        
+        // Guardar estado en localStorage
+        localStorage.setItem('userStatus', userStatus);
+        localStorage.setItem('lastActivity', lastActivity);
+    }
+
+    function actualizarActividad() {
+        lastActivity = Date.now();
+        actualizarEstadoUsuario();
+    }
+
+    function iniciarSeguimientoEstado() {
+        // Actualizar estado cada 10 segundos
+        if (userStatusInterval) clearInterval(userStatusInterval);
+        userStatusInterval = setInterval(actualizarEstadoUsuario, 10000);
+        
+        // Detectar actividad del usuario
+        window.addEventListener('click', actualizarActividad);
+        window.addEventListener('scroll', actualizarActividad);
+        window.addEventListener('keydown', actualizarActividad);
+        window.addEventListener('touchstart', actualizarActividad);
+        
+        // Detectar cuando el usuario cierra la pestaña
+        window.addEventListener('beforeunload', () => {
+            if (loggedIn) {
+                localStorage.setItem('userStatus', 'offline');
+                localStorage.setItem('lastActivity', Date.now());
+            }
+        });
+        
+        // Detectar cuando la página se vuelve visible (pestaña activa)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Pestaña inactiva
+                lastActivity = Date.now() - 60000; // Simular ausencia
+            } else {
+                // Pestaña activa
+                lastActivity = Date.now();
+            }
+            actualizarEstadoUsuario();
+        });
+        
+        actualizarEstadoUsuario();
+    }
+
     // Datos de patrocinios
     const patrocinios = [
-        { id: 1, imagen: "https://placehold.co/180x100/FF2D55/white?text=Super", link: "https://supermercado.com", texto: "🔥 Oferta Super" },
-        { id: 2, imagen: "https://placehold.co/180x100/007AFF/white?text=Banco", link: "https://banco.com", texto: "🏦 Banco Popular" },
-        { id: 3, imagen: "https://placehold.co/180x100/30D158/white?text=Concierto", link: "https://concierto.com", texto: "🎵 Concierto" },
-        { id: 4, imagen: "https://placehold.co/180x100/FF9F0A/white?text=Comida", link: "https://comida.com", texto: "🍔 Comida Rápida" },
-        { id: 5, imagen: "https://placehold.co/180x100/BF5AF2/white?text=Ropa", link: "https://ropa.com", texto: "👕 Ropa" }
+        { id: 1, imagen: "https://placehold.co/250x140/FF2D55/white?text=Super", link: "https://supermercado.com", texto: "🔥 Oferta Super" },
+        { id: 2, imagen: "https://placehold.co/250x140/007AFF/white?text=Banco", link: "https://banco.com", texto: "🏦 Banco Popular" },
+        { id: 3, imagen: "https://placehold.co/250x140/30D158/white?text=Concierto", link: "https://concierto.com", texto: "🎵 Concierto" },
+        { id: 4, imagen: "https://placehold.co/250x140/FF9F0A/white?text=Comida", link: "https://comida.com", texto: "🍔 Comida Rápida" },
+        { id: 5, imagen: "https://placehold.co/250x140/BF5AF2/white?text=Ropa", link: "https://ropa.com", texto: "👕 Ropa" }
     ];
 
     const proximosEventos = [
@@ -1453,7 +1550,7 @@
         if (autoScrollIntervalInferior) clearInterval(autoScrollIntervalInferior);
         autoScrollIntervalInferior = setInterval(() => {
             if (!isUserInteractingInferior && carousel) {
-                carousel.scrollBy({ left: 1, behavior: 'smooth' });
+                carousel.scrollBy({ left: 2, behavior: 'smooth' });
                 if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
                     carousel.scrollTo({ left: 0, behavior: 'smooth' });
                 }
@@ -1575,6 +1672,7 @@
         document.getElementById('logoutMenuBtn').style.display = 'block';
         document.getElementById('createKeTeteoBtn').style.display = 'block';
         loadProfileData();
+        iniciarSeguimientoEstado();
         alert('✅ Cuenta creada');
     }
 
@@ -1591,10 +1689,24 @@
             document.getElementById('logoutMenuBtn').style.display = 'block';
             document.getElementById('createKeTeteoBtn').style.display = 'block';
             loadProfileData();
+            iniciarSeguimientoEstado();
         } else alert('Ingresa email y contraseña');
     }
 
-    function logout() { loggedIn = false; currentUser = null; localStorage.removeItem('user'); document.getElementById('welcomeScreen').style.display = 'flex'; document.getElementById('mainScreen').classList.remove('active'); document.getElementById('logoutMenuBtn').style.display = 'none'; document.getElementById('createKeTeteoBtn').style.display = 'none'; closeMenu(); showHomeScreen(); }
+    function logout() { 
+        loggedIn = false; 
+        currentUser = null; 
+        localStorage.removeItem('user');
+        localStorage.removeItem('userStatus');
+        localStorage.removeItem('lastActivity');
+        if (userStatusInterval) clearInterval(userStatusInterval);
+        document.getElementById('welcomeScreen').style.display = 'flex'; 
+        document.getElementById('mainScreen').classList.remove('active'); 
+        document.getElementById('logoutMenuBtn').style.display = 'none'; 
+        document.getElementById('createKeTeteoBtn').style.display = 'none'; 
+        closeMenu(); 
+        showHomeScreen(); 
+    }
 
     function openCreateKeTeteoModal() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } document.getElementById('createKeTeteoModal').classList.add('show'); }
     function closeCreateModal() { document.getElementById('createKeTeteoModal').classList.remove('show'); }
@@ -1651,7 +1763,25 @@
     function openEditProfile() { alert('Editar perfil (próximamente)'); }
     function saveProfile() { alert('Perfil guardado'); }
     function closeEditModal() { document.getElementById('editProfileModal').classList.remove('show'); }
-    function loadProfileData() { const savedPhoto = localStorage.getItem('profilePhoto'); if (savedPhoto) document.getElementById('profileImg').src = savedPhoto; const user = JSON.parse(localStorage.getItem('user')); if (user) { document.getElementById('profileName').innerText = user.name; document.getElementById('profileUsername').innerText = user.username; document.getElementById('profileBio').innerText = user.bio || 'Amante de los eventos en vivo 🎉'; document.getElementById('userEmail').innerText = user.email; } }
+    function loadProfileData() { 
+        const savedPhoto = localStorage.getItem('profilePhoto'); 
+        if (savedPhoto) document.getElementById('profileImg').src = savedPhoto; 
+        const user = JSON.parse(localStorage.getItem('user')); 
+        if (user) { 
+            document.getElementById('profileName').innerText = user.name; 
+            document.getElementById('profileUsername').innerText = user.username; 
+            document.getElementById('profileBio').innerText = user.bio || 'Amante de los eventos en vivo 🎉'; 
+            document.getElementById('userEmail').innerText = user.email; 
+        }
+        // Cargar estado guardado
+        const savedStatus = localStorage.getItem('userStatus');
+        const savedLastActivity = localStorage.getItem('lastActivity');
+        if (savedStatus && savedLastActivity) {
+            lastActivity = parseInt(savedLastActivity);
+            userStatus = savedStatus;
+            actualizarEstadoUsuario();
+        }
+    }
     function copyEmail() { const email = document.getElementById('userEmail').innerText; navigator.clipboard.writeText(email); alert('Correo copiado'); }
     function copyPhone() { alert('Teléfono copiado'); }
     function shareProfile() { navigator.clipboard.writeText(window.location.href); alert('Perfil copiado'); }
@@ -1663,59 +1793,6 @@
         else if (type === 'privacy') content = 'Política de Privacidad: Protegemos tus datos personales...';
         else if (type === 'cookies') content = 'Política de Cookies: Usamos cookies para mejorar tu experiencia...';
         alert(content);
-    }
-
-    // ================= KE TETEO ADM =================
-    let logoClickCount = 0;
-    let logoTimer = null;
-    const ADMIN_PASSWORD = "KeTeteoAdmin2025";
-
-    function iniciarContadorAdmin() {
-        logoClickCount++;
-        clearTimeout(logoTimer);
-        if (logoClickCount >= 7) {
-            logoClickCount = 0;
-            pedirContraseñaAdmin();
-        }
-        logoTimer = setTimeout(() => { logoClickCount = 0; }, 1000);
-    }
-
-    function pedirContraseñaAdmin() {
-        const password = prompt("🔐 VERIFICACIÓN DE ADMINISTRADOR\n\nIngresa la contraseña para acceder a KeTeteoAdm:");
-        if (password === ADMIN_PASSWORD) {
-            alert("✅ Acceso concedido. Abriendo KeTeteoAdm...");
-            abrirKeTeteoAdm();
-        } else if (password !== null) {
-            alert("❌ Contraseña incorrecta. Acceso denegado.");
-        }
-    }
-
-    function abrirKeTeteoAdm() {
-        const userEmail = currentUser?.email;
-        const adminEmail = "keteteoadm@gmail.com";
-        if (!loggedIn) {
-            alert("⚠️ Debes iniciar sesión primero.");
-            return;
-        }
-        if (userEmail !== adminEmail) {
-            alert("❌ Acceso denegado. Solo el administrador puede acceder.");
-            return;
-        }
-        alert("👑 Bienvenido a KeTeteoAdm. Panel de administración (próximamente)");
-    }
-
-    function abrirKeTeteoAdmDesdeMenu() {
-        if (!loggedIn) {
-            alert("⚠️ Debes iniciar sesión primero.");
-            return;
-        }
-        const userEmail = currentUser?.email;
-        const adminEmail = "keteteoadm@gmail.com";
-        if (userEmail !== adminEmail) {
-            alert("❌ Acceso denegado. Solo el administrador puede acceder.");
-            return;
-        }
-        pedirContraseñaAdmin();
     }
 
     // ================= INICIALIZACIÓN =================
@@ -1731,18 +1808,13 @@
             document.getElementById('logoutMenuBtn').style.display = 'block';
             document.getElementById('createKeTeteoBtn').style.display = 'block';
             showMainScreen();
+            iniciarSeguimientoEstado();
         }
         allKeTeteos.forEach(k => {
             const savedComments = localStorage.getItem(`comments_${k.id}`);
             if (savedComments) currentComments[k.id] = JSON.parse(savedComments);
             else currentComments[k.id] = [];
         });
-
-        const logoImg = document.querySelector('.logo-img');
-        if (logoImg) {
-            logoImg.addEventListener('click', iniciarContadorAdmin);
-            logoImg.addEventListener('touchstart', iniciarContadorAdmin);
-        }
     };
 </script>
 </body>
