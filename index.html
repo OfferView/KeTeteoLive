@@ -44,7 +44,6 @@
             border-bottom: 1px solid var(--gris-medio);
         }
 
-        /* Fila superior: hamburguesa + botón iniciar */
         .header-top {
             display: flex;
             justify-content: space-between;
@@ -61,7 +60,6 @@
             color: var(--blanco);
         }
 
-        /* Logo centrado */
         .logo-container {
             display: flex;
             justify-content: center;
@@ -75,7 +73,6 @@
             object-fit: contain;
         }
 
-        /* Botón Iniciar Mi KeTeteo (pequeño) */
         .start-live-btn {
             background: var(--rojo-logo);
             border: none;
@@ -94,7 +91,6 @@
             transform: scale(0.96);
         }
 
-        /* Buscador debajo del logo */
         .search-container {
             margin-top: 0;
             margin-bottom: 6px;
@@ -130,7 +126,6 @@
             font-size: 18px;
         }
 
-        /* ========== LÍNEA DIVISORIA NARANJA ========== */
         .divider-naranja {
             margin: 10px 16px;
             border: none;
@@ -170,12 +165,51 @@
             border-color: var(--rojo-logo);
         }
 
-        /* ========== EMPUJAR EL CONTENIDO PRINCIPAL ========== */
+        /* ========== CARRUSEL 1: PATROCINIOS SUPERIOR (estilo craftmktgroup) ========== */
+        .patrocinios-superior {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            cursor: grab;
+            margin: 16px 0;
+        }
+        .patrocinios-superior:active { cursor: grabbing; }
+        .patrocinios-superior::-webkit-scrollbar { display: none; }
+        .patrocinios-track-superior {
+            display: flex;
+            gap: 12px;
+            padding: 0 16px;
+            width: max-content;
+        }
+        .patrocinio-card-superior {
+            flex: 0 0 auto;
+            width: 180px;
+            background: var(--gris-oscuro);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 1px solid var(--gris-medio);
+        }
+        .patrocinio-card-superior:active { transform: scale(0.96); }
+        .patrocinio-card-superior img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+        .patrocinio-card-superior .patro-text {
+            padding: 10px;
+            font-size: 12px;
+            text-align: center;
+            color: var(--blanco);
+            font-weight: 600;
+        }
+
+        /* ========== CARRUSEL 2: KE TETEOS ACTIVOS (4 visibles) ========== */
         #mainScreen {
             padding-top: 160px;
         }
 
-        /* ========== CARRUSEL DE KE TETEOS ACTIVOS ========== */
         .section-title {
             text-align: center;
             font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
@@ -213,6 +247,8 @@
             width: 100%;
             margin-top: 8px;
             margin-bottom: 16px;
+            max-height: 70vh;
+            overflow-y: auto;
         }
 
         .ke-teteo-card {
@@ -299,8 +335,9 @@
 
         .action-buttons {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             margin-bottom: 12px;
+            flex-wrap: wrap;
         }
 
         .action-btn {
@@ -321,6 +358,12 @@
         .action-btn:active {
             transform: scale(0.96);
             background: var(--rojo-logo);
+        }
+
+        .report-btn {
+            background: rgba(255,45,85,0.15);
+            border: 1px solid var(--rojo-logo);
+            color: var(--rojo-logo);
         }
 
         .delete-btn {
@@ -376,36 +419,25 @@
             overflow-y: auto;
         }
 
-        /* ========== CARRUSEL HORIZONTAL DE PATROCINIOS ========== */
-        .patrocinios-carousel {
+        /* ========== CARRUSEL 3: PATROCINIOS INFERIOR ========== */
+        .patrocinios-inferior {
             overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            padding: 16px 0;
-            margin: 8px 0;
             scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
             cursor: grab;
+            margin: 16px 0;
         }
-
-        .patrocinios-carousel:active {
-            cursor: grabbing;
-        }
-
-        .patrocinios-carousel::-webkit-scrollbar {
-            display: none;
-        }
-
-        .patrocinios-track {
+        .patrocinios-inferior:active { cursor: grabbing; }
+        .patrocinios-inferior::-webkit-scrollbar { display: none; }
+        .patrocinios-track-inferior {
             display: flex;
             gap: 12px;
             padding: 0 16px;
+            width: max-content;
         }
-
-        .patrocinio-card {
+        .patrocinio-card-inferior {
             flex: 0 0 auto;
-            width: calc(33.33% - 10px);
-            min-width: 110px;
-            scroll-snap-align: start;
+            width: 180px;
             background: var(--gris-oscuro);
             border-radius: 16px;
             overflow: hidden;
@@ -413,20 +445,15 @@
             transition: transform 0.2s;
             border: 1px solid var(--gris-medio);
         }
-
-        .patrocinio-card:active {
-            transform: scale(0.96);
-        }
-
-        .patrocinio-card img {
+        .patrocinio-card-inferior:active { transform: scale(0.96); }
+        .patrocinio-card-inferior img {
             width: 100%;
             height: 100px;
             object-fit: cover;
         }
-
-        .patrocinio-card .patro-text {
-            padding: 8px;
-            font-size: 11px;
+        .patrocinio-card-inferior .patro-text {
+            padding: 10px;
+            font-size: 12px;
             text-align: center;
             color: var(--blanco);
             font-weight: 600;
@@ -468,7 +495,7 @@
             z-index: 1001;
         }
 
-        /* ========== BOTTOM NAVIGATION (3 OPCIONES) ========== */
+        /* ========== BOTTOM NAVIGATION (4 OPCIONES) ========== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -608,24 +635,6 @@
             font-size: 14px;
         }
 
-        .password-wrapper {
-            position: relative;
-            margin-bottom: 12px;
-        }
-
-        .password-wrapper input {
-            padding-right: 45px;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 14px;
-            top: 14px;
-            cursor: pointer;
-            color: var(--gris-claro);
-            font-size: 18px;
-        }
-
         .btn-rojo {
             background: var(--rojo-logo);
             color: var(--blanco);
@@ -649,21 +658,6 @@
             cursor: pointer;
             width: 100%;
             font-size: 16px;
-        }
-
-        .small-note {
-            color: var(--gris-claro);
-            font-size: 10px;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .error-message {
-            color: var(--rojo-logo);
-            font-size: 12px;
-            margin-bottom: 12px;
-            display: none;
-            text-align: center;
         }
 
         /* Perfil */
@@ -764,36 +758,6 @@
             text-transform: uppercase;
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .btn-modern {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 14px 0;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn-modern.primary {
-            background: linear-gradient(135deg, var(--rojo-logo), #FF4466);
-            color: white;
-            border: none;
-        }
-
-        .btn-modern.secondary {
-            background: rgba(255,255,255,0.08);
-            color: white;
-            border: 0.5px solid rgba(255,255,255,0.1);
-        }
-
         .contact-modern {
             background: rgba(28,28,30,0.6);
             backdrop-filter: blur(10px);
@@ -847,16 +811,6 @@
             border-radius: 16px;
             margin-bottom: 12px;
             border-left: 4px solid var(--rojo-logo);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .config-option {
-            background: var(--gris-oscuro);
-            padding: 16px;
-            border-radius: 16px;
-            margin: 8px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -920,100 +874,6 @@
             font-weight: 700;
             cursor: pointer;
             margin-top: 10px;
-        }
-
-        .live-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--negro);
-            z-index: 400;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .live-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 50px 16px 16px 16px;
-        }
-
-        .close-btn {
-            background: rgba(0,0,0,0.6);
-            width: 40px;
-            height: 40px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: none;
-            color: var(--blanco);
-            font-size: 24px;
-        }
-
-        .video-box {
-            flex: 2;
-            background: var(--gris-oscuro);
-            margin: 16px;
-            border-radius: 28px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-        }
-
-        .video-emoji {
-            font-size: 60px;
-        }
-
-        .video-text {
-            color: var(--rojo-logo);
-            font-weight: 800;
-            margin-top: 10px;
-        }
-
-        .chat-list {
-            flex: 1;
-            padding: 16px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .chat-msg {
-            background: var(--gris-oscuro);
-            padding: 10px;
-            border-radius: 16px;
-            margin-bottom: 8px;
-        }
-
-        .chat-user {
-            color: var(--rojo-logo);
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .chat-text {
-            color: var(--blanco);
-            font-size: 13px;
-        }
-
-        .bottom-bar {
-            display: flex;
-            padding: 16px;
-            gap: 10px;
-        }
-
-        .like-btn {
-            font-size: 20px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: var(--blanco);
         }
 
         /* Menú lateral */
@@ -1085,28 +945,30 @@
         </div>
     </div>
 
-    <!-- LÍNEA DIVISORIA NARANJA ENTRE ETAPA 1 Y ETAPA 1.0 -->
     <hr class="divider-naranja">
 
-    <!-- BARRA HORIZONTAL (2 BOTONES) -->
     <div class="horizontal-bar">
         <button class="horiz-btn primary" onclick="filtrarPorCercania()">🎯 KeTeteo Cerca de Mí</button>
         <button class="horiz-btn" onclick="openProximosEventos()">📅 Próximos Eventos +</button>
     </div>
 
-    <!-- TÍTULO KETETEO ACTIVOS -->
+    <!-- CARRUSEL 1: PATROCINIOS SUPERIOR (estilo craftmktgroup) -->
+    <div class="patrocinios-superior" id="patrociniosSuperior">
+        <div class="patrocinios-track-superior" id="patrociniosTrackSuperior"></div>
+    </div>
+
     <div class="section-title">KETETEO ACTIVOS</div>
 
-    <!-- CARRUSEL DE KE TETEOS -->
+    <!-- CARRUSEL 2: KE TETEOS ACTIVOS -->
     <div id="carouselContainer"></div>
 
-    <!-- CARRUSEL HORIZONTAL DE PATROCINIOS -->
-    <div class="patrocinios-carousel" id="patrociniosCarousel">
-        <div class="patrocinios-track" id="patrociniosTrack"></div>
+    <!-- CARRUSEL 3: PATROCINIOS INFERIOR -->
+    <div class="patrocinios-inferior" id="patrociniosInferior">
+        <div class="patrocinios-track-inferior" id="patrociniosTrackInferior"></div>
     </div>
 </div>
 
-<!-- MENÚ LATERAL (TODAS LAS OPCIONES AQUÍ) -->
+<!-- MENÚ LATERAL -->
 <div id="sideMenu" class="side-menu">
     <button onclick="openRegister(); closeMenu()">📝 Registrarse</button>
     <button onclick="openLogin(); closeMenu()">🔑 Iniciar sesión</button>
@@ -1184,6 +1046,22 @@
     </div>
 </div>
 
+<!-- MODAL REPORTE -->
+<div id="reporteModal" class="modal">
+    <div class="modal-content">
+        <h3>⚠️ REPORTAR CONTENIDO</h3>
+        <div id="reporteOpciones">
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Contenido inapropiado')">🔞 Contenido inapropiado</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Spam o publicidad engañosa')">📢 Spam o publicidad engañosa</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Acoso o insultos')">😡 Acoso o insultos</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Contenido ilegal')">⚖️ Contenido ilegal</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Falso o engañoso')">❌ Falso o engañoso</div>
+            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Otro')">📝 Otro</div>
+        </div>
+        <button class="btn-gris" onclick="cerrarReporteModal()">Cancelar</button>
+    </div>
+</div>
+
 <!-- MODAL CONFIRMAR ELIMINACIÓN -->
 <div id="confirmarEliminarModal" class="modal">
     <div class="modal-content">
@@ -1223,14 +1101,6 @@
 
 <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
-<!-- STREAM EN VIVO (simulado) -->
-<div id="liveScreen" class="live-container" style="display:none;">
-    <div class="live-header"><button class="close-btn" onclick="closeStream()">✕</button><div id="liveName" style="color:#fff;">Maria Garcia</div><div id="liveViewers" style="color:#aaa;">👁️ 1,247</div></div>
-    <div class="video-box"><div class="video-emoji">📡</div><div class="video-text">EN VIVO</div><div id="liveTitle" style="color:#fff; margin-top:10px;">🎵 Salsa en vivo</div></div>
-    <div id="liveChat" class="chat-list"></div>
-    <div class="bottom-bar"><button class="like-btn" onclick="addLike()">❤️ <span id="likeCount">0</span></button><input type="text" id="commentInput" class="comment-input" placeholder="Comenta..."><button class="send-btn" onclick="sendComment()">Enviar</button></div>
-</div>
-
 <!-- FOOTER LEGAL -->
 <footer class="footer-legal">
     <div class="footer-content">
@@ -1245,7 +1115,7 @@
     </div>
 </footer>
 
-<!-- BOTTOM NAVIGATION (3 OPCIONES) -->
+<!-- BOTTOM NAVIGATION (4 OPCIONES) -->
 <div class="bottom-nav" id="bottomNav">
     <div class="nav-item" onclick="showHomeScreen()">
         <div class="nav-icon">🏠</div>
@@ -1259,6 +1129,10 @@
         <div class="nav-icon">👤</div>
         <div class="nav-label" id="navProfile">Perfil</div>
     </div>
+    <div class="nav-item" onclick="abrirKeTeteoAdmDesdeMenu()">
+        <div class="nav-icon">👑</div>
+        <div class="nav-label">KeTeteoAdm</div>
+    </div>
 </div>
 
 <script>
@@ -1270,27 +1144,29 @@
     let currentComments = {};
     let userLocation = null;
     let eliminarId = null;
-    let autoScrollInterval = null;
-    let isUserInteracting = false;
-    let autoScrollTimeout = null;
+    let autoScrollIntervalSuperior = null;
+    let autoScrollIntervalInferior = null;
+    let isUserInteractingSuperior = false;
+    let isUserInteractingInferior = false;
+    let autoScrollTimeoutSuperior = null;
+    let autoScrollTimeoutInferior = null;
+    let reporteKeTeteoId = null;
 
     // Datos de patrocinios
     const patrocinios = [
-        { id: 1, imagen: "https://placehold.co/130x100/FF2D55/white?text=Disponible", link: "https://supermercado.com", texto: "🔥 Disponible anucinates aquí" },
-        { id: 2, imagen: "https://placehold.co/130x100/007AFF/white?text=Disponible", link: "https://banco.com", texto: "🏦 Disponible anucinates aquí" },
-        { id: 3, imagen: "https://placehold.co/130x100/30D158/white?text=Disponible", link: "https://concierto.com", texto: "🎵 Disponible anucinates aquí" },
-        { id: 4, imagen: "https://placehold.co/130x100/FF9F0A/white?text=Disponible", link: "https://comida.com", texto: "🍔 Disponible anucinates aquí" },
-        { id: 5, imagen: "https://placehold.co/130x100/BF5AF2/white?text=Disponible", link: "https://ropa.com", texto: "👕 Disponible anucinates aquí" }
+        { id: 1, imagen: "https://placehold.co/180x100/FF2D55/white?text=Super", link: "https://supermercado.com", texto: "🔥 Oferta Super" },
+        { id: 2, imagen: "https://placehold.co/180x100/007AFF/white?text=Banco", link: "https://banco.com", texto: "🏦 Banco Popular" },
+        { id: 3, imagen: "https://placehold.co/180x100/30D158/white?text=Concierto", link: "https://concierto.com", texto: "🎵 Concierto" },
+        { id: 4, imagen: "https://placehold.co/180x100/FF9F0A/white?text=Comida", link: "https://comida.com", texto: "🍔 Comida Rápida" },
+        { id: 5, imagen: "https://placehold.co/180x100/BF5AF2/white?text=Ropa", link: "https://ropa.com", texto: "👕 Ropa" }
     ];
 
-    // Datos de próximos eventos
     const proximosEventos = [
         { titulo: "🎵 Concierto Juan Luis Guerra", ubicacion: "Estadio Olímpico", fecha: "15/05/2025", destacado: true },
         { titulo: "🎉 Fiesta 90's en Azotea", ubicacion: "Gazcue", fecha: "20/05/2025", destacado: false },
         { titulo: "💒 Boda María y Carlos", ubicacion: "Hotel Jaragua", fecha: "22/05/2025", destacado: false }
     ];
 
-    // Datos iniciales simulados
     const initialKeTeteos = [
         { id: 1, titulo: "Concierto Bachata en Vivo", nombreCreador: "Juan Luis Guerra", usuario: "@juanluis", ubicacion: "Estadio Olímpico", distancia: "0.8 km", categoria: "Concierto", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, imagen: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&h=900&fit=crop" },
         { id: 2, titulo: "Fiesta 90's en Azotea", nombreCreador: "Maria Garcia", usuario: "@maria_garcia", ubicacion: "Gazcue", distancia: "0.3 km", categoria: "Fiesta", lat: 18.47, lng: -69.91, viewers: 3452, likes: 567, imagen: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&h=900&fit=crop" },
@@ -1298,7 +1174,6 @@
         { id: 4, titulo: "Partido de Voleibol Final", nombreCreador: "Club Deportivo", usuario: "@clubdeportivo", ubicacion: "Palacio de los Deportes", distancia: "3.4 km", categoria: "Deporte", lat: 18.5, lng: -69.88, viewers: 2156, likes: 890, imagen: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&h=900&fit=crop" }
     ];
 
-    // Cargar KeTeteos desde localStorage
     function loadKeTeteos() {
         const stored = localStorage.getItem('keTeteos');
         if (stored) {
@@ -1317,20 +1192,15 @@
         localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos));
     }
 
-    // Obtener ubicación del usuario
     function getUserLocation() {
         return new Promise((resolve, reject) => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
                         userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-                        document.getElementById('locationBar').innerHTML = `<div class="location-text">📍 ${userLocation.lat.toFixed(2)}, ${userLocation.lng.toFixed(2)}</div>`;
                         resolve(userLocation);
                     },
-                    () => {
-                        document.getElementById('locationBar').innerHTML = `<div class="location-text">📍 Ubicación no disponible</div>`;
-                        reject(null);
-                    }
+                    () => { reject(null); }
                 );
             } else {
                 reject(null);
@@ -1347,7 +1217,6 @@
         return R * c;
     }
 
-    // Filtrar por categoría
     function filtrarPorCategoria(categoria) {
         const filtrados = allKeTeteos.filter(ke => ke.categoria === categoria);
         if (filtrados.length === 0) {
@@ -1357,7 +1226,6 @@
         mostrarKeTeteosFiltrados(filtrados);
     }
 
-    // Filtrar por cercanía
     async function filtrarPorCercania() {
         if (!loggedIn) {
             alert('Debes iniciar sesión para ver KeTeteos cerca de ti');
@@ -1385,60 +1253,44 @@
         const container = document.getElementById('carouselContainer');
         container.innerHTML = '';
         keTeteosFiltrados.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'ke-teteo-card';
-            card.setAttribute('data-id', item.id);
-            card.innerHTML = `
-                <div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div>
-                <div class="card-content">
-                    <div class="live-badge"><div class="live-dot"></div>EN VIVO</div>
-                    <div class="event-title">${item.titulo}</div>
-                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
-                    <div class="event-meta"><span>📍 ${item.ubicacion} · ${item.distancia}</span></div>
-                    <div class="action-buttons">
-                        <button class="action-btn like-btn" data-id="${item.id}">❤️ <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}">💬 Comentar</button>
-                        <button class="action-btn share-btn" data-id="${item.id}">🔄 Reenviar</button>
-                    </div>
-                    <div class="comment-row" id="comment-row-${item.id}" style="display: none;">
-                        <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Escribe un comentario...">
-                        <button class="send-comment" data-id="${item.id}">Enviar</button>
-                    </div>
-                    <div class="comments-list" id="comments-list-${item.id}"></div>
-                </div>
-            `;
+            const card = crearCardKeTeteo(item);
             container.appendChild(card);
             attachCardEvents(card, item.id);
         });
     }
 
-    // Renderizar carrusel completo
+    function crearCardKeTeteo(item) {
+        const card = document.createElement('div');
+        card.className = 'ke-teteo-card';
+        card.setAttribute('data-id', item.id);
+        card.innerHTML = `
+            <div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div>
+            <div class="card-content">
+                <div class="live-badge"><div class="live-dot"></div>EN VIVO</div>
+                <div class="event-title">${item.titulo}</div>
+                <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
+                <div class="event-meta"><span>📍 ${item.ubicacion} · ${item.distancia}</span></div>
+                <div class="action-buttons">
+                    <button class="action-btn like-btn" data-id="${item.id}">❤️ <span class="like-count">${currentLikes[item.id] || 0}</span></button>
+                    <button class="action-btn comment-toggle" data-id="${item.id}">💬 Comentar</button>
+                    <button class="action-btn share-btn" data-id="${item.id}">🔄 Reenviar</button>
+                    <button class="action-btn report-btn" data-id="${item.id}">⚠️ Reportar</button>
+                </div>
+                <div class="comment-row" id="comment-row-${item.id}" style="display: none;">
+                    <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Escribe un comentario...">
+                    <button class="send-comment" data-id="${item.id}">Enviar</button>
+                </div>
+                <div class="comments-list" id="comments-list-${item.id}"></div>
+            </div>
+        `;
+        return card;
+    }
+
     function renderCarousel() {
         const container = document.getElementById('carouselContainer');
         container.innerHTML = '';
         allKeTeteos.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'ke-teteo-card';
-            card.setAttribute('data-id', item.id);
-            card.innerHTML = `
-                <div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div>
-                <div class="card-content">
-                    <div class="live-badge"><div class="live-dot"></div>EN VIVO</div>
-                    <div class="event-title">${item.titulo}</div>
-                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
-                    <div class="event-meta"><span>📍 ${item.ubicacion} · ${item.distancia}</span></div>
-                    <div class="action-buttons">
-                        <button class="action-btn like-btn" data-id="${item.id}">❤️ <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}">💬 Comentar</button>
-                        <button class="action-btn share-btn" data-id="${item.id}">🔄 Reenviar</button>
-                    </div>
-                    <div class="comment-row" id="comment-row-${item.id}" style="display: none;">
-                        <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Escribe un comentario...">
-                        <button class="send-comment" data-id="${item.id}">Enviar</button>
-                    </div>
-                    <div class="comments-list" id="comments-list-${item.id}"></div>
-                </div>
-            `;
+            const card = crearCardKeTeteo(item);
             container.appendChild(card);
             attachCardEvents(card, item.id);
         });
@@ -1449,6 +1301,7 @@
         if (likeBtn) {
             likeBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
+                if (!loggedIn) { alert('Inicia sesión para dar like'); return; }
                 currentLikes[id] = (currentLikes[id] || 0) + 1;
                 const likeSpan = likeBtn.querySelector('.like-count');
                 if (likeSpan) likeSpan.innerText = currentLikes[id];
@@ -1464,6 +1317,7 @@
         if (commentToggle && commentRow) {
             commentToggle.addEventListener('click', (e) => {
                 e.stopPropagation();
+                if (!loggedIn) { alert('Inicia sesión para comentar'); return; }
                 const isVisible = commentRow.style.display === 'flex';
                 commentRow.style.display = isVisible ? 'none' : 'flex';
             });
@@ -1472,6 +1326,7 @@
         if (sendBtn) {
             sendBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
+                if (!loggedIn) { alert('Inicia sesión para comentar'); return; }
                 const input = document.getElementById(`comment-input-${id}`);
                 const text = input.value.trim();
                 if (text) {
@@ -1488,6 +1343,14 @@
             shareBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 alert(`🔗 Compartir KeTeteo: ${window.location.href}?stream=${id}`);
+            });
+        }
+        const reportBtn = card.querySelector('.report-btn');
+        if (reportBtn) {
+            reportBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                reporteKeTeteoId = id;
+                document.getElementById('reporteModal').classList.add('show');
             });
         }
         updateCommentsUI(id);
@@ -1520,66 +1383,98 @@
         fullDiv.addEventListener('click', (e) => { if (e.target === fullDiv) fullDiv.remove(); });
     }
 
-    // ================= PATROCINIOS CON AUTO-GIRO =================
-    function renderPatrocinios() {
-        const track = document.getElementById('patrociniosTrack');
+    function enviarReporte(motivo) {
+        if (!loggedIn) {
+            alert('Inicia sesión para reportar');
+            cerrarReporteModal();
+            return;
+        }
+        alert(`✅ Reporte enviado: ${motivo}\n\nGracias por ayudarnos a mantener KeTeteoLive seguro.`);
+        cerrarReporteModal();
+    }
+
+    function cerrarReporteModal() {
+        document.getElementById('reporteModal').classList.remove('show');
+        reporteKeTeteoId = null;
+    }
+
+    // ================= PATROCINIOS =================
+    function renderPatrociniosSuperior() {
+        const track = document.getElementById('patrociniosTrackSuperior');
         track.innerHTML = '';
         const patrociniosInfinitos = [...patrocinios, ...patrocinios, ...patrocinios, ...patrocinios, ...patrocinios];
         patrociniosInfinitos.forEach(p => {
             const card = document.createElement('div');
-            card.className = 'patrocinio-card';
+            card.className = 'patrocinio-card-superior';
             card.onclick = () => window.open(p.link, '_blank');
-            card.innerHTML = `
-                <img src="${p.imagen}" alt="${p.texto}">
-                <div class="patro-text">${p.texto}</div>
-            `;
+            card.innerHTML = `<img src="${p.imagen}" alt="${p.texto}"><div class="patro-text">${p.texto}</div>`;
             track.appendChild(card);
         });
-        
         setTimeout(() => {
-            configurarEventosPatrocinios();
-            iniciarAutoScrollPatrocinios();
+            configurarAutoScrollSuperior();
+            iniciarAutoScrollSuperior();
         }, 100);
     }
 
-    function iniciarAutoScrollPatrocinios() {
-        const carousel = document.querySelector('.patrocinios-carousel');
+    function renderPatrociniosInferior() {
+        const track = document.getElementById('patrociniosTrackInferior');
+        track.innerHTML = '';
+        const patrociniosInfinitos = [...patrocinios, ...patrocinios, ...patrocinios, ...patrocinios, ...patrocinios];
+        patrociniosInfinitos.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'patrocinio-card-inferior';
+            card.onclick = () => window.open(p.link, '_blank');
+            card.innerHTML = `<img src="${p.imagen}" alt="${p.texto}"><div class="patro-text">${p.texto}</div>`;
+            track.appendChild(card);
+        });
+        setTimeout(() => {
+            configurarAutoScrollInferior();
+            iniciarAutoScrollInferior();
+        }, 100);
+    }
+
+    function iniciarAutoScrollSuperior() {
+        const carousel = document.querySelector('.patrocinios-superior');
         if (!carousel) return;
-        if (autoScrollInterval) clearInterval(autoScrollInterval);
-        autoScrollInterval = setInterval(() => {
-            if (!isUserInteracting && carousel) {
-                carousel.scrollBy({ left: 140, behavior: 'smooth' });
-                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 80) {
-                    setTimeout(() => {
-                        carousel.scrollTo({ left: 0, behavior: 'smooth' });
-                    }, 300);
+        if (autoScrollIntervalSuperior) clearInterval(autoScrollIntervalSuperior);
+        autoScrollIntervalSuperior = setInterval(() => {
+            if (!isUserInteractingSuperior && carousel) {
+                carousel.scrollBy({ left: 1, behavior: 'smooth' });
+                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
+                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
                 }
             }
-        }, 4000);
+        }, 30);
     }
 
-    function detenerAutoScrollPatrocinios() {
-        isUserInteracting = true;
-        if (autoScrollTimeout) clearTimeout(autoScrollTimeout);
-        autoScrollTimeout = setTimeout(() => {
-            isUserInteracting = false;
-        }, 5000);
-    }
-
-    function configurarEventosPatrocinios() {
-        const carousel = document.querySelector('.patrocinios-carousel');
+    function iniciarAutoScrollInferior() {
+        const carousel = document.querySelector('.patrocinios-inferior');
         if (!carousel) return;
-        carousel.addEventListener('touchstart', () => detenerAutoScrollPatrocinios());
-        carousel.addEventListener('mousedown', () => detenerAutoScrollPatrocinios());
-        carousel.addEventListener('scroll', () => {
-            if (autoScrollTimeout) clearTimeout(autoScrollTimeout);
-            autoScrollTimeout = setTimeout(() => {
-                isUserInteracting = false;
-            }, 3000);
-        });
+        if (autoScrollIntervalInferior) clearInterval(autoScrollIntervalInferior);
+        autoScrollIntervalInferior = setInterval(() => {
+            if (!isUserInteractingInferior && carousel) {
+                carousel.scrollBy({ left: 1, behavior: 'smooth' });
+                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
+                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                }
+            }
+        }, 30);
     }
 
-    // ================= MODALES =================
+    function configurarAutoScrollSuperior() {
+        const carousel = document.querySelector('.patrocinios-superior');
+        if (!carousel) return;
+        carousel.addEventListener('touchstart', () => { isUserInteractingSuperior = true; if (autoScrollTimeoutSuperior) clearTimeout(autoScrollTimeoutSuperior); });
+        carousel.addEventListener('touchend', () => { autoScrollTimeoutSuperior = setTimeout(() => { isUserInteractingSuperior = false; }, 5000); });
+    }
+
+    function configurarAutoScrollInferior() {
+        const carousel = document.querySelector('.patrocinios-inferior');
+        if (!carousel) return;
+        carousel.addEventListener('touchstart', () => { isUserInteractingInferior = true; if (autoScrollTimeoutInferior) clearTimeout(autoScrollTimeoutInferior); });
+        carousel.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); });
+    }
+
     function openProximosEventos() {
         const container = document.getElementById('proximosEventosList');
         container.innerHTML = '';
@@ -1600,11 +1495,8 @@
         document.getElementById('proximosEventosModal').classList.add('show');
     }
 
-    function closeProximosEventos() {
-        document.getElementById('proximosEventosModal').classList.remove('show');
-    }
+    function closeProximosEventos() { document.getElementById('proximosEventosModal').classList.remove('show'); }
 
-    // ================= ELIMINAR KE TETEO =================
     function abrirConfirmarEliminar(id, titulo) {
         eliminarId = id;
         document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`;
@@ -1630,7 +1522,6 @@
         document.getElementById('confirmarEliminarModal').classList.remove('show');
     }
 
-    // ================= MIS TRANSMISIONES =================
     function renderMyStreams() {
         const container = document.getElementById('myStreamsList');
         const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username);
@@ -1643,17 +1534,13 @@
             const div = document.createElement('div');
             div.className = 'my-stream-card';
             div.innerHTML = `
-                <div>
-                    <strong>${ke.titulo}</strong><br>
-                    📅 Publicado recientemente · 👁️ ${ke.viewers || 0} vistas
-                </div>
+                <div><strong>${ke.titulo}</strong><br>📅 Publicado recientemente · 👁️ ${ke.viewers || 0} vistas</div>
                 <button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">🗑️ ELIMINAR</button>
             `;
             container.appendChild(div);
         });
     }
 
-    // ================= FUNCIONES DE BÚSQUEDA =================
     function searchEvents() {
         const term = document.getElementById('searchInput').value.toLowerCase();
         if (!term) return renderCarousel();
@@ -1667,7 +1554,7 @@
     function togglePassword(id) { const inp = document.getElementById(id); inp.type = inp.type === 'password' ? 'text' : 'password'; }
     function openRegister() { closeModals(); document.getElementById('registerModal').classList.add('show'); }
     function openLogin() { closeModals(); document.getElementById('loginModal').classList.add('show'); }
-    function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('show')); document.getElementById('passError').style.display = 'none'; document.getElementById('ageError').style.display = 'none'; }
+    function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('show')); }
 
     function register() {
         const name = document.getElementById('regName').value;
@@ -1709,7 +1596,6 @@
 
     function logout() { loggedIn = false; currentUser = null; localStorage.removeItem('user'); document.getElementById('welcomeScreen').style.display = 'flex'; document.getElementById('mainScreen').classList.remove('active'); document.getElementById('logoutMenuBtn').style.display = 'none'; document.getElementById('createKeTeteoBtn').style.display = 'none'; closeMenu(); showHomeScreen(); }
 
-    // ================= CREAR KE TETEO =================
     function openCreateKeTeteoModal() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } document.getElementById('createKeTeteoModal').classList.add('show'); }
     function closeCreateModal() { document.getElementById('createKeTeteoModal').classList.remove('show'); }
 
@@ -1733,18 +1619,9 @@
 
     function crearKeTeteoFinal(id, titulo, ubicacion, distancia, imagen) {
         const nuevoKe = {
-            id: id,
-            titulo: titulo,
-            nombreCreador: currentUser.name,
-            usuario: currentUser.username,
-            ubicacion: ubicacion,
-            distancia: distancia,
-            categoria: "Otros",
-            lat: 18.48,
-            lng: -69.91,
-            viewers: 0,
-            likes: 0,
-            imagen: imagen
+            id: id, titulo: titulo, nombreCreador: currentUser.name, usuario: currentUser.username,
+            ubicacion: ubicacion, distancia: distancia, categoria: "Otros", lat: 18.48, lng: -69.91,
+            viewers: 0, likes: 0, imagen: imagen
         };
         allKeTeteos.unshift(nuevoKe);
         currentLikes[nuevoKe.id] = 0;
@@ -1760,9 +1637,8 @@
         document.getElementById('newImagenFile').value = '';
     }
 
-    // ================= PANTALLAS =================
-    function showMainScreen() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('mainScreen').classList.add('active'); document.getElementById('profileScreen').classList.remove('active'); getUserLocation(); renderCarousel(); }
-    function showHomeScreen() { document.getElementById('mainScreen').classList.add('active'); document.getElementById('profileScreen').classList.remove('active'); renderCarousel(); }
+    function showMainScreen() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('mainScreen').classList.add('active'); renderCarousel(); }
+    function showHomeScreen() { document.getElementById('mainScreen').classList.add('active'); renderCarousel(); }
     function showProfileScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
     function showAlertsScreen() { alert('🔔 Alertas (Próximamente)'); }
     function showMyStreamsScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('myStreamsScreen').classList.add('active'); renderMyStreams(); }
@@ -1770,7 +1646,6 @@
     function showLanguageScreen() { alert('Idioma (Próximamente)'); }
     function setLanguage(lang) { alert('Idioma cambiado a ' + lang); }
 
-    // ================= PERFIL =================
     function uploadProfilePhoto() { document.getElementById('photoUpload').click(); }
     function handlePhotoUpload(e) { const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = ev => { document.getElementById('profileImg').src = ev.target.result; localStorage.setItem('profilePhoto', ev.target.result); }; reader.readAsDataURL(file); } }
     function openEditProfile() { alert('Editar perfil (próximamente)'); }
@@ -1782,7 +1657,6 @@
     function shareProfile() { navigator.clipboard.writeText(window.location.href); alert('Perfil copiado'); }
     function openProfileLink() { window.open('https://linktr.ee/jomani', '_blank'); }
 
-    // ================= LEGAL =================
     function openLegal(type) {
         let content = '';
         if (type === 'terms') content = 'Términos y Condiciones: Al usar KeTeteoLive aceptas nuestras normas...';
@@ -1791,11 +1665,11 @@
         alert(content);
     }
 
-    // ================= KE TETEO ADM - 7 TOQUES + CONTRASEÑA =================
+    // ================= KE TETEO ADM =================
     let logoClickCount = 0;
     let logoTimer = null;
     const ADMIN_PASSWORD = "KeTeteoAdmin2025";
-    
+
     function iniciarContadorAdmin() {
         logoClickCount++;
         clearTimeout(logoTimer);
@@ -1803,11 +1677,9 @@
             logoClickCount = 0;
             pedirContraseñaAdmin();
         }
-        logoTimer = setTimeout(() => {
-            logoClickCount = 0;
-        }, 1000);
+        logoTimer = setTimeout(() => { logoClickCount = 0; }, 1000);
     }
-    
+
     function pedirContraseñaAdmin() {
         const password = prompt("🔐 VERIFICACIÓN DE ADMINISTRADOR\n\nIngresa la contraseña para acceder a KeTeteoAdm:");
         if (password === ADMIN_PASSWORD) {
@@ -1817,7 +1689,7 @@
             alert("❌ Contraseña incorrecta. Acceso denegado.");
         }
     }
-    
+
     function abrirKeTeteoAdm() {
         const userEmail = currentUser?.email;
         const adminEmail = "keteteoadm@gmail.com";
@@ -1832,11 +1704,26 @@
         alert("👑 Bienvenido a KeTeteoAdm. Panel de administración (próximamente)");
     }
 
+    function abrirKeTeteoAdmDesdeMenu() {
+        if (!loggedIn) {
+            alert("⚠️ Debes iniciar sesión primero.");
+            return;
+        }
+        const userEmail = currentUser?.email;
+        const adminEmail = "keteteoadm@gmail.com";
+        if (userEmail !== adminEmail) {
+            alert("❌ Acceso denegado. Solo el administrador puede acceder.");
+            return;
+        }
+        pedirContraseñaAdmin();
+    }
+
     // ================= INICIALIZACIÓN =================
     window.onload = () => {
         loadKeTeteos();
         renderCarousel();
-        renderPatrocinios();
+        renderPatrociniosSuperior();
+        renderPatrociniosInferior();
         document.getElementById('welcomeScreen').style.display = 'flex';
         if (localStorage.getItem('user')) {
             currentUser = JSON.parse(localStorage.getItem('user'));
@@ -1850,13 +1737,11 @@
             if (savedComments) currentComments[k.id] = JSON.parse(savedComments);
             else currentComments[k.id] = [];
         });
-        
-        // Activar 7 toques en el logo
+
         const logoImg = document.querySelector('.logo-img');
         if (logoImg) {
             logoImg.addEventListener('click', iniciarContadorAdmin);
             logoImg.addEventListener('touchstart', iniciarContadorAdmin);
-            console.log("✅ KeTeteoAdm: 7 toques en el logo activado");
         }
     };
 </script>
