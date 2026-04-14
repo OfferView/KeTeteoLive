@@ -31,19 +31,20 @@
         }
 
         /* ========== HEADER CON LOGO GRANDE Y CENTRADO ========== */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: var(--negro);
-            padding: 15px 20px;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-            border-bottom: 1px solid var(--gris-medio);
-        }
-
+      
+      .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--negro);
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    border-bottom: 1px solid var(--gris-medio);
+  }
+        
         /* Fila superior: hamburguesa + botón iniciar */
         .header-top {
             display: flex;
@@ -69,12 +70,14 @@
             margin-bottom: 15px;
         }
 
+   
         .logo-img {
-            max-height: 150px;
-            width: auto;
-            object-fit: contain;
-        }
-
+    max-height: 80px;
+    width: auto;
+    object-fit: contain;
+    margin-top: 0;
+     }
+        
         /* Botón Iniciar Mi KeTeteo (pequeño) */
         .start-live-btn {
             background: var(--rojo-logo);
@@ -402,19 +405,21 @@
             gap: 12px;
             padding: 0 16px;
         }
-        
+
+
         .patrocinio-card {
-            flex: 0 0 auto;
-            width: 130px;
-            scroll-snap-align: start;
-            background: var(--gris-oscuro);
-            border-radius: 16px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s;
-            border: 1px solid var(--gris-medio);
-        }
-        
+    flex: 0 0 auto;
+    width: calc(33.33% - 10px);
+    min-width: 110px;
+    scroll-snap-align: start;
+    background: var(--gris-oscuro);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: 1px solid var(--gris-medio);
+}
+       
         .patrocinio-card:active {
             transform: scale(0.96);
         }
@@ -1086,9 +1091,8 @@
         </div>
     </div>
     
-    <div id="locationBar" class="location-bar">
-        <div class="location-text">📍 Buscando ubicación...</div>
-    </div>
+   <!-- LÍNEA DIVISORIA NARANJA ENTRE ETAPA 1 Y ETAPA 1.0 -->
+<hr class="divider-naranja">
 
     <!-- BARRA HORIZONTAL (2 BOTONES) -->
     <div class="horizontal-bar">
