@@ -126,11 +126,13 @@
             font-size: 18px;
         }
 
+        /* ========== DIVISORES NARANJA (ACTUALIZADO) ========== */
         .divider-naranja {
-            margin: 10px 16px;
+            margin: 20px 0;
             border: none;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--rojo-logo), transparent);
+            background: linear-gradient(90deg, transparent, var(--rojo-logo), var(--naranja), var(--rojo-logo), transparent);
+            width: 100%;
         }
 
         /* ========== BARRA HORIZONTAL (2 BOTONES) ========== */
@@ -165,47 +167,50 @@
             border-color: var(--rojo-logo);
         }
 
-        /* ========== CARRUSEL 1: PATROCINIOS SUPERIOR (estilo craftmktgroup) ========== */
+        /* ========== CARRUSEL 1: PATROCINIOS SUPERIOR (ESTILO CRAFT CINTA TEXTO) ========== */
         .patrocinios-superior {
             overflow-x: auto;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             cursor: grab;
             margin: 16px 0;
+            white-space: nowrap;
         }
         .patrocinios-superior:active { cursor: grabbing; }
         .patrocinios-superior::-webkit-scrollbar { display: none; }
         .patrocinios-track-superior {
-            display: flex;
-            gap: 16px;
+            display: inline-flex;
+            gap: 48px;
             padding: 0 16px;
-            width: max-content;
+            align-items: center;
         }
-        .patrocinio-card-superior {
-            flex: 0 0 auto;
-            width: 250px;
-            background: var(--gris-oscuro);
-            border-radius: 16px;
-            overflow: hidden;
+        .patrocinio-texto-superior {
+            display: inline-block;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: transparent;
+            background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
+            -webkit-background-clip: text;
+            background-clip: text;
+            white-space: nowrap;
+            font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+            transition: opacity 0.2s;
             cursor: pointer;
-            transition: transform 0.2s;
-            border: 1px solid var(--gris-medio);
         }
-        .patrocinio-card-superior:active { transform: scale(0.96); }
-        .patrocinio-card-superior img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
+        .patrocinio-texto-superior:active {
+            opacity: 0.7;
         }
-        .patrocinio-card-superior .patro-text {
-            padding: 10px;
-            font-size: 12px;
-            text-align: center;
-            color: var(--blanco);
-            font-weight: 600;
+        .separador-texto {
+            display: inline-block;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--rojo-logo);
+            letter-spacing: 4px;
         }
 
-        /* ========== CARRUSEL 2: KE TETEOS ACTIVOS (4 visibles) ========== */
+        /* ========== CARRUSEL 2: KE TETEOS ACTIVOS ========== */
         #mainScreen {
             padding-top: 160px;
         }
@@ -419,7 +424,7 @@
             overflow-y: auto;
         }
 
-        /* ========== CARRUSEL 3: PATROCINIOS INFERIOR (MÁS RÁPIDO) ========== */
+        /* ========== CARRUSEL 3: PATROCINIOS INFERIOR ========== */
         .patrocinios-inferior {
             overflow-x: auto;
             scroll-behavior: smooth;
@@ -975,15 +980,24 @@
         <button class="horiz-btn" onclick="openProximosEventos()">📅 Próximos Eventos +</button>
     </div>
 
-    <!-- CARRUSEL 1: PATROCINIOS SUPERIOR -->
+    <!-- LÍNEA DIVISORA NARANJA 1 -->
+    <hr class="divider-naranja">
+
+    <!-- CARRUSEL 1: PATROCINIOS SUPERIOR (ESTILO CRAFT) -->
     <div class="patrocinios-superior" id="patrociniosSuperior">
         <div class="patrocinios-track-superior" id="patrociniosTrackSuperior"></div>
     </div>
+
+    <!-- LÍNEA DIVISORA NARANJA 2 -->
+    <hr class="divider-naranja">
 
     <div class="section-title">KETETEO ACTIVOS</div>
 
     <!-- CARRUSEL 2: KE TETEOS ACTIVOS -->
     <div id="carouselContainer"></div>
+
+    <!-- LÍNEA DIVISORA NARANJA 3 -->
+    <hr class="divider-naranja">
 
     <!-- CARRUSEL 3: PATROCINIOS INFERIOR -->
     <div class="patrocinios-inferior" id="patrociniosInferior">
@@ -1191,21 +1205,26 @@
         const now = Date.now();
         const timeSinceLastActivity = now - lastActivity;
         
-        if (timeSinceLastActivity < 30000) { // 30 segundos
+        if (timeSinceLastActivity < 30000) {
             userStatus = "online";
-            document.querySelector('.status-dot').className = 'status-dot status-online';
-            document.getElementById('statusText').innerText = 'En línea';
-        } else if (timeSinceLastActivity < 300000) { // 5 minutos
+            const statusDot = document.querySelector('.status-dot');
+            if (statusDot) statusDot.className = 'status-dot status-online';
+            const statusText = document.getElementById('statusText');
+            if (statusText) statusText.innerText = 'En línea';
+        } else if (timeSinceLastActivity < 300000) {
             userStatus = "away";
-            document.querySelector('.status-dot').className = 'status-dot status-away';
-            document.getElementById('statusText').innerText = 'Ausente';
+            const statusDot = document.querySelector('.status-dot');
+            if (statusDot) statusDot.className = 'status-dot status-away';
+            const statusText = document.getElementById('statusText');
+            if (statusText) statusText.innerText = 'Ausente';
         } else {
             userStatus = "offline";
-            document.querySelector('.status-dot').className = 'status-dot status-offline';
-            document.getElementById('statusText').innerText = 'Desconectado';
+            const statusDot = document.querySelector('.status-dot');
+            if (statusDot) statusDot.className = 'status-dot status-offline';
+            const statusText = document.getElementById('statusText');
+            if (statusText) statusText.innerText = 'Desconectado';
         }
         
-        // Guardar estado en localStorage
         localStorage.setItem('userStatus', userStatus);
         localStorage.setItem('lastActivity', lastActivity);
     }
@@ -1216,17 +1235,14 @@
     }
 
     function iniciarSeguimientoEstado() {
-        // Actualizar estado cada 10 segundos
         if (userStatusInterval) clearInterval(userStatusInterval);
         userStatusInterval = setInterval(actualizarEstadoUsuario, 10000);
         
-        // Detectar actividad del usuario
         window.addEventListener('click', actualizarActividad);
         window.addEventListener('scroll', actualizarActividad);
         window.addEventListener('keydown', actualizarActividad);
         window.addEventListener('touchstart', actualizarActividad);
         
-        // Detectar cuando el usuario cierra la pestaña
         window.addEventListener('beforeunload', () => {
             if (loggedIn) {
                 localStorage.setItem('userStatus', 'offline');
@@ -1234,13 +1250,10 @@
             }
         });
         
-        // Detectar cuando la página se vuelve visible (pestaña activa)
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
-                // Pestaña inactiva
-                lastActivity = Date.now() - 60000; // Simular ausencia
+                lastActivity = Date.now() - 60000;
             } else {
-                // Pestaña activa
                 lastActivity = Date.now();
             }
             actualizarEstadoUsuario();
@@ -1249,7 +1262,7 @@
         actualizarEstadoUsuario();
     }
 
-    // Datos de patrocinios
+    // Datos de patrocinios para carrusel 3 (con imágenes)
     const patrocinios = [
         { id: 1, imagen: "https://placehold.co/250x140/FF2D55/white?text=Super", link: "https://supermercado.com", texto: "🔥 Oferta Super" },
         { id: 2, imagen: "https://placehold.co/250x140/007AFF/white?text=Banco", link: "https://banco.com", texto: "🏦 Banco Popular" },
@@ -1496,17 +1509,38 @@
     }
 
     // ================= PATROCINIOS =================
+    // NUEVO: Carrusel 1 estilo cinta de texto (como Craft Mkt Group)
     function renderPatrociniosSuperior() {
         const track = document.getElementById('patrociniosTrackSuperior');
         track.innerHTML = '';
-        const patrociniosInfinitos = [...patrocinios, ...patrocinios, ...patrocinios, ...patrocinios, ...patrocinios];
-        patrociniosInfinitos.forEach(p => {
-            const card = document.createElement('div');
-            card.className = 'patrocinio-card-superior';
-            card.onclick = () => window.open(p.link, '_blank');
-            card.innerHTML = `<img src="${p.imagen}" alt="${p.texto}"><div class="patro-text">${p.texto}</div>`;
-            track.appendChild(card);
+        
+        const textosPatrocinio = [
+            "🔥 OFERTA SUPER",
+            "🏦 BANCO POPULAR",
+            "🎵 CONCIERTO EXCLUSIVO",
+            "🍔 COMIDA RÁPIDA",
+            "👕 ROPA DE MARCA",
+            "⚡ DESCUENTOS ÚNICOS",
+            "🎫 EVENTOS ESPECIALES"
+        ];
+        
+        const textosInfinitos = [...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio];
+        
+        textosInfinitos.forEach((texto, index) => {
+            const span = document.createElement('span');
+            span.className = 'patrocinio-texto-superior';
+            span.innerText = texto;
+            span.onclick = () => window.open('https://craftmktgroup.com', '_blank');
+            track.appendChild(span);
+            
+            if (index < textosInfinitos.length - 1) {
+                const separador = document.createElement('span');
+                separador.className = 'separador-texto';
+                separador.innerText = '•';
+                track.appendChild(separador);
+            }
         });
+        
         setTimeout(() => {
             configurarAutoScrollSuperior();
             iniciarAutoScrollSuperior();
@@ -1530,20 +1564,22 @@
         }, 100);
     }
 
+    // Velocidad más rápida para carrusel 1 (texto)
     function iniciarAutoScrollSuperior() {
         const carousel = document.querySelector('.patrocinios-superior');
         if (!carousel) return;
         if (autoScrollIntervalSuperior) clearInterval(autoScrollIntervalSuperior);
         autoScrollIntervalSuperior = setInterval(() => {
             if (!isUserInteractingSuperior && carousel) {
-                carousel.scrollBy({ left: 1, behavior: 'smooth' });
+                carousel.scrollBy({ left: 2.5, behavior: 'smooth' });
                 if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
                     carousel.scrollTo({ left: 0, behavior: 'smooth' });
                 }
             }
-        }, 30);
+        }, 16);
     }
 
+    // Velocidad más rápida para carrusel 2 (KeTeteos)
     function iniciarAutoScrollInferior() {
         const carousel = document.querySelector('.patrocinios-inferior');
         if (!carousel) return;
@@ -1555,7 +1591,7 @@
                     carousel.scrollTo({ left: 0, behavior: 'smooth' });
                 }
             }
-        }, 30);
+        }, 16);
     }
 
     function configurarAutoScrollSuperior() {
@@ -1773,7 +1809,6 @@
             document.getElementById('profileBio').innerText = user.bio || 'Amante de los eventos en vivo 🎉'; 
             document.getElementById('userEmail').innerText = user.email; 
         }
-        // Cargar estado guardado
         const savedStatus = localStorage.getItem('userStatus');
         const savedLastActivity = localStorage.getItem('lastActivity');
         if (savedStatus && savedLastActivity) {
