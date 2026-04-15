@@ -66,7 +66,6 @@
             object-fit: contain;
         }
 
-        /* Espaciador para mantener equilibrio */
         .header-spacer {
             width: 40px;
         }
@@ -80,7 +79,7 @@
             width: 100%;
         }
 
-        /* ========== BARRA HORIZONTAL (2 BOTONES PEQUEÑOS) ========== */
+        /* ========== BARRA HORIZONTAL ========== */
         .horizontal-bar {
             display: flex;
             gap: 10px;
@@ -112,7 +111,7 @@
             border-color: var(--rojo-logo);
         }
 
-        /* ========== CARRUSEL 1: PATROCINIOS SUPERIOR (PEQUEÑO) ========== */
+        /* ========== CARRUSEL 1 ========== */
         .patrocinios-superior {
             overflow-x: auto;
             scroll-behavior: smooth;
@@ -144,9 +143,7 @@
             transition: opacity 0.2s;
             cursor: pointer;
         }
-        .patrocinio-texto-superior:active {
-            opacity: 0.7;
-        }
+        .patrocinio-texto-superior:active { opacity: 0.7; }
         .separador-texto {
             display: inline-block;
             font-size: 16px;
@@ -155,12 +152,11 @@
             letter-spacing: 2px;
         }
 
-        /* ========== CARRUSEL 2: KE TETEOS ACTIVOS (2 COLUMNAS, CENTRAL) ========== */
+        /* ========== CARRUSEL 2 ========== */
         #mainScreen {
             padding-top: 60px;
         }
 
-        /* Contenedor del carrusel 2 con scroll vertical independiente */
         .carousel-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -198,6 +194,14 @@
             transform: scale(0.98);
         }
 
+        /* Tarjeta especial del radar - sin cursor pointer porque tiene su propio mapa */
+        .radar-card {
+            cursor: default;
+        }
+        .radar-card:active {
+            transform: none;
+        }
+
         .stream-media {
             width: 100%;
             height: 140px;
@@ -209,6 +213,14 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        /* Mapa del radar */
+        .radar-iframe {
+            width: 100%;
+            height: 140px;
+            border: none;
+            background: #1a2a3a;
         }
 
         .card-content {
@@ -338,7 +350,7 @@
             overflow-y: auto;
         }
 
-        /* ========== CARRUSEL 3: PATROCINIOS INFERIOR (PEQUEÑO) ========== */
+        /* ========== CARRUSEL 3 ========== */
         .patrocinios-inferior {
             overflow-x: auto;
             scroll-behavior: smooth;
@@ -414,7 +426,7 @@
             z-index: 1001;
         }
 
-        /* ========== BOTTOM NAVIGATION (4 BOTONES) ========== */
+        /* ========== BOTTOM NAVIGATION ========== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -443,11 +455,6 @@
         .nav-label {
             font-size: 9px;
             color: var(--gris-claro);
-        }
-
-        .nav-label.active {
-            color: var(--rojo-logo);
-            font-weight: 700;
         }
 
         /* ========== MODALES ========== */
@@ -487,7 +494,7 @@
             font-size: 18px;
         }
 
-        .modal-content input, .modal-content select, .modal-content textarea {
+        .modal-content input, .modal-content select {
             width: 100%;
             padding: 12px;
             margin-bottom: 10px;
@@ -522,29 +529,6 @@
             width: 100%;
             font-size: 15px;
         }
-
-        /* ========== ESTADO DEL USUARIO ========== */
-        .user-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(28,28,30,0.6);
-            backdrop-filter: blur(10px);
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin: 8px auto;
-            width: fit-content;
-        }
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .status-online { background-color: #30D158; box-shadow: 0 0 6px #30D158; }
-        .status-away { background-color: #FF9F0A; box-shadow: 0 0 6px #FF9F0A; }
-        .status-offline { background-color: #8E8E93; }
-        .status-text { font-size: 12px; color: var(--gris-claro); }
 
         /* Perfil */
         .profile-modern {
@@ -611,11 +595,26 @@
             margin-top: 4px;
         }
 
-        .user-bio {
-            font-size: 13px;
-            margin-top: 8px;
-            color: #E5E5E5;
+        .user-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(28,28,30,0.6);
+            backdrop-filter: blur(10px);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin: 8px auto;
+            width: fit-content;
         }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-online { background-color: #30D158; }
+        .status-away { background-color: #FF9F0A; }
+        .status-offline { background-color: #8E8E93; }
 
         .stats-modern {
             display: flex;
@@ -625,39 +624,16 @@
             padding: 12px 0;
             background: rgba(28,28,30,0.6);
             border-radius: 24px;
-            backdrop-filter: blur(10px);
         }
-
-        .stat-card {
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .stat-value {
-            font-size: 18px;
-            font-weight: 800;
-        }
-
-        .stat-label {
-            font-size: 10px;
-            color: var(--gris-claro);
-            text-transform: uppercase;
-        }
+        .stat-card { text-align: center; cursor: pointer; }
+        .stat-value { font-size: 18px; font-weight: 800; }
+        .stat-label { font-size: 10px; color: var(--gris-claro); }
 
         .contact-modern {
             background: rgba(28,28,30,0.6);
-            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 12px;
         }
-
-        .contact-header {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--gris-claro);
-            margin-bottom: 10px;
-        }
-
         .contact-row {
             display: flex;
             align-items: center;
@@ -666,31 +642,14 @@
             border-radius: 14px;
             cursor: pointer;
         }
-
-        .contact-row:hover {
-            background: rgba(255,255,255,0.05);
-        }
-
-        .contact-icon {
-            font-size: 16px;
-            width: 28px;
-        }
-
-        .contact-value {
-            flex: 1;
-            font-size: 13px;
-        }
-
-        .contact-copy {
-            font-size: 10px;
-            opacity: 0.6;
-        }
+        .contact-icon { font-size: 16px; width: 28px; }
+        .contact-value { flex: 1; font-size: 13px; }
+        .contact-copy { font-size: 10px; opacity: 0.6; }
 
         .streams-list {
             margin-top: 60px;
             padding: 16px;
         }
-
         .my-stream-card {
             background: var(--gris-oscuro);
             padding: 14px;
@@ -702,13 +661,8 @@
             align-items: center;
         }
 
-        .screen {
-            display: none;
-        }
-
-        .screen.active {
-            display: block;
-        }
+        .screen { display: none; }
+        .screen.active { display: block; }
 
         .welcome {
             display: flex;
@@ -718,51 +672,12 @@
             height: 100vh;
             padding: 20px;
         }
+        .emoji { font-size: 70px; margin-bottom: 10px; }
+        .title { font-size: 36px; font-weight: 900; color: var(--rojo-logo); }
+        .sub { font-size: 14px; color: var(--gris-claro); margin-bottom: 30px; text-align: center; }
+        .btn-primary { background: var(--rojo-logo); padding: 14px; border-radius: 12px; width: 100%; text-align: center; color: var(--blanco); font-weight: 700; cursor: pointer; border: none; }
+        .btn-secondary { background: transparent; border: 1.5px solid var(--gris-medio); padding: 14px; border-radius: 12px; width: 100%; text-align: center; color: var(--gris-claro); font-weight: 700; cursor: pointer; margin-top: 10px; }
 
-        .emoji {
-            font-size: 70px;
-            margin-bottom: 10px;
-        }
-
-        .title {
-            font-size: 36px;
-            font-weight: 900;
-            color: var(--rojo-logo);
-        }
-
-        .sub {
-            font-size: 14px;
-            color: var(--gris-claro);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: var(--rojo-logo);
-            padding: 14px;
-            border-radius: 12px;
-            width: 100%;
-            text-align: center;
-            color: var(--blanco);
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 1.5px solid var(--gris-medio);
-            padding: 14px;
-            border-radius: 12px;
-            width: 100%;
-            text-align: center;
-            color: var(--gris-claro);
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        /* Menú lateral */
         .side-menu {
             position: fixed;
             top: 0;
@@ -773,7 +688,6 @@
             z-index: 200;
             transition: left 0.3s ease;
             padding: 70px 20px 20px 20px;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
         }
         .side-menu.open { left: 0; }
         .side-menu button {
@@ -788,7 +702,6 @@
             border-bottom: 1px solid var(--gris-medio);
             cursor: pointer;
         }
-        .side-menu button:hover { background: var(--rojo-logo); }
         .overlay {
             position: fixed;
             top: 0;
@@ -801,29 +714,18 @@
         }
         .overlay.show { display: block; }
 
-        /* Modal legal y búsqueda */
         .legal-option, .search-result {
             background: var(--negro);
             padding: 12px;
             border-radius: 12px;
             margin-bottom: 10px;
             cursor: pointer;
-            transition: all 0.2s;
             border: 1px solid var(--gris-medio);
-        }
-        .legal-option:active, .search-result:active {
-            background: var(--rojo-logo);
-            transform: scale(0.98);
         }
         .legal-option .title, .search-result .title {
             font-size: 15px;
             font-weight: 700;
             color: var(--rojo-logo);
-        }
-        .legal-option .desc, .search-result .desc {
-            font-size: 11px;
-            color: var(--gris-claro);
-            margin-top: 4px;
         }
         .contact-info-legal {
             background: var(--negro);
@@ -831,20 +733,9 @@
             border-radius: 12px;
             margin-bottom: 10px;
             text-align: center;
-            border: 1px solid var(--gris-medio);
         }
-        .contact-info-legal a {
-            color: var(--rojo-logo);
-            text-decoration: none;
-        }
-        .copyright-legal {
-            text-align: center;
-            font-size: 9px;
-            color: #555;
-            margin-top: 12px;
-            padding-top: 10px;
-            border-top: 1px solid var(--gris-medio);
-        }
+        .contact-info-legal a { color: var(--rojo-logo); text-decoration: none; }
+        .copyright-legal { text-align: center; font-size: 9px; color: #555; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gris-medio); }
         .search-input-modal {
             width: 100%;
             padding: 12px;
@@ -885,19 +776,16 @@
         <button class="horiz-btn" onclick="openProximosEventos()">📅 Próximos Eventos</button>
     </div>
 
-    <!-- CARRUSEL 1: PATROCINIOS SUPERIOR (PEQUEÑO) -->
     <div class="patrocinios-superior" id="patrociniosSuperior">
         <div class="patrocinios-track-superior" id="patrociniosTrackSuperior"></div>
     </div>
 
     <hr class="divider-naranja">
 
-    <!-- CARRUSEL 2: KE TETEOS ACTIVOS (CENTRAL) -->
     <div id="carouselContainer" class="carousel-container"></div>
 
     <hr class="divider-naranja">
 
-    <!-- CARRUSEL 3: PATROCINIOS INFERIOR (PEQUEÑO) -->
     <div class="patrocinios-inferior" id="patrociniosInferior">
         <div class="patrocinios-track-inferior" id="patrociniosTrackInferior"></div>
     </div>
@@ -916,215 +804,53 @@
 </div>
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
-<!-- MODALES AUTH -->
-<div id="registerModal" class="modal">
-    <div class="modal-content">
-        <h3>Crear cuenta</h3>
-        <input type="text" id="regName" placeholder="Nombre completo">
-        <input type="text" id="regUser" placeholder="Usuario (@ejemplo)">
-        <input type="email" id="regEmail" placeholder="Correo electrónico">
-        <input type="password" id="regPass" placeholder="Contraseña">
-        <input type="password" id="regConfirmPass" placeholder="Confirmar contraseña">
-        <select id="regYear"><option value="">Año de nacimiento (opcional)</option><script>for(let y=2024;y>=1960;y--) document.write(`<option>${y}</option>`);</script></select>
-        <button class="btn-rojo" onclick="register()">Registrarse</button>
-        <button class="btn-gris" onclick="closeModals()">Cancelar</button>
-    </div>
-</div>
+<!-- MODALES -->
+<div id="registerModal" class="modal"><div class="modal-content"><h3>Crear cuenta</h3><input type="text" id="regName" placeholder="Nombre completo"><input type="text" id="regUser" placeholder="Usuario (@ejemplo)"><input type="email" id="regEmail" placeholder="Correo electrónico"><input type="password" id="regPass" placeholder="Contraseña"><input type="password" id="regConfirmPass" placeholder="Confirmar contraseña"><select id="regYear"><option value="">Año de nacimiento</option><script>for(let y=2024;y>=1960;y--) document.write(`<option>${y}</option>`);</script></select><button class="btn-rojo" onclick="register()">Registrarse</button><button class="btn-gris" onclick="closeModals()">Cancelar</button></div></div>
 
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <h3>Iniciar sesión</h3>
-        <input type="email" id="loginEmail" placeholder="Correo electrónico">
-        <input type="password" id="loginPass" placeholder="Contraseña">
-        <button class="btn-rojo" onclick="login()">Entrar</button>
-        <button class="btn-gris" onclick="closeModals()">Cancelar</button>
-    </div>
-</div>
+<div id="loginModal" class="modal"><div class="modal-content"><h3>Iniciar sesión</h3><input type="email" id="loginEmail" placeholder="Correo electrónico"><input type="password" id="loginPass" placeholder="Contraseña"><button class="btn-rojo" onclick="login()">Entrar</button><button class="btn-gris" onclick="closeModals()">Cancelar</button></div></div>
 
-<!-- MODAL CREAR KE TETEO (con botón Iniciar Mi KeTeteo) -->
-<div id="createKeTeteoModal" class="modal">
-    <div class="modal-content">
-        <h3>Crear nuevo KeTeteo</h3>
-        <input type="text" id="newTitulo" placeholder="Título del evento">
-        <input type="text" id="newUbicacion" placeholder="Ubicación (ej. Estadio Olímpico)">
-        <input type="text" id="newDistancia" placeholder="Distancia (ej. 0.5 km)">
-        <input type="url" id="newImagen" placeholder="URL de imagen (opcional)">
-        <label style="color:var(--gris-claro); font-size:12px;">O sube una imagen:</label>
-        <input type="file" id="newImagenFile" accept="image/*">
-        <button class="btn-rojo" onclick="publicarKeTeteo()">🔴 Iniciar Mi KeTeteo</button>
-        <button class="btn-gris" onclick="closeCreateModal()">Cancelar</button>
-    </div>
-</div>
+<div id="createKeTeteoModal" class="modal"><div class="modal-content"><h3>Crear nuevo KeTeteo</h3><input type="text" id="newTitulo" placeholder="Título del evento"><input type="text" id="newUbicacion" placeholder="Ubicación"><input type="text" id="newDistancia" placeholder="Distancia"><input type="url" id="newImagen" placeholder="URL de imagen (opcional)"><label style="color:var(--gris-claro); font-size:12px;">O sube una imagen:</label><input type="file" id="newImagenFile" accept="image/*"><button class="btn-rojo" onclick="publicarKeTeteo()">🔴 Iniciar Mi KeTeteo</button><button class="btn-gris" onclick="closeCreateModal()">Cancelar</button></div></div>
 
-<!-- MODAL BÚSQUEDA (LUPA) -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <h3>🔍 Buscar eventos</h3>
-        <input type="text" id="searchInputModal" class="search-input-modal" placeholder="Escribe título o creador..." autocomplete="off">
-        <div id="searchResultsModal" style="max-height: 400px; overflow-y: auto;"></div>
-        <button class="btn-gris" onclick="closeSearchModal()">Cerrar</button>
-    </div>
-</div>
+<div id="searchModal" class="modal"><div class="modal-content"><h3>🔍 Buscar eventos</h3><input type="text" id="searchInputModal" class="search-input-modal" placeholder="Escribe título o creador..."><div id="searchResultsModal" style="max-height: 400px; overflow-y: auto;"></div><button class="btn-gris" onclick="closeSearchModal()">Cerrar</button></div></div>
 
-<!-- MODAL PRÓXIMOS EVENTOS + -->
-<div id="proximosEventosModal" class="modal">
-    <div class="modal-content" style="max-width: 400px;">
-        <h3>📅 PRÓXIMOS EVENTOS Y CATEGORÍAS</h3>
-        <div id="proximosEventosList" style="max-height: 400px; overflow-y: auto;"></div>
-        <div style="margin-top: 16px;">
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px; background:var(--rojo-logo);" onclick="filtrarPorCategoria('Fiesta'); closeProximosEventos();">🎉 Fiestas</div>
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Concierto'); closeProximosEventos();">🎵 Conciertos</div>
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Deporte'); closeProximosEventos();">⚽ Deportes</div>
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Boda'); closeProximosEventos();">💒 Bodas</div>
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Cumpleaños'); closeProximosEventos();">🎂 Cumpleaños</div>
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Actividad'); closeProximosEventos();">🎪 Actividades</div>
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Gaming'); closeProximosEventos();">🎮 Gaming</div>
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Religioso'); closeProximosEventos();">⛪ Religiosos</div>
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Trabajo'); closeProximosEventos();">💼 Trabajo</div>
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Aire Libre'); closeProximosEventos();">🏃‍♂️ Aire Libre</div>
-            <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="filtrarPorCategoria('Cocina'); closeProximosEventos();">🍳 Cocina</div>
-        </div>
-        <button class="btn-gris" onclick="closeProximosEventos()">Cerrar</button>
-    </div>
-</div>
+<div id="proximosEventosModal" class="modal"><div class="modal-content"><h3>📅 PRÓXIMOS EVENTOS</h3><div id="proximosEventosList"></div><button class="btn-gris" onclick="closeProximosEventos()">Cerrar</button></div></div>
 
-<!-- MODAL REPORTE -->
-<div id="reporteModal" class="modal">
-    <div class="modal-content">
-        <h3>⚠️ REPORTAR CONTENIDO</h3>
-        <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Contenido inapropiado')">🔞 Contenido inapropiado</div>
-        <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Spam o publicidad engañosa')">📢 Spam o publicidad engañosa</div>
-        <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Acoso o insultos')">😡 Acoso o insultos</div>
-        <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Contenido ilegal')">⚖️ Contenido ilegal</div>
-        <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Falso o engañoso')">❌ Falso o engañoso</div>
-        <div class="horiz-btn" style="width:100%; margin-bottom:8px;" onclick="enviarReporte('Otro')">📝 Otro</div>
-        <button class="btn-gris" onclick="cerrarReporteModal()">Cancelar</button>
-    </div>
-</div>
+<div id="reporteModal" class="modal"><div class="modal-content"><h3>⚠️ REPORTAR</h3><div class="horiz-btn" onclick="enviarReporte('Contenido inapropiado')">🔞 Inapropiado</div><div class="horiz-btn" onclick="enviarReporte('Spam')">📢 Spam</div><div class="horiz-btn" onclick="enviarReporte('Acoso')">😡 Acoso</div><button class="btn-gris" onclick="cerrarReporteModal()">Cancelar</button></div></div>
 
-<!-- MODAL CONFIRMAR ELIMINACIÓN -->
-<div id="confirmarEliminarModal" class="modal">
-    <div class="modal-content">
-        <h3>⚠️ ELIMINAR KE TETEO</h3>
-        <p style="text-align:center; margin-bottom:16px;">¿Estás seguro de que quieres eliminar este KeTeteo?<br>Esta acción no se puede deshacer.</p>
-        <div id="eliminarInfo" style="background: var(--negro); padding: 12px; border-radius: 12px; margin-bottom: 16px;"></div>
-        <button class="btn-rojo" onclick="confirmarEliminar()">✅ ELIMINAR</button>
-        <button class="btn-gris" onclick="cerrarConfirmarEliminar()">❌ CANCELAR</button>
-    </div>
-</div>
+<div id="confirmarEliminarModal" class="modal"><div class="modal-content"><h3>⚠️ ELIMINAR</h3><p>¿Estás seguro?</p><div id="eliminarInfo"></div><button class="btn-rojo" onclick="confirmarEliminar()">✅ ELIMINAR</button><button class="btn-gris" onclick="cerrarConfirmarEliminar()">Cancelar</button></div></div>
 
-<!-- MODAL LEGAL -->
-<div id="legalModal" class="modal">
-    <div class="modal-content">
-        <h3>📄 Información Legal</h3>
-        <div class="contact-info-legal">
-            <div style="font-size: 13px; margin-bottom: 6px;">📧 Contacto:</div>
-            <a href="mailto:soporte.keteteolive@gmail.com">soporte.keteteolive@gmail.com</a>
-        </div>
-        <div class="legal-option" onclick="openLegalContent('terms')">
-            <div class="title">⚖️ Términos y Condiciones</div>
-            <div class="desc">Al usar KeTeteoLive aceptas nuestras normas de uso...</div>
-        </div>
-        <div class="legal-option" onclick="openLegalContent('privacy')">
-            <div class="title">🔒 Política de Privacidad</div>
-            <div class="desc">Protegemos tus datos personales y tu información...</div>
-        </div>
-        <div class="legal-option" onclick="openLegalContent('cookies')">
-            <div class="title">🍪 Política de Cookies</div>
-            <div class="desc">Usamos cookies para mejorar tu experiencia...</div>
-        </div>
-        <div class="copyright-legal">
-            © 2025 KeTeteoLive. Todos los derechos reservados.
-        </div>
-        <button class="btn-gris" onclick="closeLegalModal()">Cerrar</button>
-    </div>
-</div>
+<div id="legalModal" class="modal"><div class="modal-content"><h3>📄 Información Legal</h3><div class="contact-info-legal">📧 <a href="mailto:soporte.keteteolive@gmail.com">soporte.keteteolive@gmail.com</a></div><div class="legal-option" onclick="openLegalContent('terms')">⚖️ Términos y Condiciones</div><div class="legal-option" onclick="openLegalContent('privacy')">🔒 Política de Privacidad</div><div class="legal-option" onclick="openLegalContent('cookies')">🍪 Política de Cookies</div><div class="copyright-legal">© 2025 KeTeteoLive</div><button class="btn-gris" onclick="closeLegalModal()">Cerrar</button></div></div>
 
-<!-- PANTALLA DE PERFIL -->
+<!-- PERFIL -->
 <div id="profileScreen" class="screen">
-    <div class="header">
-        <button class="hamburger" onclick="toggleMenu()">☰</button>
-        <div class="logo-container">
-            <div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Perfil</div>
-        </div>
-        <div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div>
-    </div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Perfil</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div>
     <div class="profile-modern">
         <div class="avatar-wrapper" onclick="uploadProfilePhoto()"><div class="avatar-ring"></div><img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7"><div class="avatar-badge">📷</div></div>
-        <div class="user-info">
-            <div class="user-name" id="profileName">Jomani</div>
-            <div class="user-handle" id="profileUsername">@jomani</div>
-            <div class="user-status" id="userStatus">
-                <div class="status-dot status-online"></div>
-                <span class="status-text" id="statusText">En línea</span>
-            </div>
-            <div class="user-bio" id="profileBio">Amante de los eventos en vivo 🎉</div>
-            <div class="user-link"><a href="#" onclick="openProfileLink()">linktr.ee/jomani</a></div>
-        </div>
+        <div class="user-info"><div class="user-name" id="profileName">Jomani</div><div class="user-handle" id="profileUsername">@jomani</div><div class="user-status" id="userStatus"><div class="status-dot status-online"></div><span class="status-text" id="statusText">En línea</span></div><div class="user-bio" id="profileBio">Amante de los eventos en vivo 🎉</div></div>
         <div class="stats-modern"><div class="stat-card"><div class="stat-value" id="followersCount">1.2K</div><div class="stat-label">seguidores</div></div><div class="stat-card"><div class="stat-value" id="followingCount">567</div><div class="stat-label">siguiendo</div></div><div class="stat-card"><div class="stat-value" id="teteosCount">12</div><div class="stat-label">teteos</div></div></div>
-        <div style="display: flex; gap: 12px; margin-bottom: 20px;">
-            <button class="horiz-btn" style="flex:1;" onclick="openEditProfile()">✏️ Editar perfil</button>
-            <button class="horiz-btn" style="flex:1;" onclick="shareProfile()">🔗 Compartir</button>
-        </div>
-        <div class="contact-modern"><div class="contact-header">📞 Contacto</div><div class="contact-list"><div class="contact-row" onclick="copyEmail()"><div class="contact-icon">📧</div><div class="contact-value" id="userEmail">jomani@gmail.com</div><div class="contact-copy">copiar</div></div><div class="contact-row" onclick="copyPhone()"><div class="contact-icon">📱</div><div class="contact-value" id="userPhone">+1 809 555 1234</div><div class="contact-copy">copiar</div></div></div></div>
+        <div style="display: flex; gap: 12px; margin-bottom: 20px;"><button class="horiz-btn" style="flex:1;" onclick="openEditProfile()">✏️ Editar</button><button class="horiz-btn" style="flex:1;" onclick="shareProfile()">🔗 Compartir</button></div>
+        <div class="contact-modern"><div class="contact-header">📞 Contacto</div><div class="contact-row" onclick="copyEmail()"><div class="contact-icon">📧</div><div class="contact-value" id="userEmail">jomani@gmail.com</div><div class="contact-copy">copiar</div></div><div class="contact-row" onclick="copyPhone()"><div class="contact-icon">📱</div><div class="contact-value" id="userPhone">+1 809 555 1234</div><div class="contact-copy">copiar</div></div></div>
     </div>
 </div>
 
-<!-- PANTALLA MIS TRANSMISIONES -->
+<!-- MIS TRANSMISIONES -->
 <div id="myStreamsScreen" class="screen">
-    <div class="header">
-        <button class="hamburger" onclick="toggleMenu()">☰</button>
-        <div class="logo-container">
-            <div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Mis Transmisiones</div>
-        </div>
-        <div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div>
-    </div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Mis Transmisiones</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div>
     <div id="myStreamsList" class="streams-list"></div>
     <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()">➕ Nueva transmisión</button>
 </div>
 
-<!-- OTRAS PANTALLAS -->
-<div id="configScreen" class="screen">
-    <div class="header">
-        <button class="hamburger" onclick="toggleMenu()">☰</button>
-        <div class="logo-container">
-            <div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Configuración</div>
-        </div>
-        <div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div>
-    </div>
-    <div style="padding:20px;"><div class="config-option"><span>🌙 Modo oscuro</span><span>✅ Activado</span></div></div>
-</div>
-<div id="languageScreen" class="screen">
-    <div class="header">
-        <button class="hamburger" onclick="toggleMenu()">☰</button>
-        <div class="logo-container">
-            <div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Idioma</div>
-        </div>
-        <div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div>
-    </div>
-    <div style="padding:20px;"><div class="config-option" onclick="setLanguage('es')"><span>🇪🇸 Español</span><span>✅</span></div></div>
-</div>
+<div id="configScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Configuración</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div></div>
+<div id="languageScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Idioma</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div></div>
 
 <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
-<!-- BOTTOM NAVIGATION (4 BOTONES) -->
-<div class="bottom-nav" id="bottomNav">
-    <div class="nav-item" onclick="showHomeScreen()">
-        <div class="nav-icon">🏠</div>
-        <div class="nav-label">Inicio</div>
-    </div>
-    <div class="nav-item" onclick="showAlertsScreen()">
-        <div class="nav-icon">🔔</div>
-        <div class="nav-label">Alertas</div>
-    </div>
-    <div class="nav-item" onclick="openLegalModal()">
-        <div class="nav-icon">📄</div>
-        <div class="nav-label">Legal</div>
-    </div>
-    <div class="nav-item" onclick="openSearchModal()">
-        <div class="nav-icon">🔍</div>
-        <div class="nav-label">Buscar</div>
-    </div>
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+    <div class="nav-item" onclick="showHomeScreen()"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
+    <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon">🔔</div><div class="nav-label">Alertas</div></div>
+    <div class="nav-item" onclick="openLegalModal()"><div class="nav-icon">📄</div><div class="nav-label">Legal</div></div>
+    <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon">🔍</div><div class="nav-label">Buscar</div></div>
 </div>
 
 <script>
@@ -1203,6 +929,7 @@
         { titulo: "💒 Boda María y Carlos", ubicacion: "Hotel Jaragua", fecha: "22/05/2025", destacado: false }
     ];
 
+    // 15 eventos normales + 1 tarjeta especial del radar (id: 999)
     const initialKeTeteos = [
         { id: 1, titulo: "🎸 Concierto Rock", nombreCreador: "Juan Luis Guerra", usuario: "@juanluis", ubicacion: "Estadio Olímpico", distancia: "0.8 km", categoria: "Concierto", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, imagen: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400&h=300&fit=crop" },
         { id: 2, titulo: "🎉 Fiesta 90's", nombreCreador: "Maria Garcia", usuario: "@maria_garcia", ubicacion: "Gazcue", distancia: "0.3 km", categoria: "Fiesta", lat: 18.47, lng: -69.91, viewers: 3452, likes: 567, imagen: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=300&fit=crop" },
@@ -1219,13 +946,22 @@
         { id: 13, titulo: "🎵 Noche de Salsa", nombreCreador: "Son Latino", usuario: "@sonlatino", ubicacion: "Centro Cultural", distancia: "1.3 km", categoria: "Fiesta", lat: 18.47, lng: -69.9, viewers: 1876, likes: 654, imagen: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&h=300&fit=crop" },
         { id: 14, titulo: "🎭 Teatro Libre", nombreCreador: "Grupo Teatral", usuario: "@teatro", ubicacion: "Parque Mirador", distancia: "3.2 km", categoria: "Actividad", lat: 18.49, lng: -69.87, viewers: 987, likes: 321, imagen: "https://images.unsplash.com/photo-1503095396549-8070a209f6cc?w=400&h=300&fit=crop" },
         { id: 15, titulo: "📚 Feria del Libro", nombreCreador: "Biblioteca Nacional", usuario: "@biblioteca", ubicacion: "Plaza Cultural", distancia: "2.0 km", categoria: "Actividad", lat: 18.48, lng: -69.89, viewers: 2345, likes: 789, imagen: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&h=300&fit=crop" },
-        { id: 16, titulo: "🎨 Exposición Arte", nombreCreador: "Galería Moderna", usuario: "@galeria", ubicacion: "Zona Colonial", distancia: "1.1 km", categoria: "Actividad", lat: 18.466, lng: -69.9, viewers: 654, likes: 234, imagen: "https://images.unsplash.com/photo-1531243269054-5ebf6f34081e?w=400&h=300&fit=crop" }
+        // TARJETA ESPECIAL: RADAR DE VUELOS EN TIEMPO REAL
+        { id: 999, titulo: "✈️ VUELOS EN TIEMPO REAL", nombreCreador: "Flight Radar", usuario: "@flightradar", ubicacion: "Global", distancia: "En vivo", categoria: "Radar", lat: 0, lng: 0, viewers: 15432, likes: 3421, imagen: "", esRadar: true }
     ];
 
     function loadKeTeteos() {
         const stored = localStorage.getItem('keTeteos');
-        if (stored) { allKeTeteos = JSON.parse(stored); }
-        else { allKeTeteos = [...initialKeTeteos]; localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
+        if (stored) { 
+            allKeTeteos = JSON.parse(stored);
+            // Asegurar que la tarjeta radar existe
+            if (!allKeTeteos.find(k => k.id === 999)) {
+                allKeTeteos.push(initialKeTeteos.find(k => k.id === 999));
+            }
+        } else { 
+            allKeTeteos = [...initialKeTeteos]; 
+            localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos));
+        }
         allKeTeteos.forEach(item => {
             if (currentLikes[item.id] === undefined) currentLikes[item.id] = item.likes || 0;
             if (!currentComments[item.id]) currentComments[item.id] = [];
@@ -1234,11 +970,126 @@
     function saveKeTeteos() { localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
     function getUserLocation() { return new Promise((resolve, reject) => { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((pos) => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(userLocation); }, () => { reject(null); }); } else { reject(null); } }); }
     function calcularDistancia(lat1, lng1, lat2, lng2) { const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLng = (lng2 - lng1) * Math.PI / 180; const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2); const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); return R * c; }
-    function filtrarPorCategoria(categoria) { const filtrados = allKeTeteos.filter(ke => ke.categoria === categoria); if (filtrados.length === 0) { alert(`No hay KeTeteos en la categoría "${categoria}"`); return; } mostrarKeTeteosFiltrados(filtrados); }
-    async function filtrarPorCercania() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } const location = await getUserLocation(); if (!location) { alert('No se pudo obtener tu ubicación'); return; } const keTeteosConDistancia = allKeTeteos.map(ke => { const distanciaKm = calcularDistancia(location.lat, location.lng, ke.lat || 18.48, ke.lng || -69.9); return { ...ke, distanciaReal: distanciaKm }; }); const filtrados = keTeteosConDistancia.filter(ke => ke.distanciaReal <= 10); if (filtrados.length === 0) { alert('No hay KeTeteos cerca de ti'); return; } mostrarKeTeteosFiltrados(filtrados); alert(`🎯 ${filtrados.length} KeTeteos cerca de ti`); }
-    function mostrarKeTeteosFiltrados(keTeteosFiltrados) { const container = document.getElementById('carouselContainer'); container.innerHTML = ''; keTeteosFiltrados.forEach(item => { const card = crearCardKeTeteo(item); container.appendChild(card); attachCardEvents(card, item.id); }); }
-    function crearCardKeTeteo(item) { const card = document.createElement('div'); card.className = 'ke-teteo-card'; card.setAttribute('data-id', item.id); card.innerHTML = `<div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div><div class="card-content"><div class="live-badge"><div class="live-dot"></div>EN VIVO</div><div class="event-title">${item.titulo}</div><div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div><div class="event-meta"><span>📍 ${item.ubicacion} · ${item.distancia}</span></div><div class="action-buttons"><button class="action-btn like-btn" data-id="${item.id}">❤️ <span class="like-count">${currentLikes[item.id] || 0}</span></button><button class="action-btn comment-toggle" data-id="${item.id}">💬</button><button class="action-btn share-btn" data-id="${item.id}">🔄</button><button class="action-btn report-btn" data-id="${item.id}">⚠️</button></div><div class="comment-row" id="comment-row-${item.id}" style="display: none;"><input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Comentario..."><button class="send-comment" data-id="${item.id}">Enviar</button></div><div class="comments-list" id="comments-list-${item.id}"></div></div>`; return card; }
-    function renderCarousel() { const container = document.getElementById('carouselContainer'); container.innerHTML = ''; allKeTeteos.forEach(item => { const card = crearCardKeTeteo(item); container.appendChild(card); attachCardEvents(card, item.id); }); }
+    function filtrarPorCategoria(categoria) { const filtrados = allKeTeteos.filter(ke => ke.categoria === categoria && !ke.esRadar); if (filtrados.length === 0) { alert(`No hay KeTeteos en la categoría "${categoria}"`); return; } mostrarKeTeteosFiltrados(filtrados); }
+    async function filtrarPorCercania() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } const location = await getUserLocation(); if (!location) { alert('No se pudo obtener tu ubicación'); return; } const keTeteosConDistancia = allKeTeteos.filter(k => !k.esRadar).map(ke => { const distanciaKm = calcularDistancia(location.lat, location.lng, ke.lat || 18.48, ke.lng || -69.9); return { ...ke, distanciaReal: distanciaKm }; }); const filtrados = keTeteosConDistancia.filter(ke => ke.distanciaReal <= 10); if (filtrados.length === 0) { alert('No hay KeTeteos cerca de ti'); return; } mostrarKeTeteosFiltrados(filtrados); alert(`🎯 ${filtrados.length} KeTeteos cerca de ti`); }
+    function mostrarKeTeteosFiltrados(keTeteosFiltrados) { const container = document.getElementById('carouselContainer'); container.innerHTML = ''; keTeteosFiltrados.forEach(item => { const card = crearCardKeTeteo(item); container.appendChild(card); if (!item.esRadar) attachCardEvents(card, item.id); }); }
+    
+    function crearCardKeTeteo(item) {
+        const card = document.createElement('div');
+        card.className = 'ke-teteo-card';
+        if (item.esRadar) card.classList.add('radar-card');
+        card.setAttribute('data-id', item.id);
+        
+        if (item.esRadar) {
+            // Tarjeta especial con radar de vuelos
+            card.innerHTML = `
+                <div class="stream-media">
+                    <iframe class="radar-iframe" src="https://globe.adsbexchange.com/?zoom=3" allow="geolocation" loading="lazy"></iframe>
+                </div>
+                <div class="card-content">
+                    <div class="live-badge"><div class="live-dot"></div>EN VIVO</div>
+                    <div class="event-title">✈️ ${item.titulo}</div>
+                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
+                    <div class="event-meta"><span>📍 ${item.ubicacion} · ${item.distancia}</span></div>
+                    <div class="action-buttons">
+                        <button class="action-btn like-btn" data-id="${item.id}">❤️ <span class="like-count">${currentLikes[item.id] || 0}</span></button>
+                        <button class="action-btn comment-toggle" data-id="${item.id}">💬</button>
+                        <button class="action-btn share-btn" data-id="${item.id}">🔄</button>
+                    </div>
+                    <div class="comment-row" id="comment-row-${item.id}" style="display: none;">
+                        <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Comentario...">
+                        <button class="send-comment" data-id="${item.id}">Enviar</button>
+                    </div>
+                    <div class="comments-list" id="comments-list-${item.id}"></div>
+                </div>
+            `;
+        } else {
+            // Tarjeta normal de evento
+            card.innerHTML = `
+                <div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div>
+                <div class="card-content">
+                    <div class="live-badge"><div class="live-dot"></div>EN VIVO</div>
+                    <div class="event-title">${item.titulo}</div>
+                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
+                    <div class="event-meta"><span>📍 ${item.ubicacion} · ${item.distancia}</span></div>
+                    <div class="action-buttons">
+                        <button class="action-btn like-btn" data-id="${item.id}">❤️ <span class="like-count">${currentLikes[item.id] || 0}</span></button>
+                        <button class="action-btn comment-toggle" data-id="${item.id}">💬</button>
+                        <button class="action-btn share-btn" data-id="${item.id}">🔄</button>
+                        <button class="action-btn report-btn" data-id="${item.id}">⚠️</button>
+                    </div>
+                    <div class="comment-row" id="comment-row-${item.id}" style="display: none;">
+                        <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Comentario...">
+                        <button class="send-comment" data-id="${item.id}">Enviar</button>
+                    </div>
+                    <div class="comments-list" id="comments-list-${item.id}"></div>
+                </div>
+            `;
+        }
+        return card;
+    }
+    
+    function renderCarousel() { 
+        const container = document.getElementById('carouselContainer'); 
+        container.innerHTML = ''; 
+        allKeTeteos.forEach(item => { 
+            const card = crearCardKeTeteo(item); 
+            container.appendChild(card); 
+            if (!item.esRadar) attachCardEvents(card, item.id); 
+            else attachRadarEvents(card, item.id);
+        }); 
+    }
+    
+    function attachRadarEvents(card, id) {
+        // Likes para el radar
+        const likeBtn = card.querySelector('.like-btn');
+        if (likeBtn) {
+            likeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!loggedIn) { alert('Inicia sesión'); return; }
+                currentLikes[id] = (currentLikes[id] || 0) + 1;
+                const likeSpan = likeBtn.querySelector('.like-count');
+                if (likeSpan) likeSpan.innerText = currentLikes[id];
+                saveKeTeteos();
+            });
+        }
+        // Comentarios
+        const commentToggle = card.querySelector('.comment-toggle');
+        const commentRow = card.querySelector(`#comment-row-${id}`);
+        if (commentToggle && commentRow) {
+            commentToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!loggedIn) { alert('Inicia sesión'); return; }
+                commentRow.style.display = commentRow.style.display === 'flex' ? 'none' : 'flex';
+            });
+        }
+        const sendBtn = card.querySelector('.send-comment');
+        if (sendBtn) {
+            sendBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!loggedIn) { alert('Inicia sesión'); return; }
+                const input = document.getElementById(`comment-input-${id}`);
+                const text = input.value.trim();
+                if (text) {
+                    if (!currentComments[id]) currentComments[id] = [];
+                    currentComments[id].unshift({ user: currentUser ? currentUser.username : '@anonimo', text: text, time: new Date().toLocaleTimeString() });
+                    input.value = '';
+                    updateCommentsUI(id);
+                    localStorage.setItem(`comments_${id}`, JSON.stringify(currentComments[id]));
+                }
+            });
+        }
+        const shareBtn = card.querySelector('.share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                alert(`🔗 Compartir Radar de Vuelos`);
+            });
+        }
+        updateCommentsUI(id);
+        // No abrir fullscreen para el radar
+    }
+    
     function attachCardEvents(card, id) {
         const likeBtn = card.querySelector('.like-btn'); if (likeBtn) { likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; const likeSpan = likeBtn.querySelector('.like-count'); if (likeSpan) likeSpan.innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); }); }
         const commentToggle = card.querySelector('.comment-toggle'); const commentRow = card.querySelector(`#comment-row-${id}`); if (commentToggle && commentRow) { commentToggle.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } commentRow.style.display = commentRow.style.display === 'flex' ? 'none' : 'flex'; }); }
@@ -1246,8 +1097,9 @@
         const shareBtn = card.querySelector('.share-btn'); if (shareBtn) { shareBtn.addEventListener('click', (e) => { e.stopPropagation(); alert(`🔗 Compartir KeTeteo`); }); }
         const reportBtn = card.querySelector('.report-btn'); if (reportBtn) { reportBtn.addEventListener('click', (e) => { e.stopPropagation(); reporteKeTeteoId = id; document.getElementById('reporteModal').classList.add('show'); }); }
         updateCommentsUI(id);
-        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn') || e.target.closest('.send-comment') || e.target.closest('.comment-input')) return; const item = allKeTeteos.find(k => k.id == id); if (item) openFullscreenStream(item); });
+        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn') || e.target.closest('.send-comment') || e.target.closest('.comment-input')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) openFullscreenStream(item); });
     }
+    
     function updateCommentsUI(id) { const container = document.getElementById(`comments-list-${id}`); if (!container) return; const commentsList = currentComments[id] || []; if (commentsList.length === 0) { container.innerHTML = ''; return; } container.innerHTML = commentsList.map(c => `<div style="margin-bottom: 4px; background: rgba(255,255,255,0.1); padding: 4px 6px; border-radius: 10px;"><strong style="color: #FF2D55; font-size: 8px;">${c.user}</strong> <span style="font-size: 7px; color:#aaa;">${c.time || ''}</span><br><span style="font-size: 8px;">${c.text}</span></div>`).join(''); }
     function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="close-fullscreen">← Volver</div><img src="${item.imagen}" alt="${item.titulo}"><div style="position: absolute; bottom: 40px; left: 0; right: 0; text-align: center; background: rgba(0,0,0,0.6); padding: 16px; margin: 0 20px; border-radius: 20px;"><div style="font-weight:800;">${item.titulo}</div><div>${item.nombreCreador} ${item.usuario}</div><div>📍 ${item.ubicacion} · ${item.distancia}</div><div>❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length}</div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); fullDiv.addEventListener('click', (e) => { if (e.target === fullDiv) fullDiv.remove(); }); }
     function enviarReporte(motivo) { if (!loggedIn) { alert('Inicia sesión'); cerrarReporteModal(); return; } alert(`✅ Reporte enviado: ${motivo}`); cerrarReporteModal(); }
@@ -1259,18 +1111,18 @@
     function iniciarAutoScrollInferior() { const carousel = document.querySelector('.patrocinios-inferior'); if (!carousel) return; if (autoScrollIntervalInferior) clearInterval(autoScrollIntervalInferior); autoScrollIntervalInferior = setInterval(() => { if (!isUserInteractingInferior && carousel) { carousel.scrollBy({ left: 1.5, behavior: 'smooth' }); if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { carousel.scrollTo({ left: 0, behavior: 'smooth' }); } } }, 20); }
     function configurarAutoScrollSuperior() { const carousel = document.querySelector('.patrocinios-superior'); if (!carousel) return; carousel.addEventListener('touchstart', () => { isUserInteractingSuperior = true; if (autoScrollTimeoutSuperior) clearTimeout(autoScrollTimeoutSuperior); }); carousel.addEventListener('touchend', () => { autoScrollTimeoutSuperior = setTimeout(() => { isUserInteractingSuperior = false; }, 5000); }); }
     function configurarAutoScrollInferior() { const carousel = document.querySelector('.patrocinios-inferior'); if (!carousel) return; carousel.addEventListener('touchstart', () => { isUserInteractingInferior = true; if (autoScrollTimeoutInferior) clearTimeout(autoScrollTimeoutInferior); }); carousel.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); }); }
-    function openProximosEventos() { const container = document.getElementById('proximosEventosList'); container.innerHTML = ''; proximosEventos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--negro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${e.titulo}</div><div style="font-size:12px; color:var(--gris-claro);">📍 ${e.ubicacion} · 📅 ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo); font-size:11px; margin-top:4px;">⭐ PROMOCIONADO</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Próximamente\')">➕ Añadir</button>`; container.appendChild(div); }); document.getElementById('proximosEventosModal').classList.add('show'); }
+    function openProximosEventos() { const container = document.getElementById('proximosEventosList'); container.innerHTML = ''; proximosEventos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--negro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${e.titulo}</div><div style="font-size:12px;">📍 ${e.ubicacion} · 📅 ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo); font-size:11px;">⭐ PROMOCIONADO</div>' : ''}<button class="horiz-btn" style="margin-top:8px;" onclick="alert(\'Próximamente\')">➕ Añadir</button>`; container.appendChild(div); }); document.getElementById('proximosEventosModal').classList.add('show'); }
     function closeProximosEventos() { document.getElementById('proximosEventosModal').classList.remove('show'); }
     function abrirConfirmarEliminar(id, titulo) { eliminarId = id; document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`; document.getElementById('confirmarEliminarModal').classList.add('show'); }
-    function confirmarEliminar() { if (eliminarId) { const index = allKeTeteos.findIndex(k => k.id == eliminarId); if (index !== -1) { allKeTeteos.splice(index, 1); saveKeTeteos(); renderCarousel(); renderMyStreams(); alert('✅ Eliminado'); } } cerrarConfirmarEliminar(); }
+    function confirmarEliminar() { if (eliminarId) { const index = allKeTeteos.findIndex(k => k.id == eliminarId); if (index !== -1 && !allKeTeteos[index].esRadar) { allKeTeteos.splice(index, 1); saveKeTeteos(); renderCarousel(); renderMyStreams(); alert('✅ Eliminado'); } } cerrarConfirmarEliminar(); }
     function cerrarConfirmarEliminar() { eliminarId = null; document.getElementById('confirmarEliminarModal').classList.remove('show'); }
-    function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${ke.titulo}</strong><br>👁️ ${ke.viewers || 0} vistas</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">🗑️</button>`; container.appendChild(div); }); }
+    function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${ke.titulo}</strong><br>👁️ ${ke.viewers || 0} vistas</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">🗑️</button>`; container.appendChild(div); }); }
 
     // BÚSQUEDA
     function openSearchModal() { document.getElementById('searchModal').classList.add('show'); document.getElementById('searchInputModal').focus(); }
     function closeSearchModal() { document.getElementById('searchModal').classList.remove('show'); document.getElementById('searchResultsModal').innerHTML = ''; document.getElementById('searchInputModal').value = ''; }
     document.getElementById('searchInputModal')?.addEventListener('input', function(e) { const term = e.target.value.toLowerCase(); const results = allKeTeteos.filter(k => k.titulo.toLowerCase().includes(term) || k.nombreCreador.toLowerCase().includes(term)); const container = document.getElementById('searchResultsModal'); if (!term) { container.innerHTML = ''; return; } if (results.length === 0) { container.innerHTML = '<div class="search-result"><div class="title">❌ Sin resultados</div></div>'; return; } container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${k.titulo}</div><div class="desc">${k.nombreCreador} · ${k.ubicacion}</div></div>`).join(''); });
-    function selectSearchResult(id) { closeSearchModal(); const item = allKeTeteos.find(k => k.id == id); if (item) openFullscreenStream(item); }
+    function selectSearchResult(id) { closeSearchModal(); const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) openFullscreenStream(item); else if (item && item.esRadar) alert('✈️ Abriendo radar de vuelos...'); }
 
     function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
     function closeMenu() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
@@ -1289,12 +1141,12 @@
     function showProfileScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
     function showAlertsScreen() { alert('🔔 Alertas (Próximamente)'); }
     function showMyStreamsScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('myStreamsScreen').classList.add('active'); renderMyStreams(); }
-    function showConfigScreen() { alert('Configuración (Próximamente)'); }
-    function showLanguageScreen() { alert('Idioma (Próximamente)'); }
+    function showConfigScreen() { alert('Configuración'); }
+    function showLanguageScreen() { alert('Idioma'); }
     function setLanguage(lang) { alert('Idioma cambiado a ' + lang); }
     function uploadProfilePhoto() { document.getElementById('photoUpload').click(); }
     function handlePhotoUpload(e) { const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = ev => { document.getElementById('profileImg').src = ev.target.result; localStorage.setItem('profilePhoto', ev.target.result); }; reader.readAsDataURL(file); } }
-    function openEditProfile() { alert('Editar perfil (próximamente)'); }
+    function openEditProfile() { alert('Editar perfil'); }
     function saveProfile() { alert('Perfil guardado'); }
     function closeEditModal() { document.getElementById('editProfileModal').classList.remove('show'); }
     function loadProfileData() { const savedPhoto = localStorage.getItem('profilePhoto'); if (savedPhoto) document.getElementById('profileImg').src = savedPhoto; const user = JSON.parse(localStorage.getItem('user')); if (user) { document.getElementById('profileName').innerText = user.name; document.getElementById('profileUsername').innerText = user.username; document.getElementById('profileBio').innerText = user.bio || 'Amante de los eventos en vivo 🎉'; document.getElementById('userEmail').innerText = user.email; } const savedStatus = localStorage.getItem('userStatus'); const savedLastActivity = localStorage.getItem('lastActivity'); if (savedStatus && savedLastActivity) { lastActivity = parseInt(savedLastActivity); userStatus = savedStatus; actualizarEstadoUsuario(); } }
@@ -1304,7 +1156,7 @@
     function openProfileLink() { window.open('https://linktr.ee/jomani', '_blank'); }
     function openLegalModal() { document.getElementById('legalModal').classList.add('show'); }
     function closeLegalModal() { document.getElementById('legalModal').classList.remove('show'); }
-    function openLegalContent(type) { let title = '', content = ''; if (type === 'terms') { title = '⚖️ Términos y Condiciones'; content = 'Al usar KeTeteoLive aceptas nuestras normas de uso...'; } else if (type === 'privacy') { title = '🔒 Política de Privacidad'; content = 'Protegemos tus datos personales...'; } else if (type === 'cookies') { title = '🍪 Política de Cookies'; content = 'Usamos cookies para mejorar tu experiencia...'; } alert(`${title}\n\n${content}`); }
+    function openLegalContent(type) { let title = '', content = ''; if (type === 'terms') { title = '⚖️ Términos y Condiciones'; content = 'Al usar KeTeteoLive aceptas nuestras normas...'; } else if (type === 'privacy') { title = '🔒 Política de Privacidad'; content = 'Protegemos tus datos personales...'; } else if (type === 'cookies') { title = '🍪 Política de Cookies'; content = 'Usamos cookies para mejorar tu experiencia...'; } alert(`${title}\n\n${content}`); }
 
     window.onload = () => {
         loadKeTeteos();
