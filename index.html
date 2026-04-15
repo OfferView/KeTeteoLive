@@ -76,7 +76,7 @@
         .divider-naranja {
             margin: 12px 0;
             border: none;
-            height: 1px;
+            height: 2px;
             background: linear-gradient(90deg, transparent, var(--rojo-logo), var(--naranja), var(--rojo-logo), transparent);
             width: 100%;
         }
@@ -112,30 +112,33 @@
             background: var(--rojo-logo);
         }
 
-        /* ========== CARRUSEL 1 ========== */
+        /* ========== CARRUSEL 1 (TEXTO GRANDE Y RÁPIDO) ========== */
         .patrocinios-superior {
             overflow-x: auto;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             cursor: grab;
-            margin: 8px 0;
+            margin: 16px 0;
             white-space: nowrap;
         }
         .patrocinios-superior:active { cursor: grabbing; }
         .patrocinios-superior::-webkit-scrollbar { display: none; }
         .patrocinios-track-superior {
             display: inline-flex;
-            gap: 24px;
+            gap: 48px;
             padding: 0 16px;
             align-items: center;
         }
         .patrocinio-texto-superior {
             display: inline-block;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--gris-claro);
+            color: transparent;
+            background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
+            -webkit-background-clip: text;
+            background-clip: text;
             white-space: nowrap;
             font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
             transition: opacity 0.2s;
@@ -144,13 +147,13 @@
         .patrocinio-texto-superior:active { opacity: 0.7; }
         .separador-texto {
             display: inline-block;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--gris-medio);
-            letter-spacing: 1px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--rojo-logo);
+            letter-spacing: 4px;
         }
 
-        /* ========== CARRUSEL 2 (TIPO INSTAGRAM) ========== */
+        /* ========== CARRUSEL 2 ========== */
         #mainScreen {
             padding-top: 60px;
         }
@@ -342,41 +345,41 @@
             overflow-y: auto;
         }
 
-        /* ========== CARRUSEL 3 (ANUNCIOS) ========== */
+        /* ========== CARRUSEL 3 (TAMAÑO ORIGINAL) ========== */
         .patrocinios-inferior {
             overflow-x: auto;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             cursor: grab;
-            margin: 12px 0;
+            margin: 16px 0;
         }
         .patrocinios-inferior:active { cursor: grabbing; }
         .patrocinios-inferior::-webkit-scrollbar { display: none; }
         .patrocinios-track-inferior {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             padding: 0 16px;
             width: max-content;
         }
         .patrocinio-card-inferior {
             flex: 0 0 auto;
-            width: 160px;
+            width: 250px;
             background: var(--gris-oscuro);
             border-radius: 16px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.2s;
             border: 0.5px solid var(--gris-medio);
         }
         .patrocinio-card-inferior:active { transform: scale(0.96); }
         .patrocinio-card-inferior img {
             width: 100%;
-            height: 160px;
+            height: 140px;
             object-fit: cover;
         }
         .patrocinio-card-inferior .patro-text {
             padding: 10px;
-            font-size: 11px;
+            font-size: 12px;
             text-align: center;
             color: var(--blanco);
             font-weight: 600;
@@ -766,6 +769,31 @@
             font-size: 14px;
             margin-bottom: 16px;
         }
+
+        /* Configuración e idioma */
+        .config-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: var(--gris-oscuro);
+            border-radius: 14px;
+            margin-bottom: 12px;
+            border: 0.5px solid var(--gris-medio);
+        }
+        .config-option span {
+            font-size: 14px;
+            color: var(--blanco);
+        }
+        .config-option button {
+            background: var(--rojo-logo);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -792,7 +820,7 @@
     <hr class="divider-naranja">
 
     <div class="horizontal-bar">
-        <button class="horiz-btn primary" onclick="filtrarPorCercania()">🎯 Cerca de Mí</button>
+        <button class="horiz-btn primary" onclick="filtrarPorCercania()">🎯 KeTeteo Cerca de Mí</button>
         <button class="horiz-btn" onclick="openProximosEventos()">📅 Próximos Eventos</button>
     </div>
 
@@ -853,6 +881,9 @@
     </div>
 </div>
 
+<!-- MODAL EDITAR PERFIL -->
+<div id="editProfileModal" class="modal"><div class="modal-content"><h3>Editar perfil</h3><input type="text" id="editName" placeholder="Nombre"><input type="text" id="editUsername" placeholder="Usuario"><textarea id="editBio" rows="2" placeholder="Biografía"></textarea><input type="url" id="editLink" placeholder="Enlace"><input type="email" id="editEmail" placeholder="Correo"><input type="tel" id="editPhone" placeholder="Teléfono"><button class="btn-rojo" onclick="saveProfile()">Guardar</button><button class="btn-gris" onclick="closeEditModal()">Cancelar</button></div></div>
+
 <!-- MIS TRANSMISIONES -->
 <div id="myStreamsScreen" class="screen">
     <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Mis Transmisiones</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div>
@@ -860,8 +891,25 @@
     <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()">➕ Nueva transmisión</button>
 </div>
 
-<div id="configScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Configuración</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div></div>
-<div id="languageScreen" class="screen"><div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Idioma</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div></div>
+<!-- PANTALLA CONFIGURACIÓN -->
+<div id="configScreen" class="screen">
+    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Configuración</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div>
+    <div style="padding: 20px;">
+        <div class="config-option"><span>🌙 Modo oscuro</span><span>✅ Activado</span></div>
+        <div class="config-option"><span>🔔 Notificaciones</span><button onclick="alert('Notificaciones activadas')">Activar</button></div>
+        <div class="config-option"><span>🔒 Privacidad</span><button onclick="alert('Privacidad: solo seguidores')">Configurar</button></div>
+    </div>
+</div>
+
+<!-- PANTALLA IDIOMA -->
+<div id="languageScreen" class="screen">
+    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Idioma</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div>
+    <div style="padding: 20px;">
+        <div class="config-option" onclick="setLanguage('es')"><span>🇪🇸 Español</span><span>✅</span></div>
+        <div class="config-option" onclick="setLanguage('en')"><span>🇺🇸 English</span><span></span></div>
+        <div class="config-option" onclick="setLanguage('pt')"><span>🇵🇹 Português</span><span></span></div>
+    </div>
+</div>
 
 <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
@@ -1147,15 +1195,104 @@
     function enviarReporte(motivo) { if (!loggedIn) { alert('Inicia sesión'); cerrarReporteModal(); return; } alert(`✅ Reporte enviado: ${motivo}`); cerrarReporteModal(); }
     function cerrarReporteModal() { document.getElementById('reporteModal').classList.remove('show'); reporteKeTeteoId = null; }
 
-    function renderPatrociniosSuperior() { const track = document.getElementById('patrociniosTrackSuperior'); track.innerHTML = ''; const textosPatrocinio = ["OFERTA SUPER", "BANCO POPULAR", "CONCIERTO", "COMIDA", "ROPA"]; const textosInfinitos = [...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio]; textosInfinitos.forEach((texto, index) => { const span = document.createElement('span'); span.className = 'patrocinio-texto-superior'; span.innerText = texto; span.onclick = () => window.open('#', '_blank'); track.appendChild(span); if (index < textosInfinitos.length - 1) { const separador = document.createElement('span'); separador.className = 'separador-texto'; separador.innerText = '•'; track.appendChild(separador); } }); setTimeout(() => { configurarAutoScrollSuperior(); iniciarAutoScrollSuperior(); }, 100); }
+    // PATROCINIOS
+    function renderPatrociniosSuperior() { 
+        const track = document.getElementById('patrociniosTrackSuperior'); 
+        track.innerHTML = ''; 
+        const textosPatrocinio = ["🔥 OFERTA SUPER", "🏦 BANCO POPULAR", "🎵 CONCIERTO EXCLUSIVO", "🍔 COMIDA RÁPIDA", "👕 ROPA DE MARCA", "⚡ DESCUENTOS ÚNICOS", "🎫 EVENTOS ESPECIALES"]; 
+        const textosInfinitos = [...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio]; 
+        textosInfinitos.forEach((texto, index) => { 
+            const span = document.createElement('span'); 
+            span.className = 'patrocinio-texto-superior'; 
+            span.innerText = texto; 
+            span.onclick = () => window.open('https://craftmktgroup.com', '_blank'); 
+            track.appendChild(span); 
+            if (index < textosInfinitos.length - 1) { 
+                const separador = document.createElement('span'); 
+                separador.className = 'separador-texto'; 
+                separador.innerText = '•'; 
+                track.appendChild(separador); 
+            } 
+        }); 
+        setTimeout(() => { 
+            configurarAutoScrollSuperior(); 
+            iniciarAutoScrollSuperior(); 
+        }, 100); 
+    }
     
-    function renderPatrociniosInferior() { const track = document.getElementById('patrociniosTrackInferior'); track.innerHTML = ''; anunciosCarrusel3.forEach(anuncio => { const card = document.createElement('div'); card.className = 'patrocinio-card-inferior'; card.onclick = () => alert(`📢 ${anuncio.texto}`); card.innerHTML = `<img src="${anuncio.imagen}" alt="${anuncio.texto}" onerror="this.src='https://placehold.co/160x160/FF2D55/white?text=Anuncio'"><div class="patro-text">${anuncio.texto}</div>`; track.appendChild(card); }); setTimeout(() => { configurarAutoScrollInferior(); iniciarAutoScrollInferior(); }, 100); }
+    function renderPatrociniosInferior() { 
+        const track = document.getElementById('patrociniosTrackInferior'); 
+        track.innerHTML = ''; 
+        anunciosCarrusel3.forEach(anuncio => { 
+            const card = document.createElement('div'); 
+            card.className = 'patrocinio-card-inferior'; 
+            card.onclick = () => alert(`📢 ${anuncio.texto}`); 
+            card.innerHTML = `<img src="${anuncio.imagen}" alt="${anuncio.texto}" onerror="this.src='https://placehold.co/250x140/FF2D55/white?text=Anuncio'"><div class="patro-text">${anuncio.texto}</div>`; 
+            track.appendChild(card); 
+        }); 
+        setTimeout(() => { 
+            configurarAutoScrollInferior(); 
+            iniciarAutoScrollInferior(); 
+        }, 100); 
+    }
     
-    function iniciarAutoScrollSuperior() { const carousel = document.querySelector('.patrocinios-superior'); if (!carousel) return; if (autoScrollIntervalSuperior) clearInterval(autoScrollIntervalSuperior); autoScrollIntervalSuperior = setInterval(() => { if (!isUserInteractingSuperior && carousel) { carousel.scrollBy({ left: 1, behavior: 'smooth' }); if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { carousel.scrollTo({ left: 0, behavior: 'smooth' }); } } }, 30); }
-    function iniciarAutoScrollInferior() { const carousel = document.querySelector('.patrocinios-inferior'); if (!carousel) return; if (autoScrollIntervalInferior) clearInterval(autoScrollIntervalInferior); autoScrollIntervalInferior = setInterval(() => { if (!isUserInteractingInferior && carousel) { carousel.scrollBy({ left: 1, behavior: 'smooth' }); if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { carousel.scrollTo({ left: 0, behavior: 'smooth' }); } } }, 30); }
-    function configurarAutoScrollSuperior() { const carousel = document.querySelector('.patrocinios-superior'); if (!carousel) return; carousel.addEventListener('touchstart', () => { isUserInteractingSuperior = true; if (autoScrollTimeoutSuperior) clearTimeout(autoScrollTimeoutSuperior); }); carousel.addEventListener('touchend', () => { autoScrollTimeoutSuperior = setTimeout(() => { isUserInteractingSuperior = false; }, 5000); }); }
-    function configurarAutoScrollInferior() { const carousel = document.querySelector('.patrocinios-inferior'); if (!carousel) return; carousel.addEventListener('touchstart', () => { isUserInteractingInferior = true; if (autoScrollTimeoutInferior) clearTimeout(autoScrollTimeoutInferior); }); carousel.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); }); }
-    function openProximosEventos() { const container = document.getElementById('proximosEventosList'); container.innerHTML = ''; proximosEventos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--gris-oscuro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${e.titulo}</div><div style="font-size:12px; color:var(--gris-claro);">📍 ${e.ubicacion} · 📅 ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">⭐ PROMOCIONADO</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Próximamente\')">➕ Añadir</button>`; container.appendChild(div); }); document.getElementById('proximosEventosModal').classList.add('show'); }
+    function iniciarAutoScrollSuperior() { 
+        const carousel = document.querySelector('.patrocinios-superior'); 
+        if (!carousel) return; 
+        if (autoScrollIntervalSuperior) clearInterval(autoScrollIntervalSuperior); 
+        autoScrollIntervalSuperior = setInterval(() => { 
+            if (!isUserInteractingSuperior && carousel) { 
+                carousel.scrollBy({ left: 2.5, behavior: 'smooth' }); 
+                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { 
+                    carousel.scrollTo({ left: 0, behavior: 'smooth' }); 
+                } 
+            } 
+        }, 16); 
+    }
+    
+    function iniciarAutoScrollInferior() { 
+        const carousel = document.querySelector('.patrocinios-inferior'); 
+        if (!carousel) return; 
+        if (autoScrollIntervalInferior) clearInterval(autoScrollIntervalInferior); 
+        autoScrollIntervalInferior = setInterval(() => { 
+            if (!isUserInteractingInferior && carousel) { 
+                carousel.scrollBy({ left: 2, behavior: 'smooth' }); 
+                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { 
+                    carousel.scrollTo({ left: 0, behavior: 'smooth' }); 
+                } 
+            } 
+        }, 16); 
+    }
+    
+    function configurarAutoScrollSuperior() { 
+        const carousel = document.querySelector('.patrocinios-superior'); 
+        if (!carousel) return; 
+        carousel.addEventListener('touchstart', () => { isUserInteractingSuperior = true; if (autoScrollTimeoutSuperior) clearTimeout(autoScrollTimeoutSuperior); }); 
+        carousel.addEventListener('touchend', () => { autoScrollTimeoutSuperior = setTimeout(() => { isUserInteractingSuperior = false; }, 5000); }); 
+    }
+    
+    function configurarAutoScrollInferior() { 
+        const carousel = document.querySelector('.patrocinios-inferior'); 
+        if (!carousel) return; 
+        carousel.addEventListener('touchstart', () => { isUserInteractingInferior = true; if (autoScrollTimeoutInferior) clearTimeout(autoScrollTimeoutInferior); }); 
+        carousel.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); }); 
+    }
+    
+    function openProximosEventos() { 
+        const container = document.getElementById('proximosEventosList'); 
+        container.innerHTML = ''; 
+        proximosEventos.forEach(e => { 
+            const div = document.createElement('div'); 
+            div.style.background = 'var(--gris-oscuro)'; 
+            div.style.padding = '12px'; 
+            div.style.borderRadius = '12px'; 
+            div.style.marginBottom = '12px'; 
+            div.innerHTML = `<div style="font-weight:700;">${e.titulo}</div><div style="font-size:12px; color:var(--gris-claro);">📍 ${e.ubicacion} · 📅 ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">⭐ PROMOCIONADO</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Próximamente\')">➕ Añadir</button>`; 
+            container.appendChild(div); 
+        }); 
+        document.getElementById('proximosEventosModal').classList.add('show'); 
+    }
+    
     function closeProximosEventos() { document.getElementById('proximosEventosModal').classList.remove('show'); }
     function abrirConfirmarEliminar(id, titulo) { eliminarId = id; document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`; document.getElementById('confirmarEliminarModal').classList.add('show'); }
     function confirmarEliminar() { if (eliminarId) { const index = allKeTeteos.findIndex(k => k.id == eliminarId); if (index !== -1 && !allKeTeteos[index].esRadar) { allKeTeteos.splice(index, 1); saveKeTeteos(); renderCarousel(); renderMyStreams(); alert('✅ Eliminado'); } } cerrarConfirmarEliminar(); }
@@ -1168,6 +1305,7 @@
     document.getElementById('searchInputModal')?.addEventListener('input', function(e) { const term = e.target.value.toLowerCase(); const results = allKeTeteos.filter(k => k.titulo.toLowerCase().includes(term) || k.nombreCreador.toLowerCase().includes(term)); const container = document.getElementById('searchResultsModal'); if (!term) { container.innerHTML = ''; return; } if (results.length === 0) { container.innerHTML = '<div class="search-result"><div class="title">❌ Sin resultados</div></div>'; return; } container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${k.titulo}</div><div class="desc">${k.nombreCreador} · ${k.ubicacion}</div></div>`).join(''); });
     function selectSearchResult(id) { closeSearchModal(); const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) openFullscreenStream(item); else if (item && item.esRadar) openFullscreenRadar(item); }
 
+    // AUTENTICACIÓN
     function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
     function closeMenu() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
     function openRegister() { closeModals(); document.getElementById('registerModal').classList.add('show'); }
@@ -1185,13 +1323,13 @@
     function showProfileScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
     function showAlertsScreen() { alert('🔔 Alertas (Próximamente)'); }
     function showMyStreamsScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('myStreamsScreen').classList.add('active'); renderMyStreams(); }
-    function showConfigScreen() { alert('Configuración'); }
-    function showLanguageScreen() { alert('Idioma'); }
+    function showConfigScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('configScreen').classList.add('active'); }
+    function showLanguageScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('languageScreen').classList.add('active'); }
     function setLanguage(lang) { alert('Idioma cambiado a ' + lang); }
     function uploadProfilePhoto() { document.getElementById('photoUpload').click(); }
     function handlePhotoUpload(e) { const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = ev => { document.getElementById('profileImg').src = ev.target.result; localStorage.setItem('profilePhoto', ev.target.result); }; reader.readAsDataURL(file); } }
-    function openEditProfile() { alert('Editar perfil'); }
-    function saveProfile() { alert('Perfil guardado'); }
+    function openEditProfile() { document.getElementById('editProfileModal').classList.add('show'); }
+    function saveProfile() { const name = document.getElementById('editName').value; const username = document.getElementById('editUsername').value; const bio = document.getElementById('editBio').value; const email = document.getElementById('editEmail').value; const phone = document.getElementById('editPhone').value; if (name) document.getElementById('profileName').innerText = name; if (username) document.getElementById('profileUsername').innerText = username.startsWith('@') ? username : '@'+username; if (bio) document.getElementById('profileBio').innerText = bio; if (email) document.getElementById('userEmail').innerText = email; if (currentUser) { currentUser.name = name || currentUser.name; currentUser.username = (username.startsWith('@') ? username : '@'+username) || currentUser.username; currentUser.bio = bio || currentUser.bio; currentUser.email = email || currentUser.email; localStorage.setItem('user', JSON.stringify(currentUser)); } alert('Perfil actualizado'); closeEditModal(); }
     function closeEditModal() { document.getElementById('editProfileModal').classList.remove('show'); }
     function loadProfileData() { const savedPhoto = localStorage.getItem('profilePhoto'); if (savedPhoto) document.getElementById('profileImg').src = savedPhoto; const user = JSON.parse(localStorage.getItem('user')); if (user) { document.getElementById('profileName').innerText = user.name; document.getElementById('profileUsername').innerText = user.username; document.getElementById('profileBio').innerText = user.bio || 'Amante de los eventos en vivo 🎉'; document.getElementById('userEmail').innerText = user.email; } const savedStatus = localStorage.getItem('userStatus'); const savedLastActivity = localStorage.getItem('lastActivity'); if (savedStatus && savedLastActivity) { lastActivity = parseInt(savedLastActivity); userStatus = savedStatus; actualizarEstadoUsuario(); } }
     function copyEmail() { const email = document.getElementById('userEmail').innerText; navigator.clipboard.writeText(email); alert('Correo copiado'); }
