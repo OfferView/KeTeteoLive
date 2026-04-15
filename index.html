@@ -13,36 +13,37 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Inter', system-ui, sans-serif;
-            background: #0B0B0B;
+            background: #000000;
             color: #FFFFFF;
             padding-bottom: 70px;
             -webkit-font-smoothing: antialiased;
         }
 
         :root {
-            --negro: #0B0B0B;
+            --negro: #000000;
             --rojo-logo: #FF2D55;
             --naranja: #FF6B00;
             --blanco: #FFFFFF;
-            --gris-claro: #AAAAAA;
-            --gris-oscuro: #1A1A1A;
-            --gris-medio: #222222;
+            --gris-claro: #8E8E93;
+            --gris-oscuro: #1C1C1E;
+            --gris-medio: #2C2C2E;
             --azul: #007AFF;
         }
 
-        /* ========== HEADER COMPACTO ========== */
+        /* ========== HEADER PROFESIONAL ========== */
         .header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: var(--negro);
-            padding: 4px 12px;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            border-bottom: 1px solid var(--gris-medio);
+            border-bottom: 0.5px solid var(--gris-medio);
         }
 
         .hamburger {
@@ -52,6 +53,7 @@
             border: none;
             color: var(--blanco);
             padding: 8px;
+            margin: -8px;
         }
 
         .logo-container {
@@ -70,34 +72,34 @@
             width: 40px;
         }
 
-        /* ========== DIVISORES NARANJA ========== */
+        /* ========== DIVISORES ========== */
         .divider-naranja {
             margin: 12px 0;
             border: none;
-            height: 2px;
+            height: 1px;
             background: linear-gradient(90deg, transparent, var(--rojo-logo), var(--naranja), var(--rojo-logo), transparent);
             width: 100%;
         }
 
-        /* ========== BARRA HORIZONTAL ========== */
+        /* ========== BOTONES HORIZONTALES ========== */
         .horizontal-bar {
             display: flex;
-            gap: 10px;
-            padding: 8px 12px;
+            gap: 12px;
+            padding: 8px 16px;
             margin: 4px 0;
         }
 
         .horiz-btn {
             flex: 1;
             background: var(--gris-oscuro);
-            border: 1px solid var(--gris-medio);
+            border: none;
             border-radius: 30px;
-            padding: 6px 10px;
-            font-size: 11px;
+            padding: 8px 12px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--blanco);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             text-align: center;
         }
 
@@ -108,7 +110,6 @@
 
         .horiz-btn.primary {
             background: var(--rojo-logo);
-            border-color: var(--rojo-logo);
         }
 
         /* ========== CARRUSEL 1 ========== */
@@ -125,19 +126,16 @@
         .patrocinios-track-superior {
             display: inline-flex;
             gap: 24px;
-            padding: 0 12px;
+            padding: 0 16px;
             align-items: center;
         }
         .patrocinio-texto-superior {
             display: inline-block;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            color: transparent;
-            background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
-            -webkit-background-clip: text;
-            background-clip: text;
+            color: var(--gris-claro);
             white-space: nowrap;
             font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
             transition: opacity 0.2s;
@@ -146,13 +144,13 @@
         .patrocinio-texto-superior:active { opacity: 0.7; }
         .separador-texto {
             display: inline-block;
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--rojo-logo);
-            letter-spacing: 2px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gris-medio);
+            letter-spacing: 1px;
         }
 
-        /* ========== CARRUSEL 2 ========== */
+        /* ========== CARRUSEL 2 (TIPO INSTAGRAM) ========== */
         #mainScreen {
             padding-top: 60px;
         }
@@ -161,7 +159,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            padding: 8px 12px;
+            padding: 12px;
             max-height: 65vh;
             overflow-y: auto;
             scroll-behavior: smooth;
@@ -185,8 +183,8 @@
             border-radius: 16px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.2s;
-            border: 1px solid var(--gris-medio);
+            transition: all 0.2s ease;
+            border: 0.5px solid var(--gris-medio);
             margin-bottom: 0;
         }
 
@@ -194,17 +192,16 @@
             transform: scale(0.98);
         }
 
-        /* Tarjeta especial del radar - sin cursor pointer porque tiene su propio mapa */
         .radar-card {
-            cursor: default;
+            cursor: pointer;
         }
         .radar-card:active {
-            transform: none;
+            transform: scale(0.98);
         }
 
         .stream-media {
             width: 100%;
-            height: 140px;
+            height: 160px;
             overflow: hidden;
             background: #000;
         }
@@ -215,16 +212,16 @@
             object-fit: cover;
         }
 
-        /* Mapa del radar */
         .radar-iframe {
             width: 100%;
-            height: 140px;
+            height: 160px;
             border: none;
-            background: #1a2a3a;
+            background: #0a1a2a;
+            pointer-events: none;
         }
 
         .card-content {
-            padding: 8px;
+            padding: 12px;
         }
 
         .live-badge {
@@ -232,16 +229,16 @@
             align-items: center;
             gap: 4px;
             background: var(--rojo-logo);
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 8px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 9px;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
 
         .live-dot {
-            width: 4px;
-            height: 4px;
+            width: 5px;
+            height: 5px;
             background: #fff;
             border-radius: 50%;
             animation: pulse 1.2s infinite;
@@ -254,188 +251,207 @@
         }
 
         .event-title {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
-            margin-bottom: 3px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            margin-bottom: 4px;
+            line-height: 1.3;
         }
 
         .event-creator {
-            font-size: 9px;
+            font-size: 11px;
             color: var(--gris-claro);
-            margin-bottom: 3px;
+            margin-bottom: 6px;
         }
 
         .event-creator span {
-            color: #aaa;
+            color: #6c6c70;
         }
 
         .event-meta {
             display: flex;
-            gap: 6px;
-            font-size: 8px;
+            gap: 8px;
+            font-size: 10px;
             color: var(--gris-claro);
-            margin-bottom: 6px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
         }
 
         .action-buttons {
             display: flex;
-            gap: 6px;
-            margin-bottom: 6px;
+            gap: 12px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
         }
 
         .action-btn {
-            background: rgba(30,30,35,0.8);
+            background: transparent;
             border: none;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 16px;
-            font-size: 9px;
+            color: var(--gris-claro);
+            padding: 6px 0;
+            font-size: 12px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 3px;
+            gap: 6px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .action-btn:active {
             transform: scale(0.96);
-            background: var(--rojo-logo);
+            color: var(--rojo-logo);
         }
 
         .report-btn {
-            background: rgba(255,45,85,0.15);
-            border: 1px solid var(--rojo-logo);
-            color: var(--rojo-logo);
+            color: var(--gris-claro);
         }
 
         .comment-row {
             display: flex;
-            gap: 4px;
-            margin-top: 4px;
+            gap: 8px;
+            margin-top: 8px;
         }
 
         .comment-input {
             flex: 1;
             background: var(--negro);
-            border: 1px solid var(--gris-medio);
-            border-radius: 16px;
-            padding: 4px 8px;
+            border: 0.5px solid var(--gris-medio);
+            border-radius: 20px;
+            padding: 8px 12px;
             color: white;
             outline: none;
-            font-size: 9px;
+            font-size: 12px;
         }
 
         .send-comment {
             background: var(--rojo-logo);
             border: none;
-            border-radius: 16px;
-            padding: 4px 10px;
+            border-radius: 20px;
+            padding: 8px 16px;
             color: white;
             font-weight: 600;
             cursor: pointer;
-            font-size: 9px;
+            font-size: 12px;
         }
 
         .comments-list {
-            margin-top: 4px;
-            font-size: 8px;
-            color: #ccc;
-            max-height: 60px;
+            margin-top: 8px;
+            font-size: 11px;
+            color: var(--gris-claro);
+            max-height: 80px;
             overflow-y: auto;
         }
 
-        /* ========== CARRUSEL 3 ========== */
+        /* ========== CARRUSEL 3 (ANUNCIOS) ========== */
         .patrocinios-inferior {
             overflow-x: auto;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             cursor: grab;
-            margin: 8px 0;
+            margin: 12px 0;
         }
         .patrocinios-inferior:active { cursor: grabbing; }
         .patrocinios-inferior::-webkit-scrollbar { display: none; }
         .patrocinios-track-inferior {
             display: flex;
-            gap: 10px;
-            padding: 0 12px;
+            gap: 12px;
+            padding: 0 16px;
             width: max-content;
         }
         .patrocinio-card-inferior {
             flex: 0 0 auto;
-            width: 140px;
+            width: 160px;
             background: var(--gris-oscuro);
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.2s;
-            border: 1px solid var(--gris-medio);
+            transition: all 0.2s ease;
+            border: 0.5px solid var(--gris-medio);
         }
         .patrocinio-card-inferior:active { transform: scale(0.96); }
         .patrocinio-card-inferior img {
             width: 100%;
-            height: 80px;
+            height: 160px;
             object-fit: cover;
         }
         .patrocinio-card-inferior .patro-text {
-            padding: 6px;
-            font-size: 9px;
+            padding: 10px;
+            font-size: 11px;
             text-align: center;
             color: var(--blanco);
             font-weight: 600;
+            background: var(--gris-oscuro);
         }
 
-        /* Pantalla completa */
+        /* ========== PANTALLA COMPLETA ========== */
         .fullscreen-stream {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: black;
+            background: #000;
             z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .fullscreen-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            z-index: 1001;
+        }
+
+        .close-fullscreen {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .fullscreen-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
+            background: #000;
         }
 
-        .fullscreen-stream img {
+        .fullscreen-content iframe {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background: black;
+            height: 70%;
+            border: none;
         }
 
-        .close-fullscreen {
+        .fullscreen-info {
             position: absolute;
-            top: 50px;
-            left: 20px;
-            background: rgba(0,0,0,0.6);
-            border-radius: 30px;
-            padding: 10px 16px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1001;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 24px 16px 40px;
         }
 
-        /* ========== BOTTOM NAVIGATION ========== */
+        /* ========== BOTTOM NAV ========== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             display: flex;
-            background: var(--negro);
-            border-top: 1px solid var(--gris-medio);
-            padding: 8px 0 16px 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            border-top: 0.5px solid var(--gris-medio);
+            padding: 8px 0 20px 0;
             z-index: 100;
         }
 
@@ -444,8 +460,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
             cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:active {
+            transform: scale(0.95);
         }
 
         .nav-icon {
@@ -453,7 +474,7 @@
         }
 
         .nav-label {
-            font-size: 9px;
+            font-size: 10px;
             color: var(--gris-claro);
         }
 
@@ -478,29 +499,29 @@
 
         .modal-content {
             background: var(--gris-oscuro);
-            padding: 20px;
-            border-radius: 20px;
+            padding: 24px;
+            border-radius: 24px;
             width: 90%;
             max-width: 350px;
-            border: 1px solid var(--gris-medio);
+            border: 0.5px solid var(--gris-medio);
             max-height: 80vh;
             overflow-y: auto;
         }
 
         .modal-content h3 {
             color: var(--rojo-logo);
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             text-align: center;
-            font-size: 18px;
+            font-size: 20px;
         }
 
         .modal-content input, .modal-content select {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
             background: var(--negro);
-            border: 1px solid var(--gris-medio);
-            border-radius: 12px;
+            border: 0.5px solid var(--gris-medio);
+            border-radius: 14px;
             color: var(--blanco);
             font-size: 14px;
         }
@@ -508,29 +529,29 @@
         .btn-rojo {
             background: var(--rojo-logo);
             color: var(--blanco);
-            padding: 12px;
-            border-radius: 12px;
+            padding: 14px;
+            border-radius: 14px;
             border: none;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             width: 100%;
-            font-size: 15px;
+            font-size: 16px;
         }
 
         .btn-gris {
             background: var(--gris-medio);
             color: var(--gris-claro);
-            margin-top: 10px;
-            padding: 12px;
-            border-radius: 12px;
+            margin-top: 12px;
+            padding: 14px;
+            border-radius: 14px;
             border: none;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             width: 100%;
-            font-size: 15px;
+            font-size: 16px;
         }
 
-        /* Perfil */
+        /* ========== PERFIL ========== */
         .profile-modern {
             margin-top: 60px;
             padding: 20px;
@@ -583,14 +604,10 @@
         .user-name {
             font-size: 22px;
             font-weight: 700;
-            background: linear-gradient(135deg, #fff, var(--gris-claro));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
         }
 
         .user-handle {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--gris-claro);
             margin-top: 4px;
         }
@@ -607,8 +624,8 @@
             width: fit-content;
         }
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             display: inline-block;
         }
@@ -619,32 +636,33 @@
         .stats-modern {
             display: flex;
             justify-content: center;
-            gap: 24px;
-            margin-bottom: 20px;
-            padding: 12px 0;
-            background: rgba(28,28,30,0.6);
+            gap: 32px;
+            margin-bottom: 24px;
+            padding: 16px 0;
+            background: var(--gris-oscuro);
             border-radius: 24px;
         }
         .stat-card { text-align: center; cursor: pointer; }
         .stat-value { font-size: 18px; font-weight: 800; }
-        .stat-label { font-size: 10px; color: var(--gris-claro); }
+        .stat-label { font-size: 11px; color: var(--gris-claro); }
 
         .contact-modern {
-            background: rgba(28,28,30,0.6);
+            background: var(--gris-oscuro);
             border-radius: 20px;
-            padding: 12px;
+            padding: 16px;
         }
         .contact-row {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px;
+            gap: 12px;
+            padding: 12px;
             border-radius: 14px;
             cursor: pointer;
         }
-        .contact-icon { font-size: 16px; width: 28px; }
-        .contact-value { flex: 1; font-size: 13px; }
-        .contact-copy { font-size: 10px; opacity: 0.6; }
+        .contact-row:active { background: var(--gris-medio); }
+        .contact-icon { font-size: 18px; width: 32px; }
+        .contact-value { flex: 1; font-size: 14px; }
+        .contact-copy { font-size: 11px; opacity: 0.6; }
 
         .streams-list {
             margin-top: 60px;
@@ -652,9 +670,9 @@
         }
         .my-stream-card {
             background: var(--gris-oscuro);
-            padding: 14px;
-            border-radius: 14px;
-            margin-bottom: 10px;
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 12px;
             border-left: 4px solid var(--rojo-logo);
             display: flex;
             justify-content: space-between;
@@ -671,12 +689,13 @@
             align-items: center;
             height: 100vh;
             padding: 20px;
+            background: #000;
         }
         .emoji { font-size: 70px; margin-bottom: 10px; }
         .title { font-size: 36px; font-weight: 900; color: var(--rojo-logo); }
         .sub { font-size: 14px; color: var(--gris-claro); margin-bottom: 30px; text-align: center; }
-        .btn-primary { background: var(--rojo-logo); padding: 14px; border-radius: 12px; width: 100%; text-align: center; color: var(--blanco); font-weight: 700; cursor: pointer; border: none; }
-        .btn-secondary { background: transparent; border: 1.5px solid var(--gris-medio); padding: 14px; border-radius: 12px; width: 100%; text-align: center; color: var(--gris-claro); font-weight: 700; cursor: pointer; margin-top: 10px; }
+        .btn-primary { background: var(--rojo-logo); padding: 14px; border-radius: 14px; width: 100%; text-align: center; color: var(--blanco); font-weight: 600; cursor: pointer; border: none; }
+        .btn-secondary { background: transparent; border: 1px solid var(--gris-medio); padding: 14px; border-radius: 14px; width: 100%; text-align: center; color: var(--gris-claro); font-weight: 600; cursor: pointer; margin-top: 10px; }
 
         .side-menu {
             position: fixed;
@@ -698,10 +717,11 @@
             color: var(--blanco);
             padding: 14px;
             text-align: left;
-            font-size: 15px;
-            border-bottom: 1px solid var(--gris-medio);
+            font-size: 16px;
+            border-bottom: 0.5px solid var(--gris-medio);
             cursor: pointer;
         }
+        .side-menu button:active { background: var(--rojo-logo); }
         .overlay {
             position: fixed;
             top: 0;
@@ -716,11 +736,11 @@
 
         .legal-option, .search-result {
             background: var(--negro);
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 10px;
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 12px;
             cursor: pointer;
-            border: 1px solid var(--gris-medio);
+            border: 0.5px solid var(--gris-medio);
         }
         .legal-option .title, .search-result .title {
             font-size: 15px;
@@ -729,18 +749,18 @@
         }
         .contact-info-legal {
             background: var(--negro);
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 10px;
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 12px;
             text-align: center;
         }
         .contact-info-legal a { color: var(--rojo-logo); text-decoration: none; }
-        .copyright-legal { text-align: center; font-size: 9px; color: #555; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gris-medio); }
+        .copyright-legal { text-align: center; font-size: 10px; color: #555; margin-top: 16px; padding-top: 12px; border-top: 0.5px solid var(--gris-medio); }
         .search-input-modal {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: var(--negro);
-            border: 1px solid var(--gris-medio);
+            border: 0.5px solid var(--gris-medio);
             border-radius: 30px;
             color: var(--blanco);
             font-size: 14px;
@@ -915,12 +935,12 @@
         actualizarEstadoUsuario();
     }
 
-    const patrocinios = [
-        { id: 1, imagen: "https://placehold.co/140x80/FF2D55/white?text=Super", link: "https://supermercado.com", texto: "Oferta Super" },
-        { id: 2, imagen: "https://placehold.co/140x80/007AFF/white?text=Banco", link: "https://banco.com", texto: "Banco Popular" },
-        { id: 3, imagen: "https://placehold.co/140x80/30D158/white?text=Concierto", link: "https://concierto.com", texto: "Concierto" },
-        { id: 4, imagen: "https://placehold.co/140x80/FF9F0A/white?text=Comida", link: "https://comida.com", texto: "Comida Rápida" },
-        { id: 5, imagen: "https://placehold.co/140x80/BF5AF2/white?text=Ropa", link: "https://ropa.com", texto: "Ropa" }
+    // ANUNCIOS CARRUSEL 3
+    const anunciosCarrusel3 = [
+        { id: 1, imagen: "file_00000000715471f88646b13cbd8632b5.png", texto: "CHEF DON MARCO", link: "#" },
+        { id: 2, imagen: "yobuskologo.jpg", texto: "YOBUSKO - Tu guía a las mejores ofertas", link: "#" },
+        { id: 3, imagen: "file_000000006ca871fdb0acac11566b0ed4.png", texto: "NicoVox - Sonido & Accesorios Móviles", link: "#" },
+        { id: 4, imagen: "file_00000000b6c8722faff83ddca70039d4.png", texto: "NicoVox - Sound & Mobile Accessories", link: "#" }
     ];
 
     const proximosEventos = [
@@ -929,7 +949,7 @@
         { titulo: "💒 Boda María y Carlos", ubicacion: "Hotel Jaragua", fecha: "22/05/2025", destacado: false }
     ];
 
-    // 15 eventos normales + 1 tarjeta especial del radar (id: 999)
+    // 15 eventos normales + 1 tarjeta radar
     const initialKeTeteos = [
         { id: 1, titulo: "🎸 Concierto Rock", nombreCreador: "Juan Luis Guerra", usuario: "@juanluis", ubicacion: "Estadio Olímpico", distancia: "0.8 km", categoria: "Concierto", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, imagen: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400&h=300&fit=crop" },
         { id: 2, titulo: "🎉 Fiesta 90's", nombreCreador: "Maria Garcia", usuario: "@maria_garcia", ubicacion: "Gazcue", distancia: "0.3 km", categoria: "Fiesta", lat: 18.47, lng: -69.91, viewers: 3452, likes: 567, imagen: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=300&fit=crop" },
@@ -946,15 +966,14 @@
         { id: 13, titulo: "🎵 Noche de Salsa", nombreCreador: "Son Latino", usuario: "@sonlatino", ubicacion: "Centro Cultural", distancia: "1.3 km", categoria: "Fiesta", lat: 18.47, lng: -69.9, viewers: 1876, likes: 654, imagen: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&h=300&fit=crop" },
         { id: 14, titulo: "🎭 Teatro Libre", nombreCreador: "Grupo Teatral", usuario: "@teatro", ubicacion: "Parque Mirador", distancia: "3.2 km", categoria: "Actividad", lat: 18.49, lng: -69.87, viewers: 987, likes: 321, imagen: "https://images.unsplash.com/photo-1503095396549-8070a209f6cc?w=400&h=300&fit=crop" },
         { id: 15, titulo: "📚 Feria del Libro", nombreCreador: "Biblioteca Nacional", usuario: "@biblioteca", ubicacion: "Plaza Cultural", distancia: "2.0 km", categoria: "Actividad", lat: 18.48, lng: -69.89, viewers: 2345, likes: 789, imagen: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&h=300&fit=crop" },
-        // TARJETA ESPECIAL: RADAR DE VUELOS EN TIEMPO REAL
-        { id: 999, titulo: "✈️ VUELOS EN TIEMPO REAL", nombreCreador: "Flight Radar", usuario: "@flightradar", ubicacion: "Global", distancia: "En vivo", categoria: "Radar", lat: 0, lng: 0, viewers: 15432, likes: 3421, imagen: "", esRadar: true }
+        // TARJETA RADAR
+        { id: 999, titulo: "✈️ VUELOS EN TIEMPO REAL", nombreCreador: "FlightRadar24", usuario: "@flightradar", ubicacion: "Santo Domingo", distancia: "En vivo", categoria: "Radar", lat: 18.46, lng: -69.90, viewers: 15432, likes: 3421, imagen: "", esRadar: true, radarUrl: "https://www.flightradar24.com/18.46,-69.90/6" }
     ];
 
     function loadKeTeteos() {
         const stored = localStorage.getItem('keTeteos');
         if (stored) { 
             allKeTeteos = JSON.parse(stored);
-            // Asegurar que la tarjeta radar existe
             if (!allKeTeteos.find(k => k.id === 999)) {
                 allKeTeteos.push(initialKeTeteos.find(k => k.id === 999));
             }
@@ -972,7 +991,7 @@
     function calcularDistancia(lat1, lng1, lat2, lng2) { const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLng = (lng2 - lng1) * Math.PI / 180; const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2); const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); return R * c; }
     function filtrarPorCategoria(categoria) { const filtrados = allKeTeteos.filter(ke => ke.categoria === categoria && !ke.esRadar); if (filtrados.length === 0) { alert(`No hay KeTeteos en la categoría "${categoria}"`); return; } mostrarKeTeteosFiltrados(filtrados); }
     async function filtrarPorCercania() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } const location = await getUserLocation(); if (!location) { alert('No se pudo obtener tu ubicación'); return; } const keTeteosConDistancia = allKeTeteos.filter(k => !k.esRadar).map(ke => { const distanciaKm = calcularDistancia(location.lat, location.lng, ke.lat || 18.48, ke.lng || -69.9); return { ...ke, distanciaReal: distanciaKm }; }); const filtrados = keTeteosConDistancia.filter(ke => ke.distanciaReal <= 10); if (filtrados.length === 0) { alert('No hay KeTeteos cerca de ti'); return; } mostrarKeTeteosFiltrados(filtrados); alert(`🎯 ${filtrados.length} KeTeteos cerca de ti`); }
-    function mostrarKeTeteosFiltrados(keTeteosFiltrados) { const container = document.getElementById('carouselContainer'); container.innerHTML = ''; keTeteosFiltrados.forEach(item => { const card = crearCardKeTeteo(item); container.appendChild(card); if (!item.esRadar) attachCardEvents(card, item.id); }); }
+    function mostrarKeTeteosFiltrados(keTeteosFiltrados) { const container = document.getElementById('carouselContainer'); container.innerHTML = ''; keTeteosFiltrados.forEach(item => { const card = crearCardKeTeteo(item); container.appendChild(card); if (!item.esRadar) attachCardEvents(card, item.id); else attachRadarEvents(card, item.id); }); }
     
     function crearCardKeTeteo(item) {
         const card = document.createElement('div');
@@ -981,10 +1000,9 @@
         card.setAttribute('data-id', item.id);
         
         if (item.esRadar) {
-            // Tarjeta especial con radar de vuelos
             card.innerHTML = `
                 <div class="stream-media">
-                    <iframe class="radar-iframe" src="https://globe.adsbexchange.com/?zoom=3" allow="geolocation" loading="lazy"></iframe>
+                    <iframe class="radar-iframe" src="https://www.flightradar24.com/18.46,-69.90/6" allow="geolocation" loading="lazy"></iframe>
                 </div>
                 <div class="card-content">
                     <div class="live-badge"><div class="live-dot"></div>EN VIVO</div>
@@ -1004,7 +1022,6 @@
                 </div>
             `;
         } else {
-            // Tarjeta normal de evento
             card.innerHTML = `
                 <div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div>
                 <div class="card-content">
@@ -1040,8 +1057,28 @@
         }); 
     }
     
+    function openFullscreenRadar(item) {
+        const fullDiv = document.createElement('div');
+        fullDiv.className = 'fullscreen-stream';
+        fullDiv.innerHTML = `
+            <div class="fullscreen-header">
+                <button class="close-fullscreen">← Volver</button>
+            </div>
+            <div class="fullscreen-content">
+                <iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe>
+                <div class="fullscreen-info">
+                    <div style="font-size:20px; font-weight:800;">${item.titulo}</div>
+                    <div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div>
+                    <div style="font-size:12px; color:#8E8E93;">📍 ${item.ubicacion} · ${item.distancia}</div>
+                    <div style="font-size:12px; margin-top:8px;">❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(fullDiv);
+        fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove());
+    }
+    
     function attachRadarEvents(card, id) {
-        // Likes para el radar
         const likeBtn = card.querySelector('.like-btn');
         if (likeBtn) {
             likeBtn.addEventListener('click', (e) => {
@@ -1053,7 +1090,6 @@
                 saveKeTeteos();
             });
         }
-        // Comentarios
         const commentToggle = card.querySelector('.comment-toggle');
         const commentRow = card.querySelector(`#comment-row-${id}`);
         if (commentToggle && commentRow) {
@@ -1087,7 +1123,13 @@
             });
         }
         updateCommentsUI(id);
-        // No abrir fullscreen para el radar
+        
+        // Abrir pantalla completa al tocar la tarjeta (no los botones)
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.action-btn') || e.target.closest('.send-comment') || e.target.closest('.comment-input')) return;
+            const item = allKeTeteos.find(k => k.id == id);
+            if (item && item.esRadar) openFullscreenRadar(item);
+        });
     }
     
     function attachCardEvents(card, id) {
@@ -1100,18 +1142,20 @@
         card.addEventListener('click', (e) => { if (e.target.closest('.action-btn') || e.target.closest('.send-comment') || e.target.closest('.comment-input')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) openFullscreenStream(item); });
     }
     
-    function updateCommentsUI(id) { const container = document.getElementById(`comments-list-${id}`); if (!container) return; const commentsList = currentComments[id] || []; if (commentsList.length === 0) { container.innerHTML = ''; return; } container.innerHTML = commentsList.map(c => `<div style="margin-bottom: 4px; background: rgba(255,255,255,0.1); padding: 4px 6px; border-radius: 10px;"><strong style="color: #FF2D55; font-size: 8px;">${c.user}</strong> <span style="font-size: 7px; color:#aaa;">${c.time || ''}</span><br><span style="font-size: 8px;">${c.text}</span></div>`).join(''); }
-    function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="close-fullscreen">← Volver</div><img src="${item.imagen}" alt="${item.titulo}"><div style="position: absolute; bottom: 40px; left: 0; right: 0; text-align: center; background: rgba(0,0,0,0.6); padding: 16px; margin: 0 20px; border-radius: 20px;"><div style="font-weight:800;">${item.titulo}</div><div>${item.nombreCreador} ${item.usuario}</div><div>📍 ${item.ubicacion} · ${item.distancia}</div><div>❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length}</div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); fullDiv.addEventListener('click', (e) => { if (e.target === fullDiv) fullDiv.remove(); }); }
+    function updateCommentsUI(id) { const container = document.getElementById(`comments-list-${id}`); if (!container) return; const commentsList = currentComments[id] || []; if (commentsList.length === 0) { container.innerHTML = ''; return; } container.innerHTML = commentsList.map(c => `<div style="margin-bottom: 6px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 12px;"><strong style="color: #FF2D55; font-size: 10px;">${c.user}</strong> <span style="font-size: 9px; color:#8E8E93;">${c.time || ''}</span><br><span style="font-size: 10px;">${c.text}</span></div>`).join(''); }
+    function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen">← Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">📍 ${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
     function enviarReporte(motivo) { if (!loggedIn) { alert('Inicia sesión'); cerrarReporteModal(); return; } alert(`✅ Reporte enviado: ${motivo}`); cerrarReporteModal(); }
     function cerrarReporteModal() { document.getElementById('reporteModal').classList.remove('show'); reporteKeTeteoId = null; }
 
-    function renderPatrociniosSuperior() { const track = document.getElementById('patrociniosTrackSuperior'); track.innerHTML = ''; const textosPatrocinio = ["🔥 OFERTA SUPER", "🏦 BANCO POPULAR", "🎵 CONCIERTO", "🍔 COMIDA", "👕 ROPA"]; const textosInfinitos = [...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio]; textosInfinitos.forEach((texto, index) => { const span = document.createElement('span'); span.className = 'patrocinio-texto-superior'; span.innerText = texto; span.onclick = () => window.open('https://craftmktgroup.com', '_blank'); track.appendChild(span); if (index < textosInfinitos.length - 1) { const separador = document.createElement('span'); separador.className = 'separador-texto'; separador.innerText = '•'; track.appendChild(separador); } }); setTimeout(() => { configurarAutoScrollSuperior(); iniciarAutoScrollSuperior(); }, 100); }
-    function renderPatrociniosInferior() { const track = document.getElementById('patrociniosTrackInferior'); track.innerHTML = ''; const patrociniosInfinitos = [...patrocinios, ...patrocinios, ...patrocinios]; patrociniosInfinitos.forEach(p => { const card = document.createElement('div'); card.className = 'patrocinio-card-inferior'; card.onclick = () => window.open(p.link, '_blank'); card.innerHTML = `<img src="${p.imagen}" alt="${p.texto}"><div class="patro-text">${p.texto}</div>`; track.appendChild(card); }); setTimeout(() => { configurarAutoScrollInferior(); iniciarAutoScrollInferior(); }, 100); }
-    function iniciarAutoScrollSuperior() { const carousel = document.querySelector('.patrocinios-superior'); if (!carousel) return; if (autoScrollIntervalSuperior) clearInterval(autoScrollIntervalSuperior); autoScrollIntervalSuperior = setInterval(() => { if (!isUserInteractingSuperior && carousel) { carousel.scrollBy({ left: 1.5, behavior: 'smooth' }); if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { carousel.scrollTo({ left: 0, behavior: 'smooth' }); } } }, 20); }
-    function iniciarAutoScrollInferior() { const carousel = document.querySelector('.patrocinios-inferior'); if (!carousel) return; if (autoScrollIntervalInferior) clearInterval(autoScrollIntervalInferior); autoScrollIntervalInferior = setInterval(() => { if (!isUserInteractingInferior && carousel) { carousel.scrollBy({ left: 1.5, behavior: 'smooth' }); if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { carousel.scrollTo({ left: 0, behavior: 'smooth' }); } } }, 20); }
+    function renderPatrociniosSuperior() { const track = document.getElementById('patrociniosTrackSuperior'); track.innerHTML = ''; const textosPatrocinio = ["OFERTA SUPER", "BANCO POPULAR", "CONCIERTO", "COMIDA", "ROPA"]; const textosInfinitos = [...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio]; textosInfinitos.forEach((texto, index) => { const span = document.createElement('span'); span.className = 'patrocinio-texto-superior'; span.innerText = texto; span.onclick = () => window.open('#', '_blank'); track.appendChild(span); if (index < textosInfinitos.length - 1) { const separador = document.createElement('span'); separador.className = 'separador-texto'; separador.innerText = '•'; track.appendChild(separador); } }); setTimeout(() => { configurarAutoScrollSuperior(); iniciarAutoScrollSuperior(); }, 100); }
+    
+    function renderPatrociniosInferior() { const track = document.getElementById('patrociniosTrackInferior'); track.innerHTML = ''; anunciosCarrusel3.forEach(anuncio => { const card = document.createElement('div'); card.className = 'patrocinio-card-inferior'; card.onclick = () => alert(`📢 ${anuncio.texto}`); card.innerHTML = `<img src="${anuncio.imagen}" alt="${anuncio.texto}" onerror="this.src='https://placehold.co/160x160/FF2D55/white?text=Anuncio'"><div class="patro-text">${anuncio.texto}</div>`; track.appendChild(card); }); setTimeout(() => { configurarAutoScrollInferior(); iniciarAutoScrollInferior(); }, 100); }
+    
+    function iniciarAutoScrollSuperior() { const carousel = document.querySelector('.patrocinios-superior'); if (!carousel) return; if (autoScrollIntervalSuperior) clearInterval(autoScrollIntervalSuperior); autoScrollIntervalSuperior = setInterval(() => { if (!isUserInteractingSuperior && carousel) { carousel.scrollBy({ left: 1, behavior: 'smooth' }); if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { carousel.scrollTo({ left: 0, behavior: 'smooth' }); } } }, 30); }
+    function iniciarAutoScrollInferior() { const carousel = document.querySelector('.patrocinios-inferior'); if (!carousel) return; if (autoScrollIntervalInferior) clearInterval(autoScrollIntervalInferior); autoScrollIntervalInferior = setInterval(() => { if (!isUserInteractingInferior && carousel) { carousel.scrollBy({ left: 1, behavior: 'smooth' }); if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { carousel.scrollTo({ left: 0, behavior: 'smooth' }); } } }, 30); }
     function configurarAutoScrollSuperior() { const carousel = document.querySelector('.patrocinios-superior'); if (!carousel) return; carousel.addEventListener('touchstart', () => { isUserInteractingSuperior = true; if (autoScrollTimeoutSuperior) clearTimeout(autoScrollTimeoutSuperior); }); carousel.addEventListener('touchend', () => { autoScrollTimeoutSuperior = setTimeout(() => { isUserInteractingSuperior = false; }, 5000); }); }
     function configurarAutoScrollInferior() { const carousel = document.querySelector('.patrocinios-inferior'); if (!carousel) return; carousel.addEventListener('touchstart', () => { isUserInteractingInferior = true; if (autoScrollTimeoutInferior) clearTimeout(autoScrollTimeoutInferior); }); carousel.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); }); }
-    function openProximosEventos() { const container = document.getElementById('proximosEventosList'); container.innerHTML = ''; proximosEventos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--negro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${e.titulo}</div><div style="font-size:12px;">📍 ${e.ubicacion} · 📅 ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo); font-size:11px;">⭐ PROMOCIONADO</div>' : ''}<button class="horiz-btn" style="margin-top:8px;" onclick="alert(\'Próximamente\')">➕ Añadir</button>`; container.appendChild(div); }); document.getElementById('proximosEventosModal').classList.add('show'); }
+    function openProximosEventos() { const container = document.getElementById('proximosEventosList'); container.innerHTML = ''; proximosEventos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--gris-oscuro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${e.titulo}</div><div style="font-size:12px; color:var(--gris-claro);">📍 ${e.ubicacion} · 📅 ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">⭐ PROMOCIONADO</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Próximamente\')">➕ Añadir</button>`; container.appendChild(div); }); document.getElementById('proximosEventosModal').classList.add('show'); }
     function closeProximosEventos() { document.getElementById('proximosEventosModal').classList.remove('show'); }
     function abrirConfirmarEliminar(id, titulo) { eliminarId = id; document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`; document.getElementById('confirmarEliminarModal').classList.add('show'); }
     function confirmarEliminar() { if (eliminarId) { const index = allKeTeteos.findIndex(k => k.id == eliminarId); if (index !== -1 && !allKeTeteos[index].esRadar) { allKeTeteos.splice(index, 1); saveKeTeteos(); renderCarousel(); renderMyStreams(); alert('✅ Eliminado'); } } cerrarConfirmarEliminar(); }
@@ -1122,7 +1166,7 @@
     function openSearchModal() { document.getElementById('searchModal').classList.add('show'); document.getElementById('searchInputModal').focus(); }
     function closeSearchModal() { document.getElementById('searchModal').classList.remove('show'); document.getElementById('searchResultsModal').innerHTML = ''; document.getElementById('searchInputModal').value = ''; }
     document.getElementById('searchInputModal')?.addEventListener('input', function(e) { const term = e.target.value.toLowerCase(); const results = allKeTeteos.filter(k => k.titulo.toLowerCase().includes(term) || k.nombreCreador.toLowerCase().includes(term)); const container = document.getElementById('searchResultsModal'); if (!term) { container.innerHTML = ''; return; } if (results.length === 0) { container.innerHTML = '<div class="search-result"><div class="title">❌ Sin resultados</div></div>'; return; } container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${k.titulo}</div><div class="desc">${k.nombreCreador} · ${k.ubicacion}</div></div>`).join(''); });
-    function selectSearchResult(id) { closeSearchModal(); const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) openFullscreenStream(item); else if (item && item.esRadar) alert('✈️ Abriendo radar de vuelos...'); }
+    function selectSearchResult(id) { closeSearchModal(); const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) openFullscreenStream(item); else if (item && item.esRadar) openFullscreenRadar(item); }
 
     function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
     function closeMenu() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
