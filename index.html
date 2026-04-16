@@ -30,7 +30,7 @@
             --azul: #007AFF;
         }
 
-        /* ========== HEADER PROFESIONAL ========== */
+        /* ========== HEADER PROFESIONAL MÁS COMPACTO ========== */
         .header {
             position: fixed;
             top: 0;
@@ -74,42 +74,11 @@
 
         /* ========== DIVISORES ========== */
         .divider-naranja {
-            margin: 12px 0;
+            margin: 8px 0;
             border: none;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--rojo-logo), var(--naranja), var(--rojo-logo), transparent);
             width: 100%;
-        }
-
-        /* ========== BOTONES HORIZONTALES ========== */
-        .horizontal-bar {
-            display: flex;
-            gap: 12px;
-            padding: 8px 16px;
-            margin: 4px 0;
-        }
-
-        .horiz-btn {
-            flex: 1;
-            background: var(--gris-oscuro);
-            border: none;
-            border-radius: 30px;
-            padding: 8px 12px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--blanco);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-
-        .horiz-btn:active {
-            transform: scale(0.97);
-            background: var(--rojo-logo);
-        }
-
-        .horiz-btn.primary {
-            background: var(--rojo-logo);
         }
 
         /* ========== CARRUSEL 1 (TEXTO GRANDE Y RÁPIDO) ========== */
@@ -118,7 +87,7 @@
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             cursor: grab;
-            margin: 16px 0;
+            margin: 12px 0;
             white-space: nowrap;
         }
         .patrocinios-superior:active { cursor: grabbing; }
@@ -153,9 +122,9 @@
             letter-spacing: 4px;
         }
 
-        /* ========== CARRUSEL 2 ========== */
+        /* ========== CARRUSEL 2 (MÁS GRANDE) ========== */
         #mainScreen {
-            padding-top: 60px;
+            padding-top: 56px;
         }
 
         .carousel-container {
@@ -163,7 +132,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             padding: 12px;
-            max-height: 65vh;
+            max-height: 72vh;
             overflow-y: auto;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
@@ -345,46 +314,39 @@
             overflow-y: auto;
         }
 
-        /* ========== CARRUSEL 3 (TAMAÑO ORIGINAL) ========== */
+        /* ========== CARRUSEL 3 (SOLO IMAGEN + LINK) ========== */
         .patrocinios-inferior {
             overflow-x: auto;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             cursor: grab;
-            margin: 16px 0;
+            margin: 12px 0 20px;
         }
         .patrocinios-inferior:active { cursor: grabbing; }
         .patrocinios-inferior::-webkit-scrollbar { display: none; }
         .patrocinios-track-inferior {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             padding: 0 16px;
             width: max-content;
         }
         .patrocinio-card-inferior {
             flex: 0 0 auto;
-            width: 250px;
-            background: var(--gris-oscuro);
-            border-radius: 16px;
+            width: 140px;
+            background: transparent;
+            border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.2s;
-            border: 0.5px solid var(--gris-medio);
         }
         .patrocinio-card-inferior:active { transform: scale(0.96); }
         .patrocinio-card-inferior img {
             width: 100%;
             height: 140px;
             object-fit: cover;
+            border-radius: 12px;
         }
-        .patrocinio-card-inferior .patro-text {
-            padding: 10px;
-            font-size: 12px;
-            text-align: center;
-            color: var(--blanco);
-            font-weight: 600;
-            background: var(--gris-oscuro);
-        }
+        /* Sin texto debajo de la imagen */
 
         /* ========== PANTALLA COMPLETA ========== */
         .fullscreen-stream {
@@ -397,7 +359,6 @@
             z-index: 1000;
             display: flex;
             flex-direction: column;
-            z-index: 1000;
         }
 
         .fullscreen-header {
@@ -770,7 +731,6 @@
             margin-bottom: 16px;
         }
 
-        /* Configuración e idioma */
         .config-option {
             display: flex;
             justify-content: space-between;
@@ -819,21 +779,19 @@
 
     <hr class="divider-naranja">
 
-    <div class="horizontal-bar">
-        <button class="horiz-btn primary" onclick="filtrarPorCercania()">🎯 KeTeteo Cerca de Mí</button>
-        <button class="horiz-btn" onclick="openProximosEventos()">📅 Próximos Eventos</button>
-    </div>
-
+    <!-- CARRUSEL 1: PATROCINIOS SUPERIOR -->
     <div class="patrocinios-superior" id="patrociniosSuperior">
         <div class="patrocinios-track-superior" id="patrociniosTrackSuperior"></div>
     </div>
 
     <hr class="divider-naranja">
 
+    <!-- CARRUSEL 2: KE TETEOS ACTIVOS (SIN TÍTULO) -->
     <div id="carouselContainer" class="carousel-container"></div>
 
     <hr class="divider-naranja">
 
+    <!-- CARRUSEL 3: PATROCINIOS INFERIOR (SOLO IMAGEN) -->
     <div class="patrocinios-inferior" id="patrociniosInferior">
         <div class="patrocinios-track-inferior" id="patrociniosTrackInferior"></div>
     </div>
@@ -848,6 +806,7 @@
     <button onclick="showMyStreamsScreen(); closeMenu()">📡 Mis transmisiones</button>
     <button onclick="showConfigScreen(); closeMenu()">⚙️ Configuración</button>
     <button onclick="showLanguageScreen(); closeMenu()">🌐 Idioma</button>
+    <button onclick="openProximosEventos(); closeMenu()">📅 Próximos Eventos</button>
     <button onclick="logout(); closeMenu()" id="logoutMenuBtn" style="display:none;">🚪 Cerrar sesión</button>
 </div>
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
@@ -913,12 +872,13 @@
 
 <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
-<!-- BOTTOM NAV -->
+<!-- BOTTOM NAV (5 BOTONES) -->
 <div class="bottom-nav">
     <div class="nav-item" onclick="showHomeScreen()"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
-    <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon">🔔</div><div class="nav-label">Alertas</div></div>
-    <div class="nav-item" onclick="openLegalModal()"><div class="nav-icon">📄</div><div class="nav-label">Legal</div></div>
     <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon">🔍</div><div class="nav-label">Buscar</div></div>
+    <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon">🔔</div><div class="nav-label">Alertas</div></div>
+    <div class="nav-item" onclick="showProfileScreen()"><div class="nav-icon">👤</div><div class="nav-label">Perfil</div></div>
+    <div class="nav-item" onclick="openLegalModal()"><div class="nav-icon">📄</div><div class="nav-label">Legal</div></div>
 </div>
 
 <script>
@@ -983,12 +943,12 @@
         actualizarEstadoUsuario();
     }
 
-    // ANUNCIOS CARRUSEL 3
+    // ANUNCIOS CARRUSEL 3 (SOLO IMAGEN + LINK)
     const anunciosCarrusel3 = [
-        { id: 1, imagen: "file_00000000715471f88646b13cbd8632b5.png", texto: "CHEF DON MARCO", link: "#" },
-        { id: 2, imagen: "yobuskologo.jpg", texto: "YOBUSKO - Tu guía a las mejores ofertas", link: "#" },
-        { id: 3, imagen: "file_000000006ca871fdb0acac11566b0ed4.png", texto: "NicoVox - Sonido & Accesorios Móviles", link: "#" },
-        { id: 4, imagen: "file_00000000b6c8722faff83ddca70039d4.png", texto: "NicoVox - Sound & Mobile Accessories", link: "#" }
+        { id: 1, imagen: "file_00000000715471f88646b13cbd8632b5.png", link: "https://www.instagram.com/chefdonmarco/" },
+        { id: 2, imagen: "yobuskologo.jpg", link: "https://yobusko.com" },
+        { id: 3, imagen: "file_000000006ca871fdb0acac11566b0ed4.png", link: "https://nicovox.com" },
+        { id: 4, imagen: "file_00000000b6c8722faff83ddca70039d4.png", link: "https://nicovox.com" }
     ];
 
     const proximosEventos = [
@@ -1037,8 +997,32 @@
     function saveKeTeteos() { localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
     function getUserLocation() { return new Promise((resolve, reject) => { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((pos) => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(userLocation); }, () => { reject(null); }); } else { reject(null); } }); }
     function calcularDistancia(lat1, lng1, lat2, lng2) { const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLng = (lng2 - lng1) * Math.PI / 180; const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2); const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); return R * c; }
-    function filtrarPorCategoria(categoria) { const filtrados = allKeTeteos.filter(ke => ke.categoria === categoria && !ke.esRadar); if (filtrados.length === 0) { alert(`No hay KeTeteos en la categoría "${categoria}"`); return; } mostrarKeTeteosFiltrados(filtrados); }
-    async function filtrarPorCercania() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } const location = await getUserLocation(); if (!location) { alert('No se pudo obtener tu ubicación'); return; } const keTeteosConDistancia = allKeTeteos.filter(k => !k.esRadar).map(ke => { const distanciaKm = calcularDistancia(location.lat, location.lng, ke.lat || 18.48, ke.lng || -69.9); return { ...ke, distanciaReal: distanciaKm }; }); const filtrados = keTeteosConDistancia.filter(ke => ke.distanciaReal <= 10); if (filtrados.length === 0) { alert('No hay KeTeteos cerca de ti'); return; } mostrarKeTeteosFiltrados(filtrados); alert(`🎯 ${filtrados.length} KeTeteos cerca de ti`); }
+    
+    // Función para ordenar KeTeteos por cercanía automáticamente al cargar
+    async function ordenarKeTeteosPorCercania() {
+        if (!userLocation) {
+            try {
+                await getUserLocation();
+            } catch(e) {
+                console.log("No se pudo obtener ubicación");
+                return;
+            }
+        }
+        if (userLocation) {
+            allKeTeteos = allKeTeteos.map(ke => {
+                if (ke.esRadar) return ke;
+                const distanciaKm = calcularDistancia(userLocation.lat, userLocation.lng, ke.lat || 18.48, ke.lng || -69.9);
+                return { ...ke, distanciaReal: distanciaKm };
+            });
+            // Ordenar: primero los no radar por distancia, luego el radar al final
+            const noRadar = allKeTeteos.filter(k => !k.esRadar).sort((a,b) => (a.distanciaReal || 999) - (b.distanciaReal || 999));
+            const radar = allKeTeteos.filter(k => k.esRadar);
+            allKeTeteos = [...noRadar, ...radar];
+            saveKeTeteos();
+            renderCarousel();
+        }
+    }
+
     function mostrarKeTeteosFiltrados(keTeteosFiltrados) { const container = document.getElementById('carouselContainer'); container.innerHTML = ''; keTeteosFiltrados.forEach(item => { const card = crearCardKeTeteo(item); container.appendChild(card); if (!item.esRadar) attachCardEvents(card, item.id); else attachRadarEvents(card, item.id); }); }
     
     function crearCardKeTeteo(item) {
@@ -1172,7 +1156,6 @@
         }
         updateCommentsUI(id);
         
-        // Abrir pantalla completa al tocar la tarjeta (no los botones)
         card.addEventListener('click', (e) => {
             if (e.target.closest('.action-btn') || e.target.closest('.send-comment') || e.target.closest('.comment-input')) return;
             const item = allKeTeteos.find(k => k.id == id);
@@ -1226,8 +1209,8 @@
         anunciosCarrusel3.forEach(anuncio => { 
             const card = document.createElement('div'); 
             card.className = 'patrocinio-card-inferior'; 
-            card.onclick = () => alert(`📢 ${anuncio.texto}`); 
-            card.innerHTML = `<img src="${anuncio.imagen}" alt="${anuncio.texto}" onerror="this.src='https://placehold.co/250x140/FF2D55/white?text=Anuncio'"><div class="patro-text">${anuncio.texto}</div>`; 
+            card.onclick = () => { if (anuncio.link && anuncio.link !== '#') window.open(anuncio.link, '_blank'); else alert(`📢 ${anuncio.texto || 'Anuncio'}`); };
+            card.innerHTML = `<img src="${anuncio.imagen}" alt="Anuncio" onerror="this.src='https://placehold.co/140x140/FF2D55/white?text=Ad'">`; 
             track.appendChild(card); 
         }); 
         setTimeout(() => { 
@@ -1318,8 +1301,8 @@
     function closeCreateModal() { document.getElementById('createKeTeteoModal').classList.remove('show'); }
     function publicarKeTeteo() { if (!loggedIn) { alert('Inicia sesión'); return; } const titulo = document.getElementById('newTitulo').value.trim(); const ubicacion = document.getElementById('newUbicacion').value.trim(); const distancia = document.getElementById('newDistancia').value.trim(); let imagen = document.getElementById('newImagen').value.trim(); const fileInput = document.getElementById('newImagenFile'); if (!titulo || !ubicacion || !distancia) { alert('Completa título, ubicación y distancia'); return; } const nuevoId = Date.now(); if (!imagen && fileInput.files.length > 0) { const reader = new FileReader(); reader.onload = function(e) { imagen = e.target.result; crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen); }; reader.readAsDataURL(fileInput.files[0]); } else { crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen || 'https://via.placeholder.com/400x300?text=KeTeteo'); } }
     function crearKeTeteoFinal(id, titulo, ubicacion, distancia, imagen) { const nuevoKe = { id: id, titulo: titulo, nombreCreador: currentUser.name, usuario: currentUser.username, ubicacion: ubicacion, distancia: distancia, categoria: "Otros", lat: 18.48, lng: -69.91, viewers: 0, likes: 0, imagen: imagen }; allKeTeteos.unshift(nuevoKe); currentLikes[nuevoKe.id] = 0; currentComments[nuevoKe.id] = []; saveKeTeteos(); renderCarousel(); closeCreateModal(); alert('✅ KeTeteo publicado'); document.getElementById('newTitulo').value = ''; document.getElementById('newUbicacion').value = ''; document.getElementById('newDistancia').value = ''; document.getElementById('newImagen').value = ''; document.getElementById('newImagenFile').value = ''; }
-    function showMainScreen() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('mainScreen').classList.add('active'); renderCarousel(); }
-    function showHomeScreen() { document.getElementById('mainScreen').classList.add('active'); renderCarousel(); }
+    function showMainScreen() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
+    function showHomeScreen() { document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
     function showProfileScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
     function showAlertsScreen() { alert('🔔 Alertas (Próximamente)'); }
     function showMyStreamsScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('myStreamsScreen').classList.add('active'); renderMyStreams(); }
@@ -1355,6 +1338,10 @@
             iniciarSeguimientoEstado();
         }
         allKeTeteos.forEach(k => { const savedComments = localStorage.getItem(`comments_${k.id}`); if (savedComments) currentComments[k.id] = JSON.parse(savedComments); else currentComments[k.id] = []; });
+        // Ordenar por cercanía automáticamente al cargar si hay ubicación
+        setTimeout(() => {
+            if (loggedIn) ordenarKeTeteosPorCercania();
+        }, 1000);
     };
 </script>
 </body>
