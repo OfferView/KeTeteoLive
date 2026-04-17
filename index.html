@@ -30,41 +30,72 @@
             --azul: #007AFF;
         }
 
-        /* ========== RUTA CORREGIDA DE LAS FIGURAS (GitHub) ========== */
-        .figura-base {
-            display: inline-block;
-            background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png');
+        /* ========== ICONOS PERSONALIZADOS (carpeta icons) ========== */
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-size: 100%;
             background-repeat: no-repeat;
-            background-size: 2048px 2048px;
+            background-position: center;
+        }
+
+        .i-menu { background-image: url('icons/menu.png'); }
+        .i-home { background-image: url('icons/home.png'); }
+        .i-search { background-image: url('icons/search.png'); }
+        .i-bell { background-image: url('icons/bell.png'); }
+        .i-target { background-image: url('icons/target.png'); }
+        .i-document { background-image: url('icons/document.png'); }
+        .i-heart { background-image: url('icons/heart.png'); }
+        .i-comment { background-image: url('icons/comment.png'); }
+        .i-share { background-image: url('icons/refresh.png'); }
+        .i-flag { background-image: url('icons/warning.png'); }
+        .i-user { background-image: url('icons/user.png'); }
+        .i-plus { background-image: url('icons/add.png'); }
+        .i-cog { background-image: url('icons/settings.png'); }
+        .i-globe { background-image: url('icons/world.png'); }
+        .i-logout { background-image: url('icons/door.png'); }
+        .i-close { background-image: url('icons/close.png'); }
+        .i-trash { background-image: url('icons/trash.png'); }
+        .i-email { background-image: url('icons/email.png'); }
+        .i-phone { background-image: url('icons/phone.png'); }
+        .i-location { background-image: url('icons/location.png'); }
+        .i-music { background-image: url('icons/music.png'); }
+        .i-live { background-image: url('icons/live.png'); }
+        .i-edit { background-image: url('icons/edit.png'); }
+        .i-link { background-image: url('icons/link.png'); }
+        .i-copy { background-image: url('icons/copy.png'); }
+        .i-calendar { background-image: url('icons/calendar.png'); }
+
+        /* Ajustes de tamaño para diferentes usos */
+        .nav-icon .i-home, .nav-icon .i-search, .nav-icon .i-bell,
+        .nav-icon .i-target, .nav-icon .i-document {
+            width: 28px;
+            height: 28px;
         }
         
-        .i-menu { background-position: 0px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-calendar { background-position: -256px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-live { background-position: -768px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-search { background-position: -1024px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-home { background-position: -256px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-bell { background-position: -512px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-document { background-position: -768px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-heart { background-position: -1280px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-comment { background-position: -1536px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-share { background-position: -1792px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-flag { background-position: 0px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-edit { background-position: -1024px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-link { background-position: -1536px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-email { background-position: -1792px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-phone { background-position: 0px -1536px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-cog { background-position: -256px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-globe { background-position: -512px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-logout { background-position: -768px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-close { background-position: -1536px -1536px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-trash { background-position: -1792px -1536px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-eye { background-position: -1024px -1024px; background-size: 2048px 2048px; width: 20px; height: 20px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-user { background-position: -1792px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-plus { background-position: -1536px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-location { background-position: -1024px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-target { background-position: -256px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-copy { background-position: -256px -1792px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
-        .i-music { background-position: 0px -256px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .action-btn .i-heart, .action-btn .i-comment,
+        .action-btn .i-share, .action-btn .i-flag {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .live-badge .i-live {
+            width: 10px;
+            height: 10px;
+        }
+        
+        .side-menu button .i-user,
+        .side-menu button .i-plus,
+        .side-menu button .i-cog,
+        .side-menu button .i-globe,
+        .side-menu button .i-logout {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+        }
 
         /* ========== HEADER ========== */
         .header {
@@ -338,7 +369,7 @@
         .nav-icon { font-size: 22px; }
         .nav-label { font-size: 10px; color: var(--gris-claro); }
 
-        /* ========== MODALES CORREGIDOS ========== */
+        /* ========== MODALES ========== */
         .modal {
             position: fixed;
             top: 0;
@@ -720,14 +751,14 @@
     <div class="emoji">📡</div>
     <div class="title">KeTeteoLive</div>
     <div class="sub">Tu vida ahora</div>
-    <button class="btn-primary" onclick="openRegister()"><i class="i-user"></i> Crear cuenta</button>
-    <button class="btn-secondary" onclick="openLogin()"><i class="i-user"></i> Iniciar sesión</button>
+    <button class="btn-primary" onclick="openRegister()"><i class="icon i-user"></i> Crear cuenta</button>
+    <button class="btn-secondary" onclick="openLogin()"><i class="icon i-user"></i> Iniciar sesión</button>
 </div>
 
 <!-- PANTALLA PRINCIPAL -->
 <div id="mainScreen" class="screen">
     <div class="header">
-        <button class="hamburger" onclick="toggleMenu()"><i class="i-menu" style="width:28px; height:28px;"></i></button>
+        <button class="hamburger" onclick="toggleMenu()"><i class="icon i-menu" style="width:28px; height:28px;"></i></button>
         <div class="logo-container">
             <img src="ketelogo.jpg" alt="KeTeteoLive" class="logo-img" onerror="this.src='https://placehold.co/200x60/FF2D55/white?text=KeTeteoLive'">
         </div>
@@ -753,102 +784,102 @@
 
 <!-- MENÚ LATERAL -->
 <div id="sideMenu" class="side-menu">
-    <button onclick="openRegister(); closeMenu()"><i class="i-user"></i> Registrarse</button>
-    <button onclick="openLogin(); closeMenu()"><i class="i-user"></i> Iniciar sesión</button>
-    <button id="createKeTeteoBtn" onclick="openCreateKeTeteoModal(); closeMenu()"><i class="i-plus"></i> Crear KeTeteo</button>
-    <button onclick="showProfileScreen(); closeMenu()"><i class="i-user"></i> Mi perfil</button>
-    <button onclick="showMyStreamsScreen(); closeMenu()"><i class="i-cog" style="background-position:0px -1280px;"></i> Mis transmisiones</button>
-    <button onclick="showConfigScreen(); closeMenu()"><i class="i-cog"></i> Configuración</button>
-    <button onclick="showLanguageScreen(); closeMenu()"><i class="i-globe"></i> Idioma</button>
-    <button onclick="logout(); closeMenu()" id="logoutMenuBtn" style="display:none;"><i class="i-logout"></i> Cerrar sesión</button>
+    <button onclick="openRegister(); closeMenu()"><i class="icon i-user"></i> Registrarse</button>
+    <button onclick="openLogin(); closeMenu()"><i class="icon i-user"></i> Iniciar sesión</button>
+    <button id="createKeTeteoBtn" onclick="openCreateKeTeteoModal(); closeMenu()"><i class="icon i-plus"></i> Crear KeTeteo</button>
+    <button onclick="showProfileScreen(); closeMenu()"><i class="icon i-user"></i> Mi perfil</button>
+    <button onclick="showMyStreamsScreen(); closeMenu()"><i class="icon i-cog"></i> Mis transmisiones</button>
+    <button onclick="showConfigScreen(); closeMenu()"><i class="icon i-cog"></i> Configuración</button>
+    <button onclick="showLanguageScreen(); closeMenu()"><i class="icon i-globe"></i> Idioma</button>
+    <button onclick="logout(); closeMenu()" id="logoutMenuBtn" style="display:none;"><i class="icon i-logout"></i> Cerrar sesión</button>
 </div>
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
 <!-- MODALES -->
 <div id="registerModal" class="modal">
     <div class="modal-content">
-        <h3><i class="i-user"></i> Crear cuenta</h3>
+        <h3><i class="icon i-user"></i> Crear cuenta</h3>
         <input type="text" id="regName" placeholder="Nombre completo">
         <input type="text" id="regUser" placeholder="Usuario (@ejemplo)">
         <input type="email" id="regEmail" placeholder="Correo electrónico">
         <div class="password-field">
             <input type="password" id="regPass" placeholder="Contraseña">
-            <span class="password-toggle" onclick="togglePassword('regPass')"><i class="i-eye"></i></span>
+            <span class="password-toggle" onclick="togglePassword('regPass')"><i class="icon i-eye"></i></span>
         </div>
         <div class="password-field">
             <input type="password" id="regConfirmPass" placeholder="Confirmar contraseña">
-            <span class="password-toggle" onclick="togglePassword('regConfirmPass')"><i class="i-eye"></i></span>
+            <span class="password-toggle" onclick="togglePassword('regConfirmPass')"><i class="icon i-eye"></i></span>
         </div>
         <select id="regYear"><option value="">Año de nacimiento</option><script>for(let y=2024;y>=1960;y--) document.write(`<option>${y}</option>`);</script></select>
-        <button class="btn-rojo" onclick="register()"><i class="i-heart" style="background-position:-1280px -1536px;"></i> Registrarse</button>
-        <button class="btn-gris" onclick="closeModals()"><i class="i-close"></i> Cancelar</button>
+        <button class="btn-rojo" onclick="register()"><i class="icon i-heart"></i> Registrarse</button>
+        <button class="btn-gris" onclick="closeModals()"><i class="icon i-close"></i> Cancelar</button>
     </div>
 </div>
 
 <div id="loginModal" class="modal">
     <div class="modal-content">
-        <h3><i class="i-user"></i> Iniciar sesión</h3>
+        <h3><i class="icon i-user"></i> Iniciar sesión</h3>
         <input type="email" id="loginEmail" placeholder="Correo electrónico">
         <div class="password-field">
             <input type="password" id="loginPass" placeholder="Contraseña">
-            <span class="password-toggle" onclick="togglePassword('loginPass')"><i class="i-eye"></i></span>
+            <span class="password-toggle" onclick="togglePassword('loginPass')"><i class="icon i-eye"></i></span>
         </div>
-        <button class="btn-rojo" onclick="login()"><i class="i-target"></i> Entrar</button>
-        <button class="btn-gris" onclick="closeModals()"><i class="i-close"></i> Cancelar</button>
+        <button class="btn-rojo" onclick="login()"><i class="icon i-target"></i> Entrar</button>
+        <button class="btn-gris" onclick="closeModals()"><i class="icon i-close"></i> Cancelar</button>
     </div>
 </div>
 
-<div id="createKeTeteoModal" class="modal"><div class="modal-content"><h3><i class="i-plus"></i> Crear nuevo KeTeteo</h3><input type="text" id="newTitulo" placeholder="Título del evento"><input type="text" id="newUbicacion" placeholder="Ubicación"><input type="text" id="newDistancia" placeholder="Distancia"><input type="url" id="newImagen" placeholder="URL de imagen (opcional)"><label style="color:var(--gris-claro); font-size:12px;"><i class="i-cog" style="background-position:-1024px -1280px;"></i> O sube una imagen:</label><input type="file" id="newImagenFile" accept="image/*"><button class="btn-rojo" onclick="publicarKeTeteo()"><i class="i-live"></i> Iniciar Mi KeTeteo</button><button class="btn-gris" onclick="closeCreateModal()"><i class="i-close"></i> Cancelar</button></div></div>
+<div id="createKeTeteoModal" class="modal"><div class="modal-content"><h3><i class="icon i-plus"></i> Crear nuevo KeTeteo</h3><input type="text" id="newTitulo" placeholder="Título del evento"><input type="text" id="newUbicacion" placeholder="Ubicación"><input type="text" id="newDistancia" placeholder="Distancia"><input type="url" id="newImagen" placeholder="URL de imagen (opcional)"><label style="color:var(--gris-claro); font-size:12px;"><i class="icon i-cog"></i> O sube una imagen:</label><input type="file" id="newImagenFile" accept="image/*"><button class="btn-rojo" onclick="publicarKeTeteo()"><i class="icon i-live"></i> Iniciar Mi KeTeteo</button><button class="btn-gris" onclick="closeCreateModal()"><i class="icon i-close"></i> Cancelar</button></div></div>
 
-<div id="searchModal" class="modal"><div class="modal-content"><h3><i class="i-search"></i> Buscar eventos</h3><input type="text" id="searchInputModal" class="search-input-modal" placeholder="Escribe título o creador..."><div id="searchResultsModal" style="max-height: 400px; overflow-y: auto;"></div><button class="btn-gris" onclick="closeSearchModal()"><i class="i-close"></i> Cerrar</button></div></div>
+<div id="searchModal" class="modal"><div class="modal-content"><h3><i class="icon i-search"></i> Buscar eventos</h3><input type="text" id="searchInputModal" class="search-input-modal" placeholder="Escribe título o creador..."><div id="searchResultsModal" style="max-height: 400px; overflow-y: auto;"></div><button class="btn-gris" onclick="closeSearchModal()"><i class="icon i-close"></i> Cerrar</button></div></div>
 
-<div id="proximosEventosModal" class="modal"><div class="modal-content"><h3><i class="i-target"></i> PRÓXIMOS KETETEOS</h3><div id="proximosEventosList"></div><button class="btn-gris" onclick="closeProximosEventos()"><i class="i-close"></i> Cerrar</button></div></div>
+<div id="proximosEventosModal" class="modal"><div class="modal-content"><h3><i class="icon i-target"></i> PRÓXIMOS KETETEOS</h3><div id="proximosEventosList"></div><button class="btn-gris" onclick="closeProximosEventos()"><i class="icon i-close"></i> Cerrar</button></div></div>
 
-<div id="reporteModal" class="modal"><div class="modal-content"><h3><i class="i-flag"></i> REPORTAR</h3><div class="horiz-btn" onclick="enviarReporte('Contenido inapropiado')"><i class="i-close"></i> Inapropiado</div><div class="horiz-btn" onclick="enviarReporte('Spam')"><i class="i-email"></i> Spam</div><div class="horiz-btn" onclick="enviarReporte('Acoso')"><i class="i-flag" style="background-position:-1280px -1024px;"></i> Acoso</div><button class="btn-gris" onclick="cerrarReporteModal()"><i class="i-close"></i> Cancelar</button></div></div>
+<div id="reporteModal" class="modal"><div class="modal-content"><h3><i class="icon i-flag"></i> REPORTAR</h3><div class="horiz-btn" onclick="enviarReporte('Contenido inapropiado')"><i class="icon i-close"></i> Inapropiado</div><div class="horiz-btn" onclick="enviarReporte('Spam')"><i class="icon i-email"></i> Spam</div><div class="horiz-btn" onclick="enviarReporte('Acoso')"><i class="icon i-flag"></i> Acoso</div><button class="btn-gris" onclick="cerrarReporteModal()"><i class="icon i-close"></i> Cancelar</button></div></div>
 
-<div id="confirmarEliminarModal" class="modal"><div class="modal-content"><h3><i class="i-trash"></i> ELIMINAR</h3><p>¿Estás seguro?</p><div id="eliminarInfo"></div><button class="btn-rojo" onclick="confirmarEliminar()"><i class="i-heart" style="background-position:-1280px -1536px;"></i> ELIMINAR</button><button class="btn-gris" onclick="cerrarConfirmarEliminar()"><i class="i-close"></i> Cancelar</button></div></div>
+<div id="confirmarEliminarModal" class="modal"><div class="modal-content"><h3><i class="icon i-trash"></i> ELIMINAR</h3><p>¿Estás seguro?</p><div id="eliminarInfo"></div><button class="btn-rojo" onclick="confirmarEliminar()"><i class="icon i-heart"></i> ELIMINAR</button><button class="btn-gris" onclick="cerrarConfirmarEliminar()"><i class="icon i-close"></i> Cancelar</button></div></div>
 
-<div id="legalModal" class="modal"><div class="modal-content"><h3><i class="i-document"></i> Información Legal</h3><div class="contact-info-legal"><i class="i-email"></i> <a href="mailto:soporte.keteteolive@gmail.com">soporte.keteteolive@gmail.com</a></div><div class="legal-option" onclick="openLegalContent('terms')"><i class="i-copy" style="background-position:-256px -1792px;"></i> Términos y Condiciones</div><div class="legal-option" onclick="openLegalContent('privacy')"><i class="i-cog" style="background-position:-768px -1536px;"></i> Política de Privacidad</div><div class="legal-option" onclick="openLegalContent('cookies')"><i class="i-copy" style="background-position:-512px -1792px;"></i> Política de Cookies</div><div class="copyright-legal">© 2025 KeTeteoLive</div><button class="btn-gris" onclick="closeLegalModal()"><i class="i-close"></i> Cerrar</button></div></div>
+<div id="legalModal" class="modal"><div class="modal-content"><h3><i class="icon i-document"></i> Información Legal</h3><div class="contact-info-legal"><i class="icon i-email"></i> <a href="mailto:soporte.keteteolive@gmail.com">soporte.keteteolive@gmail.com</a></div><div class="legal-option" onclick="openLegalContent('terms')"><i class="icon i-copy"></i> Términos y Condiciones</div><div class="legal-option" onclick="openLegalContent('privacy')"><i class="icon i-cog"></i> Política de Privacidad</div><div class="legal-option" onclick="openLegalContent('cookies')"><i class="icon i-copy"></i> Política de Cookies</div><div class="copyright-legal">© 2025 KeTeteoLive</div><button class="btn-gris" onclick="closeLegalModal()"><i class="icon i-close"></i> Cerrar</button></div></div>
 
 <!-- PERFIL -->
 <div id="profileScreen" class="screen">
     <div class="header">
-        <button class="hamburger" onclick="toggleMenu()"><i class="i-menu" style="width:28px; height:28px;"></i></button>
-        <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);"><i class="i-user"></i> Perfil</div></div>
-        <div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;"><i class="i-close"></i></div>
+        <button class="hamburger" onclick="toggleMenu()"><i class="icon i-menu" style="width:28px; height:28px;"></i></button>
+        <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);"><i class="icon i-user"></i> Perfil</div></div>
+        <div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;"><i class="icon i-close"></i></div>
     </div>
     <div class="profile-modern">
-        <div class="avatar-wrapper" onclick="uploadProfilePhoto()"><div class="avatar-ring"></div><img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7"><div class="avatar-badge"><i class="i-cog" style="background-position:-1024px -1280px;"></i></div></div>
-        <div class="user-info"><div class="user-name" id="profileName">Jomany</div><div class="user-handle" id="profileUsername">@jomany</div><div class="user-status" id="userStatus"><div class="status-dot status-online"></div><span class="status-text" id="statusText">En línea</span></div><div class="user-bio" id="profileBio">Amante de los eventos en vivo <i class="i-music"></i></div></div>
+        <div class="avatar-wrapper" onclick="uploadProfilePhoto()"><div class="avatar-ring"></div><img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7"><div class="avatar-badge"><i class="icon i-cog"></i></div></div>
+        <div class="user-info"><div class="user-name" id="profileName">Jomany</div><div class="user-handle" id="profileUsername">@jomany</div><div class="user-status" id="userStatus"><div class="status-dot status-online"></div><span class="status-text" id="statusText">En línea</span></div><div class="user-bio" id="profileBio">Amante de los eventos en vivo <i class="icon i-music"></i></div></div>
         <div class="stats-modern"><div class="stat-card"><div class="stat-value" id="followersCount">1.2K</div><div class="stat-label">seguidores</div></div><div class="stat-card"><div class="stat-value" id="followingCount">567</div><div class="stat-label">siguiendo</div></div><div class="stat-card"><div class="stat-value" id="teteosCount">12</div><div class="stat-label">teteos</div></div></div>
-        <div class="profile-buttons"><button class="profile-btn" onclick="openEditProfile()"><i class="i-edit"></i> Editar perfil</button><button class="profile-btn" onclick="shareProfile()"><i class="i-link"></i> Compartir</button></div>
-        <div class="contact-modern"><div style="font-size:13px; font-weight:600; color:var(--gris-claro); margin-bottom:12px;"><i class="i-cog" style="background-position:-256px -1536px;"></i> Contacto</div><div class="contact-row" onclick="copyEmail()"><div class="contact-icon"><i class="i-email"></i></div><div class="contact-value" id="userEmail">jomanicompanygroup@gmail.com</div><div class="contact-copy"><i class="i-copy"></i> copiar</div></div><div class="contact-row" onclick="copyPhone()"><div class="contact-icon"><i class="i-phone"></i></div><div class="contact-value" id="userPhone">+1 809 555 1234</div><div class="contact-copy"><i class="i-copy"></i> copiar</div></div></div>
+        <div class="profile-buttons"><button class="profile-btn" onclick="openEditProfile()"><i class="icon i-edit"></i> Editar perfil</button><button class="profile-btn" onclick="shareProfile()"><i class="icon i-link"></i> Compartir</button></div>
+        <div class="contact-modern"><div style="font-size:13px; font-weight:600; color:var(--gris-claro); margin-bottom:12px;"><i class="icon i-cog"></i> Contacto</div><div class="contact-row" onclick="copyEmail()"><div class="contact-icon"><i class="icon i-email"></i></div><div class="contact-value" id="userEmail">jomanicompanygroup@gmail.com</div><div class="contact-copy"><i class="icon i-copy"></i> copiar</div></div><div class="contact-row" onclick="copyPhone()"><div class="contact-icon"><i class="icon i-phone"></i></div><div class="contact-value" id="userPhone">+1 809 555 1234</div><div class="contact-copy"><i class="icon i-copy"></i> copiar</div></div></div>
     </div>
 </div>
 
-<div id="editProfileModal" class="modal"><div class="modal-content"><h3><i class="i-edit"></i> Editar perfil</h3><input type="text" id="editName" placeholder="Nombre"><input type="text" id="editUsername" placeholder="Usuario"><textarea id="editBio" rows="2" placeholder="Biografía"></textarea><input type="url" id="editLink" placeholder="Enlace"><input type="email" id="editEmail" placeholder="Correo"><input type="tel" id="editPhone" placeholder="Teléfono"><button class="btn-rojo" onclick="saveProfile()"><i class="i-heart" style="background-position:-1280px -1536px;"></i> Guardar</button><button class="btn-gris" onclick="closeEditModal()"><i class="i-close"></i> Cancelar</button></div></div>
+<div id="editProfileModal" class="modal"><div class="modal-content"><h3><i class="icon i-edit"></i> Editar perfil</h3><input type="text" id="editName" placeholder="Nombre"><input type="text" id="editUsername" placeholder="Usuario"><textarea id="editBio" rows="2" placeholder="Biografía"></textarea><input type="url" id="editLink" placeholder="Enlace"><input type="email" id="editEmail" placeholder="Correo"><input type="tel" id="editPhone" placeholder="Teléfono"><button class="btn-rojo" onclick="saveProfile()"><i class="icon i-heart"></i> Guardar</button><button class="btn-gris" onclick="closeEditModal()"><i class="icon i-close"></i> Cancelar</button></div></div>
 
 <div id="myStreamsScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()"><i class="i-menu" style="width:28px; height:28px;"></i></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);"><i class="i-cog" style="background-position:0px -1280px;"></i> Mis Transmisiones</div></div><div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;"><i class="i-close"></i></div></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()"><i class="icon i-menu" style="width:28px; height:28px;"></i></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);"><i class="icon i-cog"></i> Mis Transmisiones</div></div><div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;"><i class="icon i-close"></i></div></div>
     <div id="myStreamsList" class="streams-list"></div>
-    <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()"><i class="i-plus"></i> Nueva transmisión</button>
+    <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()"><i class="icon i-plus"></i> Nueva transmisión</button>
 </div>
 
 <div id="configScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()"><i class="i-menu" style="width:28px; height:28px;"></i></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);"><i class="i-cog"></i> Configuración</div></div><div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;"><i class="i-close"></i></div></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()"><i class="icon i-menu" style="width:28px; height:28px;"></i></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);"><i class="icon i-cog"></i> Configuración</div></div><div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;"><i class="icon i-close"></i></div></div>
     <div style="padding: 20px;">
-        <div class="config-option"><span><i class="i-cog" style="background-position:-512px -1536px;"></i> Modo oscuro</span><span>✅ Activado</span></div>
-        <div class="config-option"><span><i class="i-bell"></i> Notificaciones</span><button onclick="alert('Notificaciones activadas')"><i class="i-bell"></i> Activar</button></div>
-        <div class="config-option"><span><i class="i-cog" style="background-position:-768px -1536px;"></i> Privacidad</span><button onclick="alert('Privacidad: solo seguidores')"><i class="i-cog"></i> Configurar</button></div>
+        <div class="config-option"><span><i class="icon i-cog"></i> Modo oscuro</span><span>✅ Activado</span></div>
+        <div class="config-option"><span><i class="icon i-bell"></i> Notificaciones</span><button onclick="alert('Notificaciones activadas')"><i class="icon i-bell"></i> Activar</button></div>
+        <div class="config-option"><span><i class="icon i-cog"></i> Privacidad</span><button onclick="alert('Privacidad: solo seguidores')"><i class="icon i-cog"></i> Configurar</button></div>
     </div>
 </div>
 
 <div id="languageScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()"><i class="i-menu" style="width:28px; height:28px;"></i></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);"><i class="i-globe"></i> Idioma</div></div><div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;"><i class="i-close"></i></div></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()"><i class="icon i-menu" style="width:28px; height:28px;"></i></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);"><i class="icon i-globe"></i> Idioma</div></div><div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;"><i class="icon i-close"></i></div></div>
     <div style="padding: 20px;">
-        <div class="config-option" onclick="setLanguage('es')"><span><i class="i-cog" style="background-position:-1024px -1536px;"></i> Español</span><span>✅</span></div>
-        <div class="config-option" onclick="setLanguage('en')"><span><i class="i-cog" style="background-position:-1024px -1536px;"></i> English</span><span></span></div>
-        <div class="config-option" onclick="setLanguage('pt')"><span><i class="i-cog" style="background-position:-1024px -1536px;"></i> Português</span><span></span></div>
+        <div class="config-option" onclick="setLanguage('es')"><span><i class="icon i-cog"></i> Español</span><span>✅</span></div>
+        <div class="config-option" onclick="setLanguage('en')"><span><i class="icon i-cog"></i> English</span><span></span></div>
+        <div class="config-option" onclick="setLanguage('pt')"><span><i class="icon i-cog"></i> Português</span><span></span></div>
     </div>
 </div>
 
@@ -856,11 +887,11 @@
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
-    <div class="nav-item" onclick="showHomeScreenClean()"><div class="nav-icon"><i class="i-home"></i></div><div class="nav-label">Inicio</div></div>
-    <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon"><i class="i-search"></i></div><div class="nav-label">Buscar</div></div>
-    <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon"><i class="i-bell"></i></div><div class="nav-label">Alertas</div></div>
-    <div class="nav-item" onclick="openProximosKeTeteo()"><div class="nav-icon"><i class="i-target"></i></div><div class="nav-label">Próximo KeTeteo</div></div>
-    <div class="nav-item" onclick="openLegalModal()"><div class="nav-icon"><i class="i-document"></i></div><div class="nav-label">Legal</div></div>
+    <div class="nav-item" onclick="showHomeScreenClean()"><div class="nav-icon"><i class="icon i-home"></i></div><div class="nav-label">Inicio</div></div>
+    <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon"><i class="icon i-search"></i></div><div class="nav-label">Buscar</div></div>
+    <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon"><i class="icon i-bell"></i></div><div class="nav-label">Alertas</div></div>
+    <div class="nav-item" onclick="openProximosKeTeteo()"><div class="nav-icon"><i class="icon i-target"></i></div><div class="nav-label">Próximo KeTeteo</div></div>
+    <div class="nav-item" onclick="openLegalModal()"><div class="nav-icon"><i class="icon i-document"></i></div><div class="nav-label">Legal</div></div>
 </div>
 
 <script>
@@ -1021,14 +1052,14 @@
                     <iframe class="radar-iframe" src="https://www.flightradar24.com/18.46,-69.90/6" allow="geolocation" loading="lazy"></iframe>
                 </div>
                 <div class="card-content">
-                    <div class="live-badge"><i class="i-live" style="width:8px; height:8px;"></i><div class="live-dot"></div>EN VIVO</div>
-                    <div class="event-title"><i class="i-location"></i> ${item.titulo}</div>
+                    <div class="live-badge"><i class="icon i-live" style="width:8px; height:8px;"></i><div class="live-dot"></div>EN VIVO</div>
+                    <div class="event-title"><i class="icon i-location"></i> ${item.titulo}</div>
                     <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
-                    <div class="event-meta"><span><i class="i-location"></i> ${item.ubicacion} · ${item.distancia}</span></div>
+                    <div class="event-meta"><span><i class="icon i-location"></i> ${item.ubicacion} · ${item.distancia}</span></div>
                     <div class="action-buttons">
-                        <button class="action-btn like-btn" data-id="${item.id}"><i class="i-heart"></i> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}"><i class="i-comment"></i></button>
-                        <button class="action-btn share-btn" data-id="${item.id}"><i class="i-share"></i></button>
+                        <button class="action-btn like-btn" data-id="${item.id}"><i class="icon i-heart"></i> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
+                        <button class="action-btn comment-toggle" data-id="${item.id}"><i class="icon i-comment"></i></button>
+                        <button class="action-btn share-btn" data-id="${item.id}"><i class="icon i-share"></i></button>
                     </div>
                     <div class="comment-row" id="comment-row-${item.id}" style="display: none;">
                         <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Comentario...">
@@ -1041,15 +1072,15 @@
             card.innerHTML = `
                 <div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div>
                 <div class="card-content">
-                    <div class="live-badge"><i class="i-live" style="width:8px; height:8px;"></i><div class="live-dot"></div>EN VIVO</div>
+                    <div class="live-badge"><i class="icon i-live" style="width:8px; height:8px;"></i><div class="live-dot"></div>EN VIVO</div>
                     <div class="event-title">${item.titulo}</div>
                     <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
-                    <div class="event-meta"><span><i class="i-location"></i> ${item.ubicacion} · ${item.distancia}</span></div>
+                    <div class="event-meta"><span><i class="icon i-location"></i> ${item.ubicacion} · ${item.distancia}</span></div>
                     <div class="action-buttons">
-                        <button class="action-btn like-btn" data-id="${item.id}"><i class="i-heart"></i> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}"><i class="i-comment"></i></button>
-                        <button class="action-btn share-btn" data-id="${item.id}"><i class="i-share"></i></button>
-                        <button class="action-btn report-btn" data-id="${item.id}"><i class="i-flag"></i></button>
+                        <button class="action-btn like-btn" data-id="${item.id}"><i class="icon i-heart"></i> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
+                        <button class="action-btn comment-toggle" data-id="${item.id}"><i class="icon i-comment"></i></button>
+                        <button class="action-btn share-btn" data-id="${item.id}"><i class="icon i-share"></i></button>
+                        <button class="action-btn report-btn" data-id="${item.id}"><i class="icon i-flag"></i></button>
                     </div>
                     <div class="comment-row" id="comment-row-${item.id}" style="display: none;">
                         <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Comentario...">
@@ -1078,15 +1109,15 @@
         fullDiv.className = 'fullscreen-stream';
         fullDiv.innerHTML = `
             <div class="fullscreen-header">
-                <button class="close-fullscreen"><i class="i-close"></i> Volver</button>
+                <button class="close-fullscreen"><i class="icon i-close"></i> Volver</button>
             </div>
             <div class="fullscreen-content">
                 <iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe>
                 <div class="fullscreen-info">
-                    <div style="font-size:20px; font-weight:800;"><i class="i-location"></i> ${item.titulo}</div>
+                    <div style="font-size:20px; font-weight:800;"><i class="icon i-location"></i> ${item.titulo}</div>
                     <div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div>
-                    <div style="font-size:12px; color:#8E8E93;"><i class="i-location"></i> ${item.ubicacion} · ${item.distancia}</div>
-                    <div style="font-size:12px; margin-top:8px;"><i class="i-heart"></i> ${currentLikes[item.id]} · <i class="i-comment"></i> ${(currentComments[item.id] || []).length} comentarios</div>
+                    <div style="font-size:12px; color:#8E8E93;"><i class="icon i-location"></i> ${item.ubicacion} · ${item.distancia}</div>
+                    <div style="font-size:12px; margin-top:8px;"><i class="icon i-heart"></i> ${currentLikes[item.id]} · <i class="icon i-comment"></i> ${(currentComments[item.id] || []).length} comentarios</div>
                 </div>
             </div>
         `;
@@ -1158,7 +1189,7 @@
     }
     
     function updateCommentsUI(id) { const container = document.getElementById(`comments-list-${id}`); if (!container) return; const commentsList = currentComments[id] || []; if (commentsList.length === 0) { container.innerHTML = ''; return; } container.innerHTML = commentsList.map(c => `<div style="margin-bottom: 6px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 12px;"><strong style="color: #FF2D55; font-size: 10px;">${c.user}</strong> <span style="font-size: 9px; color:#8E8E93;">${c.time || ''}</span><br><span style="font-size: 10px;">${c.text}</span></div>`).join(''); }
-    function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><i class="i-close"></i> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;"><i class="i-location"></i> ${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;"><i class="i-heart"></i> ${currentLikes[item.id]} · <i class="i-comment"></i> ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
+    function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><i class="icon i-close"></i> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;"><i class="icon i-location"></i> ${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;"><i class="icon i-heart"></i> ${currentLikes[item.id]} · <i class="icon i-comment"></i> ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
     function enviarReporte(motivo) { if (!loggedIn) { alert('Inicia sesión'); cerrarReporteModal(); return; } alert(`✅ Reporte enviado: ${motivo}`); cerrarReporteModal(); }
     function cerrarReporteModal() { document.getElementById('reporteModal').classList.remove('show'); reporteKeTeteoId = null; }
 
@@ -1256,12 +1287,12 @@
             div.style.padding = '12px'; 
             div.style.borderRadius = '12px'; 
             div.style.marginBottom = '12px'; 
-            div.innerHTML = `<div style="font-weight:700;"><i class="i-music"></i> ${e.titulo}</div><div style="font-size:12px; color:var(--gris-claro);"><i class="i-location"></i> ${e.ubicacion} · <i class="i-calendar"></i> ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;"><i class="i-target" style="background-position:-1024px -1536px;"></i> PRÓXIMAMENTE</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert('Recibirás una notificación cuando esté disponible')"><i class="i-bell"></i> Recordar</button>`; 
+            div.innerHTML = `<div style="font-weight:700;"><i class="icon i-music"></i> ${e.titulo}</div><div style="font-size:12px; color:var(--gris-claro);"><i class="icon i-location"></i> ${e.ubicacion} · <i class="icon i-calendar"></i> ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;"><i class="icon i-target"></i> PRÓXIMAMENTE</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert('Recibirás una notificación cuando esté disponible')"><i class="icon i-bell"></i> Recordar</button>`; 
             container.appendChild(div); 
         }); 
         const modal = document.getElementById('proximosEventosModal');
         if (modal) {
-            modal.querySelector('h3').innerHTML = '<i class="i-target"></i> PRÓXIMOS KETETEOS';
+            modal.querySelector('h3').innerHTML = '<i class="icon i-target"></i> PRÓXIMOS KETETEOS';
             modal.classList.add('show');
         }
     }
@@ -1270,7 +1301,7 @@
     function abrirConfirmarEliminar(id, titulo) { eliminarId = id; document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`; document.getElementById('confirmarEliminarModal').classList.add('show'); }
     function confirmarEliminar() { if (eliminarId) { const index = allKeTeteos.findIndex(k => k.id == eliminarId); if (index !== -1 && !allKeTeteos[index].esRadar) { allKeTeteos.splice(index, 1); saveKeTeteos(); renderCarousel(); renderMyStreams(); alert('✅ Eliminado'); } } cerrarConfirmarEliminar(); }
     function cerrarConfirmarEliminar() { eliminarId = null; document.getElementById('confirmarEliminarModal').classList.remove('show'); }
-    function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${ke.titulo}</strong><br>👁️ ${ke.viewers || 0} vistas</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')"><i class="i-trash"></i></button>`; container.appendChild(div); }); }
+    function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${ke.titulo}</strong><br>👁️ ${ke.viewers || 0} vistas</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')"><i class="icon i-trash"></i></button>`; container.appendChild(div); }); }
 
     // BÚSQUEDA
     function openSearchModal() { document.getElementById('searchModal').classList.add('show'); document.getElementById('searchInputModal').focus(); }
