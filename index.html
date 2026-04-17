@@ -30,21 +30,21 @@
             --azul: #007AFF;
         }
 
-        /* ========== HEADER PROFESIONAL (OPCIÓN B: 50px, logo 40px) ========== */
-       .header {
+        /* ========== HEADER PROFESIONAL ========== */
+.header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     background: rgba(0,0,0,0.95);
     backdrop-filter: blur(10px);
-    padding: 4px 16px;
+    padding: 8px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
     border-bottom: 0.5px solid var(--gris-medio);
-    height: 72px;
+    height: 96px;
 }
 
 .hamburger {
@@ -64,7 +64,7 @@
 }
 
 .logo-img {
-    max-height: 60px;
+    max-height: 80px;
     width: auto;
     object-fit: contain;
 }
@@ -72,28 +72,31 @@
 .header-spacer {
     width: 40px;
 }
-   
-        /* ========== COMPENSACIÓN PARA CONTENIDO DEBAJO DEL HEADER FIJO ========== */
-        #mainScreen, .screen > .header + div, .screen > div:first-child {
-            padding-top: 60px;
-        }
 
-        /* Pantallas específicas con contenido que puede quedar tapado */
-        .config-option, .config-option:first-child, .language-option {
-            margin-top: 0;
-        }
+/* ========== COMPENSACIÓN PARA CONTENIDO DEBAJO DEL HEADER FIJO ========== */
+#mainScreen {
+    padding-top: 96px;
+}
 
-        /* ========== DIVISORES ========== */
-        .divider-naranja {
-            margin: 8px 0;
-            border: none;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--rojo-logo), var(--naranja), var(--rojo-logo), transparent);
-            width: 100%;
-        }
+.screen > .header + div, .screen > div:first-child {
+    padding-top: 0;
+}
 
+/* Pantallas específicas con contenido que puede quedar tapado */
+.config-option, .config-option:first-child, .language-option {
+    margin-top: 0;
+}
 
-        /* ========== CARRUSEL 1 ========== */
+/* ========== DIVISORES ========== */
+.divider-naranja {
+    margin: 8px 0;
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--rojo-logo), var(--naranja), var(--rojo-logo), transparent);
+    width: 100%;
+}
+
+/* ========== CARRUSEL 1 ========== */
 .patrocinios-superior {
     overflow-x: auto;
     scroll-behavior: smooth;
