@@ -30,7 +30,7 @@
             --azul: #007AFF;
         }
 
-        /* ========== HEADER PROFESIONAL ========== */
+        /* ========== HEADER PROFESIONAL (OPCIÓN B: 50px, logo 40px) ========== */
         .header {
             position: fixed;
             top: 0;
@@ -38,12 +38,13 @@
             right: 0;
             background: rgba(0,0,0,0.95);
             backdrop-filter: blur(10px);
-            padding: 8px 16px;
+            padding: 5px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
             border-bottom: 0.5px solid var(--gris-medio);
+            height: 50px;
         }
 
         .hamburger {
@@ -63,13 +64,23 @@
         }
 
         .logo-img {
-            max-height: 32px;
+            max-height: 40px;
             width: auto;
             object-fit: contain;
         }
 
         .header-spacer {
             width: 40px;
+        }
+
+        /* ========== COMPENSACIÓN PARA CONTENIDO DEBAJO DEL HEADER FIJO ========== */
+        #mainScreen, .screen > .header + div, .screen > div:first-child {
+            padding-top: 60px;
+        }
+
+        /* Pantallas específicas con contenido que puede quedar tapado */
+        .config-option, .config-option:first-child, .language-option {
+            margin-top: 0;
         }
 
         /* ========== DIVISORES ========== */
@@ -123,10 +134,6 @@
         }
 
         /* ========== CARRUSEL 2 ========== */
-        #mainScreen {
-            padding-top: 56px;
-        }
-
         .carousel-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -332,9 +339,9 @@
         }
         .patrocinio-card-inferior {
             flex: 0 0 auto;
-            width: 120px;
+            width: 100px;
             background: transparent;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.2s;
@@ -342,9 +349,9 @@
         .patrocinio-card-inferior:active { transform: scale(0.96); }
         .patrocinio-card-inferior img {
             width: 100%;
-            height: 100px;
+            height: 80px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 10px;
         }
 
         /* ========== PANTALLA COMPLETA ========== */
@@ -490,6 +497,42 @@
             letter-spacing: -0.3px;
         }
 
+        /* Estilos para campos de contraseña con ojito */
+        .password-field {
+            position: relative;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        .password-field input {
+            width: 100%;
+            padding: 14px 40px 14px 16px;
+            background: var(--negro);
+            border: 0.5px solid var(--gris-medio);
+            border-radius: 14px;
+            color: var(--blanco);
+            font-size: 15px;
+            font-weight: 400;
+            transition: all 0.2s ease;
+        }
+        .password-field input:focus {
+            outline: none;
+            border-color: var(--rojo-logo);
+            box-shadow: 0 0 0 3px rgba(255,45,85,0.2);
+        }
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--gris-claro);
+            transition: all 0.2s ease;
+        }
+        .password-toggle:active {
+            color: var(--rojo-logo);
+        }
+
         .modal-content input, .modal-content select {
             width: 100%;
             padding: 14px 16px;
@@ -549,7 +592,7 @@
 
         /* ========== PERFIL PROFESIONAL ========== */
         .profile-modern {
-            margin-top: 60px;
+            margin-top: 0;
             padding: 20px;
         }
 
@@ -686,7 +729,7 @@
         .contact-copy { font-size: 11px; opacity: 0.6; }
 
         .streams-list {
-            margin-top: 60px;
+            margin-top: 0;
             padding: 16px;
         }
         .my-stream-card {
@@ -853,7 +896,7 @@
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()">☰</button>
         <div class="logo-container">
-            <img src="keteteologologo.jpg" alt="KeTeteoLive" class="logo-img" onerror="this.src='https://placehold.co/200x60/FF2D55/white?text=KeTeteoLive'">
+            <img src="ketelogo.jpg" alt="KeTeteoLive" class="logo-img" onerror="this.src='https://placehold.co/200x60/FF2D55/white?text=KeTeteoLive'">
         </div>
         <div class="header-spacer"></div>
     </div>
@@ -878,7 +921,7 @@
     </div>
 </div>
 
-<!-- MENÚ LATERAL (SIN DUPLICADOS) -->
+<!-- MENÚ LATERAL -->
 <div id="sideMenu" class="side-menu">
     <button onclick="openRegister(); closeMenu()">📝 Registrarse</button>
     <button onclick="openLogin(); closeMenu()">🔑 Iniciar sesión</button>
@@ -892,13 +935,44 @@
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
 <!-- MODALES -->
-<div id="registerModal" class="modal"><div class="modal-content"><h3>Crear cuenta</h3><input type="text" id="regName" placeholder="Nombre completo"><input type="text" id="regUser" placeholder="Usuario (@ejemplo)"><input type="email" id="regEmail" placeholder="Correo electrónico"><input type="password" id="regPass" placeholder="Contraseña"><input type="password" id="regConfirmPass" placeholder="Confirmar contraseña"><select id="regYear"><option value="">Año de nacimiento</option><script>for(let y=2024;y>=1960;y--) document.write(`<option>${y}</option>`);</script></select><button class="btn-rojo" onclick="register()">Registrarse</button><button class="btn-gris" onclick="closeModals()">Cancelar</button></div></div>
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <h3>Crear cuenta</h3>
+        <input type="text" id="regName" placeholder="Nombre completo">
+        <input type="text" id="regUser" placeholder="Usuario (@ejemplo)">
+        <input type="email" id="regEmail" placeholder="Correo electrónico">
+        <div class="password-field">
+            <input type="password" id="regPass" placeholder="Contraseña">
+            <span class="password-toggle" onclick="togglePassword('regPass')">👁️</span>
+        </div>
+        <div class="password-field">
+            <input type="password" id="regConfirmPass" placeholder="Confirmar contraseña">
+            <span class="password-toggle" onclick="togglePassword('regConfirmPass')">👁️</span>
+        </div>
+        <select id="regYear"><option value="">Año de nacimiento</option><script>for(let y=2024;y>=1960;y--) document.write(`<option>${y}</option>`);</script></select>
+        <button class="btn-rojo" onclick="register()">Registrarse</button>
+        <button class="btn-gris" onclick="closeModals()">Cancelar</button>
+    </div>
+</div>
 
-<div id="loginModal" class="modal"><div class="modal-content"><h3>Iniciar sesión</h3><input type="email" id="loginEmail" placeholder="Correo electrónico"><input type="password" id="loginPass" placeholder="Contraseña"><button class="btn-rojo" onclick="login()">Entrar</button><button class="btn-gris" onclick="closeModals()">Cancelar</button></div></div>
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h3>Iniciar sesión</h3>
+        <input type="email" id="loginEmail" placeholder="Correo electrónico">
+        <div class="password-field">
+            <input type="password" id="loginPass" placeholder="Contraseña">
+            <span class="password-toggle" onclick="togglePassword('loginPass')">👁️</span>
+        </div>
+        <button class="btn-rojo" onclick="login()">Entrar</button>
+        <button class="btn-gris" onclick="closeModals()">Cancelar</button>
+    </div>
+</div>
 
 <div id="createKeTeteoModal" class="modal"><div class="modal-content"><h3>Crear nuevo KeTeteo</h3><input type="text" id="newTitulo" placeholder="Título del evento"><input type="text" id="newUbicacion" placeholder="Ubicación"><input type="text" id="newDistancia" placeholder="Distancia"><input type="url" id="newImagen" placeholder="URL de imagen (opcional)"><label style="color:var(--gris-claro); font-size:12px;">O sube una imagen:</label><input type="file" id="newImagenFile" accept="image/*"><button class="btn-rojo" onclick="publicarKeTeteo()">🔴 Iniciar Mi KeTeteo</button><button class="btn-gris" onclick="closeCreateModal()">Cancelar</button></div></div>
 
 <div id="searchModal" class="modal"><div class="modal-content"><h3>🔍 Buscar eventos</h3><input type="text" id="searchInputModal" class="search-input-modal" placeholder="Escribe título o creador..."><div id="searchResultsModal" style="max-height: 400px; overflow-y: auto;"></div><button class="btn-gris" onclick="closeSearchModal()">Cerrar</button></div></div>
+
+<div id="proximosEventosModal" class="modal"><div class="modal-content"><h3>🎯 PRÓXIMOS KETETEOS</h3><div id="proximosEventosList"></div><button class="btn-gris" onclick="closeProximosEventos()">Cerrar</button></div></div>
 
 <div id="reporteModal" class="modal"><div class="modal-content"><h3>⚠️ REPORTAR</h3><div class="horiz-btn" onclick="enviarReporte('Contenido inapropiado')">🔞 Inapropiado</div><div class="horiz-btn" onclick="enviarReporte('Spam')">📢 Spam</div><div class="horiz-btn" onclick="enviarReporte('Acoso')">😡 Acoso</div><button class="btn-gris" onclick="cerrarReporteModal()">Cancelar</button></div></div>
 
@@ -908,7 +982,11 @@
 
 <!-- PERFIL PROFESIONAL -->
 <div id="profileScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Perfil</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div>
+    <div class="header">
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+        <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Perfil</div></div>
+        <div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;">✕</div>
+    </div>
     <div class="profile-modern">
         <div class="avatar-wrapper" onclick="uploadProfilePhoto()"><div class="avatar-ring"></div><img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7"><div class="avatar-badge">📷</div></div>
         <div class="user-info"><div class="user-name" id="profileName">Jomany</div><div class="user-handle" id="profileUsername">@jomany</div><div class="user-status" id="userStatus"><div class="status-dot status-online"></div><span class="status-text" id="statusText">En línea</span></div><div class="user-bio" id="profileBio">Amante de los eventos en vivo 🎉</div></div>
@@ -923,14 +1001,14 @@
 
 <!-- MIS TRANSMISIONES -->
 <div id="myStreamsScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Mis Transmisiones</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Mis Transmisiones</div></div><div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;">✕</div></div>
     <div id="myStreamsList" class="streams-list"></div>
     <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()">➕ Nueva transmisión</button>
 </div>
 
 <!-- PANTALLA CONFIGURACIÓN -->
 <div id="configScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Configuración</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Configuración</div></div><div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;">✕</div></div>
     <div style="padding: 20px;">
         <div class="config-option"><span>🌙 Modo oscuro</span><span>✅ Activado</span></div>
         <div class="config-option"><span>🔔 Notificaciones</span><button onclick="alert('Notificaciones activadas')">Activar</button></div>
@@ -940,7 +1018,7 @@
 
 <!-- PANTALLA IDIOMA -->
 <div id="languageScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Idioma</div></div><div class="header-spacer" onclick="showHomeScreen()" style="cursor:pointer;">✕</div></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()">☰</button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Idioma</div></div><div class="header-spacer" onclick="showHomeScreenClean()" style="cursor:pointer;">✕</div></div>
     <div style="padding: 20px;">
         <div class="config-option" onclick="setLanguage('es')"><span>🇪🇸 Español</span><span>✅</span></div>
         <div class="config-option" onclick="setLanguage('en')"><span>🇺🇸 English</span><span></span></div>
@@ -950,12 +1028,12 @@
 
 <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
-<!-- BOTTOM NAV (5 BOTONES: INICIO, BUSCAR, ALERTAS, PRÓXIMO KETETEO, LEGAL) -->
+<!-- BOTTOM NAV (5 BOTONES) -->
 <div class="bottom-nav">
-    <div class="nav-item" onclick="showHomeScreen()"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
+    <div class="nav-item" onclick="showHomeScreenClean()"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
     <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon">🔍</div><div class="nav-label">Buscar</div></div>
     <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon">🔔</div><div class="nav-label">Alertas</div></div>
-    <div class="nav-item" onclick="openProximosKeTeteo()"><div class="nav-icon">🎯</div><div class="nav-label">Próximo</div></div>
+    <div class="nav-item" onclick="openProximosKeTeteo()"><div class="nav-icon">🎯</div><div class="nav-label">Próximo KeTeteo</div></div>
     <div class="nav-item" onclick="openLegalModal()"><div class="nav-icon">📄</div><div class="nav-label">Legal</div></div>
 </div>
 
@@ -1022,14 +1100,14 @@
         actualizarEstadoUsuario();
     }
 
-    // ANUNCIOS CARRUSEL 3 (más bajo: 100px)
+    // ANUNCIOS CARRUSEL 3 (más bajo: 80px)
     const anunciosCarrusel3 = [
-        { id: 1, imagen: "file_00000000715471f88646b13cbd8632b5.png", link: "https://www.instagram.com/chefdonmarco/" },
+        { id: 1, imagen: "figurasteteo.png", link: "https://www.instagram.com/chefdonmarco/" },
         { id: 2, imagen: "yobuskologo.jpg", link: "https://yobusko.com" },
         { id: 3, imagen: "file_000000006ca871fdb0acac11566b0ed4.png", link: "https://nicovox.com" },
         { id: 4, imagen: "file_00000000b6c8722faff83ddca70039d4.png", link: "https://nicovox.com" },
-        { id: 5, imagen: "https://placehold.co/120x100/FF2D55/white?text=Anuncio1", link: "#" },
-        { id: 6, imagen: "https://placehold.co/120x100/FF6B00/white?text=Anuncio2", link: "#" }
+        { id: 5, imagen: "https://placehold.co/100x80/FF2D55/white?text=Anuncio1", link: "#" },
+        { id: 6, imagen: "https://placehold.co/100x80/FF6B00/white?text=Anuncio2", link: "#" }
     ];
 
     // Próximos KeTeteos (eventos destacados)
@@ -1292,7 +1370,7 @@
             const card = document.createElement('div'); 
             card.className = 'patrocinio-card-inferior'; 
             card.onclick = () => { if (anuncio.link && anuncio.link !== '#') window.open(anuncio.link, '_blank'); else alert('📢 Anuncio'); };
-            card.innerHTML = `<img src="${anuncio.imagen}" alt="Anuncio" onerror="this.src='https://placehold.co/120x100/FF2D55/white?text=Ad'">`; 
+            card.innerHTML = `<img src="${anuncio.imagen}" alt="Anuncio" onerror="this.src='https://placehold.co/100x80/FF2D55/white?text=Ad'">`; 
             track.appendChild(card); 
         }); 
         setTimeout(() => { 
@@ -1322,7 +1400,6 @@
         carousel3ScrollInterval = setInterval(() => { 
             if (!isUserInteractingInferior && carousel) { 
                 carousel.scrollBy({ left: 1.5, behavior: 'smooth' }); 
-                // Scroll infinito: cuando llega al final, vuelve al principio
                 if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 5) { 
                     carousel.scrollTo({ left: 0, behavior: 'smooth' }); 
                 } 
@@ -1344,7 +1421,7 @@
         carousel.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); }); 
     }
     
-    // Próximo KeTeteo (antes "Próximos Eventos")
+    // Próximo KeTeteo
     function openProximosKeTeteo() { 
         const container = document.getElementById('proximosEventosList'); 
         if (!container) return;
@@ -1380,23 +1457,30 @@
     // AUTENTICACIÓN
     function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
     function closeMenu() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
+    function togglePassword(id) { const input = document.getElementById(id); if (input.type === 'password') { input.type = 'text'; } else { input.type = 'password'; } }
     function openRegister() { closeModals(); document.getElementById('registerModal').classList.add('show'); }
     function openLogin() { closeModals(); document.getElementById('loginModal').classList.add('show'); }
     function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('show')); }
-    function register() { const name = document.getElementById('regName').value; const user = document.getElementById('regUser').value; const email = document.getElementById('regEmail').value; const pass = document.getElementById('regPass').value; const confirm = document.getElementById('regConfirmPass').value; if (!name || !user || !email || !pass || !confirm) { alert('Completa todos los campos'); return; } if (pass !== confirm) { alert('Contraseñas no coinciden'); return; } currentUser = { name, username: user.startsWith('@') ? user : '@'+user, email, bio: 'Amante de los eventos en vivo 🎉' }; localStorage.setItem('user', JSON.stringify(currentUser)); loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); alert('✅ Cuenta creada'); }
+    function register() { const name = document.getElementById('regName').value; const user = document.getElementById('regUser').value; const email = document.getElementById('regEmail').value; const pass = document.getElementById('regPass').value; const confirm = document.getElementById('regConfirmPass').value; if (!name || !user || !email || !pass || !confirm) { alert('Completa todos los campos'); return; } if (pass !== confirm) { alert('Contraseñas no coinciden'); return; } if (pass.length < 6) { alert('La contraseña debe tener al menos 6 caracteres'); return; } currentUser = { name, username: user.startsWith('@') ? user : '@'+user, email, bio: 'Amante de los eventos en vivo 🎉' }; localStorage.setItem('user', JSON.stringify(currentUser)); loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); alert('✅ Cuenta creada'); }
     function login() { const email = document.getElementById('loginEmail').value; const pass = document.getElementById('loginPass').value; if (email && pass) { const stored = localStorage.getItem('user'); if (stored) currentUser = JSON.parse(stored); else currentUser = { name: 'Usuario', username: '@usuario', email, bio: 'Amante de los eventos en vivo 🎉' }; loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); } else alert('Ingresa email y contraseña'); }
-    function logout() { loggedIn = false; currentUser = null; localStorage.removeItem('user'); localStorage.removeItem('userStatus'); localStorage.removeItem('lastActivity'); if (userStatusInterval) clearInterval(userStatusInterval); if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); document.getElementById('welcomeScreen').style.display = 'flex'; document.getElementById('mainScreen').classList.remove('active'); document.getElementById('logoutMenuBtn').style.display = 'none'; document.getElementById('createKeTeteoBtn').style.display = 'none'; closeMenu(); showHomeScreen(); }
+    function logout() { loggedIn = false; currentUser = null; localStorage.removeItem('user'); localStorage.removeItem('userStatus'); localStorage.removeItem('lastActivity'); if (userStatusInterval) clearInterval(userStatusInterval); if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); document.getElementById('welcomeScreen').style.display = 'flex'; document.getElementById('mainScreen').classList.remove('active'); document.getElementById('logoutMenuBtn').style.display = 'none'; document.getElementById('createKeTeteoBtn').style.display = 'none'; closeMenu(); showHomeScreenClean(); }
     function openCreateKeTeteoModal() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } document.getElementById('createKeTeteoModal').classList.add('show'); }
     function closeCreateModal() { document.getElementById('createKeTeteoModal').classList.remove('show'); }
     function publicarKeTeteo() { if (!loggedIn) { alert('Inicia sesión'); return; } const titulo = document.getElementById('newTitulo').value.trim(); const ubicacion = document.getElementById('newUbicacion').value.trim(); const distancia = document.getElementById('newDistancia').value.trim(); let imagen = document.getElementById('newImagen').value.trim(); const fileInput = document.getElementById('newImagenFile'); if (!titulo || !ubicacion || !distancia) { alert('Completa título, ubicación y distancia'); return; } const nuevoId = Date.now(); if (!imagen && fileInput.files.length > 0) { const reader = new FileReader(); reader.onload = function(e) { imagen = e.target.result; crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen); }; reader.readAsDataURL(fileInput.files[0]); } else { crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen || 'https://via.placeholder.com/400x300?text=KeTeteo'); } }
     function crearKeTeteoFinal(id, titulo, ubicacion, distancia, imagen) { const nuevoKe = { id: id, titulo: titulo, nombreCreador: currentUser.name, usuario: currentUser.username, ubicacion: ubicacion, distancia: distancia, categoria: "Otros", lat: 18.48, lng: -69.91, viewers: 0, likes: 0, imagen: imagen }; allKeTeteos.unshift(nuevoKe); currentLikes[nuevoKe.id] = 0; currentComments[nuevoKe.id] = []; saveKeTeteos(); renderCarousel(); closeCreateModal(); alert('✅ KeTeteo publicado'); document.getElementById('newTitulo').value = ''; document.getElementById('newUbicacion').value = ''; document.getElementById('newDistancia').value = ''; document.getElementById('newImagen').value = ''; document.getElementById('newImagenFile').value = ''; }
     function showMainScreen() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
-    function showHomeScreen() { document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
-    function showProfileScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
+    function showHomeScreenClean() { 
+        // Limpiar todas las pantallas activas
+        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+        document.getElementById('mainScreen').classList.add('active'); 
+        renderCarousel(); 
+        ordenarKeTeteosPorCercania(); 
+    }
+    function showProfileScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
     function showAlertsScreen() { alert('🔔 Próximamente tendrás notificaciones en tiempo real'); }
-    function showMyStreamsScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('myStreamsScreen').classList.add('active'); renderMyStreams(); }
-    function showConfigScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('configScreen').classList.add('active'); }
-    function showLanguageScreen() { document.getElementById('mainScreen').classList.remove('active'); document.getElementById('languageScreen').classList.add('active'); }
+    function showMyStreamsScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('myStreamsScreen').classList.add('active'); renderMyStreams(); }
+    function showConfigScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('configScreen').classList.add('active'); }
+    function showLanguageScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('languageScreen').classList.add('active'); }
     function setLanguage(lang) { alert('Idioma cambiado a ' + lang); }
     function uploadProfilePhoto() { document.getElementById('photoUpload').click(); }
     function handlePhotoUpload(e) { const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = ev => { document.getElementById('profileImg').src = ev.target.result; localStorage.setItem('profilePhoto', ev.target.result); }; reader.readAsDataURL(file); } }
