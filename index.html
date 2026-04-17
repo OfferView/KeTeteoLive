@@ -30,33 +30,41 @@
             --azul: #007AFF;
         }
 
-        /* ========== SPRITE DE FIGURAS ========== */
-        .i-menu { background-position: 0px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-calendar { background-position: -256px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-live { background-position: -768px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-search { background-position: -1024px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-home { background-position: -256px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-bell { background-position: -512px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-document { background-position: -768px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-heart { background-position: -1280px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-comment { background-position: -1536px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-share { background-position: -1792px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-flag { background-position: 0px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-edit { background-position: -1024px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-link { background-position: -1536px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-email { background-position: -1792px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-phone { background-position: 0px -1536px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-cog { background-position: -256px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-globe { background-position: -512px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-logout { background-position: -768px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-close { background-position: -1536px -1536px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-trash { background-position: -1792px -1536px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-eye { background-position: -1024px -1024px; background-size: 2048px 2048px; width: 20px; height: 20px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-user { background-position: -1792px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-plus { background-position: -1536px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-location { background-position: -1024px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-target { background-position: -256px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
-        .i-copy { background-position: -256px -1792px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('figurasteteo.png'); background-repeat: no-repeat; }
+        /* ========== RUTA CORREGIDA DE LAS FIGURAS (GitHub) ========== */
+        .figura-base {
+            display: inline-block;
+            background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png');
+            background-repeat: no-repeat;
+            background-size: 2048px 2048px;
+        }
+        
+        .i-menu { background-position: 0px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-calendar { background-position: -256px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-live { background-position: -768px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-search { background-position: -1024px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-home { background-position: -256px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-bell { background-position: -512px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-document { background-position: -768px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-heart { background-position: -1280px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-comment { background-position: -1536px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-share { background-position: -1792px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-flag { background-position: 0px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-edit { background-position: -1024px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-link { background-position: -1536px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-email { background-position: -1792px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-phone { background-position: 0px -1536px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-cog { background-position: -256px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-globe { background-position: -512px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-logout { background-position: -768px -1280px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-close { background-position: -1536px -1536px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-trash { background-position: -1792px -1536px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-eye { background-position: -1024px -1024px; background-size: 2048px 2048px; width: 20px; height: 20px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-user { background-position: -1792px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-plus { background-position: -1536px -1024px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-location { background-position: -1024px -768px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-target { background-position: -256px 0px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-copy { background-position: -256px -1792px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
+        .i-music { background-position: 0px -256px; background-size: 2048px 2048px; width: 24px; height: 24px; display: inline-block; background-image: url('https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png'); background-repeat: no-repeat; }
 
         /* ========== HEADER ========== */
         .header {
@@ -811,7 +819,7 @@
     </div>
     <div class="profile-modern">
         <div class="avatar-wrapper" onclick="uploadProfilePhoto()"><div class="avatar-ring"></div><img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7"><div class="avatar-badge"><i class="i-cog" style="background-position:-1024px -1280px;"></i></div></div>
-        <div class="user-info"><div class="user-name" id="profileName">Jomany</div><div class="user-handle" id="profileUsername">@jomany</div><div class="user-status" id="userStatus"><div class="status-dot status-online"></div><span class="status-text" id="statusText">En línea</span></div><div class="user-bio" id="profileBio">Amante de los eventos en vivo <i class="i-music" style="background-position:0px -256px;"></i></div></div>
+        <div class="user-info"><div class="user-name" id="profileName">Jomany</div><div class="user-handle" id="profileUsername">@jomany</div><div class="user-status" id="userStatus"><div class="status-dot status-online"></div><span class="status-text" id="statusText">En línea</span></div><div class="user-bio" id="profileBio">Amante de los eventos en vivo <i class="i-music"></i></div></div>
         <div class="stats-modern"><div class="stat-card"><div class="stat-value" id="followersCount">1.2K</div><div class="stat-label">seguidores</div></div><div class="stat-card"><div class="stat-value" id="followingCount">567</div><div class="stat-label">siguiendo</div></div><div class="stat-card"><div class="stat-value" id="teteosCount">12</div><div class="stat-label">teteos</div></div></div>
         <div class="profile-buttons"><button class="profile-btn" onclick="openEditProfile()"><i class="i-edit"></i> Editar perfil</button><button class="profile-btn" onclick="shareProfile()"><i class="i-link"></i> Compartir</button></div>
         <div class="contact-modern"><div style="font-size:13px; font-weight:600; color:var(--gris-claro); margin-bottom:12px;"><i class="i-cog" style="background-position:-256px -1536px;"></i> Contacto</div><div class="contact-row" onclick="copyEmail()"><div class="contact-icon"><i class="i-email"></i></div><div class="contact-value" id="userEmail">jomanicompanygroup@gmail.com</div><div class="contact-copy"><i class="i-copy"></i> copiar</div></div><div class="contact-row" onclick="copyPhone()"><div class="contact-icon"><i class="i-phone"></i></div><div class="contact-value" id="userPhone">+1 809 555 1234</div><div class="contact-copy"><i class="i-copy"></i> copiar</div></div></div>
@@ -920,7 +928,7 @@
 
     // ANUNCIOS CARRUSEL 3
     const anunciosCarrusel3 = [
-        { id: 1, imagen: "figurasteteo.png", link: "https://www.instagram.com/chefdonmarco/" },
+        { id: 1, imagen: "https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png", link: "https://www.instagram.com/chefdonmarco/" },
         { id: 2, imagen: "yobuskologo.jpg", link: "https://yobusko.com" },
         { id: 3, imagen: "file_000000006ca871fdb0acac11566b0ed4.png", link: "https://nicovox.com" },
         { id: 4, imagen: "file_00000000b6c8722faff83ddca70039d4.png", link: "https://nicovox.com" },
