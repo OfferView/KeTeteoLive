@@ -30,7 +30,7 @@
             --azul: #007AFF;
         }
 
-/* ========== ICONOS PERSONALIZADOS (carpeta icons) ========== */
+        /* ========== ICONOS PERSONALIZADOS COLOR NARANJA ========== */
 .icon {
     display: inline-flex;
     align-items: center;
@@ -40,7 +40,7 @@
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
-    filter: brightness(0) invert(1);
+    filter: brightness(0) sepia(1) hue-rotate(350deg) saturate(10);
 }
 
 .i-menu { background-image: url('icons/menu.png'); }
@@ -69,6 +69,7 @@
 .i-link { background-image: url('icons/link.png'); }
 .i-copy { background-image: url('icons/copy.png'); }
 .i-calendar { background-image: url('icons/calendar.png'); }
+.i-eye { background-image: url('icons/eye.png'); }
 
 /* Ajustes de tamaño para diferentes usos */
 .nav-icon .i-home, .nav-icon .i-search, .nav-icon .i-bell,
@@ -98,14 +99,10 @@
     margin-right: 12px;
 }
 
-/* ====== PRUEBA DE DEPURACIÓN (fondo rojo) ====== */
-.i-menu { 
-    background-color: red !important;
-    width: 40px !important;
-    height: 40px !important;
-    display: inline-block !important;
+.password-toggle .i-eye {
+    width: 20px;
+    height: 20px;
 }
-
         /* ========== HEADER ========== */
         .header {
             position: fixed;
