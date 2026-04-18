@@ -60,6 +60,12 @@
         .password-toggle .icon-svg { width: 20px; height: 20px; }
         .profile-btn .icon-svg { width: 16px; height: 16px; margin-right: 6px; }
         .contact-icon .icon-svg { width: 20px; height: 20px; }
+        
+        /* Botón hamburguesa más grande */
+        .hamburger .icon-svg {
+            width: 32px;
+            height: 32px;
+        }
 
         /* ========== HEADER ========== */
         .header {
@@ -102,8 +108,12 @@
             width: 40px;
         }
 
-        /* ========== COMPENSACIÓN ========== */
-        #mainScreen {
+        /* ========== COMPENSACIÓN PARA TODAS LAS PANTALLAS ========== */
+        #mainScreen,
+        #profileScreen,
+        #configScreen,
+        #languageScreen,
+        #myStreamsScreen {
             padding-top: 96px;
         }
 
@@ -332,6 +342,11 @@
         .nav-item:active { transform: scale(0.95); }
         .nav-icon { font-size: 22px; }
         .nav-label { font-size: 10px; color: var(--gris-claro); }
+
+        /* Ocultar barra inferior en pantalla de bienvenida */
+        body:has(#welcomeScreen[style*="flex"]) .bottom-nav {
+            display: none;
+        }
 
         /* ========== MODALES ========== */
         .modal {
@@ -570,9 +585,6 @@
             padding: 20px;
             background: #000;
         }
-        .emoji { font-size: 70px; margin-bottom: 10px; }
-        .title { font-size: 36px; font-weight: 900; color: var(--rojo-logo); letter-spacing: -0.5px; }
-        .sub { font-size: 14px; color: var(--gris-claro); margin-bottom: 30px; text-align: center; }
         .btn-primary {
             background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
             padding: 14px;
@@ -712,9 +724,9 @@
 
 <!-- BIENVENIDA -->
 <div id="welcomeScreen" class="welcome">
-    <div class="emoji">📡</div>
-    <div class="title">KeTeteoLive</div>
-    <div class="sub">Tu vida ahora</div>
+    <div class="logo-container" style="margin-bottom: 30px;">
+        <img src="ketelogo.jpg" alt="KeTeteoLive" style="max-height: 80px; width: auto; object-fit: contain;">
+    </div>
     <button class="btn-primary" onclick="openRegister()">
         <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
         Crear cuenta
