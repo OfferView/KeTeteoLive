@@ -876,8 +876,8 @@
 <div id="sideMenu" class="side-menu">
     <button id="createKeTeteoBtn" onclick="openCreateKeTeteoModal(); closeMenu()">Crear KeTeteoLive</button>
     <button onclick="showProfileScreen(); closeMenu()">Mi perfil</button>
-    <button onclick="showMyStreamsScreen(); closeMenu()">📋 Mis KeTeteos</button>
-    <button onclick="showGroupsScreen(); closeMenu()">👥 Mis Grupos KeTeteoLive</button>
+    <button onclick="showMyStreamsScreen(); closeMenu()">Mis KeTeteos</button>
+    <button onclick="showGroupsScreen(); closeMenu()">Mis Grupos KeTeteoLive</button>
     <button onclick="showConfigScreen(); closeMenu()">Configuración</button>
     <button onclick="showLanguageScreen(); closeMenu()">Idioma</button>
     <button onclick="logout(); closeMenu()" id="logoutMenuBtn" style="display:none;">Cerrar sesión</button>
@@ -1015,7 +1015,7 @@
         <div class="config-option" onclick="setLanguage('es')"><span>Español</span><span>✅</span></div>
         <div class="config-option" onclick="setLanguage('en')"><span>English</span><span></span></div>
         <div class="config-option" onclick="setLanguage('pt')"><span>Português</span><span></span></div>
-        <div class="config-option" onclick="setLanguage('zh')"><span>🇨🇳 中文 (Mandarin)</span><span></span></div>
+        <div class="config-option" onclick="setLanguage('zh')"><span>🇨🇳 中文</span><span></span></div>
         <div class="config-option" onclick="setLanguage('fr')"><span>🇫🇷 Français</span><span></span></div>
     </div>
 </div>
@@ -1170,7 +1170,7 @@
                 <div class="group-avatar"><img src="${grupo.foto}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%238E8E93\' stroke-width=\'2\'%3E%3Cpath d=\'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\'/%3E%3Ccircle cx=\'9\' cy=\'7\' r=\'4\'/%3E%3Cpath d=\'M23 21v-2a4 4 0 0 0-3-3.87\'/%3E%3Cpath d=\'M16 3.13a4 4 0 0 1 0 7.75\'/%3E%3C/svg%3E'"></div>
                 <div class="group-info">
                     <div class="group-name">${grupo.nombre}</div>
-                    <div class="group-meta">👥 ${grupo.miembros.length} miembros • ${grupo.tipo === 'publico' ? '🌍 Público' : '🔒 Privado'}</div>
+                    <div class="group-meta"> ${grupo.miembros.length} miembros • ${grupo.tipo === 'publico' ? '🌍 Público' : '🔒 Privado'}</div>
                     ${grupo.descripcion ? `<div class="group-meta" style="font-size:10px;">📝 ${grupo.descripcion.substring(0, 50)}</div>` : ''}
                 </div>
             `;
