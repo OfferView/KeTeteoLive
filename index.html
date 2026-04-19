@@ -226,10 +226,134 @@
             transition: all 0.2s ease;
         }
         .action-btn:active { transform: scale(0.96); color: var(--rojo-logo); }
-        .comment-row { display: flex; gap: 8px; margin-top: 8px; }
-        .comment-input { flex: 1; background: var(--negro); border: 0.5px solid var(--gris-medio); border-radius: 20px; padding: 8px 12px; color: white; outline: none; font-size: 12px; }
-        .send-comment { background: var(--rojo-logo); border: none; border-radius: 20px; padding: 8px 16px; color: white; font-weight: 600; cursor: pointer; font-size: 12px; }
-        .comments-list { margin-top: 8px; font-size: 11px; color: var(--gris-claro); max-height: 80px; overflow-y: auto; }
+        
+        /* Estilos comentarios estilo Instagram */
+        .comment-section {
+            margin-top: 12px;
+            border-top: 0.5px solid var(--gris-medio);
+            padding-top: 10px;
+        }
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .comments-count {
+            font-size: 11px;
+            color: var(--gris-claro);
+            font-weight: 600;
+        }
+        .comments-list {
+            max-height: 180px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        .comment-item {
+            margin-bottom: 12px;
+            padding: 6px 0;
+        }
+        .comment-user {
+            font-weight: 700;
+            color: var(--naranja);
+            font-size: 12px;
+        }
+        .comment-time {
+            font-size: 9px;
+            color: var(--gris-claro);
+            margin-left: 8px;
+        }
+        .comment-text {
+            font-size: 12px;
+            color: var(--blanco);
+            margin-top: 3px;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+        .comment-input-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gris-oscuro);
+            border-radius: 24px;
+            padding: 4px 12px;
+            border: 0.5px solid var(--gris-medio);
+        }
+        .comment-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px 0;
+            color: white;
+            font-size: 13px;
+            outline: none;
+        }
+        .comment-input::placeholder {
+            color: var(--gris-claro);
+        }
+        .emoji-picker {
+            display: flex;
+            gap: 12px;
+            padding: 6px 0;
+        }
+        .emoji-btn {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+            transition: transform 0.1s ease;
+        }
+        .emoji-btn:active {
+            transform: scale(0.9);
+        }
+        .send-comment-btn {
+            background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
+            border: none;
+            border-radius: 20px;
+            padding: 6px 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.2s;
+        }
+        .send-comment-btn.active {
+            opacity: 1;
+        }
+        .send-comment-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Estilos modales de compartir y reporte */
+        .share-options, .report-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .share-option, .report-option {
+            background: var(--gris-oscuro);
+            border: 0.5px solid var(--gris-medio);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .share-option:active, .report-option:active {
+            background: var(--gris-medio);
+            transform: scale(0.98);
+        }
+        .share-option span:first-child, .report-option span:first-child {
+            font-size: 24px;
+        }
+        .share-option span:last-child, .report-option span:last-child {
+            font-size: 14px;
+            font-weight: 600;
+        }
 
         .patrocinios-inferior {
             overflow-x: auto;
@@ -666,7 +790,6 @@
             margin-bottom: 16px;
         }
         
-        /* Estilos configuración profesional */
         .config-section {
             margin-bottom: 24px;
         }
@@ -963,7 +1086,66 @@
     </div>
 </div>
 
-<!-- MENÚ LATERAL -->
+<!-- MODAL COMPARTIR PROFESIONAL -->
+<div id="shareModal" class="modal">
+    <div class="modal-content">
+        <h3>📤 Compartir</h3>
+        <div class="share-options">
+            <div class="share-option" onclick="shareCopyLink()">
+                <span>🔗</span>
+                <span>Copiar enlace</span>
+            </div>
+            <div class="share-option" onclick="shareExternal()">
+                <span>📱</span>
+                <span>Compartir externo</span>
+            </div>
+            <div class="share-option" onclick="shareToGroup()">
+                <span>👥</span>
+                <span>Enviar a un grupo</span>
+            </div>
+            <div class="share-option" onclick="shareToUser()">
+                <span>👤</span>
+                <span>Enviar a un usuario</span>
+            </div>
+            <div class="share-option" onclick="shareToWhatsApp()">
+                <span>💬</span>
+                <span>Compartir por WhatsApp</span>
+            </div>
+        </div>
+        <button class="btn-gris" onclick="closeShareModal()" style="margin-top: 16px;">❌ Cancelar</button>
+    </div>
+</div>
+
+<!-- MODAL REPORTAR PROFESIONAL -->
+<div id="reportModal" class="modal">
+    <div class="modal-content">
+        <h3>🚨 Reportar</h3>
+        <div class="report-options">
+            <div class="report-option" onclick="submitReport('Contenido inapropiado')">
+                <span>⚠️</span>
+                <span>Contenido inapropiado</span>
+            </div>
+            <div class="report-option" onclick="submitReport('Spam')">
+                <span>📧</span>
+                <span>Spam</span>
+            </div>
+            <div class="report-option" onclick="submitReport('Acoso')">
+                <span>😡</span>
+                <span>Acoso</span>
+            </div>
+            <div class="report-option" onclick="submitReport('Falsa información')">
+                <span>❌</span>
+                <span>Falsa información</span>
+            </div>
+            <div class="report-option" onclick="submitReport('Violencia')">
+                <span>🔪</span>
+                <span>Violencia</span>
+            </div>
+        </div>
+        <button class="btn-gris" onclick="closeReportModal()" style="margin-top: 16px;">❌ Cancelar</button>
+    </div>
+</div>
+
 <div id="sideMenu" class="side-menu">
     <button id="createKeTeteoBtn" onclick="openCreateKeTeteoModal(); closeMenu()">
         <span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span> Crear KeTeteoLive
@@ -1054,14 +1236,7 @@
     <button class="btn-gris" onclick="closeProximosEventos()">Cerrar</button>
 </div></div>
 
-<div id="reporteModal" class="modal"><div class="modal-content">
-    <h3>REPORTAR</h3>
-    <div class="horiz-btn" onclick="enviarReporte('Contenido inapropiado')">Inapropiado</div>
-    <div class="horiz-btn" onclick="enviarReporte('Spam')">Spam</div>
-    <div class="horiz-btn" onclick="enviarReporte('Acoso')">Acoso</div>
-    <button class="btn-gris" onclick="cerrarReporteModal()">Cancelar</button>
-</div></div>
-
+<!-- Reporte modal antiguo ya no se usa, ahora usamos reportModal -->
 <div id="confirmarEliminarModal" class="modal"><div class="modal-content">
     <h3>ELIMINAR</h3>
     <p>¿Estás seguro?</p>
@@ -1106,7 +1281,6 @@
     <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()">Nueva transmisión</button>
 </div>
 
-<!-- PANTALLA DE CONFIGURACIÓN PROFESIONAL CON GUARDAR/CANCELAR -->
 <div id="configScreen" class="screen">
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button>
@@ -1114,122 +1288,40 @@
         <div class="header-spacer" onclick="scrollToTopAndHome()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
     </div>
     <div style="padding: 20px;">
-        <!-- SECCIÓN CUENTA -->
         <div class="config-section">
-            <div class="config-section-title">
-                <span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Cuenta
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Correo electrónico</div>
-                <input type="email" id="configEmail" class="config-edit" placeholder="correo@ejemplo.com">
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Teléfono</div>
-                <input type="tel" id="configPhone" class="config-edit" placeholder="+1 809 555 1234">
-            </div>
+            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Cuenta</div>
+            <div class="config-item"><div class="config-item-label">Correo electrónico</div><input type="email" id="configEmail" class="config-edit" placeholder="correo@ejemplo.com"></div>
+            <div class="config-item"><div class="config-item-label">Teléfono</div><input type="tel" id="configPhone" class="config-edit" placeholder="+1 809 555 1234"></div>
         </div>
-
-        <!-- SECCIÓN PRIVACIDAD -->
         <div class="config-section">
-            <div class="config-section-title">
-                <span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span> Privacidad
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Perfil público</div>
-                <div class="config-toggle" id="toggleProfilePublic"></div>
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Mostrar ubicación</div>
-                <div class="config-toggle" id="toggleShowLocation"></div>
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Quién puede comentar</div>
-                <select id="selectWhoCanComment" class="config-select">
-                    <option value="todos">Todos</option>
-                    <option value="seguidores">Solo seguidores</option>
-                    <option value="nadie">Nadie</option>
-                </select>
-            </div>
+            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span> Privacidad</div>
+            <div class="config-item"><div class="config-item-label">Perfil público</div><div class="config-toggle" id="toggleProfilePublic"></div></div>
+            <div class="config-item"><div class="config-item-label">Mostrar ubicación</div><div class="config-toggle" id="toggleShowLocation"></div></div>
+            <div class="config-item"><div class="config-item-label">Quién puede comentar</div><select id="selectWhoCanComment" class="config-select"><option value="todos">Todos</option><option value="seguidores">Solo seguidores</option><option value="nadie">Nadie</option></select></div>
         </div>
-
-        <!-- SECCIÓN NOTIFICACIONES -->
         <div class="config-section">
-            <div class="config-section-title">
-                <span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span> Notificaciones
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Push notifications</div>
-                <div class="config-toggle" id="togglePushNotifications"></div>
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Nuevos seguidores</div>
-                <div class="config-toggle" id="toggleNewFollowers"></div>
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Comentarios en mis posts</div>
-                <div class="config-toggle" id="togglePostComments"></div>
-            </div>
+            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span> Notificaciones</div>
+            <div class="config-item"><div class="config-item-label">Push notifications</div><div class="config-toggle" id="togglePushNotifications"></div></div>
+            <div class="config-item"><div class="config-item-label">Nuevos seguidores</div><div class="config-toggle" id="toggleNewFollowers"></div></div>
+            <div class="config-item"><div class="config-item-label">Comentarios en mis posts</div><div class="config-toggle" id="togglePostComments"></div></div>
         </div>
-
-        <!-- SECCIÓN APARIENCIA -->
         <div class="config-section">
-            <div class="config-section-title">
-                <span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="22"/></svg></span> Apariencia
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Modo oscuro</div>
-                <div class="config-toggle" id="toggleDarkMode"></div>
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Tamaño de fuente</div>
-                <select id="selectFontSize" class="config-select">
-                    <option value="pequeño">Pequeño</option>
-                    <option value="mediano">Mediano</option>
-                    <option value="grande">Grande</option>
-                </select>
-            </div>
+            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="22"/></svg></span> Apariencia</div>
+            <div class="config-item"><div class="config-item-label">Modo oscuro</div><div class="config-toggle" id="toggleDarkMode"></div></div>
+            <div class="config-item"><div class="config-item-label">Tamaño de fuente</div><select id="selectFontSize" class="config-select"><option value="pequeño">Pequeño</option><option value="mediano">Mediano</option><option value="grande">Grande</option></select></div>
         </div>
-
-        <!-- SECCIÓN IDIOMA Y REGIÓN -->
         <div class="config-section">
-            <div class="config-section-title">
-                <span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span> Idioma y Región
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Idioma</div>
-                <select id="selectLanguage" class="config-select">
-                    <option value="es">Español</option>
-                    <option value="en">English</option>
-                    <option value="pt">Português</option>
-                </select>
-            </div>
-            <div class="config-item">
-                <div class="config-item-label">Unidad de distancia</div>
-                <select id="selectDistanceUnit" class="config-select">
-                    <option value="km">Kilómetros (km)</option>
-                    <option value="mi">Millas (mi)</option>
-                </select>
-            </div>
+            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span> Idioma y Región</div>
+            <div class="config-item"><div class="config-item-label">Idioma</div><select id="selectLanguage" class="config-select"><option value="es">Español</option><option value="en">English</option><option value="pt">Português</option></select></div>
+            <div class="config-item"><div class="config-item-label">Unidad de distancia</div><select id="selectDistanceUnit" class="config-select"><option value="km">Kilómetros (km)</option><option value="mi">Millas (mi)</option></select></div>
         </div>
-
-        <!-- SECCIÓN DATOS Y SEGURIDAD -->
         <div class="config-section">
-            <div class="config-section-title">
-                <span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span> Datos y Seguridad
-            </div>
+            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span> Datos y Seguridad</div>
             <button class="config-danger-btn" onclick="exportUserData()">📥 Exportar mis datos</button>
             <button class="config-danger-btn" onclick="deleteAccount()" style="margin-top: 8px;">🗑️ Eliminar mi cuenta</button>
         </div>
-
-        <!-- BOTONES GUARDAR Y CANCELAR -->
-        <div class="config-buttons">
-            <button class="config-btn-save" onclick="saveConfigChanges()">💾 GUARDAR CAMBIOS</button>
-            <button class="config-btn-cancel" onclick="cancelConfigChanges()">❌ DESCARTAR</button>
-        </div>
-
-        <div class="config-version">
-            Versión 2.0.0
-        </div>
+        <div class="config-buttons"><button class="config-btn-save" onclick="saveConfigChanges()">💾 GUARDAR CAMBIOS</button><button class="config-btn-cancel" onclick="cancelConfigChanges()">❌ DESCARTAR</button></div>
+        <div class="config-version">Versión 2.0.0</div>
     </div>
 </div>
 
@@ -1260,6 +1352,8 @@
     let allKeTeteos = [];
     let currentLikes = {};
     let currentComments = {};
+    let currentShares = {};
+    let currentReports = {};
     let userLocation = null;
     let eliminarId = null;
     let autoScrollIntervalSuperior = null;
@@ -1268,51 +1362,278 @@
     let isUserInteractingInferior = false;
     let autoScrollTimeoutSuperior = null;
     let autoScrollTimeoutInferior = null;
-    let reporteKeTeteoId = null;
     let carousel3ScrollInterval = null;
     let allGroups = [];
     let currentGroupCode = "";
+    let currentShareKeId = null;
+    let currentReportKeId = null;
     
-    // Configuración temporal (para cambios no guardados)
     let tempConfig = {
-        email: '',
-        phone: '',
-        profilePublic: true,
-        showLocation: true,
-        whoCanComment: "todos",
-        pushNotifications: true,
-        newFollowers: false,
-        postComments: true,
-        darkMode: true,
-        fontSize: "mediano",
-        language: "es",
-        distanceUnit: "km"
+        email: '', phone: '', profilePublic: true, showLocation: true,
+        whoCanComment: "todos", pushNotifications: true, newFollowers: false,
+        postComments: true, darkMode: true, fontSize: "mediano",
+        language: "es", distanceUnit: "km"
     };
     
-    // Configuración guardada permanentemente
-    let savedConfig = {
-        profilePublic: true,
-        showLocation: true,
-        whoCanComment: "todos",
-        pushNotifications: true,
-        newFollowers: false,
-        postComments: true,
-        darkMode: true,
-        fontSize: "mediano",
-        language: "es",
-        distanceUnit: "km"
-    };
+    let savedConfig = { ...tempConfig };
 
     function scrollToTop() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById('mainScreen').classList.add('active');
     }
     
     function scrollToTopAndHome() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById('mainScreen').classList.add('active');
+    }
+
+    // ================= FUNCIONES DE COMPARTIR PROFESIONAL =================
+    function openShareModal(keId) {
+        if (!loggedIn) {
+            alert('Inicia sesión para compartir');
+            return;
+        }
+        currentShareKeId = keId;
+        document.getElementById('shareModal').classList.add('show');
+    }
+    
+    function closeShareModal() {
+        document.getElementById('shareModal').classList.remove('show');
+        currentShareKeId = null;
+    }
+    
+    function shareCopyLink() {
+        const ke = allKeTeteos.find(k => k.id == currentShareKeId);
+        if (ke) {
+            const shareUrl = `${window.location.origin}${window.location.pathname}?ke=${ke.id}`;
+            navigator.clipboard.writeText(shareUrl);
+            alert('✅ Enlace copiado al portapapeles');
+            incrementShares(currentShareKeId);
+        }
+        closeShareModal();
+    }
+    
+    function shareExternal() {
+        const ke = allKeTeteos.find(k => k.id == currentShareKeId);
+        if (ke && navigator.share) {
+            navigator.share({
+                title: ke.titulo,
+                text: `¡Mira este KeTeteo! ${ke.titulo} por ${ke.nombreCreador}`,
+                url: `${window.location.origin}${window.location.pathname}?ke=${ke.id}`
+            }).then(() => incrementShares(currentShareKeId)).catch(() => {});
+        } else {
+            shareCopyLink();
+        }
+        closeShareModal();
+    }
+    
+    function shareToGroup() {
+        const grupos = allGroups.filter(g => g.miembros.includes(currentUser?.username));
+        if (grupos.length === 0) {
+            alert('No tienes grupos para compartir. Crea o únete a un grupo primero.');
+            closeShareModal();
+            return;
+        }
+        const grupoNombres = grupos.map(g => g.nombre).join('\n');
+        const grupoSeleccionado = prompt(`Selecciona un grupo para compartir:\n${grupoNombres}\n\nEscribe el nombre exacto del grupo:`);
+        const grupo = grupos.find(g => g.nombre === grupoSeleccionado);
+        if (grupo) {
+            alert(`✅ Compartido en el grupo "${grupo.nombre}"`);
+            incrementShares(currentShareKeId);
+        } else {
+            alert('Grupo no encontrado');
+        }
+        closeShareModal();
+    }
+    
+    function shareToUser() {
+        const username = prompt('Ingresa el nombre de usuario (@ejemplo) a quien quieres enviar este KeTeteo:');
+        if (username && username.trim()) {
+            alert(`✅ Enviado a ${username.trim()}`);
+            incrementShares(currentShareKeId);
+        }
+        closeShareModal();
+    }
+    
+    function shareToWhatsApp() {
+        const ke = allKeTeteos.find(k => k.id == currentShareKeId);
+        if (ke) {
+            const text = encodeURIComponent(`¡Mira este KeTeteo! ${ke.titulo} por ${ke.nombreCreador}`);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+            incrementShares(currentShareKeId);
+        }
+        closeShareModal();
+    }
+    
+    function incrementShares(keId) {
+        if (!currentShares[keId]) currentShares[keId] = 0;
+        currentShares[keId]++;
+        localStorage.setItem(`shares_${keId}`, currentShares[keId]);
+    }
+    
+    function loadShares() {
+        allKeTeteos.forEach(ke => {
+            const saved = localStorage.getItem(`shares_${ke.id}`);
+            if (saved) currentShares[ke.id] = parseInt(saved);
+            else currentShares[ke.id] = 0;
+        });
+    }
+
+    // ================= FUNCIONES DE REPORTAR PROFESIONAL =================
+    function openReportModal(keId) {
+        if (!loggedIn) {
+            alert('Inicia sesión para reportar');
+            return;
+        }
+        currentReportKeId = keId;
+        document.getElementById('reportModal').classList.add('show');
+    }
+    
+    function closeReportModal() {
+        document.getElementById('reportModal').classList.remove('show');
+        currentReportKeId = null;
+    }
+    
+    function submitReport(motivo) {
+        if (!currentReportKeId) return;
+        if (!currentReports[currentReportKeId]) currentReports[currentReportKeId] = [];
+        currentReports[currentReportKeId].push({
+            usuario: currentUser.username,
+            motivo: motivo,
+            fecha: new Date().toISOString()
+        });
+        localStorage.setItem(`reports_${currentReportKeId}`, JSON.stringify(currentReports[currentReportKeId]));
+        alert(`✅ Reporte enviado: ${motivo}\n\nGracias por ayudarnos a mantener la comunidad segura.`);
+        closeReportModal();
+    }
+    
+    function loadReports() {
+        allKeTeteos.forEach(ke => {
+            const saved = localStorage.getItem(`reports_${ke.id}`);
+            if (saved) currentReports[ke.id] = JSON.parse(saved);
+            else currentReports[ke.id] = [];
+        });
+    }
+
+    // ================= FUNCIONES DE COMENTARIOS =================
+    function formatCommentTime(date) {
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        const diffDays = Math.floor(diffMs / 86400000);
+        
+        if (diffMins < 1) return 'ahora';
+        if (diffMins < 60) return `hace ${diffMins} min`;
+        if (diffHours < 24) return `hace ${diffHours} h`;
+        if (diffDays === 1) return 'ayer';
+        return `hace ${diffDays} días`;
+    }
+    
+    function addComment(keId, commentText) {
+        if (!commentText.trim()) return false;
+        if (!loggedIn) {
+            alert('Inicia sesión para comentar');
+            return false;
+        }
+        
+        if (!currentComments[keId]) currentComments[keId] = [];
+        
+        const newComment = {
+            user: currentUser.username,
+            text: commentText.trim(),
+            timestamp: new Date().toISOString(),
+            timeAgo: formatCommentTime(new Date())
+        };
+        
+        currentComments[keId].unshift(newComment);
+        localStorage.setItem(`comments_${keId}`, JSON.stringify(currentComments[keId]));
+        
+        updateCommentsUI(keId);
+        
+        const commentCountSpan = document.querySelector(`.ke-teteo-card[data-id="${keId}"] .comment-count`);
+        if (commentCountSpan) commentCountSpan.innerText = currentComments[keId].length;
+        
+        return true;
+    }
+    
+    function updateCommentsUI(keId) {
+        const container = document.getElementById(`comments-list-${keId}`);
+        if (!container) return;
+        
+        const comments = currentComments[keId] || [];
+        const countSpan = document.getElementById(`comments-count-${keId}`);
+        if (countSpan) countSpan.innerText = comments.length;
+        
+        if (comments.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:12px; color:var(--gris-claro); font-size:11px;">No hay comentarios aún. Sé el primero en comentar 💬</div>';
+            return;
+        }
+        
+        container.innerHTML = comments.map(c => `
+            <div class="comment-item">
+                <div>
+                    <span class="comment-user">${escapeHtml(c.user)}</span>
+                    <span class="comment-time">${c.timeAgo || formatCommentTime(new Date(c.timestamp))}</span>
+                </div>
+                <div class="comment-text">${escapeHtml(c.text)}</div>
+            </div>
+        `).join('');
+    }
+    
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    function setupCommentListeners(card, keId) {
+        const input = card.querySelector(`#comment-input-${keId}`);
+        const sendBtn = card.querySelector(`#send-comment-${keId}`);
+        const emojiBtns = card.querySelectorAll(`.emoji-btn-${keId}`);
+        
+        if (input && sendBtn) {
+            input.addEventListener('input', () => {
+                if (input.value.trim()) {
+                    sendBtn.classList.add('active');
+                } else {
+                    sendBtn.classList.remove('active');
+                }
+            });
+            
+            sendBtn.addEventListener('click', () => {
+                if (input.value.trim()) {
+                    if (addComment(keId, input.value)) {
+                        input.value = '';
+                        sendBtn.classList.remove('active');
+                    }
+                }
+            });
+            
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && input.value.trim()) {
+                    if (addComment(keId, input.value)) {
+                        input.value = '';
+                        sendBtn.classList.remove('active');
+                    }
+                }
+            });
+        }
+        
+        emojiBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const emoji = btn.getAttribute('data-emoji');
+                if (input) {
+                    input.value += emoji;
+                    input.focus();
+                    if (input.value.trim()) {
+                        sendBtn.classList.add('active');
+                    }
+                }
+            });
+        });
     }
 
     // ================= FUNCIONES DE CONFIGURACIÓN =================
@@ -1323,14 +1644,12 @@
             savedConfig = parsed;
             tempConfig = { ...parsed };
         }
-        
         if (currentUser) {
             tempConfig.email = currentUser.email || '';
             tempConfig.phone = currentUser.phone || '';
             savedConfig.email = currentUser.email || '';
             savedConfig.phone = currentUser.phone || '';
         }
-        
         updateConfigUI();
     }
     
@@ -1341,12 +1660,10 @@
         document.getElementById('toggleNewFollowers').className = 'config-toggle ' + (tempConfig.newFollowers ? 'active' : '');
         document.getElementById('togglePostComments').className = 'config-toggle ' + (tempConfig.postComments ? 'active' : '');
         document.getElementById('toggleDarkMode').className = 'config-toggle ' + (tempConfig.darkMode ? 'active' : '');
-        
         document.getElementById('selectWhoCanComment').value = tempConfig.whoCanComment;
         document.getElementById('selectFontSize').value = tempConfig.fontSize;
         document.getElementById('selectLanguage').value = tempConfig.language;
         document.getElementById('selectDistanceUnit').value = tempConfig.distanceUnit;
-        
         document.getElementById('configEmail').value = tempConfig.email || '';
         document.getElementById('configPhone').value = tempConfig.phone || '';
     }
@@ -1359,27 +1676,17 @@
             document.body.style.background = '#000000';
             document.body.style.color = '#FFFFFF';
         }
-        
         let fontSizeValue = '16px';
         if (tempConfig.fontSize === 'pequeño') fontSizeValue = '12px';
         if (tempConfig.fontSize === 'mediano') fontSizeValue = '16px';
         if (tempConfig.fontSize === 'grande') fontSizeValue = '20px';
         document.body.style.fontSize = fontSizeValue;
-        
         if (currentUser) {
             currentUser.email = tempConfig.email;
             currentUser.phone = tempConfig.phone;
             localStorage.setItem('user', JSON.stringify(currentUser));
             localStorage.setItem('userPhone', tempConfig.phone);
             loadProfileData();
-        }
-        
-        if (tempConfig.language === 'es') {
-            document.querySelector('#configScreen .logo-container div').innerHTML = '⚙️ Configuración';
-        } else if (tempConfig.language === 'en') {
-            document.querySelector('#configScreen .logo-container div').innerHTML = '⚙️ Settings';
-        } else if (tempConfig.language === 'pt') {
-            document.querySelector('#configScreen .logo-container div').innerHTML = '⚙️ Configuração';
         }
     }
     
@@ -1412,37 +1719,16 @@
         updateConfigUI();
     }
     
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('selectWhoCanComment')?.addEventListener('change', () => {
-            tempConfig.whoCanComment = document.getElementById('selectWhoCanComment').value;
-        });
-        document.getElementById('selectFontSize')?.addEventListener('change', () => {
-            tempConfig.fontSize = document.getElementById('selectFontSize').value;
-        });
-        document.getElementById('selectLanguage')?.addEventListener('change', () => {
-            tempConfig.language = document.getElementById('selectLanguage').value;
-        });
-        document.getElementById('selectDistanceUnit')?.addEventListener('change', () => {
-            tempConfig.distanceUnit = document.getElementById('selectDistanceUnit').value;
-        });
-        document.getElementById('configEmail')?.addEventListener('input', (e) => {
-            tempConfig.email = e.target.value;
-        });
-        document.getElementById('configPhone')?.addEventListener('input', (e) => {
-            tempConfig.phone = e.target.value;
-        });
-    });
+    document.getElementById('selectWhoCanComment')?.addEventListener('change', () => tempConfig.whoCanComment = document.getElementById('selectWhoCanComment').value);
+    document.getElementById('selectFontSize')?.addEventListener('change', () => tempConfig.fontSize = document.getElementById('selectFontSize').value);
+    document.getElementById('selectLanguage')?.addEventListener('change', () => tempConfig.language = document.getElementById('selectLanguage').value);
+    document.getElementById('selectDistanceUnit')?.addEventListener('change', () => tempConfig.distanceUnit = document.getElementById('selectDistanceUnit').value);
+    document.getElementById('configEmail')?.addEventListener('input', (e) => tempConfig.email = e.target.value);
+    document.getElementById('configPhone')?.addEventListener('input', (e) => tempConfig.phone = e.target.value);
     
     function exportUserData() {
-        if (!currentUser) {
-            alert('Inicia sesión primero');
-            return;
-        }
-        const userData = {
-            perfil: currentUser,
-            configuracion: savedConfig,
-            fechaExportacion: new Date().toISOString()
-        };
+        if (!currentUser) { alert('Inicia sesión primero'); return; }
+        const userData = { perfil: currentUser, configuracion: savedConfig, fechaExportacion: new Date().toISOString() };
         const blob = new Blob([JSON.stringify(userData, null, 2)], {type: 'application/json'});
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -1454,54 +1740,30 @@
     }
     
     function deleteAccount() {
-        if (!currentUser) {
-            alert('Inicia sesión primero');
-            return;
-        }
+        if (!currentUser) { alert('Inicia sesión primero'); return; }
         if (confirm('⚠️ ¿ESTÁS SEGURO?\n\nEsta acción es irreversible.\nSe eliminarán todos tus datos.\n\n¿Continuar?')) {
             const confirmText = prompt('Escribe "ELIMINAR" para confirmar:');
             if (confirmText === 'ELIMINAR') {
                 localStorage.clear();
                 alert('Cuenta eliminada permanentemente');
                 window.location.reload();
-            } else {
-                alert('Cancelado');
-            }
+            } else { alert('Cancelado'); }
         }
     }
 
     function loadGroups() {
         const stored = localStorage.getItem('keTeteoGroups');
-        if (stored) {
-            allGroups = JSON.parse(stored);
-        } else {
-            allGroups = [];
-            saveGroups();
-        }
+        allGroups = stored ? JSON.parse(stored) : [];
     }
-    
-    function saveGroups() {
-        localStorage.setItem('keTeteoGroups', JSON.stringify(allGroups));
-    }
-    
+    function saveGroups() { localStorage.setItem('keTeteoGroups', JSON.stringify(allGroups)); }
     function generateGroupCode() {
-        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const numbers = '0123456789';
         let code = 'KETEO-';
-        for (let i = 0; i < 4; i++) {
-            code += letters.charAt(Math.floor(Math.random() * letters.length));
-        }
-        for (let i = 0; i < 2; i++) {
-            code += numbers.charAt(Math.floor(Math.random() * numbers.length));
-        }
+        for (let i = 0; i < 4; i++) code += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 26)];
+        for (let i = 0; i < 2; i++) code += '0123456789'[Math.floor(Math.random() * 10)];
         return code;
     }
-    
     function openCreateGroupModal() {
-        if (!loggedIn) {
-            alert('Debes iniciar sesión para crear un grupo');
-            return;
-        }
+        if (!loggedIn) { alert('Debes iniciar sesión para crear un grupo'); return; }
         currentGroupCode = generateGroupCode();
         document.getElementById('codigoInvitacionDisplay').innerText = 'Código: ' + currentGroupCode;
         document.getElementById('groupNombre').value = '';
@@ -1512,154 +1774,69 @@
         document.getElementById('groupPasswordContainer').style.display = 'none';
         document.getElementById('createGroupModal').classList.add('show');
     }
-    
-    function closeCreateGroupModal() {
-        document.getElementById('createGroupModal').classList.remove('show');
-    }
-    
+    function closeCreateGroupModal() { document.getElementById('createGroupModal').classList.remove('show'); }
     function previewGroupPhoto(event) {
         const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('groupFotoPreview').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
+        if (file) { const reader = new FileReader(); reader.onload = (e) => { document.getElementById('groupFotoPreview').src = e.target.result; }; reader.readAsDataURL(file); }
     }
-    
     function createGroup() {
         const nombre = document.getElementById('groupNombre').value.trim();
-        if (!nombre) {
-            alert('El nombre del grupo es requerido');
-            return;
-        }
-        
+        if (!nombre) { alert('El nombre del grupo es requerido'); return; }
         const descripcion = document.getElementById('groupDescripcion').value.trim();
         const tipo = document.getElementById('groupTipo').value;
         const password = document.getElementById('groupPassword').value;
         const foto = document.getElementById('groupFotoPreview').src;
-        
-        const nuevoGrupo = {
-            id: Date.now().toString(),
-            nombre: nombre,
-            descripcion: descripcion,
-            tipo: tipo,
-            foto: foto,
-            creador: currentUser.username,
-            miembros: [currentUser.username],
-            codigoInvitacion: currentGroupCode,
-            password: tipo === 'privado' ? password : null,
-            fechaCreacion: new Date().toISOString()
-        };
-        
+        const nuevoGrupo = { id: Date.now().toString(), nombre, descripcion, tipo, foto, creador: currentUser.username, miembros: [currentUser.username], codigoInvitacion: currentGroupCode, password: tipo === 'privado' ? password : null, fechaCreacion: new Date().toISOString() };
         allGroups.push(nuevoGrupo);
         saveGroups();
         renderGroupsList();
         closeCreateGroupModal();
         alert('✅ Grupo creado exitosamente');
     }
-    
     function renderGroupsList() {
         const container = document.getElementById('groupsList');
         if (!container) return;
-        
         const misGrupos = allGroups.filter(g => g.miembros.includes(currentUser?.username));
-        
-        if (misGrupos.length === 0) {
-            container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--gris-claro);">📭 No tienes grupos aún.<br>Crea uno o únete con un código</div>';
-            return;
-        }
-        
+        if (misGrupos.length === 0) { container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--gris-claro);">📭 No tienes grupos aún.<br>Crea uno o únete con un código</div>'; return; }
         container.innerHTML = '';
         misGrupos.forEach(grupo => {
             const div = document.createElement('div');
             div.className = 'group-card';
-            div.innerHTML = `
-                <div class="group-avatar"><img src="${grupo.foto}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%238E8E93\' stroke-width=\'2\'%3E%3Cpath d=\'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\'/%3E%3Ccircle cx=\'9\' cy=\'7\' r=\'4\'/%3E%3Cpath d=\'M23 21v-2a4 4 0 0 0-3-3.87\'/%3E%3Cpath d=\'M16 3.13a4 4 0 0 1 0 7.75\'/%3E%3C/svg%3E'"></div>
-                <div class="group-info">
-                    <div class="group-name">${grupo.nombre}</div>
-                    <div class="group-meta"> ${grupo.miembros.length} miembros • ${grupo.tipo === 'publico' ? '🌍 Público' : '🔒 Privado'}</div>
-                    ${grupo.descripcion ? `<div class="group-meta" style="font-size:10px;">📝 ${grupo.descripcion.substring(0, 50)}</div>` : ''}
-                </div>
-            `;
+            div.innerHTML = `<div class="group-avatar"><img src="${grupo.foto}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%238E8E93\' stroke-width=\'2\'%3E%3Cpath d=\'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\'/%3E%3Ccircle cx=\'9\' cy=\'7\' r=\'4\'/%3E%3Cpath d=\'M23 21v-2a4 4 0 0 0-3-3.87\'/%3E%3Cpath d=\'M16 3.13a4 4 0 0 1 0 7.75\'/%3E%3C/svg%3E'"></div><div class="group-info"><div class="group-name">${grupo.nombre}</div><div class="group-meta"> ${grupo.miembros.length} miembros • ${grupo.tipo === 'publico' ? '🌍 Público' : '🔒 Privado'}</div>${grupo.descripcion ? `<div class="group-meta" style="font-size:10px;">📝 ${grupo.descripcion.substring(0, 50)}</div>` : ''}</div>`;
             container.appendChild(div);
         });
     }
-    
     function openJoinGroupModal() {
-        if (!loggedIn) {
-            alert('Debes iniciar sesión');
-            return;
-        }
+        if (!loggedIn) { alert('Debes iniciar sesión'); return; }
         document.getElementById('joinCode').value = '';
         document.getElementById('joinPassword').value = '';
         document.getElementById('joinPasswordContainer').style.display = 'none';
         document.getElementById('joinGroupModal').classList.add('show');
     }
-    
-    function closeJoinGroupModal() {
-        document.getElementById('joinGroupModal').classList.remove('show');
-    }
-    
+    function closeJoinGroupModal() { document.getElementById('joinGroupModal').classList.remove('show'); }
     function joinGroup() {
         const codigo = document.getElementById('joinCode').value.trim().toUpperCase();
         const grupo = allGroups.find(g => g.codigoInvitacion === codigo);
-        
-        if (!grupo) {
-            alert('Código de invitación inválido');
-            return;
-        }
-        
-        if (grupo.tipo === 'privado') {
-            const password = document.getElementById('joinPassword').value;
-            if (password !== grupo.password) {
-                alert('Contraseña incorrecta');
-                return;
-            }
-        }
-        
-        if (grupo.miembros.includes(currentUser.username)) {
-            alert('Ya eres miembro de este grupo');
-            closeJoinGroupModal();
-            return;
-        }
-        
+        if (!grupo) { alert('Código de invitación inválido'); return; }
+        if (grupo.tipo === 'privado') { const password = document.getElementById('joinPassword').value; if (password !== grupo.password) { alert('Contraseña incorrecta'); return; } }
+        if (grupo.miembros.includes(currentUser.username)) { alert('Ya eres miembro de este grupo'); closeJoinGroupModal(); return; }
         grupo.miembros.push(currentUser.username);
         saveGroups();
         renderGroupsList();
         closeJoinGroupModal();
         alert(`✅ Te has unido a ${grupo.nombre}`);
     }
-    
-    document.getElementById('groupTipo')?.addEventListener('change', function(e) {
-        const container = document.getElementById('groupPasswordContainer');
-        if (e.target.value === 'privado') {
-            container.style.display = 'block';
-        } else {
-            container.style.display = 'none';
-        }
-    });
-    
+    document.getElementById('groupTipo')?.addEventListener('change', function(e) { document.getElementById('groupPasswordContainer').style.display = e.target.value === 'privado' ? 'block' : 'none'; });
     document.getElementById('joinCode')?.addEventListener('input', function(e) {
         const codigo = e.target.value.trim().toUpperCase();
         const grupo = allGroups.find(g => g.codigoInvitacion === codigo);
-        const container = document.getElementById('joinPasswordContainer');
-        if (grupo && grupo.tipo === 'privado') {
-            container.style.display = 'block';
-        } else {
-            container.style.display = 'none';
-        }
+        document.getElementById('joinPasswordContainer').style.display = (grupo && grupo.tipo === 'privado') ? 'block' : 'none';
     });
 
-    let userStatusInterval = null;
-    let lastActivity = Date.now();
-    let userStatus = "online";
-
+    let userStatusInterval = null, lastActivity = Date.now(), userStatus = "online";
     function actualizarEstadoUsuario() {
         if (!loggedIn) return;
-        const now = Date.now();
-        const timeSinceLastActivity = now - lastActivity;
+        const timeSinceLastActivity = Date.now() - lastActivity;
         if (timeSinceLastActivity < 30000) {
             userStatus = "online";
             const statusDot = document.querySelector('.status-dot');
@@ -1682,9 +1859,7 @@
         localStorage.setItem('userStatus', userStatus);
         localStorage.setItem('lastActivity', lastActivity);
     }
-
     function actualizarActividad() { lastActivity = Date.now(); actualizarEstadoUsuario(); }
-    
     function iniciarSeguimientoEstado() {
         if (userStatusInterval) clearInterval(userStatusInterval);
         userStatusInterval = setInterval(actualizarEstadoUsuario, 10000);
@@ -1734,58 +1909,24 @@
 
     function loadKeTeteos() {
         const stored = localStorage.getItem('keTeteos');
-        if (stored) { 
-            allKeTeteos = JSON.parse(stored);
-            if (!allKeTeteos.find(k => k.id === 999)) {
-                allKeTeteos.push(initialKeTeteos.find(k => k.id === 999));
-            }
-        } else { 
-            allKeTeteos = [...initialKeTeteos]; 
-            localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos));
-        }
+        if (stored) { allKeTeteos = JSON.parse(stored); if (!allKeTeteos.find(k => k.id === 999)) allKeTeteos.push(initialKeTeteos.find(k => k.id === 999)); }
+        else { allKeTeteos = [...initialKeTeteos]; localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
         allKeTeteos.forEach(item => {
             if (currentLikes[item.id] === undefined) currentLikes[item.id] = item.likes || 0;
-            if (!currentComments[item.id]) currentComments[item.id] = [];
+            const savedComments = localStorage.getItem(`comments_${item.id}`);
+            if (savedComments) currentComments[item.id] = JSON.parse(savedComments);
+            else currentComments[item.id] = [];
         });
+        loadShares();
+        loadReports();
     }
-    
     function saveKeTeteos() { localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
-    
-    function getUserLocation() { 
-        return new Promise((resolve, reject) => { 
-            if (navigator.geolocation) { 
-                navigator.geolocation.getCurrentPosition((pos) => { 
-                    userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; 
-                    resolve(userLocation); 
-                }, () => { reject(null); }); 
-            } else { reject(null); } 
-        }); 
-    }
-    
-    function calcularDistancia(lat1, lng1, lat2, lng2) { 
-        const R = 6371; 
-        const dLat = (lat2 - lat1) * Math.PI / 180; 
-        const dLng = (lng2 - lng1) * Math.PI / 180; 
-        const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2); 
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-        return R * c; 
-    }
-    
+    function getUserLocation() { return new Promise((resolve, reject) => { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((pos) => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(userLocation); }, () => { reject(null); }); } else { reject(null); } }); }
+    function calcularDistancia(lat1, lng1, lat2, lng2) { const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLng = (lng2 - lng1) * Math.PI / 180; const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2); const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); return R * c; }
     async function ordenarKeTeteosPorCercania() {
-        if (!userLocation) {
-            try {
-                await getUserLocation();
-            } catch(e) {
-                console.log("No se pudo obtener ubicación");
-                return;
-            }
-        }
+        if (!userLocation) { try { await getUserLocation(); } catch(e) { console.log("No se pudo obtener ubicación"); return; } }
         if (userLocation) {
-            allKeTeteos = allKeTeteos.map(ke => {
-                if (ke.esRadar) return ke;
-                const distanciaKm = calcularDistancia(userLocation.lat, userLocation.lng, ke.lat || 18.48, ke.lng || -69.9);
-                return { ...ke, distanciaReal: distanciaKm };
-            });
+            allKeTeteos = allKeTeteos.map(ke => { if (ke.esRadar) return ke; const distanciaKm = calcularDistancia(userLocation.lat, userLocation.lng, ke.lat || 18.48, ke.lng || -69.9); return { ...ke, distanciaReal: distanciaKm }; });
             const noRadar = allKeTeteos.filter(k => !k.esRadar).sort((a,b) => (a.distanciaReal || 999) - (b.distanciaReal || 999));
             const radar = allKeTeteos.filter(k => k.esRadar);
             allKeTeteos = [...noRadar, ...radar];
@@ -1794,15 +1935,9 @@
         }
     }
 
-    // Función para incrementar views
     function incrementViews(keId) {
         const ke = allKeTeteos.find(k => k.id == keId);
-        if (ke) {
-            ke.viewers = (ke.viewers || 0) + 1;
-            saveKeTeteos();
-            const viewsSpan = document.querySelector(`.ke-teteo-card[data-id="${keId}"] .views-count`);
-            if (viewsSpan) viewsSpan.innerText = ke.viewers;
-        }
+        if (ke) { ke.viewers = (ke.viewers || 0) + 1; saveKeTeteos(); }
     }
 
     function crearCardKeTeteo(item) {
@@ -1811,11 +1946,11 @@
         if (item.esRadar) card.classList.add('radar-card');
         card.setAttribute('data-id', item.id);
         
+        const commentsCount = (currentComments[item.id] || []).length;
+        
         if (item.esRadar) {
             card.innerHTML = `
-                <div class="stream-media">
-                    <iframe class="radar-iframe" src="https://www.flightradar24.com/18.46,-69.90/6" allow="geolocation" loading="lazy"></iframe>
-                </div>
+                <div class="stream-media"><iframe class="radar-iframe" src="https://www.flightradar24.com/18.46,-69.90/6" allow="geolocation" loading="lazy"></iframe></div>
                 <div class="card-content">
                     <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
                     <div class="event-title">${item.titulo}</div>
@@ -1824,14 +1959,25 @@
                     <div class="action-buttons">
                         <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
                         <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></button>
+                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> <span class="comment-count">${commentsCount}</span></button>
                         <button class="action-btn share-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span></button>
                     </div>
-                    <div class="comment-row" id="comment-row-${item.id}" style="display: none;">
-                        <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Comentario...">
-                        <button class="send-comment" data-id="${item.id}">Enviar</button>
+                    <div class="comment-section" id="comment-section-${item.id}">
+                        <div class="comments-header"><div class="comments-count" id="comments-count-${item.id}">${commentsCount} comentarios</div></div>
+                        <div class="comments-list" id="comments-list-${item.id}"></div>
+                        <div class="comment-input-container">
+                            <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Añade un comentario...">
+                            <div class="emoji-picker">
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😊">😊</button>
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="❤️">❤️</button>
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="👍">👍</button>
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😂">😂</button>
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😢">😢</button>
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="🎉">🎉</button>
+                            </div>
+                            <button class="send-comment-btn" id="send-comment-${item.id}">Publicar</button>
+                        </div>
                     </div>
-                    <div class="comments-list" id="comments-list-${item.id}"></div>
                 </div>
             `;
         } else {
@@ -1845,15 +1991,26 @@
                     <div class="action-buttons">
                         <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
                         <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></button>
+                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> <span class="comment-count">${commentsCount}</span></button>
                         <button class="action-btn share-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span></button>
                         <button class="action-btn report-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span></button>
                     </div>
-                    <div class="comment-row" id="comment-row-${item.id}" style="display: none;">
-                        <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Comentario...">
-                        <button class="send-comment" data-id="${item.id}">Enviar</button>
+                    <div class="comment-section" id="comment-section-${item.id}">
+                        <div class="comments-header"><div class="comments-count" id="comments-count-${item.id}">${commentsCount} comentarios</div></div>
+                        <div class="comments-list" id="comments-list-${item.id}"></div>
+                        <div class="comment-input-container">
+                            <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Añade un comentario...">
+                            <div class="emoji-picker">
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😊">😊</button>
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="❤️">❤️</button>
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="👍">👍</button>
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😂">😂</button>
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😢">😢</button>
+                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="🎉">🎉</button>
+                            </div>
+                            <button class="send-comment-btn" id="send-comment-${item.id}">Publicar</button>
+                        </div>
                     </div>
-                    <div class="comments-list" id="comments-list-${item.id}"></div>
                 </div>
             `;
         }
@@ -1866,6 +2023,8 @@
         allKeTeteos.forEach(item => { 
             const card = crearCardKeTeteo(item); 
             container.appendChild(card); 
+            updateCommentsUI(item.id);
+            setupCommentListeners(card, item.id);
             if (!item.esRadar) attachCardEvents(card, item.id); 
             else attachRadarEvents(card, item.id);
         }); 
@@ -1875,174 +2034,36 @@
         incrementViews(item.id);
         const fullDiv = document.createElement('div');
         fullDiv.className = 'fullscreen-stream';
-        fullDiv.innerHTML = `
-            <div class="fullscreen-header">
-                <button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button>
-            </div>
-            <div class="fullscreen-content">
-                <iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe>
-                <div class="fullscreen-info">
-                    <div style="font-size:20px; font-weight:800;">${item.titulo}</div>
-                    <div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div>
-                    <div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div>
-                    <div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div>
-                </div>
-            </div>
-        `;
+        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`;
         document.body.appendChild(fullDiv);
         fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove());
     }
     
     function attachRadarEvents(card, id) {
         const likeBtn = card.querySelector('.like-btn');
-        if (likeBtn) {
-            likeBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (!loggedIn) { alert('Inicia sesión'); return; }
-                currentLikes[id] = (currentLikes[id] || 0) + 1;
-                const likeSpan = likeBtn.querySelector('.like-count');
-                if (likeSpan) likeSpan.innerText = currentLikes[id];
-                saveKeTeteos();
-            });
-        }
-        const commentToggle = card.querySelector('.comment-toggle');
-        const commentRow = card.querySelector(`#comment-row-${id}`);
-        if (commentToggle && commentRow) {
-            commentToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (!loggedIn) { alert('Inicia sesión'); return; }
-                commentRow.style.display = commentRow.style.display === 'flex' ? 'none' : 'flex';
-            });
-        }
-        const sendBtn = card.querySelector('.send-comment');
-        if (sendBtn) {
-            sendBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (!loggedIn) { alert('Inicia sesión'); return; }
-                const input = document.getElementById(`comment-input-${id}`);
-                const text = input.value.trim();
-                if (text) {
-                    if (!currentComments[id]) currentComments[id] = [];
-                    currentComments[id].unshift({ user: currentUser ? currentUser.username : '@anonimo', text: text, time: new Date().toLocaleTimeString() });
-                    input.value = '';
-                    updateCommentsUI(id);
-                    localStorage.setItem(`comments_${id}`, JSON.stringify(currentComments[id]));
-                }
-            });
-        }
+        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; saveKeTeteos(); });
         const shareBtn = card.querySelector('.share-btn');
-        if (shareBtn) {
-            shareBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                alert(`Compartir Radar de Vuelos`);
-            });
-        }
-        updateCommentsUI(id);
-        
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('.action-btn') || e.target.closest('.send-comment') || e.target.closest('.comment-input')) return;
-            const item = allKeTeteos.find(k => k.id == id);
-            if (item && item.esRadar) openFullscreenRadar(item);
-        });
+        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
+        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn') || e.target.closest('.send-comment-btn') || e.target.closest('.comment-input') || e.target.closest('.emoji-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && item.esRadar) openFullscreenRadar(item); });
     }
     
     function attachCardEvents(card, id) {
-        const likeBtn = card.querySelector('.like-btn'); 
-        if (likeBtn) { 
-            likeBtn.addEventListener('click', (e) => { 
-                e.stopPropagation(); 
-                if (!loggedIn) { alert('Inicia sesión'); return; } 
-                currentLikes[id] = (currentLikes[id] || 0) + 1; 
-                const likeSpan = likeBtn.querySelector('.like-count'); 
-                if (likeSpan) likeSpan.innerText = currentLikes[id]; 
-                const ke = allKeTeteos.find(k => k.id == id); 
-                if (ke) ke.likes = currentLikes[id]; 
-                saveKeTeteos(); 
-            }); 
-        }
-        const commentToggle = card.querySelector('.comment-toggle'); 
-        const commentRow = card.querySelector(`#comment-row-${id}`); 
-        if (commentToggle && commentRow) { 
-            commentToggle.addEventListener('click', (e) => { 
-                e.stopPropagation(); 
-                if (!loggedIn) { alert('Inicia sesión'); return; } 
-                commentRow.style.display = commentRow.style.display === 'flex' ? 'none' : 'flex'; 
-            }); 
-        }
-        const sendBtn = card.querySelector('.send-comment'); 
-        if (sendBtn) { 
-            sendBtn.addEventListener('click', (e) => { 
-                e.stopPropagation(); 
-                if (!loggedIn) { alert('Inicia sesión'); return; } 
-                const input = document.getElementById(`comment-input-${id}`); 
-                const text = input.value.trim(); 
-                if (text) { 
-                    if (!currentComments[id]) currentComments[id] = []; 
-                    currentComments[id].unshift({ user: currentUser ? currentUser.username : '@anonimo', text: text, time: new Date().toLocaleTimeString() }); 
-                    input.value = ''; 
-                    updateCommentsUI(id); 
-                    localStorage.setItem(`comments_${id}`, JSON.stringify(currentComments[id])); 
-                } 
-            }); 
-        }
-        const shareBtn = card.querySelector('.share-btn'); 
-        if (shareBtn) { 
-            shareBtn.addEventListener('click', (e) => { 
-                e.stopPropagation(); 
-                alert(`Compartir KeTeteo`); 
-            }); 
-        }
-        const reportBtn = card.querySelector('.report-btn'); 
-        if (reportBtn) { 
-            reportBtn.addEventListener('click', (e) => { 
-                e.stopPropagation(); 
-                reporteKeTeteoId = id; 
-                document.getElementById('reporteModal').classList.add('show'); 
-            }); 
-        }
-        updateCommentsUI(id);
-        card.addEventListener('click', (e) => { 
-            if (e.target.closest('.action-btn') || e.target.closest('.send-comment') || e.target.closest('.comment-input')) return; 
-            const item = allKeTeteos.find(k => k.id == id); 
-            if (item && !item.esRadar) {
-                incrementViews(id);
-                openFullscreenStream(item);
-            }
-        });
-    }
-    
-    function updateCommentsUI(id) { 
-        const container = document.getElementById(`comments-list-${id}`); 
-        if (!container) return; 
-        const commentsList = currentComments[id] || []; 
-        if (commentsList.length === 0) { 
-            container.innerHTML = ''; 
-            return; 
-        } 
-        container.innerHTML = commentsList.map(c => `<div style="margin-bottom: 6px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 12px;"><strong style="color: #FF2D55; font-size: 10px;">${c.user}</strong> <span style="font-size: 9px; color:#8E8E93;">${c.time || ''}</span><br><span style="font-size: 10px;">${c.text}</span></div>`).join(''); 
+        const likeBtn = card.querySelector('.like-btn');
+        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); });
+        const shareBtn = card.querySelector('.share-btn');
+        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
+        const reportBtn = card.querySelector('.report-btn');
+        if (reportBtn) reportBtn.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
+        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn') || e.target.closest('.send-comment-btn') || e.target.closest('.comment-input') || e.target.closest('.emoji-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } });
     }
     
     function openFullscreenStream(item) { 
+        incrementViews(item.id);
         const fullDiv = document.createElement('div'); 
         fullDiv.className = 'fullscreen-stream'; 
         fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; 
         document.body.appendChild(fullDiv); 
         fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); 
-    }
-    
-    function enviarReporte(motivo) { 
-        if (!loggedIn) { 
-            alert('Inicia sesión'); 
-            cerrarReporteModal(); 
-            return; 
-        } 
-        alert(`✅ Reporte enviado: ${motivo}`); 
-        cerrarReporteModal(); 
-    }
-    
-    function cerrarReporteModal() { 
-        document.getElementById('reporteModal').classList.remove('show'); 
-        reporteKeTeteoId = null; 
     }
 
     function renderPatrociniosSuperior() { 
@@ -2050,551 +2071,76 @@
         track.innerHTML = ''; 
         const textosPatrocinio = ["OFERTA SUPER", "BANCO POPULAR", "CONCIERTO EXCLUSIVO", "COMIDA RÁPIDA", "ROPA DE MARCA", "DESCUENTOS ÚNICOS", "EVENTOS ESPECIALES"]; 
         const textosInfinitos = [...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio]; 
-        textosInfinitos.forEach((texto, index) => { 
-            const span = document.createElement('span'); 
-            span.className = 'patrocinio-texto-superior'; 
-            span.innerText = texto; 
-            span.onclick = () => window.open('https://craftmktgroup.com', '_blank'); 
-            track.appendChild(span); 
-            if (index < textosInfinitos.length - 1) { 
-                const separador = document.createElement('span'); 
-                separador.className = 'separador-texto'; 
-                separador.innerText = '•'; 
-                track.appendChild(separador); 
-            } 
-        }); 
-        setTimeout(() => { 
-            configurarAutoScrollSuperior(); 
-            iniciarAutoScrollSuperior(); 
-        }, 100); 
+        textosInfinitos.forEach((texto, index) => { const span = document.createElement('span'); span.className = 'patrocinio-texto-superior'; span.innerText = texto; span.onclick = () => window.open('https://craftmktgroup.com', '_blank'); track.appendChild(span); if (index < textosInfinitos.length - 1) { const separador = document.createElement('span'); separador.className = 'separador-texto'; separador.innerText = '•'; track.appendChild(separador); } }); 
+        setTimeout(() => { configurarAutoScrollSuperior(); iniciarAutoScrollSuperior(); }, 100); 
     }
     
     function renderPatrociniosInferior() { 
         const track = document.getElementById('patrociniosTrackInferior'); 
         track.innerHTML = ''; 
         const anunciosInfinitos = [...anunciosCarrusel3, ...anunciosCarrusel3, ...anunciosCarrusel3, ...anunciosCarrusel3];
-        anunciosInfinitos.forEach(anuncio => { 
-            const card = document.createElement('div'); 
-            card.className = 'patrocinio-card-inferior'; 
-            card.onclick = () => { if (anuncio.link && anuncio.link !== '#') window.open(anuncio.link, '_blank'); else alert('Anuncio'); };
-            card.innerHTML = `<img src="${anuncio.imagen}" alt="Anuncio" onerror="this.src='https://placehold.co/100x80/FF2D55/white?text=Ad'">`; 
-            track.appendChild(card); 
-        }); 
-        setTimeout(() => { 
-            configurarAutoScrollInferior(); 
-            iniciarAutoScrollInferior(); 
-        }, 100); 
+        anunciosInfinitos.forEach(anuncio => { const card = document.createElement('div'); card.className = 'patrocinio-card-inferior'; card.onclick = () => { if (anuncio.link && anuncio.link !== '#') window.open(anuncio.link, '_blank'); else alert('Anuncio'); }; card.innerHTML = `<img src="${anuncio.imagen}" alt="Anuncio" onerror="this.src='https://placehold.co/100x80/FF2D55/white?text=Ad'">`; track.appendChild(card); }); 
+        setTimeout(() => { configurarAutoScrollInferior(); iniciarAutoScrollInferior(); }, 100); 
     }
     
-    function iniciarAutoScrollSuperior() { 
-        const carousel = document.querySelector('.patrocinios-superior'); 
-        if (!carousel) return; 
-        if (autoScrollIntervalSuperior) clearInterval(autoScrollIntervalSuperior); 
-        autoScrollIntervalSuperior = setInterval(() => { 
-            if (!isUserInteractingSuperior && carousel) { 
-                carousel.scrollBy({ left: 2.5, behavior: 'smooth' }); 
-                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { 
-                    carousel.scrollTo({ left: 0, behavior: 'smooth' }); 
-                } 
-            } 
-        }, 16); 
-    }
-    
-    function iniciarAutoScrollInferior() { 
-        const carousel = document.querySelector('.patrocinios-inferior'); 
-        if (!carousel) return; 
-        if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval);
-        carousel3ScrollInterval = setInterval(() => { 
-            if (!isUserInteractingInferior && carousel) { 
-                carousel.scrollBy({ left: 1.5, behavior: 'smooth' }); 
-                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 5) { 
-                    carousel.scrollTo({ left: 0, behavior: 'smooth' }); 
-                } 
-            } 
-        }, 20); 
-    }
-    
-    function configurarAutoScrollSuperior() { 
-        const carousel = document.querySelector('.patrocinios-superior'); 
-        if (!carousel) return; 
-        carousel.addEventListener('touchstart', () => { isUserInteractingSuperior = true; if (autoScrollTimeoutSuperior) clearTimeout(autoScrollTimeoutSuperior); }); 
-        carousel.addEventListener('touchend', () => { autoScrollTimeoutSuperior = setTimeout(() => { isUserInteractingSuperior = false; }, 5000); }); 
-    }
-    
-    function configurarAutoScrollInferior() { 
-        const carousel = document.querySelector('.patrocinios-inferior'); 
-        if (!carousel) return; 
-        carousel.addEventListener('touchstart', () => { isUserInteractingInferior = true; if (autoScrollTimeoutInferior) clearTimeout(autoScrollTimeoutInferior); }); 
-        carousel.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); }); 
-    }
+    function iniciarAutoScrollSuperior() { const carousel = document.querySelector('.patrocinios-superior'); if (!carousel) return; if (autoScrollIntervalSuperior) clearInterval(autoScrollIntervalSuperior); autoScrollIntervalSuperior = setInterval(() => { if (!isUserInteractingSuperior && carousel) { carousel.scrollBy({ left: 2.5, behavior: 'smooth' }); if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) { carousel.scrollTo({ left: 0, behavior: 'smooth' }); } } }, 16); }
+    function iniciarAutoScrollInferior() { const carousel = document.querySelector('.patrocinios-inferior'); if (!carousel) return; if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); carousel3ScrollInterval = setInterval(() => { if (!isUserInteractingInferior && carousel) { carousel.scrollBy({ left: 1.5, behavior: 'smooth' }); if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 5) { carousel.scrollTo({ left: 0, behavior: 'smooth' }); } } }, 20); }
+    function configurarAutoScrollSuperior() { const carousel = document.querySelector('.patrocinios-superior'); if (!carousel) return; carousel.addEventListener('touchstart', () => { isUserInteractingSuperior = true; if (autoScrollTimeoutSuperior) clearTimeout(autoScrollTimeoutSuperior); }); carousel.addEventListener('touchend', () => { autoScrollTimeoutSuperior = setTimeout(() => { isUserInteractingSuperior = false; }, 5000); }); }
+    function configurarAutoScrollInferior() { const carousel = document.querySelector('.patrocinios-inferior'); if (!carousel) return; carousel.addEventListener('touchstart', () => { isUserInteractingInferior = true; if (autoScrollTimeoutInferior) clearTimeout(autoScrollTimeoutInferior); }); carousel.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); }); }
     
     function openProximosKeTeteo() { 
         const container = document.getElementById('proximosEventosList'); 
         if (!container) return;
         container.innerHTML = ''; 
-        proximosKeTeteos.forEach(e => { 
-            const div = document.createElement('div'); 
-            div.style.background = 'var(--gris-oscuro)'; 
-            div.style.padding = '12px'; 
-            div.style.borderRadius = '12px'; 
-            div.style.marginBottom = '12px'; 
-            div.innerHTML = `<div style="font-weight:700;">${e.titulo}</div><div style="font-size:12px; color:var(--gris-claro);">${e.ubicacion} · ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">PRÓXIMAMENTE</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Recibirás una notificación cuando esté disponible\')">Recordar</button>`; 
-            container.appendChild(div); 
-        }); 
+        proximosKeTeteos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--gris-oscuro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${e.titulo}</div><div style="font-size:12px; color:var(--gris-claro);">${e.ubicacion} · ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">PRÓXIMAMENTE</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Recibirás una notificación cuando esté disponible\')">Recordar</button>`; container.appendChild(div); }); 
         const modal = document.getElementById('proximosEventosModal');
-        if (modal) {
-            modal.querySelector('h3').innerHTML = 'PRÓXIMOS KETETEOS';
-            modal.classList.add('show');
-        }
+        if (modal) { modal.querySelector('h3').innerHTML = 'PRÓXIMOS KETETEOS'; modal.classList.add('show'); }
     }
-    
     function closeProximosEventos() { document.getElementById('proximosEventosModal').classList.remove('show'); }
-    
-    function abrirConfirmarEliminar(id, titulo) { 
-        eliminarId = id; 
-        document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`; 
-        document.getElementById('confirmarEliminarModal').classList.add('show'); 
-    }
-    
-    function confirmarEliminar() { 
-        if (eliminarId) { 
-            const index = allKeTeteos.findIndex(k => k.id == eliminarId); 
-            if (index !== -1 && !allKeTeteos[index].esRadar) { 
-                allKeTeteos.splice(index, 1); 
-                saveKeTeteos(); 
-                renderCarousel(); 
-                renderMyStreams(); 
-                alert('✅ Eliminado'); 
-            } 
-        } 
-        cerrarConfirmarEliminar(); 
-    }
-    
-    function cerrarConfirmarEliminar() { 
-        eliminarId = null; 
-        document.getElementById('confirmarEliminarModal').classList.remove('show'); 
-    }
-    
-    function renderMyStreams() { 
-        const container = document.getElementById('myStreamsList'); 
-        const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); 
-        if (misKeTeteos.length === 0) { 
-            container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; 
-            return; 
-        } 
-        container.innerHTML = ''; 
-        misKeTeteos.forEach(ke => { 
-            const div = document.createElement('div'); 
-            div.className = 'my-stream-card'; 
-            div.innerHTML = `<div><strong>${ke.titulo}</strong><br>👁️ ${ke.viewers || 0} vistas</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">Eliminar</button>`; 
-            container.appendChild(div); 
-        }); 
-    }
+    function abrirConfirmarEliminar(id, titulo) { eliminarId = id; document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`; document.getElementById('confirmarEliminarModal').classList.add('show'); }
+    function confirmarEliminar() { if (eliminarId) { const index = allKeTeteos.findIndex(k => k.id == eliminarId); if (index !== -1 && !allKeTeteos[index].esRadar) { allKeTeteos.splice(index, 1); saveKeTeteos(); renderCarousel(); renderMyStreams(); alert('✅ Eliminado'); } } cerrarConfirmarEliminar(); }
+    function cerrarConfirmarEliminar() { eliminarId = null; document.getElementById('confirmarEliminarModal').classList.remove('show'); }
+    function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${ke.titulo}</strong><br>👁️ ${ke.viewers || 0} vistas | ❤️ ${ke.likes || 0} | 💬 ${(currentComments[ke.id] || []).length}</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">Eliminar</button>`; container.appendChild(div); }); }
 
-    function openSearchModal() { 
-        document.getElementById('searchModal').classList.add('show'); 
-        document.getElementById('searchInputModal').focus(); 
-    }
-    
-    function closeSearchModal() { 
-        document.getElementById('searchModal').classList.remove('show'); 
-        document.getElementById('searchResultsModal').innerHTML = ''; 
-        document.getElementById('searchInputModal').value = ''; 
-    }
-    
-    document.getElementById('searchInputModal')?.addEventListener('input', function(e) { 
-        const term = e.target.value.toLowerCase(); 
-        const results = allKeTeteos.filter(k => k.titulo.toLowerCase().includes(term) || k.nombreCreador.toLowerCase().includes(term)); 
-        const container = document.getElementById('searchResultsModal'); 
-        if (!term) { 
-            container.innerHTML = ''; 
-            return; 
-        } 
-        if (results.length === 0) { 
-            container.innerHTML = '<div class="search-result"><div class="title">❌ Sin resultados</div></div>'; 
-            return; 
-        } 
-        container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${k.titulo}</div><div class="desc">${k.nombreCreador} · ${k.ubicacion}</div></div>`).join(''); 
-    });
-    
-    function selectSearchResult(id) { 
-        closeSearchModal(); 
-        const item = allKeTeteos.find(k => k.id == id); 
-        if (item && !item.esRadar) {
-            incrementViews(id);
-            openFullscreenStream(item);
-        } else if (item && item.esRadar) {
-            incrementViews(id);
-            openFullscreenRadar(item);
-        }
-    }
+    function openSearchModal() { document.getElementById('searchModal').classList.add('show'); document.getElementById('searchInputModal').focus(); }
+    function closeSearchModal() { document.getElementById('searchModal').classList.remove('show'); document.getElementById('searchResultsModal').innerHTML = ''; document.getElementById('searchInputModal').value = ''; }
+    document.getElementById('searchInputModal')?.addEventListener('input', function(e) { const term = e.target.value.toLowerCase(); const results = allKeTeteos.filter(k => k.titulo.toLowerCase().includes(term) || k.nombreCreador.toLowerCase().includes(term)); const container = document.getElementById('searchResultsModal'); if (!term) { container.innerHTML = ''; return; } if (results.length === 0) { container.innerHTML = '<div class="search-result"><div class="title">❌ Sin resultados</div></div>'; return; } container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${k.titulo}</div><div class="desc">${k.nombreCreador} · ${k.ubicacion}</div></div>`).join(''); });
+    function selectSearchResult(id) { closeSearchModal(); const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } else if (item && item.esRadar) { incrementViews(id); openFullscreenRadar(item); } }
 
-    function toggleMenu() { 
-        document.getElementById('sideMenu').classList.toggle('open'); 
-        document.getElementById('overlay').classList.toggle('show'); 
-    }
-    
-    function closeMenu() { 
-        document.getElementById('sideMenu').classList.remove('open'); 
-        document.getElementById('overlay').classList.remove('show'); 
-    }
-    
-    function togglePassword(id) { 
-        const input = document.getElementById(id); 
-        if (input.type === 'password') { 
-            input.type = 'text'; 
-        } else { 
-            input.type = 'password'; 
-        } 
-    }
-    
-    function openRegister() { 
-        closeModals(); 
-        document.getElementById('registerModal').classList.add('show'); 
-    }
-    
-    function openLogin() { 
-        closeModals(); 
-        document.getElementById('loginModal').classList.add('show'); 
-    }
-    
-    function closeModals() { 
-        document.querySelectorAll('.modal').forEach(m => m.classList.remove('show')); 
-    }
-    
-    function register() { 
-        const name = document.getElementById('regName').value; 
-        const user = document.getElementById('regUser').value; 
-        const email = document.getElementById('regEmail').value; 
-        const pass = document.getElementById('regPass').value; 
-        const confirm = document.getElementById('regConfirmPass').value; 
-        if (!name || !user || !email || !pass || !confirm) { 
-            alert('Completa todos los campos'); 
-            return; 
-        } 
-        if (pass !== confirm) { 
-            alert('Contraseñas no coinciden'); 
-            return; 
-        } 
-        if (pass.length < 6) { 
-            alert('La contraseña debe tener al menos 6 caracteres'); 
-            return; 
-        } 
-        currentUser = { 
-            name: name, 
-            username: user.startsWith('@') ? user : '@'+user, 
-            email: email, 
-            bio: 'Amante de los eventos en vivo 🎉',
-            phone: ''
-        }; 
-        localStorage.setItem('user', JSON.stringify(currentUser)); 
-        localStorage.setItem('userPhone', '');
-        loggedIn = true; 
-        closeModals(); 
-        showMainScreen(); 
-        document.getElementById('logoutMenuBtn').style.display = 'block'; 
-        document.getElementById('createKeTeteoBtn').style.display = 'block'; 
-        loadProfileData(); 
-        iniciarSeguimientoEstado(); 
-        loadConfigToTemp();
-        alert('✅ Cuenta creada'); 
-    }
-    
-    function login() { 
-        const email = document.getElementById('loginEmail').value; 
-        const pass = document.getElementById('loginPass').value; 
-        if (email && pass) { 
-            const stored = localStorage.getItem('user'); 
-            if (stored) {
-                currentUser = JSON.parse(stored);
-            } else { 
-                currentUser = { 
-                    name: 'Usuario', 
-                    username: '@usuario', 
-                    email: email, 
-                    bio: 'Amante de los eventos en vivo 🎉',
-                    phone: ''
-                }; 
-                localStorage.setItem('user', JSON.stringify(currentUser));
-            } 
-            loggedIn = true; 
-            closeModals(); 
-            showMainScreen(); 
-            document.getElementById('logoutMenuBtn').style.display = 'block'; 
-            document.getElementById('createKeTeteoBtn').style.display = 'block'; 
-            loadProfileData(); 
-            iniciarSeguimientoEstado(); 
-            loadConfigToTemp();
-        } else alert('Ingresa email y contraseña'); 
-    }
-    
-    function logout() { 
-        loggedIn = false; 
-        currentUser = null; 
-        localStorage.removeItem('user'); 
-        localStorage.removeItem('userStatus'); 
-        localStorage.removeItem('lastActivity'); 
-        if (userStatusInterval) clearInterval(userStatusInterval); 
-        if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); 
-        document.getElementById('welcomeScreen').style.display = 'flex'; 
-        document.getElementById('mainScreen').classList.remove('active'); 
-        document.getElementById('logoutMenuBtn').style.display = 'none'; 
-        document.getElementById('createKeTeteoBtn').style.display = 'none'; 
-        closeMenu(); 
-        showHomeScreenClean(); 
-    }
-    
-    function openCreateKeTeteoModal() { 
-        if (!loggedIn) { 
-            alert('Debes iniciar sesión'); 
-            return; 
-        } 
-        document.getElementById('createKeTeteoModal').classList.add('show'); 
-    }
-    
-    function closeCreateModal() { 
-        document.getElementById('createKeTeteoModal').classList.remove('show'); 
-    }
-    
-    function publicarKeTeteo() { 
-        if (!loggedIn) { 
-            alert('Inicia sesión'); 
-            return; 
-        } 
-        const titulo = document.getElementById('newTitulo').value.trim(); 
-        const ubicacion = document.getElementById('newUbicacion').value.trim(); 
-        const distancia = document.getElementById('newDistancia').value.trim(); 
-        let imagen = document.getElementById('newImagen').value.trim(); 
-        const fileInput = document.getElementById('newImagenFile'); 
-        if (!titulo || !ubicacion || !distancia) { 
-            alert('Completa título, ubicación y distancia'); 
-            return; 
-        } 
-        const nuevoId = Date.now(); 
-        if (!imagen && fileInput.files.length > 0) { 
-            const reader = new FileReader(); 
-            reader.onload = function(e) { 
-                imagen = e.target.result; 
-                crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen); 
-            }; 
-            reader.readAsDataURL(fileInput.files[0]); 
-        } else { 
-            crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen || 'https://via.placeholder.com/400x300?text=KeTeteo'); 
-        } 
-    }
-    
-    function crearKeTeteoFinal(id, titulo, ubicacion, distancia, imagen) { 
-        const nuevoKe = { 
-            id: id, 
-            titulo: titulo, 
-            nombreCreador: currentUser.name, 
-            usuario: currentUser.username, 
-            ubicacion: ubicacion, 
-            distancia: distancia, 
-            categoria: "Otros", 
-            lat: 18.48, 
-            lng: -69.91, 
-            viewers: 0, 
-            likes: 0, 
-            imagen: imagen 
-        }; 
-        allKeTeteos.unshift(nuevoKe); 
-        currentLikes[nuevoKe.id] = 0; 
-        currentComments[nuevoKe.id] = []; 
-        saveKeTeteos(); 
-        renderCarousel(); 
-        closeCreateModal(); 
-        alert('✅ KeTeteo publicado'); 
-        document.getElementById('newTitulo').value = ''; 
-        document.getElementById('newUbicacion').value = ''; 
-        document.getElementById('newDistancia').value = ''; 
-        document.getElementById('newImagen').value = ''; 
-        document.getElementById('newImagenFile').value = ''; 
-    }
-    
-    function showMainScreen() { 
-        document.getElementById('welcomeScreen').style.display = 'none'; 
-        document.getElementById('mainScreen').classList.add('active'); 
-        renderCarousel(); 
-        ordenarKeTeteosPorCercania(); 
-    }
-    
-    function showHomeScreenClean() { 
-        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-        document.getElementById('mainScreen').classList.add('active'); 
-        renderCarousel(); 
-        ordenarKeTeteosPorCercania(); 
-    }
-    
-    function showProfileScreen() { 
-        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
-        document.getElementById('profileScreen').classList.add('active'); 
-        loadProfileData(); 
-    }
-    
-    function showAlertsScreen() { 
-        alert('🔔 Próximamente tendrás notificaciones en tiempo real'); 
-    }
-    
-    function showMyStreamsScreen() { 
-        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
-        document.getElementById('myStreamsScreen').classList.add('active'); 
-        renderMyStreams(); 
-    }
-    
-    function showConfigScreen() { 
-        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
-        document.getElementById('configScreen').classList.add('active'); 
-        loadConfigToTemp();
-    }
-    
-    function showLanguageScreen() { 
-        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
-        document.getElementById('languageScreen').classList.add('active'); 
-    }
-    
-    function showGroupsScreen() { 
-        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
-        document.getElementById('groupsScreen').classList.add('active'); 
-        renderGroupsList(); 
-    }
-    
-    function setLanguage(lang) { 
-        alert('Idioma cambiado a ' + lang); 
-    }
-    
-    function uploadProfilePhoto() { 
-        document.getElementById('photoUpload').click(); 
-    }
-    
-    function handlePhotoUpload(e) { 
-        const file = e.target.files[0]; 
-        if (file) { 
-            const reader = new FileReader(); 
-            reader.onload = ev => { 
-                document.getElementById('profileImg').src = ev.target.result; 
-                localStorage.setItem('profilePhoto', ev.target.result); 
-            }; 
-            reader.readAsDataURL(file); 
-        } 
-    }
-    
-    function openEditProfile() { 
-        document.getElementById('editProfileModal').classList.add('show'); 
-        const user = JSON.parse(localStorage.getItem('user')); 
-        const savedPhone = localStorage.getItem('userPhone') || '';
-        if (user) { 
-            document.getElementById('editName').value = user.name || ''; 
-            document.getElementById('editUsername').value = (user.username || '@usuario').replace('@', ''); 
-            document.getElementById('editBio').value = user.bio || ''; 
-            document.getElementById('editEmail').value = user.email || ''; 
-            document.getElementById('editPhone').value = savedPhone;
-        } 
-    }
-    
-    function saveProfile() { 
-        const name = document.getElementById('editName').value; 
-        const username = document.getElementById('editUsername').value; 
-        const bio = document.getElementById('editBio').value; 
-        const email = document.getElementById('editEmail').value; 
-        const phone = document.getElementById('editPhone').value; 
-        
-        if (name) document.getElementById('profileName').innerText = name; 
-        if (username) document.getElementById('profileUsername').innerText = username.startsWith('@') ? username : '@'+username; 
-        if (bio) document.getElementById('profileBio').innerText = bio; 
-        if (email) document.getElementById('userEmail').innerText = email; 
-        if (phone) document.getElementById('userPhone').innerText = phone; 
-        
-        if (currentUser) { 
-            currentUser.name = name || currentUser.name; 
-            currentUser.username = (username.startsWith('@') ? username : '@'+username) || currentUser.username; 
-            currentUser.bio = bio || currentUser.bio; 
-            currentUser.email = email || currentUser.email; 
-            currentUser.phone = phone || currentUser.phone; 
-            localStorage.setItem('user', JSON.stringify(currentUser)); 
-            localStorage.setItem('userPhone', phone || '');
-            
-            if (tempConfig) {
-                tempConfig.email = email || currentUser.email;
-                tempConfig.phone = phone || currentUser.phone;
-            }
-        } 
-        
-        alert('Perfil actualizado correctamente'); 
-        closeEditModal(); 
-        loadProfileData();
-    }
-    
-    function closeEditModal() { 
-        document.getElementById('editProfileModal').classList.remove('show'); 
-    }
-    
-    function loadProfileData() { 
-        const savedPhoto = localStorage.getItem('profilePhoto'); 
-        if (savedPhoto) document.getElementById('profileImg').src = savedPhoto; 
-        const user = JSON.parse(localStorage.getItem('user')); 
-        if (user) { 
-            document.getElementById('profileName').innerText = user.name || 'Usuario'; 
-            document.getElementById('profileUsername').innerText = user.username || '@usuario'; 
-            document.getElementById('profileBio').innerText = user.bio || 'Amante de los eventos en vivo 🎉'; 
-            document.getElementById('userEmail').innerText = user.email || 'correo@ejemplo.com'; 
-            const savedPhone = localStorage.getItem('userPhone') || user.phone || '';
-            document.getElementById('userPhone').innerText = savedPhone || '+1 809 555 1234';
-            
-            if (tempConfig) {
-                tempConfig.email = user.email || '';
-                tempConfig.phone = savedPhone;
-                updateConfigUI();
-            }
-        } 
-        const savedStatus = localStorage.getItem('userStatus'); 
-        const savedLastActivity = localStorage.getItem('lastActivity'); 
-        if (savedStatus && savedLastActivity) { 
-            lastActivity = parseInt(savedLastActivity); 
-            userStatus = savedStatus; 
-            actualizarEstadoUsuario(); 
-        } 
-    }
-    
-    function copyEmail() { 
-        const email = document.getElementById('userEmail').innerText; 
-        navigator.clipboard.writeText(email); 
-        alert('Correo copiado'); 
-    }
-    
-    function copyPhone() { 
-        const phone = document.getElementById('userPhone').innerText;
-        navigator.clipboard.writeText(phone); 
-        alert('Teléfono copiado'); 
-    }
-    
-    function shareProfile() { 
-        navigator.clipboard.writeText(window.location.href); 
-        alert('Perfil copiado'); 
-    }
-    
-    function openLegalModal() { 
-        document.getElementById('legalModal').classList.add('show'); 
-    }
-    
-    function closeLegalModal() { 
-        document.getElementById('legalModal').classList.remove('show'); 
-    }
-    
-    function openLegalContent(type) { 
-        let title = '', content = ''; 
-        if (type === 'terms') { 
-            title = '⚖️ Términos y Condiciones'; 
-            content = 'Al usar KeTeteoLive aceptas nuestras normas de uso. Todo el contenido es responsabilidad de sus creadores. No está permitido: spam, acoso, contenido ilegal o inapropiado. KeTeteoLive se reserva el derecho de eliminar contenido que viole estas normas.'; 
-        } else if (type === 'privacy') { 
-            title = '🔒 Política de Privacidad'; 
-            content = 'Protegemos tus datos personales. La información que compartes (ubicación, correo, nombre) solo se usa para mejorar tu experiencia. No vendemos tu información a terceros. Puedes solicitar la eliminación de tus datos en cualquier momento.'; 
-        } else if (type === 'cookies') { 
-            title = '🍪 Política de Cookies'; 
-            content = 'Usamos cookies para recordar tus preferencias y mejorar el rendimiento de la plataforma. No usamos cookies de terceros para publicidad. Puedes deshabilitarlas desde la configuración de tu navegador.'; 
-        } 
-        alert(`${title}\n\n${content}`); 
-    }
+    function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
+    function closeMenu() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
+    function togglePassword(id) { const input = document.getElementById(id); input.type = input.type === 'password' ? 'text' : 'password'; }
+    function openRegister() { closeModals(); document.getElementById('registerModal').classList.add('show'); }
+    function openLogin() { closeModals(); document.getElementById('loginModal').classList.add('show'); }
+    function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('show')); }
+    function register() { const name = document.getElementById('regName').value; const user = document.getElementById('regUser').value; const email = document.getElementById('regEmail').value; const pass = document.getElementById('regPass').value; const confirm = document.getElementById('regConfirmPass').value; if (!name || !user || !email || !pass || !confirm) { alert('Completa todos los campos'); return; } if (pass !== confirm) { alert('Contraseñas no coinciden'); return; } if (pass.length < 6) { alert('La contraseña debe tener al menos 6 caracteres'); return; } currentUser = { name, username: user.startsWith('@') ? user : '@'+user, email, bio: 'Amante de los eventos en vivo 🎉', phone: '' }; localStorage.setItem('user', JSON.stringify(currentUser)); localStorage.setItem('userPhone', ''); loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); loadConfigToTemp(); alert('✅ Cuenta creada'); }
+    function login() { const email = document.getElementById('loginEmail').value; const pass = document.getElementById('loginPass').value; if (email && pass) { const stored = localStorage.getItem('user'); if (stored) currentUser = JSON.parse(stored); else currentUser = { name: 'Usuario', username: '@usuario', email, bio: 'Amante de los eventos en vivo 🎉', phone: '' }; localStorage.setItem('user', JSON.stringify(currentUser)); loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); loadConfigToTemp(); } else alert('Ingresa email y contraseña'); }
+    function logout() { loggedIn = false; currentUser = null; localStorage.removeItem('user'); localStorage.removeItem('userStatus'); localStorage.removeItem('lastActivity'); if (userStatusInterval) clearInterval(userStatusInterval); if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); document.getElementById('welcomeScreen').style.display = 'flex'; document.getElementById('mainScreen').classList.remove('active'); document.getElementById('logoutMenuBtn').style.display = 'none'; document.getElementById('createKeTeteoBtn').style.display = 'none'; closeMenu(); showHomeScreenClean(); }
+    function openCreateKeTeteoModal() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } document.getElementById('createKeTeteoModal').classList.add('show'); }
+    function closeCreateModal() { document.getElementById('createKeTeteoModal').classList.remove('show'); }
+    function publicarKeTeteo() { if (!loggedIn) { alert('Inicia sesión'); return; } const titulo = document.getElementById('newTitulo').value.trim(); const ubicacion = document.getElementById('newUbicacion').value.trim(); const distancia = document.getElementById('newDistancia').value.trim(); let imagen = document.getElementById('newImagen').value.trim(); const fileInput = document.getElementById('newImagenFile'); if (!titulo || !ubicacion || !distancia) { alert('Completa título, ubicación y distancia'); return; } const nuevoId = Date.now(); if (!imagen && fileInput.files.length > 0) { const reader = new FileReader(); reader.onload = function(e) { imagen = e.target.result; crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen); }; reader.readAsDataURL(fileInput.files[0]); } else { crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen || 'https://via.placeholder.com/400x300?text=KeTeteo'); } }
+    function crearKeTeteoFinal(id, titulo, ubicacion, distancia, imagen) { const nuevoKe = { id, titulo, nombreCreador: currentUser.name, usuario: currentUser.username, ubicacion, distancia, categoria: "Otros", lat: 18.48, lng: -69.91, viewers: 0, likes: 0, imagen }; allKeTeteos.unshift(nuevoKe); currentLikes[nuevoKe.id] = 0; currentComments[nuevoKe.id] = []; currentShares[nuevoKe.id] = 0; currentReports[nuevoKe.id] = []; saveKeTeteos(); renderCarousel(); closeCreateModal(); alert('✅ KeTeteo publicado'); document.getElementById('newTitulo').value = ''; document.getElementById('newUbicacion').value = ''; document.getElementById('newDistancia').value = ''; document.getElementById('newImagen').value = ''; document.getElementById('newImagenFile').value = ''; }
+    function showMainScreen() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
+    function showHomeScreenClean() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
+    function showProfileScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
+    function showAlertsScreen() { alert('🔔 Próximamente tendrás notificaciones en tiempo real'); }
+    function showMyStreamsScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('myStreamsScreen').classList.add('active'); renderMyStreams(); }
+    function showConfigScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('configScreen').classList.add('active'); loadConfigToTemp(); }
+    function showLanguageScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('languageScreen').classList.add('active'); }
+    function showGroupsScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('groupsScreen').classList.add('active'); renderGroupsList(); }
+    function setLanguage(lang) { alert('Idioma cambiado a ' + lang); }
+    function uploadProfilePhoto() { document.getElementById('photoUpload').click(); }
+    function handlePhotoUpload(e) { const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = ev => { document.getElementById('profileImg').src = ev.target.result; localStorage.setItem('profilePhoto', ev.target.result); }; reader.readAsDataURL(file); } }
+    function openEditProfile() { document.getElementById('editProfileModal').classList.add('show'); const user = JSON.parse(localStorage.getItem('user')); const savedPhone = localStorage.getItem('userPhone') || ''; if (user) { document.getElementById('editName').value = user.name || ''; document.getElementById('editUsername').value = (user.username || '@usuario').replace('@', ''); document.getElementById('editBio').value = user.bio || ''; document.getElementById('editEmail').value = user.email || ''; document.getElementById('editPhone').value = savedPhone; } }
+    function saveProfile() { const name = document.getElementById('editName').value; const username = document.getElementById('editUsername').value; const bio = document.getElementById('editBio').value; const email = document.getElementById('editEmail').value; const phone = document.getElementById('editPhone').value; if (name) document.getElementById('profileName').innerText = name; if (username) document.getElementById('profileUsername').innerText = username.startsWith('@') ? username : '@'+username; if (bio) document.getElementById('profileBio').innerText = bio; if (email) document.getElementById('userEmail').innerText = email; if (phone) document.getElementById('userPhone').innerText = phone; if (currentUser) { currentUser.name = name || currentUser.name; currentUser.username = (username.startsWith('@') ? username : '@'+username) || currentUser.username; currentUser.bio = bio || currentUser.bio; currentUser.email = email || currentUser.email; currentUser.phone = phone || currentUser.phone; localStorage.setItem('user', JSON.stringify(currentUser)); localStorage.setItem('userPhone', phone || ''); if (tempConfig) { tempConfig.email = email || currentUser.email; tempConfig.phone = phone || currentUser.phone; } } alert('Perfil actualizado correctamente'); closeEditModal(); loadProfileData(); }
+    function closeEditModal() { document.getElementById('editProfileModal').classList.remove('show'); }
+    function loadProfileData() { const savedPhoto = localStorage.getItem('profilePhoto'); if (savedPhoto) document.getElementById('profileImg').src = savedPhoto; const user = JSON.parse(localStorage.getItem('user')); if (user) { document.getElementById('profileName').innerText = user.name || 'Usuario'; document.getElementById('profileUsername').innerText = user.username || '@usuario'; document.getElementById('profileBio').innerText = user.bio || 'Amante de los eventos en vivo 🎉'; document.getElementById('userEmail').innerText = user.email || 'correo@ejemplo.com'; const savedPhone = localStorage.getItem('userPhone') || user.phone || ''; document.getElementById('userPhone').innerText = savedPhone || '+1 809 555 1234'; if (tempConfig) { tempConfig.email = user.email || ''; tempConfig.phone = savedPhone; updateConfigUI(); } } const savedStatus = localStorage.getItem('userStatus'); const savedLastActivity = localStorage.getItem('lastActivity'); if (savedStatus && savedLastActivity) { lastActivity = parseInt(savedLastActivity); userStatus = savedStatus; actualizarEstadoUsuario(); } }
+    function copyEmail() { const email = document.getElementById('userEmail').innerText; navigator.clipboard.writeText(email); alert('Correo copiado'); }
+    function copyPhone() { const phone = document.getElementById('userPhone').innerText; navigator.clipboard.writeText(phone); alert('Teléfono copiado'); }
+    function shareProfile() { navigator.clipboard.writeText(window.location.href); alert('Perfil copiado'); }
+    function openLegalModal() { document.getElementById('legalModal').classList.add('show'); }
+    function closeLegalModal() { document.getElementById('legalModal').classList.remove('show'); }
+    function openLegalContent(type) { let title = '', content = ''; if (type === 'terms') { title = '⚖️ Términos y Condiciones'; content = 'Al usar KeTeteoLive aceptas nuestras normas de uso. Todo el contenido es responsabilidad de sus creadores. No está permitido: spam, acoso, contenido ilegal o inapropiado. KeTeteoLive se reserva el derecho de eliminar contenido que viole estas normas.'; } else if (type === 'privacy') { title = '🔒 Política de Privacidad'; content = 'Protegemos tus datos personales. La información que compartes (ubicación, correo, nombre) solo se usa para mejorar tu experiencia. No vendemos tu información a terceros. Puedes solicitar la eliminación de tus datos en cualquier momento.'; } else if (type === 'cookies') { title = '🍪 Política de Cookies'; content = 'Usamos cookies para recordar tus preferencias y mejorar el rendimiento de la plataforma. No usamos cookies de terceros para publicidad. Puedes deshabilitarlas desde la configuración de tu navegador.'; } alert(`${title}\n\n${content}`); }
 
     window.onload = () => {
         loadKeTeteos();
@@ -2612,15 +2158,7 @@
             showMainScreen();
             iniciarSeguimientoEstado();
         }
-        allKeTeteos.forEach(k => { 
-            const savedComments = localStorage.getItem(`comments_${k.id}`); 
-            if (savedComments) currentComments[k.id] = JSON.parse(savedComments); 
-            else currentComments[k.id] = []; 
-        });
-        setTimeout(() => {
-            if (loggedIn) ordenarKeTeteosPorCercania();
-        }, 1000);
-        
+        setTimeout(() => { if (loggedIn) ordenarKeTeteosPorCercania(); }, 1000);
         document.getElementById('toggleProfilePublic')?.addEventListener('click', () => toggleSetting('profilePublic'));
         document.getElementById('toggleShowLocation')?.addEventListener('click', () => toggleSetting('showLocation'));
         document.getElementById('togglePushNotifications')?.addEventListener('click', () => toggleSetting('pushNotifications'));
