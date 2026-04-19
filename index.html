@@ -226,51 +226,79 @@
             transition: all 0.2s ease;
         }
         .action-btn:active { transform: scale(0.96); color: var(--rojo-logo); }
-        
-        /* Estilos comentarios estilo Instagram */
-        .comment-section {
-            margin-top: 12px;
-            border-top: 0.5px solid var(--gris-medio);
-            padding-top: 10px;
+
+        /* Modal de comentarios estilo Instagram */
+        .comment-modal-content {
+            max-width: 400px;
+            width: 90%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
         }
-        .comments-header {
+        .comment-modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            padding-bottom: 12px;
+            border-bottom: 0.5px solid var(--gris-medio);
+            margin-bottom: 16px;
         }
-        .comments-count {
-            font-size: 11px;
-            color: var(--gris-claro);
+        .comment-modal-title {
+            font-size: 16px;
             font-weight: 600;
+            color: var(--naranja);
         }
-        .comments-list {
-            max-height: 180px;
+        .close-modal-btn {
+            background: none;
+            border: none;
+            color: var(--gris-claro);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .comments-modal-list {
+            flex: 1;
             overflow-y: auto;
-            margin-bottom: 10px;
+            margin-bottom: 16px;
         }
-        .comment-item {
-            margin-bottom: 12px;
-            padding: 6px 0;
+        .comment-modal-item {
+            margin-bottom: 16px;
+            padding: 8px 0;
+            border-bottom: 0.5px solid var(--gris-medio);
         }
-        .comment-user {
+        .comment-modal-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .comment-modal-user {
             font-weight: 700;
             color: var(--naranja);
-            font-size: 12px;
+            font-size: 13px;
         }
-        .comment-time {
-            font-size: 9px;
+        .comment-modal-time {
+            font-size: 10px;
             color: var(--gris-claro);
-            margin-left: 8px;
         }
-        .comment-text {
-            font-size: 12px;
+        .comment-modal-text {
+            font-size: 13px;
             color: var(--blanco);
-            margin-top: 3px;
+            margin-top: 4px;
             line-height: 1.4;
-            word-break: break-word;
         }
-        .comment-input-container {
+        .delete-comment-btn {
+            background: none;
+            border: none;
+            color: var(--rojo-logo);
+            font-size: 12px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+        .delete-comment-btn:active {
+            background: rgba(255,45,85,0.2);
+        }
+        .comment-modal-input-container {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -278,8 +306,9 @@
             border-radius: 24px;
             padding: 4px 12px;
             border: 0.5px solid var(--gris-medio);
+            margin-bottom: 12px;
         }
-        .comment-input {
+        .comment-modal-input {
             flex: 1;
             background: transparent;
             border: none;
@@ -288,26 +317,19 @@
             font-size: 13px;
             outline: none;
         }
-        .comment-input::placeholder {
-            color: var(--gris-claro);
-        }
-        .emoji-picker {
+        .comment-modal-emoji-picker {
             display: flex;
             gap: 12px;
             padding: 6px 0;
         }
-        .emoji-btn {
+        .comment-modal-emoji {
             background: transparent;
             border: none;
             font-size: 18px;
             cursor: pointer;
             padding: 4px;
-            transition: transform 0.1s ease;
         }
-        .emoji-btn:active {
-            transform: scale(0.9);
-        }
-        .send-comment-btn {
+        .comment-modal-send {
             background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
             border: none;
             border-radius: 20px;
@@ -317,13 +339,9 @@
             font-size: 12px;
             cursor: pointer;
             opacity: 0.5;
-            transition: all 0.2s;
         }
-        .send-comment-btn.active {
+        .comment-modal-send.active {
             opacity: 1;
-        }
-        .send-comment-btn:active {
-            transform: scale(0.95);
         }
 
         /* Estilos modales de compartir y reporte */
@@ -1043,7 +1061,7 @@
             <span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span>
         </button>
         <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">👥 Mis Grupos KeTeteoLive</div></div>
-        <div class="header-spacer" onclick="scrollToTopAndHome()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
+        <div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
     </div>
     <div class="groups-container">
         <button class="btn-create-group" onclick="openCreateGroupModal()">➕ Crear grupo</button>
@@ -1086,31 +1104,41 @@
     </div>
 </div>
 
+<!-- MODAL COMENTARIOS (ESTILO INSTAGRAM) -->
+<div id="commentsModal" class="modal">
+    <div class="modal-content comment-modal-content">
+        <div class="comment-modal-header">
+            <span class="comment-modal-title">💬 Comentarios</span>
+            <button class="close-modal-btn" onclick="closeCommentsModal()">✕</button>
+        </div>
+        <div class="comments-modal-list" id="commentsModalList">
+            <!-- Los comentarios se cargarán dinámicamente -->
+        </div>
+        <div class="comment-modal-input-container">
+            <input type="text" class="comment-modal-input" id="commentModalInput" placeholder="Añade un comentario...">
+            <div class="comment-modal-emoji-picker">
+                <button class="comment-modal-emoji" data-emoji="😊">😊</button>
+                <button class="comment-modal-emoji" data-emoji="❤️">❤️</button>
+                <button class="comment-modal-emoji" data-emoji="👍">👍</button>
+                <button class="comment-modal-emoji" data-emoji="😂">😂</button>
+                <button class="comment-modal-emoji" data-emoji="😢">😢</button>
+                <button class="comment-modal-emoji" data-emoji="🎉">🎉</button>
+            </div>
+            <button class="comment-modal-send" id="commentModalSendBtn">Publicar</button>
+        </div>
+    </div>
+</div>
+
 <!-- MODAL COMPARTIR PROFESIONAL -->
 <div id="shareModal" class="modal">
     <div class="modal-content">
         <h3>📤 Compartir</h3>
         <div class="share-options">
-            <div class="share-option" onclick="shareCopyLink()">
-                <span>🔗</span>
-                <span>Copiar enlace</span>
-            </div>
-            <div class="share-option" onclick="shareExternal()">
-                <span>📱</span>
-                <span>Compartir externo</span>
-            </div>
-            <div class="share-option" onclick="shareToGroup()">
-                <span>👥</span>
-                <span>Enviar a un grupo</span>
-            </div>
-            <div class="share-option" onclick="shareToUser()">
-                <span>👤</span>
-                <span>Enviar a un usuario</span>
-            </div>
-            <div class="share-option" onclick="shareToWhatsApp()">
-                <span>💬</span>
-                <span>Compartir por WhatsApp</span>
-            </div>
+            <div class="share-option" onclick="shareCopyLink()"><span>🔗</span><span>Copiar enlace</span></div>
+            <div class="share-option" onclick="shareExternal()"><span>📱</span><span>Compartir externo</span></div>
+            <div class="share-option" onclick="shareToGroup()"><span>👥</span><span>Enviar a un grupo</span></div>
+            <div class="share-option" onclick="shareToUser()"><span>👤</span><span>Enviar a un usuario</span></div>
+            <div class="share-option" onclick="shareToWhatsApp()"><span>💬</span><span>Compartir por WhatsApp</span></div>
         </div>
         <button class="btn-gris" onclick="closeShareModal()" style="margin-top: 16px;">❌ Cancelar</button>
     </div>
@@ -1121,26 +1149,11 @@
     <div class="modal-content">
         <h3>🚨 Reportar</h3>
         <div class="report-options">
-            <div class="report-option" onclick="submitReport('Contenido inapropiado')">
-                <span>⚠️</span>
-                <span>Contenido inapropiado</span>
-            </div>
-            <div class="report-option" onclick="submitReport('Spam')">
-                <span>📧</span>
-                <span>Spam</span>
-            </div>
-            <div class="report-option" onclick="submitReport('Acoso')">
-                <span>😡</span>
-                <span>Acoso</span>
-            </div>
-            <div class="report-option" onclick="submitReport('Falsa información')">
-                <span>❌</span>
-                <span>Falsa información</span>
-            </div>
-            <div class="report-option" onclick="submitReport('Violencia')">
-                <span>🔪</span>
-                <span>Violencia</span>
-            </div>
+            <div class="report-option" onclick="submitReport('Contenido inapropiado')"><span>⚠️</span><span>Contenido inapropiado</span></div>
+            <div class="report-option" onclick="submitReport('Spam')"><span>📧</span><span>Spam</span></div>
+            <div class="report-option" onclick="submitReport('Acoso')"><span>😡</span><span>Acoso</span></div>
+            <div class="report-option" onclick="submitReport('Falsa información')"><span>❌</span><span>Falsa información</span></div>
+            <div class="report-option" onclick="submitReport('Violencia')"><span>🔪</span><span>Violencia</span></div>
         </div>
         <button class="btn-gris" onclick="closeReportModal()" style="margin-top: 16px;">❌ Cancelar</button>
     </div>
@@ -1211,9 +1224,28 @@
     </div>
 </div>
 
+<!-- MODAL CREAR KETETEO CON CATEGORÍAS -->
 <div id="createKeTeteoModal" class="modal"><div class="modal-content">
     <h3>Crear nuevo KeTeteo</h3>
     <input type="text" id="newTitulo" placeholder="Título del evento">
+    <select id="newCategoria" class="config-select" style="width:100%; margin-bottom:12px;">
+        <option value="">Seleccionar categoría *</option>
+        <option value="Teteo">🎉 Teteo</option>
+        <option value="Deportiva">⚽ Deportiva</option>
+        <option value="Infantil">🧸 Infantil</option>
+        <option value="Concierto">🎵 Concierto</option>
+        <option value="Fiesta">🎊 Fiesta</option>
+        <option value="Cumpleaños">🎂 Cumpleaños</option>
+        <option value="Boda">💒 Boda</option>
+        <option value="Charla">🎤 Charla</option>
+        <option value="Conferencia">📊 Conferencia</option>
+        <option value="Capacitación">📚 Capacitación</option>
+        <option value="Programa">📺 Programa</option>
+        <option value="Aventura">🏔️ Aventura</option>
+        <option value="Académica">📖 Académica</option>
+        <option value="Reunión">🤝 Reunión</option>
+        <option value="Viaje">✈️ Viaje</option>
+    </select>
     <input type="text" id="newUbicacion" placeholder="Ubicación">
     <input type="text" id="newDistancia" placeholder="Distancia">
     <input type="url" id="newImagen" placeholder="URL de imagen (opcional)">
@@ -1225,7 +1257,7 @@
 
 <div id="searchModal" class="modal"><div class="modal-content">
     <h3>Buscar eventos</h3>
-    <input type="text" id="searchInputModal" class="search-input-modal" placeholder="Escribe título o creador...">
+    <input type="text" id="searchInputModal" class="search-input-modal" placeholder="Buscar por título, creador, ubicación o categoría...">
     <div id="searchResultsModal" style="max-height: 400px; overflow-y: auto;"></div>
     <button class="btn-gris" onclick="closeSearchModal()">Cerrar</button>
 </div></div>
@@ -1236,7 +1268,6 @@
     <button class="btn-gris" onclick="closeProximosEventos()">Cerrar</button>
 </div></div>
 
-<!-- Reporte modal antiguo ya no se usa, ahora usamos reportModal -->
 <div id="confirmarEliminarModal" class="modal"><div class="modal-content">
     <h3>ELIMINAR</h3>
     <p>¿Estás seguro?</p>
@@ -1259,7 +1290,7 @@
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button>
         <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Perfil</div></div>
-        <div class="header-spacer" onclick="scrollToTopAndHome()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
+        <div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
     </div>
     <div class="profile-modern">
         <div class="avatar-wrapper" onclick="uploadProfilePhoto()"><div class="avatar-ring"></div><img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7"><div class="avatar-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span></div></div>
@@ -1276,7 +1307,7 @@
 <div id="editProfileModal" class="modal"><div class="modal-content"><h3>Editar perfil</h3><input type="text" id="editName" placeholder="Nombre"><input type="text" id="editUsername" placeholder="Usuario"><textarea id="editBio" rows="2" placeholder="Biografía"></textarea><input type="url" id="editLink" placeholder="Enlace"><input type="email" id="editEmail" placeholder="Correo"><input type="tel" id="editPhone" placeholder="Teléfono"><button class="btn-rojo" onclick="saveProfile()">Guardar</button><button class="btn-gris" onclick="closeEditModal()">Cancelar</button></div></div>
 
 <div id="myStreamsScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">📋 Mis KeTeteos</div></div><div class="header-spacer" onclick="scrollToTopAndHome()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">📋 Mis KeTeteos</div></div><div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div></div>
     <div id="myStreamsList" class="streams-list"></div>
     <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()">Nueva transmisión</button>
 </div>
@@ -1285,38 +1316,32 @@
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button>
         <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">⚙️ Configuración</div></div>
-        <div class="header-spacer" onclick="scrollToTopAndHome()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
+        <div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
     </div>
     <div style="padding: 20px;">
-        <div class="config-section">
-            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Cuenta</div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Cuenta</div>
             <div class="config-item"><div class="config-item-label">Correo electrónico</div><input type="email" id="configEmail" class="config-edit" placeholder="correo@ejemplo.com"></div>
             <div class="config-item"><div class="config-item-label">Teléfono</div><input type="tel" id="configPhone" class="config-edit" placeholder="+1 809 555 1234"></div>
         </div>
-        <div class="config-section">
-            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span> Privacidad</div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span> Privacidad</div>
             <div class="config-item"><div class="config-item-label">Perfil público</div><div class="config-toggle" id="toggleProfilePublic"></div></div>
             <div class="config-item"><div class="config-item-label">Mostrar ubicación</div><div class="config-toggle" id="toggleShowLocation"></div></div>
             <div class="config-item"><div class="config-item-label">Quién puede comentar</div><select id="selectWhoCanComment" class="config-select"><option value="todos">Todos</option><option value="seguidores">Solo seguidores</option><option value="nadie">Nadie</option></select></div>
         </div>
-        <div class="config-section">
-            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span> Notificaciones</div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span> Notificaciones</div>
             <div class="config-item"><div class="config-item-label">Push notifications</div><div class="config-toggle" id="togglePushNotifications"></div></div>
             <div class="config-item"><div class="config-item-label">Nuevos seguidores</div><div class="config-toggle" id="toggleNewFollowers"></div></div>
             <div class="config-item"><div class="config-item-label">Comentarios en mis posts</div><div class="config-toggle" id="togglePostComments"></div></div>
         </div>
-        <div class="config-section">
-            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="22"/></svg></span> Apariencia</div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="22"/></svg></span> Apariencia</div>
             <div class="config-item"><div class="config-item-label">Modo oscuro</div><div class="config-toggle" id="toggleDarkMode"></div></div>
             <div class="config-item"><div class="config-item-label">Tamaño de fuente</div><select id="selectFontSize" class="config-select"><option value="pequeño">Pequeño</option><option value="mediano">Mediano</option><option value="grande">Grande</option></select></div>
         </div>
-        <div class="config-section">
-            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span> Idioma y Región</div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span> Idioma y Región</div>
             <div class="config-item"><div class="config-item-label">Idioma</div><select id="selectLanguage" class="config-select"><option value="es">Español</option><option value="en">English</option><option value="pt">Português</option></select></div>
             <div class="config-item"><div class="config-item-label">Unidad de distancia</div><select id="selectDistanceUnit" class="config-select"><option value="km">Kilómetros (km)</option><option value="mi">Millas (mi)</option></select></div>
         </div>
-        <div class="config-section">
-            <div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span> Datos y Seguridad</div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span> Datos y Seguridad</div>
             <button class="config-danger-btn" onclick="exportUserData()">📥 Exportar mis datos</button>
             <button class="config-danger-btn" onclick="deleteAccount()" style="margin-top: 8px;">🗑️ Eliminar mi cuenta</button>
         </div>
@@ -1326,7 +1351,7 @@
 </div>
 
 <div id="languageScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Idioma</div></div><div class="header-spacer" onclick="scrollToTopAndHome()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Idioma</div></div><div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div></div>
     <div style="padding: 20px;">
         <div class="config-option" onclick="setLanguage('es')"><span>Español</span><span>✅</span></div>
         <div class="config-option" onclick="setLanguage('en')"><span>English</span><span></span></div>
@@ -1339,7 +1364,7 @@
 <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
 <div class="bottom-nav">
-    <div class="nav-item" onclick="scrollToTop()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-7H9v7H5a2 2 0 0 1-2-2z"/></svg></span></div><div class="nav-label">Inicio</div></div>
+    <div class="nav-item" onclick="refreshHomeScreen()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-7H9v7H5a2 2 0 0 1-2-2z"/></svg></span></div><div class="nav-label">Inicio</div></div>
     <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span></div><div class="nav-label">Buscar</div></div>
     <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span></div><div class="nav-label">Alertas</div></div>
     <div class="nav-item" onclick="openProximosKeTeteo()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span></div><div class="nav-label">Próximo KeTeteo</div></div>
@@ -1367,6 +1392,7 @@
     let currentGroupCode = "";
     let currentShareKeId = null;
     let currentReportKeId = null;
+    let currentCommentsKeId = null;
     
     let tempConfig = {
         email: '', phone: '', profilePublic: true, showLocation: true,
@@ -1377,145 +1403,198 @@
     
     let savedConfig = { ...tempConfig };
 
-    function scrollToTop() {
+    // ================= FUNCIÓN REFRESCAR INICIO (ACTUALIZA TODAS LAS PUBLICACIONES) =================
+    function refreshHomeScreen() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById('mainScreen').classList.add('active');
-    }
-    
-    function scrollToTopAndHome() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById('mainScreen').classList.add('active');
+        ordenarKeTeteosPorCercania();
+        renderCarousel();
     }
 
-    // ================= FUNCIONES DE COMPARTIR PROFESIONAL =================
-    function openShareModal(keId) {
+    // ================= FUNCIONES DE COMENTARIOS MODAL (ESTILO INSTAGRAM) =================
+    function openCommentsModal(keId) {
         if (!loggedIn) {
-            alert('Inicia sesión para compartir');
+            alert('Inicia sesión para ver comentarios');
             return;
         }
+        currentCommentsKeId = keId;
+        const ke = allKeTeteos.find(k => k.id == keId);
+        if (!ke) return;
+        
+        document.getElementById('commentModalInput').value = '';
+        document.getElementById('commentModalSendBtn').classList.remove('active');
+        loadCommentsToModal(keId);
+        document.getElementById('commentsModal').classList.add('show');
+        
+        // Configurar evento del botón de envío
+        const sendBtn = document.getElementById('commentModalSendBtn');
+        const input = document.getElementById('commentModalInput');
+        
+        const newSendHandler = () => {
+            if (input.value.trim()) {
+                if (addCommentToModal()) {
+                    input.value = '';
+                    sendBtn.classList.remove('active');
+                }
+            }
+        };
+        
+        const newInputHandler = () => {
+            if (input.value.trim()) {
+                sendBtn.classList.add('active');
+            } else {
+                sendBtn.classList.remove('active');
+            }
+        };
+        
+        sendBtn.removeEventListener('click', newSendHandler);
+        input.removeEventListener('input', newInputHandler);
+        sendBtn.addEventListener('click', newSendHandler);
+        input.addEventListener('input', newInputHandler);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && input.value.trim()) {
+                if (addCommentToModal()) {
+                    input.value = '';
+                    sendBtn.classList.remove('active');
+                }
+            }
+        });
+        
+        // Configurar emojis
+        document.querySelectorAll('.comment-modal-emoji').forEach(btn => {
+            btn.removeEventListener('click', () => {});
+            btn.addEventListener('click', () => {
+                const emoji = btn.getAttribute('data-emoji');
+                input.value += emoji;
+                input.focus();
+                if (input.value.trim()) {
+                    sendBtn.classList.add('active');
+                }
+            });
+        });
+    }
+    
+    function closeCommentsModal() {
+        document.getElementById('commentsModal').classList.remove('show');
+        currentCommentsKeId = null;
+    }
+    
+    function loadCommentsToModal(keId) {
+        const container = document.getElementById('commentsModalList');
+        const comments = currentComments[keId] || [];
+        const ke = allKeTeteos.find(k => k.id == keId);
+        
+        if (comments.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--gris-claro);">No hay comentarios aún. Sé el primero en comentar 💬</div>';
+            return;
+        }
+        
+        container.innerHTML = comments.map(c => `
+            <div class="comment-modal-item" data-comment-user="${c.user}" data-comment-text="${escapeHtml(c.text)}" data-comment-timestamp="${c.timestamp}">
+                <div class="comment-modal-header-info">
+                    <span class="comment-modal-user">${escapeHtml(c.user)}</span>
+                    <span class="comment-modal-time">${c.timeAgo || formatCommentTime(new Date(c.timestamp))}</span>
+                    ${(c.user === currentUser?.username || ke?.usuario === currentUser?.username) ? `<button class="delete-comment-btn" onclick="deleteCommentFromModal('${keId}', '${c.timestamp}')">Eliminar</button>` : ''}
+                </div>
+                <div class="comment-modal-text">${escapeHtml(c.text)}</div>
+            </div>
+        `).join('');
+    }
+    
+    function addCommentToModal() {
+        if (!currentCommentsKeId) return false;
+        const input = document.getElementById('commentModalInput');
+        const text = input.value.trim();
+        if (!text) return false;
+        
+        if (!currentComments[currentCommentsKeId]) currentComments[currentCommentsKeId] = [];
+        
+        const newComment = {
+            user: currentUser.username,
+            text: text,
+            timestamp: new Date().toISOString(),
+            timeAgo: formatCommentTime(new Date())
+        };
+        
+        currentComments[currentCommentsKeId].unshift(newComment);
+        localStorage.setItem(`comments_${currentCommentsKeId}`, JSON.stringify(currentComments[currentCommentsKeId]));
+        
+        // Actualizar UI del modal
+        loadCommentsToModal(currentCommentsKeId);
+        
+        // Actualizar contador en la tarjeta
+        const commentCountSpan = document.querySelector(`.ke-teteo-card[data-id="${currentCommentsKeId}"] .comment-count`);
+        if (commentCountSpan) commentCountSpan.innerText = currentComments[currentCommentsKeId].length;
+        
+        return true;
+    }
+    
+    function deleteCommentFromModal(keId, timestamp) {
+        if (!currentComments[keId]) return;
+        const commentIndex = currentComments[keId].findIndex(c => c.timestamp === timestamp);
+        if (commentIndex !== -1) {
+            currentComments[keId].splice(commentIndex, 1);
+            localStorage.setItem(`comments_${keId}`, JSON.stringify(currentComments[keId]));
+            loadCommentsToModal(keId);
+            const commentCountSpan = document.querySelector(`.ke-teteo-card[data-id="${keId}"] .comment-count`);
+            if (commentCountSpan) commentCountSpan.innerText = currentComments[keId].length;
+        }
+    }
+
+    // ================= FUNCIONES DE COMPARTIR =================
+    function openShareModal(keId) {
+        if (!loggedIn) { alert('Inicia sesión para compartir'); return; }
         currentShareKeId = keId;
         document.getElementById('shareModal').classList.add('show');
     }
-    
-    function closeShareModal() {
-        document.getElementById('shareModal').classList.remove('show');
-        currentShareKeId = null;
-    }
-    
+    function closeShareModal() { document.getElementById('shareModal').classList.remove('show'); currentShareKeId = null; }
     function shareCopyLink() {
         const ke = allKeTeteos.find(k => k.id == currentShareKeId);
-        if (ke) {
-            const shareUrl = `${window.location.origin}${window.location.pathname}?ke=${ke.id}`;
-            navigator.clipboard.writeText(shareUrl);
-            alert('✅ Enlace copiado al portapapeles');
-            incrementShares(currentShareKeId);
-        }
+        if (ke) { navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}?ke=${ke.id}`); alert('✅ Enlace copiado'); incrementShares(currentShareKeId); }
         closeShareModal();
     }
-    
     function shareExternal() {
         const ke = allKeTeteos.find(k => k.id == currentShareKeId);
-        if (ke && navigator.share) {
-            navigator.share({
-                title: ke.titulo,
-                text: `¡Mira este KeTeteo! ${ke.titulo} por ${ke.nombreCreador}`,
-                url: `${window.location.origin}${window.location.pathname}?ke=${ke.id}`
-            }).then(() => incrementShares(currentShareKeId)).catch(() => {});
-        } else {
-            shareCopyLink();
-        }
+        if (ke && navigator.share) { navigator.share({ title: ke.titulo, text: `¡Mira este KeTeteo! ${ke.titulo}`, url: `${window.location.origin}${window.location.pathname}?ke=${ke.id}` }).then(() => incrementShares(currentShareKeId)).catch(() => {}); }
+        else shareCopyLink();
         closeShareModal();
     }
-    
     function shareToGroup() {
         const grupos = allGroups.filter(g => g.miembros.includes(currentUser?.username));
-        if (grupos.length === 0) {
-            alert('No tienes grupos para compartir. Crea o únete a un grupo primero.');
-            closeShareModal();
-            return;
-        }
+        if (grupos.length === 0) { alert('No tienes grupos'); closeShareModal(); return; }
         const grupoNombres = grupos.map(g => g.nombre).join('\n');
-        const grupoSeleccionado = prompt(`Selecciona un grupo para compartir:\n${grupoNombres}\n\nEscribe el nombre exacto del grupo:`);
+        const grupoSeleccionado = prompt(`Selecciona un grupo:\n${grupoNombres}\n\nEscribe el nombre exacto:`);
         const grupo = grupos.find(g => g.nombre === grupoSeleccionado);
-        if (grupo) {
-            alert(`✅ Compartido en el grupo "${grupo.nombre}"`);
-            incrementShares(currentShareKeId);
-        } else {
-            alert('Grupo no encontrado');
-        }
+        if (grupo) { alert(`✅ Compartido en "${grupo.nombre}"`); incrementShares(currentShareKeId); }
+        else alert('Grupo no encontrado');
         closeShareModal();
     }
-    
     function shareToUser() {
-        const username = prompt('Ingresa el nombre de usuario (@ejemplo) a quien quieres enviar este KeTeteo:');
-        if (username && username.trim()) {
-            alert(`✅ Enviado a ${username.trim()}`);
-            incrementShares(currentShareKeId);
-        }
+        const username = prompt('Ingresa el nombre de usuario (@ejemplo):');
+        if (username && username.trim()) { alert(`✅ Enviado a ${username.trim()}`); incrementShares(currentShareKeId); }
         closeShareModal();
     }
-    
     function shareToWhatsApp() {
         const ke = allKeTeteos.find(k => k.id == currentShareKeId);
-        if (ke) {
-            const text = encodeURIComponent(`¡Mira este KeTeteo! ${ke.titulo} por ${ke.nombreCreador}`);
-            window.open(`https://wa.me/?text=${text}`, '_blank');
-            incrementShares(currentShareKeId);
-        }
+        if (ke) { window.open(`https://wa.me/?text=${encodeURIComponent(`¡Mira este KeTeteo! ${ke.titulo} por ${ke.nombreCreador}`)}`, '_blank'); incrementShares(currentShareKeId); }
         closeShareModal();
     }
-    
-    function incrementShares(keId) {
-        if (!currentShares[keId]) currentShares[keId] = 0;
-        currentShares[keId]++;
-        localStorage.setItem(`shares_${keId}`, currentShares[keId]);
-    }
-    
-    function loadShares() {
-        allKeTeteos.forEach(ke => {
-            const saved = localStorage.getItem(`shares_${ke.id}`);
-            if (saved) currentShares[ke.id] = parseInt(saved);
-            else currentShares[ke.id] = 0;
-        });
-    }
+    function incrementShares(keId) { if (!currentShares[keId]) currentShares[keId] = 0; currentShares[keId]++; localStorage.setItem(`shares_${keId}`, currentShares[keId]); }
+    function loadShares() { allKeTeteos.forEach(ke => { const saved = localStorage.getItem(`shares_${ke.id}`); currentShares[ke.id] = saved ? parseInt(saved) : 0; }); }
 
-    // ================= FUNCIONES DE REPORTAR PROFESIONAL =================
-    function openReportModal(keId) {
-        if (!loggedIn) {
-            alert('Inicia sesión para reportar');
-            return;
-        }
-        currentReportKeId = keId;
-        document.getElementById('reportModal').classList.add('show');
-    }
-    
-    function closeReportModal() {
-        document.getElementById('reportModal').classList.remove('show');
-        currentReportKeId = null;
-    }
-    
+    // ================= FUNCIONES DE REPORTAR =================
+    function openReportModal(keId) { if (!loggedIn) { alert('Inicia sesión para reportar'); return; } currentReportKeId = keId; document.getElementById('reportModal').classList.add('show'); }
+    function closeReportModal() { document.getElementById('reportModal').classList.remove('show'); currentReportKeId = null; }
     function submitReport(motivo) {
         if (!currentReportKeId) return;
         if (!currentReports[currentReportKeId]) currentReports[currentReportKeId] = [];
-        currentReports[currentReportKeId].push({
-            usuario: currentUser.username,
-            motivo: motivo,
-            fecha: new Date().toISOString()
-        });
+        currentReports[currentReportKeId].push({ usuario: currentUser.username, motivo: motivo, fecha: new Date().toISOString() });
         localStorage.setItem(`reports_${currentReportKeId}`, JSON.stringify(currentReports[currentReportKeId]));
-        alert(`✅ Reporte enviado: ${motivo}\n\nGracias por ayudarnos a mantener la comunidad segura.`);
+        alert(`✅ Reporte enviado: ${motivo}`);
         closeReportModal();
     }
-    
-    function loadReports() {
-        allKeTeteos.forEach(ke => {
-            const saved = localStorage.getItem(`reports_${ke.id}`);
-            if (saved) currentReports[ke.id] = JSON.parse(saved);
-            else currentReports[ke.id] = [];
-        });
-    }
+    function loadReports() { allKeTeteos.forEach(ke => { const saved = localStorage.getItem(`reports_${ke.id}`); currentReports[ke.id] = saved ? JSON.parse(saved) : []; }); }
 
     // ================= FUNCIONES DE COMENTARIOS =================
     function formatCommentTime(date) {
@@ -1524,135 +1603,169 @@
         const diffMins = Math.floor(diffMs / 60000);
         const diffHours = Math.floor(diffMs / 3600000);
         const diffDays = Math.floor(diffMs / 86400000);
-        
         if (diffMins < 1) return 'ahora';
         if (diffMins < 60) return `hace ${diffMins} min`;
         if (diffHours < 24) return `hace ${diffHours} h`;
         if (diffDays === 1) return 'ayer';
         return `hace ${diffDays} días`;
     }
-    
-    function addComment(keId, commentText) {
-        if (!commentText.trim()) return false;
-        if (!loggedIn) {
-            alert('Inicia sesión para comentar');
-            return false;
-        }
-        
-        if (!currentComments[keId]) currentComments[keId] = [];
-        
-        const newComment = {
-            user: currentUser.username,
-            text: commentText.trim(),
-            timestamp: new Date().toISOString(),
-            timeAgo: formatCommentTime(new Date())
-        };
-        
-        currentComments[keId].unshift(newComment);
-        localStorage.setItem(`comments_${keId}`, JSON.stringify(currentComments[keId]));
-        
-        updateCommentsUI(keId);
-        
-        const commentCountSpan = document.querySelector(`.ke-teteo-card[data-id="${keId}"] .comment-count`);
-        if (commentCountSpan) commentCountSpan.innerText = currentComments[keId].length;
-        
-        return true;
-    }
-    
-    function updateCommentsUI(keId) {
-        const container = document.getElementById(`comments-list-${keId}`);
-        if (!container) return;
-        
-        const comments = currentComments[keId] || [];
-        const countSpan = document.getElementById(`comments-count-${keId}`);
-        if (countSpan) countSpan.innerText = comments.length;
-        
-        if (comments.length === 0) {
-            container.innerHTML = '<div style="text-align:center; padding:12px; color:var(--gris-claro); font-size:11px;">No hay comentarios aún. Sé el primero en comentar 💬</div>';
-            return;
-        }
-        
-        container.innerHTML = comments.map(c => `
-            <div class="comment-item">
-                <div>
-                    <span class="comment-user">${escapeHtml(c.user)}</span>
-                    <span class="comment-time">${c.timeAgo || formatCommentTime(new Date(c.timestamp))}</span>
-                </div>
-                <div class="comment-text">${escapeHtml(c.text)}</div>
-            </div>
-        `).join('');
-    }
-    
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-    
-    function setupCommentListeners(card, keId) {
-        const input = card.querySelector(`#comment-input-${keId}`);
-        const sendBtn = card.querySelector(`#send-comment-${keId}`);
-        const emojiBtns = card.querySelectorAll(`.emoji-btn-${keId}`);
-        
-        if (input && sendBtn) {
-            input.addEventListener('input', () => {
-                if (input.value.trim()) {
-                    sendBtn.classList.add('active');
-                } else {
-                    sendBtn.classList.remove('active');
-                }
-            });
-            
-            sendBtn.addEventListener('click', () => {
-                if (input.value.trim()) {
-                    if (addComment(keId, input.value)) {
-                        input.value = '';
-                        sendBtn.classList.remove('active');
-                    }
-                }
-            });
-            
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && input.value.trim()) {
-                    if (addComment(keId, input.value)) {
-                        input.value = '';
-                        sendBtn.classList.remove('active');
-                    }
-                }
-            });
-        }
-        
-        emojiBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const emoji = btn.getAttribute('data-emoji');
-                if (input) {
-                    input.value += emoji;
-                    input.focus();
-                    if (input.value.trim()) {
-                        sendBtn.classList.add('active');
-                    }
-                }
-            });
+
+    function loadKeTeteos() {
+        const stored = localStorage.getItem('keTeteos');
+        if (stored) { allKeTeteos = JSON.parse(stored); if (!allKeTeteos.find(k => k.id === 999)) allKeTeteos.push(initialKeTeteos.find(k => k.id === 999)); }
+        else { allKeTeteos = [...initialKeTeteos]; localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
+        allKeTeteos.forEach(item => {
+            if (currentLikes[item.id] === undefined) currentLikes[item.id] = item.likes || 0;
+            const savedComments = localStorage.getItem(`comments_${item.id}`);
+            if (savedComments) currentComments[item.id] = JSON.parse(savedComments);
+            else currentComments[item.id] = [];
         });
+        loadShares();
+        loadReports();
+    }
+    function saveKeTeteos() { localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
+    function getUserLocation() { return new Promise((resolve, reject) => { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((pos) => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(userLocation); }, () => { reject(null); }); } else { reject(null); } }); }
+    function calcularDistancia(lat1, lng1, lat2, lng2) { const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLng = (lng2 - lng1) * Math.PI / 180; const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2); const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); return R * c; }
+    async function ordenarKeTeteosPorCercania() {
+        if (!userLocation) { try { await getUserLocation(); } catch(e) { console.log("No se pudo obtener ubicación"); return; } }
+        if (userLocation) {
+            allKeTeteos = allKeTeteos.map(ke => { if (ke.esRadar) return ke; const distanciaKm = calcularDistancia(userLocation.lat, userLocation.lng, ke.lat || 18.48, ke.lng || -69.9); return { ...ke, distanciaReal: distanciaKm }; });
+            const noRadar = allKeTeteos.filter(k => !k.esRadar).sort((a,b) => (a.distanciaReal || 999) - (b.distanciaReal || 999));
+            const radar = allKeTeteos.filter(k => k.esRadar);
+            allKeTeteos = [...noRadar, ...radar];
+            saveKeTeteos();
+        }
+    }
+
+    function incrementViews(keId) { const ke = allKeTeteos.find(k => k.id == keId); if (ke) { ke.viewers = (ke.viewers || 0) + 1; saveKeTeteos(); } }
+
+    function crearCardKeTeteo(item) {
+        const card = document.createElement('div');
+        card.className = 'ke-teteo-card';
+        if (item.esRadar) card.classList.add('radar-card');
+        card.setAttribute('data-id', item.id);
+        const commentsCount = (currentComments[item.id] || []).length;
+        
+        if (item.esRadar) {
+            card.innerHTML = `
+                <div class="stream-media"><iframe class="radar-iframe" src="https://www.flightradar24.com/18.46,-69.90/6" allow="geolocation" loading="lazy"></iframe></div>
+                <div class="card-content">
+                    <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
+                    <div class="event-title">${item.titulo}</div>
+                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
+                    <div class="event-meta"><span>${item.ubicacion} · ${item.distancia}</span></div>
+                    <div class="action-buttons">
+                        <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
+                        <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
+                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> <span class="comment-count">${commentsCount}</span></button>
+                        <button class="action-btn share-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span></button>
+                    </div>
+                </div>
+            `;
+        } else {
+            card.innerHTML = `
+                <div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div>
+                <div class="card-content">
+                    <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
+                    <div class="event-title">${item.titulo}</div>
+                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
+                    <div class="event-meta"><span>${item.ubicacion} · ${item.distancia}</span>${item.categoria ? ` · 🏷️ ${item.categoria}` : ''}</div>
+                    <div class="action-buttons">
+                        <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
+                        <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
+                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> <span class="comment-count">${commentsCount}</span></button>
+                        <button class="action-btn share-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span></button>
+                        <button class="action-btn report-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span></button>
+                    </div>
+                </div>
+            `;
+        }
+        return card;
+    }
+    
+    function renderCarousel() { 
+        const container = document.getElementById('carouselContainer'); 
+        container.innerHTML = ''; 
+        allKeTeteos.forEach(item => { 
+            const card = crearCardKeTeteo(item); 
+            container.appendChild(card); 
+            if (!item.esRadar) attachCardEvents(card, item.id); 
+            else attachRadarEvents(card, item.id);
+        }); 
+    }
+    
+    function openFullscreenRadar(item) {
+        incrementViews(item.id);
+        const fullDiv = document.createElement('div');
+        fullDiv.className = 'fullscreen-stream';
+        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`;
+        document.body.appendChild(fullDiv);
+        fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove());
+    }
+    
+    function attachRadarEvents(card, id) {
+        const likeBtn = card.querySelector('.like-btn');
+        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; saveKeTeteos(); });
+        const shareBtn = card.querySelector('.share-btn');
+        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
+        const commentBtn = card.querySelector('.comment-toggle');
+        if (commentBtn) commentBtn.addEventListener('click', (e) => { e.stopPropagation(); openCommentsModal(id); });
+        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && item.esRadar) openFullscreenRadar(item); });
+    }
+    
+    function attachCardEvents(card, id) {
+        const likeBtn = card.querySelector('.like-btn');
+        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); });
+        const shareBtn = card.querySelector('.share-btn');
+        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
+        const reportBtn = card.querySelector('.report-btn');
+        if (reportBtn) reportBtn.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
+        const commentBtn = card.querySelector('.comment-toggle');
+        if (commentBtn) commentBtn.addEventListener('click', (e) => { e.stopPropagation(); openCommentsModal(id); });
+        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } });
+    }
+    
+    function openFullscreenStream(item) { 
+        incrementViews(item.id);
+        const fullDiv = document.createElement('div'); 
+        fullDiv.className = 'fullscreen-stream'; 
+        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; 
+        document.body.appendChild(fullDiv); 
+        fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); 
+    }
+
+    // ================= BÚSQUEDA MEJORADA POR CATEGORÍA =================
+    function openSearchModal() { 
+        document.getElementById('searchModal').classList.add('show'); 
+        document.getElementById('searchInputModal').focus(); 
+    }
+    function closeSearchModal() { 
+        document.getElementById('searchModal').classList.remove('show'); 
+        document.getElementById('searchResultsModal').innerHTML = ''; 
+        document.getElementById('searchInputModal').value = ''; 
+    }
+    document.getElementById('searchInputModal')?.addEventListener('input', function(e) { 
+        const term = e.target.value.toLowerCase().trim(); 
+        if (!term) { document.getElementById('searchResultsModal').innerHTML = ''; return; }
+        const results = allKeTeteos.filter(k => 
+            k.titulo.toLowerCase().includes(term) || 
+            k.nombreCreador.toLowerCase().includes(term) || 
+            k.ubicacion.toLowerCase().includes(term) ||
+            (k.categoria && k.categoria.toLowerCase().includes(term))
+        ); 
+        const container = document.getElementById('searchResultsModal'); 
+        if (results.length === 0) { container.innerHTML = '<div class="search-result"><div class="title">❌ Sin resultados</div></div>'; return; } 
+        container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${k.titulo}</div><div class="desc">${k.nombreCreador} · ${k.ubicacion}${k.categoria ? ` · 🏷️ ${k.categoria}` : ''}</div></div>`).join(''); 
+    });
+    function selectSearchResult(id) { 
+        closeSearchModal(); 
+        const item = allKeTeteos.find(k => k.id == id); 
+        if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } 
+        else if (item && item.esRadar) { incrementViews(id); openFullscreenRadar(item); } 
     }
 
     // ================= FUNCIONES DE CONFIGURACIÓN =================
-    function loadConfigToTemp() {
-        const saved = localStorage.getItem('userConfig');
-        if (saved) {
-            const parsed = JSON.parse(saved);
-            savedConfig = parsed;
-            tempConfig = { ...parsed };
-        }
-        if (currentUser) {
-            tempConfig.email = currentUser.email || '';
-            tempConfig.phone = currentUser.phone || '';
-            savedConfig.email = currentUser.email || '';
-            savedConfig.phone = currentUser.phone || '';
-        }
-        updateConfigUI();
-    }
-    
+    function loadConfigToTemp() { const saved = localStorage.getItem('userConfig'); if (saved) { const parsed = JSON.parse(saved); savedConfig = parsed; tempConfig = { ...parsed }; } if (currentUser) { tempConfig.email = currentUser.email || ''; tempConfig.phone = currentUser.phone || ''; savedConfig.email = currentUser.email || ''; savedConfig.phone = currentUser.phone || ''; } updateConfigUI(); }
     function updateConfigUI() {
         document.getElementById('toggleProfilePublic').className = 'config-toggle ' + (tempConfig.profilePublic ? 'active' : '');
         document.getElementById('toggleShowLocation').className = 'config-toggle ' + (tempConfig.showLocation ? 'active' : '');
@@ -1667,46 +1780,14 @@
         document.getElementById('configEmail').value = tempConfig.email || '';
         document.getElementById('configPhone').value = tempConfig.phone || '';
     }
-    
     function applyConfigChanges() {
-        if (!tempConfig.darkMode) {
-            document.body.style.background = '#FFFFFF';
-            document.body.style.color = '#000000';
-        } else {
-            document.body.style.background = '#000000';
-            document.body.style.color = '#FFFFFF';
-        }
-        let fontSizeValue = '16px';
-        if (tempConfig.fontSize === 'pequeño') fontSizeValue = '12px';
-        if (tempConfig.fontSize === 'mediano') fontSizeValue = '16px';
-        if (tempConfig.fontSize === 'grande') fontSizeValue = '20px';
+        if (!tempConfig.darkMode) { document.body.style.background = '#FFFFFF'; document.body.style.color = '#000000'; } else { document.body.style.background = '#000000'; document.body.style.color = '#FFFFFF'; }
+        let fontSizeValue = '16px'; if (tempConfig.fontSize === 'pequeño') fontSizeValue = '12px'; if (tempConfig.fontSize === 'mediano') fontSizeValue = '16px'; if (tempConfig.fontSize === 'grande') fontSizeValue = '20px';
         document.body.style.fontSize = fontSizeValue;
-        if (currentUser) {
-            currentUser.email = tempConfig.email;
-            currentUser.phone = tempConfig.phone;
-            localStorage.setItem('user', JSON.stringify(currentUser));
-            localStorage.setItem('userPhone', tempConfig.phone);
-            loadProfileData();
-        }
+        if (currentUser) { currentUser.email = tempConfig.email; currentUser.phone = tempConfig.phone; localStorage.setItem('user', JSON.stringify(currentUser)); localStorage.setItem('userPhone', tempConfig.phone); loadProfileData(); }
     }
-    
-    function saveConfigChanges() {
-        savedConfig = { ...tempConfig };
-        localStorage.setItem('userConfig', JSON.stringify(savedConfig));
-        applyConfigChanges();
-        alert('✅ Configuración guardada correctamente');
-    }
-    
-    function cancelConfigChanges() {
-        tempConfig = { ...savedConfig };
-        if (currentUser) {
-            tempConfig.email = currentUser.email || '';
-            tempConfig.phone = currentUser.phone || '';
-        }
-        updateConfigUI();
-        alert('❌ Cambios descartados');
-    }
-    
+    function saveConfigChanges() { savedConfig = { ...tempConfig }; localStorage.setItem('userConfig', JSON.stringify(savedConfig)); applyConfigChanges(); alert('✅ Configuración guardada correctamente'); }
+    function cancelConfigChanges() { tempConfig = { ...savedConfig }; if (currentUser) { tempConfig.email = currentUser.email || ''; tempConfig.phone = currentUser.phone || ''; } updateConfigUI(); alert('❌ Cambios descartados'); }
     function toggleSetting(setting) {
         switch(setting) {
             case 'profilePublic': tempConfig.profilePublic = !tempConfig.profilePublic; break;
@@ -1718,7 +1799,6 @@
         }
         updateConfigUI();
     }
-    
     document.getElementById('selectWhoCanComment')?.addEventListener('change', () => tempConfig.whoCanComment = document.getElementById('selectWhoCanComment').value);
     document.getElementById('selectFontSize')?.addEventListener('change', () => tempConfig.fontSize = document.getElementById('selectFontSize').value);
     document.getElementById('selectLanguage')?.addEventListener('change', () => tempConfig.language = document.getElementById('selectLanguage').value);
@@ -1726,151 +1806,27 @@
     document.getElementById('configEmail')?.addEventListener('input', (e) => tempConfig.email = e.target.value);
     document.getElementById('configPhone')?.addEventListener('input', (e) => tempConfig.phone = e.target.value);
     
-    function exportUserData() {
-        if (!currentUser) { alert('Inicia sesión primero'); return; }
-        const userData = { perfil: currentUser, configuracion: savedConfig, fechaExportacion: new Date().toISOString() };
-        const blob = new Blob([JSON.stringify(userData, null, 2)], {type: 'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `keteteo_export_${currentUser.username}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        alert('✅ Datos exportados correctamente');
-    }
-    
-    function deleteAccount() {
-        if (!currentUser) { alert('Inicia sesión primero'); return; }
-        if (confirm('⚠️ ¿ESTÁS SEGURO?\n\nEsta acción es irreversible.\nSe eliminarán todos tus datos.\n\n¿Continuar?')) {
-            const confirmText = prompt('Escribe "ELIMINAR" para confirmar:');
-            if (confirmText === 'ELIMINAR') {
-                localStorage.clear();
-                alert('Cuenta eliminada permanentemente');
-                window.location.reload();
-            } else { alert('Cancelado'); }
-        }
-    }
+    function exportUserData() { if (!currentUser) { alert('Inicia sesión primero'); return; } const userData = { perfil: currentUser, configuracion: savedConfig, fechaExportacion: new Date().toISOString() }; const blob = new Blob([JSON.stringify(userData, null, 2)], {type: 'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `keteteo_export_${currentUser.username}.json`; a.click(); URL.revokeObjectURL(url); alert('✅ Datos exportados correctamente'); }
+    function deleteAccount() { if (!currentUser) { alert('Inicia sesión primero'); return; } if (confirm('⚠️ ¿ESTÁS SEGURO?\n\nEsta acción es irreversible.\nSe eliminarán todos tus datos.\n\n¿Continuar?')) { const confirmText = prompt('Escribe "ELIMINAR" para confirmar:'); if (confirmText === 'ELIMINAR') { localStorage.clear(); alert('Cuenta eliminada permanentemente'); window.location.reload(); } else { alert('Cancelado'); } } }
 
-    function loadGroups() {
-        const stored = localStorage.getItem('keTeteoGroups');
-        allGroups = stored ? JSON.parse(stored) : [];
-    }
+    function loadGroups() { const stored = localStorage.getItem('keTeteoGroups'); allGroups = stored ? JSON.parse(stored) : []; }
     function saveGroups() { localStorage.setItem('keTeteoGroups', JSON.stringify(allGroups)); }
-    function generateGroupCode() {
-        let code = 'KETEO-';
-        for (let i = 0; i < 4; i++) code += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 26)];
-        for (let i = 0; i < 2; i++) code += '0123456789'[Math.floor(Math.random() * 10)];
-        return code;
-    }
-    function openCreateGroupModal() {
-        if (!loggedIn) { alert('Debes iniciar sesión para crear un grupo'); return; }
-        currentGroupCode = generateGroupCode();
-        document.getElementById('codigoInvitacionDisplay').innerText = 'Código: ' + currentGroupCode;
-        document.getElementById('groupNombre').value = '';
-        document.getElementById('groupDescripcion').value = '';
-        document.getElementById('groupTipo').value = 'publico';
-        document.getElementById('groupPassword').value = '';
-        document.getElementById('groupFotoPreview').src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E";
-        document.getElementById('groupPasswordContainer').style.display = 'none';
-        document.getElementById('createGroupModal').classList.add('show');
-    }
+    function generateGroupCode() { let code = 'KETEO-'; for (let i = 0; i < 4; i++) code += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 26)]; for (let i = 0; i < 2; i++) code += '0123456789'[Math.floor(Math.random() * 10)]; return code; }
+    function openCreateGroupModal() { if (!loggedIn) { alert('Debes iniciar sesión para crear un grupo'); return; } currentGroupCode = generateGroupCode(); document.getElementById('codigoInvitacionDisplay').innerText = 'Código: ' + currentGroupCode; document.getElementById('groupNombre').value = ''; document.getElementById('groupDescripcion').value = ''; document.getElementById('groupTipo').value = 'publico'; document.getElementById('groupPassword').value = ''; document.getElementById('groupFotoPreview').src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E"; document.getElementById('groupPasswordContainer').style.display = 'none'; document.getElementById('createGroupModal').classList.add('show'); }
     function closeCreateGroupModal() { document.getElementById('createGroupModal').classList.remove('show'); }
-    function previewGroupPhoto(event) {
-        const file = event.target.files[0];
-        if (file) { const reader = new FileReader(); reader.onload = (e) => { document.getElementById('groupFotoPreview').src = e.target.result; }; reader.readAsDataURL(file); }
-    }
-    function createGroup() {
-        const nombre = document.getElementById('groupNombre').value.trim();
-        if (!nombre) { alert('El nombre del grupo es requerido'); return; }
-        const descripcion = document.getElementById('groupDescripcion').value.trim();
-        const tipo = document.getElementById('groupTipo').value;
-        const password = document.getElementById('groupPassword').value;
-        const foto = document.getElementById('groupFotoPreview').src;
-        const nuevoGrupo = { id: Date.now().toString(), nombre, descripcion, tipo, foto, creador: currentUser.username, miembros: [currentUser.username], codigoInvitacion: currentGroupCode, password: tipo === 'privado' ? password : null, fechaCreacion: new Date().toISOString() };
-        allGroups.push(nuevoGrupo);
-        saveGroups();
-        renderGroupsList();
-        closeCreateGroupModal();
-        alert('✅ Grupo creado exitosamente');
-    }
-    function renderGroupsList() {
-        const container = document.getElementById('groupsList');
-        if (!container) return;
-        const misGrupos = allGroups.filter(g => g.miembros.includes(currentUser?.username));
-        if (misGrupos.length === 0) { container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--gris-claro);">📭 No tienes grupos aún.<br>Crea uno o únete con un código</div>'; return; }
-        container.innerHTML = '';
-        misGrupos.forEach(grupo => {
-            const div = document.createElement('div');
-            div.className = 'group-card';
-            div.innerHTML = `<div class="group-avatar"><img src="${grupo.foto}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%238E8E93\' stroke-width=\'2\'%3E%3Cpath d=\'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\'/%3E%3Ccircle cx=\'9\' cy=\'7\' r=\'4\'/%3E%3Cpath d=\'M23 21v-2a4 4 0 0 0-3-3.87\'/%3E%3Cpath d=\'M16 3.13a4 4 0 0 1 0 7.75\'/%3E%3C/svg%3E'"></div><div class="group-info"><div class="group-name">${grupo.nombre}</div><div class="group-meta"> ${grupo.miembros.length} miembros • ${grupo.tipo === 'publico' ? '🌍 Público' : '🔒 Privado'}</div>${grupo.descripcion ? `<div class="group-meta" style="font-size:10px;">📝 ${grupo.descripcion.substring(0, 50)}</div>` : ''}</div>`;
-            container.appendChild(div);
-        });
-    }
-    function openJoinGroupModal() {
-        if (!loggedIn) { alert('Debes iniciar sesión'); return; }
-        document.getElementById('joinCode').value = '';
-        document.getElementById('joinPassword').value = '';
-        document.getElementById('joinPasswordContainer').style.display = 'none';
-        document.getElementById('joinGroupModal').classList.add('show');
-    }
+    function previewGroupPhoto(event) { const file = event.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = (e) => { document.getElementById('groupFotoPreview').src = e.target.result; }; reader.readAsDataURL(file); } }
+    function createGroup() { const nombre = document.getElementById('groupNombre').value.trim(); if (!nombre) { alert('El nombre del grupo es requerido'); return; } const descripcion = document.getElementById('groupDescripcion').value.trim(); const tipo = document.getElementById('groupTipo').value; const password = document.getElementById('groupPassword').value; const foto = document.getElementById('groupFotoPreview').src; const nuevoGrupo = { id: Date.now().toString(), nombre, descripcion, tipo, foto, creador: currentUser.username, miembros: [currentUser.username], codigoInvitacion: currentGroupCode, password: tipo === 'privado' ? password : null, fechaCreacion: new Date().toISOString() }; allGroups.push(nuevoGrupo); saveGroups(); renderGroupsList(); closeCreateGroupModal(); alert('✅ Grupo creado exitosamente'); }
+    function renderGroupsList() { const container = document.getElementById('groupsList'); if (!container) return; const misGrupos = allGroups.filter(g => g.miembros.includes(currentUser?.username)); if (misGrupos.length === 0) { container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--gris-claro);">📭 No tienes grupos aún.<br>Crea uno o únete con un código</div>'; return; } container.innerHTML = ''; misGrupos.forEach(grupo => { const div = document.createElement('div'); div.className = 'group-card'; div.innerHTML = `<div class="group-avatar"><img src="${grupo.foto}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%238E8E93\' stroke-width=\'2\'%3E%3Cpath d=\'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\'/%3E%3Ccircle cx=\'9\' cy=\'7\' r=\'4\'/%3E%3Cpath d=\'M23 21v-2a4 4 0 0 0-3-3.87\'/%3E%3Cpath d=\'M16 3.13a4 4 0 0 1 0 7.75\'/%3E%3C/svg%3E'"></div><div class="group-info"><div class="group-name">${grupo.nombre}</div><div class="group-meta"> ${grupo.miembros.length} miembros • ${grupo.tipo === 'publico' ? '🌍 Público' : '🔒 Privado'}</div>${grupo.descripcion ? `<div class="group-meta" style="font-size:10px;">📝 ${grupo.descripcion.substring(0, 50)}</div>` : ''}</div>`; container.appendChild(div); }); }
+    function openJoinGroupModal() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } document.getElementById('joinCode').value = ''; document.getElementById('joinPassword').value = ''; document.getElementById('joinPasswordContainer').style.display = 'none'; document.getElementById('joinGroupModal').classList.add('show'); }
     function closeJoinGroupModal() { document.getElementById('joinGroupModal').classList.remove('show'); }
-    function joinGroup() {
-        const codigo = document.getElementById('joinCode').value.trim().toUpperCase();
-        const grupo = allGroups.find(g => g.codigoInvitacion === codigo);
-        if (!grupo) { alert('Código de invitación inválido'); return; }
-        if (grupo.tipo === 'privado') { const password = document.getElementById('joinPassword').value; if (password !== grupo.password) { alert('Contraseña incorrecta'); return; } }
-        if (grupo.miembros.includes(currentUser.username)) { alert('Ya eres miembro de este grupo'); closeJoinGroupModal(); return; }
-        grupo.miembros.push(currentUser.username);
-        saveGroups();
-        renderGroupsList();
-        closeJoinGroupModal();
-        alert(`✅ Te has unido a ${grupo.nombre}`);
-    }
+    function joinGroup() { const codigo = document.getElementById('joinCode').value.trim().toUpperCase(); const grupo = allGroups.find(g => g.codigoInvitacion === codigo); if (!grupo) { alert('Código de invitación inválido'); return; } if (grupo.tipo === 'privado') { const password = document.getElementById('joinPassword').value; if (password !== grupo.password) { alert('Contraseña incorrecta'); return; } } if (grupo.miembros.includes(currentUser.username)) { alert('Ya eres miembro de este grupo'); closeJoinGroupModal(); return; } grupo.miembros.push(currentUser.username); saveGroups(); renderGroupsList(); closeJoinGroupModal(); alert(`✅ Te has unido a ${grupo.nombre}`); }
     document.getElementById('groupTipo')?.addEventListener('change', function(e) { document.getElementById('groupPasswordContainer').style.display = e.target.value === 'privado' ? 'block' : 'none'; });
-    document.getElementById('joinCode')?.addEventListener('input', function(e) {
-        const codigo = e.target.value.trim().toUpperCase();
-        const grupo = allGroups.find(g => g.codigoInvitacion === codigo);
-        document.getElementById('joinPasswordContainer').style.display = (grupo && grupo.tipo === 'privado') ? 'block' : 'none';
-    });
+    document.getElementById('joinCode')?.addEventListener('input', function(e) { const codigo = e.target.value.trim().toUpperCase(); const grupo = allGroups.find(g => g.codigoInvitacion === codigo); document.getElementById('joinPasswordContainer').style.display = (grupo && grupo.tipo === 'privado') ? 'block' : 'none'; });
 
     let userStatusInterval = null, lastActivity = Date.now(), userStatus = "online";
-    function actualizarEstadoUsuario() {
-        if (!loggedIn) return;
-        const timeSinceLastActivity = Date.now() - lastActivity;
-        if (timeSinceLastActivity < 30000) {
-            userStatus = "online";
-            const statusDot = document.querySelector('.status-dot');
-            if (statusDot) statusDot.className = 'status-dot status-online';
-            const statusText = document.getElementById('statusText');
-            if (statusText) statusText.innerText = 'En línea';
-        } else if (timeSinceLastActivity < 300000) {
-            userStatus = "away";
-            const statusDot = document.querySelector('.status-dot');
-            if (statusDot) statusDot.className = 'status-dot status-away';
-            const statusText = document.getElementById('statusText');
-            if (statusText) statusText.innerText = 'Ausente';
-        } else {
-            userStatus = "offline";
-            const statusDot = document.querySelector('.status-dot');
-            if (statusDot) statusDot.className = 'status-dot status-offline';
-            const statusText = document.getElementById('statusText');
-            if (statusText) statusText.innerText = 'Desconectado';
-        }
-        localStorage.setItem('userStatus', userStatus);
-        localStorage.setItem('lastActivity', lastActivity);
-    }
+    function actualizarEstadoUsuario() { if (!loggedIn) return; const timeSinceLastActivity = Date.now() - lastActivity; if (timeSinceLastActivity < 30000) { userStatus = "online"; const statusDot = document.querySelector('.status-dot'); if (statusDot) statusDot.className = 'status-dot status-online'; const statusText = document.getElementById('statusText'); if (statusText) statusText.innerText = 'En línea'; } else if (timeSinceLastActivity < 300000) { userStatus = "away"; const statusDot = document.querySelector('.status-dot'); if (statusDot) statusDot.className = 'status-dot status-away'; const statusText = document.getElementById('statusText'); if (statusText) statusText.innerText = 'Ausente'; } else { userStatus = "offline"; const statusDot = document.querySelector('.status-dot'); if (statusDot) statusDot.className = 'status-dot status-offline'; const statusText = document.getElementById('statusText'); if (statusText) statusText.innerText = 'Desconectado'; } localStorage.setItem('userStatus', userStatus); localStorage.setItem('lastActivity', lastActivity); }
     function actualizarActividad() { lastActivity = Date.now(); actualizarEstadoUsuario(); }
-    function iniciarSeguimientoEstado() {
-        if (userStatusInterval) clearInterval(userStatusInterval);
-        userStatusInterval = setInterval(actualizarEstadoUsuario, 10000);
-        window.addEventListener('click', actualizarActividad);
-        window.addEventListener('scroll', actualizarActividad);
-        window.addEventListener('keydown', actualizarActividad);
-        window.addEventListener('touchstart', actualizarActividad);
-        window.addEventListener('beforeunload', () => { if (loggedIn) { localStorage.setItem('userStatus', 'offline'); localStorage.setItem('lastActivity', Date.now()); } });
-        document.addEventListener('visibilitychange', () => { lastActivity = document.hidden ? Date.now() - 60000 : Date.now(); actualizarEstadoUsuario(); });
-        actualizarEstadoUsuario();
-    }
+    function iniciarSeguimientoEstado() { if (userStatusInterval) clearInterval(userStatusInterval); userStatusInterval = setInterval(actualizarEstadoUsuario, 10000); window.addEventListener('click', actualizarActividad); window.addEventListener('scroll', actualizarActividad); window.addEventListener('keydown', actualizarActividad); window.addEventListener('touchstart', actualizarActividad); window.addEventListener('beforeunload', () => { if (loggedIn) { localStorage.setItem('userStatus', 'offline'); localStorage.setItem('lastActivity', Date.now()); } }); document.addEventListener('visibilitychange', () => { lastActivity = document.hidden ? Date.now() - 60000 : Date.now(); actualizarEstadoUsuario(); }); actualizarEstadoUsuario(); }
 
     const anunciosCarrusel3 = [
         { id: 1, imagen: "https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png", link: "https://www.instagram.com/chefdonmarco/" },
@@ -1907,168 +1863,8 @@
         { id: 999, titulo: "VUELOS EN TIEMPO REAL", nombreCreador: "FlightRadar24", usuario: "@flightradar", ubicacion: "Santo Domingo", distancia: "En vivo", categoria: "Radar", lat: 18.46, lng: -69.90, viewers: 15432, likes: 3421, imagen: "", esRadar: true, radarUrl: "https://www.flightradar24.com/18.46,-69.90/6" }
     ];
 
-    function loadKeTeteos() {
-        const stored = localStorage.getItem('keTeteos');
-        if (stored) { allKeTeteos = JSON.parse(stored); if (!allKeTeteos.find(k => k.id === 999)) allKeTeteos.push(initialKeTeteos.find(k => k.id === 999)); }
-        else { allKeTeteos = [...initialKeTeteos]; localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
-        allKeTeteos.forEach(item => {
-            if (currentLikes[item.id] === undefined) currentLikes[item.id] = item.likes || 0;
-            const savedComments = localStorage.getItem(`comments_${item.id}`);
-            if (savedComments) currentComments[item.id] = JSON.parse(savedComments);
-            else currentComments[item.id] = [];
-        });
-        loadShares();
-        loadReports();
-    }
-    function saveKeTeteos() { localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
-    function getUserLocation() { return new Promise((resolve, reject) => { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((pos) => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(userLocation); }, () => { reject(null); }); } else { reject(null); } }); }
-    function calcularDistancia(lat1, lng1, lat2, lng2) { const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLng = (lng2 - lng1) * Math.PI / 180; const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2); const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); return R * c; }
-    async function ordenarKeTeteosPorCercania() {
-        if (!userLocation) { try { await getUserLocation(); } catch(e) { console.log("No se pudo obtener ubicación"); return; } }
-        if (userLocation) {
-            allKeTeteos = allKeTeteos.map(ke => { if (ke.esRadar) return ke; const distanciaKm = calcularDistancia(userLocation.lat, userLocation.lng, ke.lat || 18.48, ke.lng || -69.9); return { ...ke, distanciaReal: distanciaKm }; });
-            const noRadar = allKeTeteos.filter(k => !k.esRadar).sort((a,b) => (a.distanciaReal || 999) - (b.distanciaReal || 999));
-            const radar = allKeTeteos.filter(k => k.esRadar);
-            allKeTeteos = [...noRadar, ...radar];
-            saveKeTeteos();
-            renderCarousel();
-        }
-    }
-
-    function incrementViews(keId) {
-        const ke = allKeTeteos.find(k => k.id == keId);
-        if (ke) { ke.viewers = (ke.viewers || 0) + 1; saveKeTeteos(); }
-    }
-
-    function crearCardKeTeteo(item) {
-        const card = document.createElement('div');
-        card.className = 'ke-teteo-card';
-        if (item.esRadar) card.classList.add('radar-card');
-        card.setAttribute('data-id', item.id);
-        
-        const commentsCount = (currentComments[item.id] || []).length;
-        
-        if (item.esRadar) {
-            card.innerHTML = `
-                <div class="stream-media"><iframe class="radar-iframe" src="https://www.flightradar24.com/18.46,-69.90/6" allow="geolocation" loading="lazy"></iframe></div>
-                <div class="card-content">
-                    <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
-                    <div class="event-title">${item.titulo}</div>
-                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
-                    <div class="event-meta"><span>${item.ubicacion} · ${item.distancia}</span></div>
-                    <div class="action-buttons">
-                        <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
-                        <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> <span class="comment-count">${commentsCount}</span></button>
-                        <button class="action-btn share-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span></button>
-                    </div>
-                    <div class="comment-section" id="comment-section-${item.id}">
-                        <div class="comments-header"><div class="comments-count" id="comments-count-${item.id}">${commentsCount} comentarios</div></div>
-                        <div class="comments-list" id="comments-list-${item.id}"></div>
-                        <div class="comment-input-container">
-                            <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Añade un comentario...">
-                            <div class="emoji-picker">
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😊">😊</button>
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="❤️">❤️</button>
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="👍">👍</button>
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😂">😂</button>
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😢">😢</button>
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="🎉">🎉</button>
-                            </div>
-                            <button class="send-comment-btn" id="send-comment-${item.id}">Publicar</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        } else {
-            card.innerHTML = `
-                <div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div>
-                <div class="card-content">
-                    <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
-                    <div class="event-title">${item.titulo}</div>
-                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
-                    <div class="event-meta"><span>${item.ubicacion} · ${item.distancia}</span></div>
-                    <div class="action-buttons">
-                        <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
-                        <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> <span class="comment-count">${commentsCount}</span></button>
-                        <button class="action-btn share-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span></button>
-                        <button class="action-btn report-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span></button>
-                    </div>
-                    <div class="comment-section" id="comment-section-${item.id}">
-                        <div class="comments-header"><div class="comments-count" id="comments-count-${item.id}">${commentsCount} comentarios</div></div>
-                        <div class="comments-list" id="comments-list-${item.id}"></div>
-                        <div class="comment-input-container">
-                            <input type="text" class="comment-input" id="comment-input-${item.id}" placeholder="Añade un comentario...">
-                            <div class="emoji-picker">
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😊">😊</button>
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="❤️">❤️</button>
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="👍">👍</button>
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😂">😂</button>
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="😢">😢</button>
-                                <button class="emoji-btn emoji-btn-${item.id}" data-emoji="🎉">🎉</button>
-                            </div>
-                            <button class="send-comment-btn" id="send-comment-${item.id}">Publicar</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-        return card;
-    }
-    
-    function renderCarousel() { 
-        const container = document.getElementById('carouselContainer'); 
-        container.innerHTML = ''; 
-        allKeTeteos.forEach(item => { 
-            const card = crearCardKeTeteo(item); 
-            container.appendChild(card); 
-            updateCommentsUI(item.id);
-            setupCommentListeners(card, item.id);
-            if (!item.esRadar) attachCardEvents(card, item.id); 
-            else attachRadarEvents(card, item.id);
-        }); 
-    }
-    
-    function openFullscreenRadar(item) {
-        incrementViews(item.id);
-        const fullDiv = document.createElement('div');
-        fullDiv.className = 'fullscreen-stream';
-        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`;
-        document.body.appendChild(fullDiv);
-        fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove());
-    }
-    
-    function attachRadarEvents(card, id) {
-        const likeBtn = card.querySelector('.like-btn');
-        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; saveKeTeteos(); });
-        const shareBtn = card.querySelector('.share-btn');
-        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
-        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn') || e.target.closest('.send-comment-btn') || e.target.closest('.comment-input') || e.target.closest('.emoji-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && item.esRadar) openFullscreenRadar(item); });
-    }
-    
-    function attachCardEvents(card, id) {
-        const likeBtn = card.querySelector('.like-btn');
-        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); });
-        const shareBtn = card.querySelector('.share-btn');
-        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
-        const reportBtn = card.querySelector('.report-btn');
-        if (reportBtn) reportBtn.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
-        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn') || e.target.closest('.send-comment-btn') || e.target.closest('.comment-input') || e.target.closest('.emoji-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } });
-    }
-    
-    function openFullscreenStream(item) { 
-        incrementViews(item.id);
-        const fullDiv = document.createElement('div'); 
-        fullDiv.className = 'fullscreen-stream'; 
-        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; 
-        document.body.appendChild(fullDiv); 
-        fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); 
-    }
-
     function renderPatrociniosSuperior() { 
-        const track = document.getElementById('patrociniosTrackSuperior'); 
-        track.innerHTML = ''; 
+        const track = document.getElementById('patrociniosTrackSuperior'); track.innerHTML = ''; 
         const textosPatrocinio = ["OFERTA SUPER", "BANCO POPULAR", "CONCIERTO EXCLUSIVO", "COMIDA RÁPIDA", "ROPA DE MARCA", "DESCUENTOS ÚNICOS", "EVENTOS ESPECIALES"]; 
         const textosInfinitos = [...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio, ...textosPatrocinio]; 
         textosInfinitos.forEach((texto, index) => { const span = document.createElement('span'); span.className = 'patrocinio-texto-superior'; span.innerText = texto; span.onclick = () => window.open('https://craftmktgroup.com', '_blank'); track.appendChild(span); if (index < textosInfinitos.length - 1) { const separador = document.createElement('span'); separador.className = 'separador-texto'; separador.innerText = '•'; track.appendChild(separador); } }); 
@@ -2076,8 +1872,7 @@
     }
     
     function renderPatrociniosInferior() { 
-        const track = document.getElementById('patrociniosTrackInferior'); 
-        track.innerHTML = ''; 
+        const track = document.getElementById('patrociniosTrackInferior'); track.innerHTML = ''; 
         const anunciosInfinitos = [...anunciosCarrusel3, ...anunciosCarrusel3, ...anunciosCarrusel3, ...anunciosCarrusel3];
         anunciosInfinitos.forEach(anuncio => { const card = document.createElement('div'); card.className = 'patrocinio-card-inferior'; card.onclick = () => { if (anuncio.link && anuncio.link !== '#') window.open(anuncio.link, '_blank'); else alert('Anuncio'); }; card.innerHTML = `<img src="${anuncio.imagen}" alt="Anuncio" onerror="this.src='https://placehold.co/100x80/FF2D55/white?text=Ad'">`; track.appendChild(card); }); 
         setTimeout(() => { configurarAutoScrollInferior(); iniciarAutoScrollInferior(); }, 100); 
@@ -2089,8 +1884,7 @@
     function configurarAutoScrollInferior() { const carousel = document.querySelector('.patrocinios-inferior'); if (!carousel) return; carousel.addEventListener('touchstart', () => { isUserInteractingInferior = true; if (autoScrollTimeoutInferior) clearTimeout(autoScrollTimeoutInferior); }); carousel.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); }); }
     
     function openProximosKeTeteo() { 
-        const container = document.getElementById('proximosEventosList'); 
-        if (!container) return;
+        const container = document.getElementById('proximosEventosList'); if (!container) return;
         container.innerHTML = ''; 
         proximosKeTeteos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--gris-oscuro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${e.titulo}</div><div style="font-size:12px; color:var(--gris-claro);">${e.ubicacion} · ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">PRÓXIMAMENTE</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Recibirás una notificación cuando esté disponible\')">Recordar</button>`; container.appendChild(div); }); 
         const modal = document.getElementById('proximosEventosModal');
@@ -2101,11 +1895,6 @@
     function confirmarEliminar() { if (eliminarId) { const index = allKeTeteos.findIndex(k => k.id == eliminarId); if (index !== -1 && !allKeTeteos[index].esRadar) { allKeTeteos.splice(index, 1); saveKeTeteos(); renderCarousel(); renderMyStreams(); alert('✅ Eliminado'); } } cerrarConfirmarEliminar(); }
     function cerrarConfirmarEliminar() { eliminarId = null; document.getElementById('confirmarEliminarModal').classList.remove('show'); }
     function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${ke.titulo}</strong><br>👁️ ${ke.viewers || 0} vistas | ❤️ ${ke.likes || 0} | 💬 ${(currentComments[ke.id] || []).length}</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">Eliminar</button>`; container.appendChild(div); }); }
-
-    function openSearchModal() { document.getElementById('searchModal').classList.add('show'); document.getElementById('searchInputModal').focus(); }
-    function closeSearchModal() { document.getElementById('searchModal').classList.remove('show'); document.getElementById('searchResultsModal').innerHTML = ''; document.getElementById('searchInputModal').value = ''; }
-    document.getElementById('searchInputModal')?.addEventListener('input', function(e) { const term = e.target.value.toLowerCase(); const results = allKeTeteos.filter(k => k.titulo.toLowerCase().includes(term) || k.nombreCreador.toLowerCase().includes(term)); const container = document.getElementById('searchResultsModal'); if (!term) { container.innerHTML = ''; return; } if (results.length === 0) { container.innerHTML = '<div class="search-result"><div class="title">❌ Sin resultados</div></div>'; return; } container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${k.titulo}</div><div class="desc">${k.nombreCreador} · ${k.ubicacion}</div></div>`).join(''); });
-    function selectSearchResult(id) { closeSearchModal(); const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } else if (item && item.esRadar) { incrementViews(id); openFullscreenRadar(item); } }
 
     function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
     function closeMenu() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
@@ -2118,8 +1907,8 @@
     function logout() { loggedIn = false; currentUser = null; localStorage.removeItem('user'); localStorage.removeItem('userStatus'); localStorage.removeItem('lastActivity'); if (userStatusInterval) clearInterval(userStatusInterval); if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); document.getElementById('welcomeScreen').style.display = 'flex'; document.getElementById('mainScreen').classList.remove('active'); document.getElementById('logoutMenuBtn').style.display = 'none'; document.getElementById('createKeTeteoBtn').style.display = 'none'; closeMenu(); showHomeScreenClean(); }
     function openCreateKeTeteoModal() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } document.getElementById('createKeTeteoModal').classList.add('show'); }
     function closeCreateModal() { document.getElementById('createKeTeteoModal').classList.remove('show'); }
-    function publicarKeTeteo() { if (!loggedIn) { alert('Inicia sesión'); return; } const titulo = document.getElementById('newTitulo').value.trim(); const ubicacion = document.getElementById('newUbicacion').value.trim(); const distancia = document.getElementById('newDistancia').value.trim(); let imagen = document.getElementById('newImagen').value.trim(); const fileInput = document.getElementById('newImagenFile'); if (!titulo || !ubicacion || !distancia) { alert('Completa título, ubicación y distancia'); return; } const nuevoId = Date.now(); if (!imagen && fileInput.files.length > 0) { const reader = new FileReader(); reader.onload = function(e) { imagen = e.target.result; crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen); }; reader.readAsDataURL(fileInput.files[0]); } else { crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen || 'https://via.placeholder.com/400x300?text=KeTeteo'); } }
-    function crearKeTeteoFinal(id, titulo, ubicacion, distancia, imagen) { const nuevoKe = { id, titulo, nombreCreador: currentUser.name, usuario: currentUser.username, ubicacion, distancia, categoria: "Otros", lat: 18.48, lng: -69.91, viewers: 0, likes: 0, imagen }; allKeTeteos.unshift(nuevoKe); currentLikes[nuevoKe.id] = 0; currentComments[nuevoKe.id] = []; currentShares[nuevoKe.id] = 0; currentReports[nuevoKe.id] = []; saveKeTeteos(); renderCarousel(); closeCreateModal(); alert('✅ KeTeteo publicado'); document.getElementById('newTitulo').value = ''; document.getElementById('newUbicacion').value = ''; document.getElementById('newDistancia').value = ''; document.getElementById('newImagen').value = ''; document.getElementById('newImagenFile').value = ''; }
+    function publicarKeTeteo() { if (!loggedIn) { alert('Inicia sesión'); return; } const titulo = document.getElementById('newTitulo').value.trim(); const categoria = document.getElementById('newCategoria').value; const ubicacion = document.getElementById('newUbicacion').value.trim(); const distancia = document.getElementById('newDistancia').value.trim(); let imagen = document.getElementById('newImagen').value.trim(); const fileInput = document.getElementById('newImagenFile'); if (!titulo || !categoria || !ubicacion || !distancia) { alert('Completa título, categoría, ubicación y distancia'); return; } const nuevoId = Date.now(); if (!imagen && fileInput.files.length > 0) { const reader = new FileReader(); reader.onload = function(e) { imagen = e.target.result; crearKeTeteoFinal(nuevoId, titulo, categoria, ubicacion, distancia, imagen); }; reader.readAsDataURL(fileInput.files[0]); } else { crearKeTeteoFinal(nuevoId, titulo, categoria, ubicacion, distancia, imagen || 'https://via.placeholder.com/400x300?text=KeTeteo'); } }
+    function crearKeTeteoFinal(id, titulo, categoria, ubicacion, distancia, imagen) { const nuevoKe = { id, titulo, categoria, nombreCreador: currentUser.name, usuario: currentUser.username, ubicacion, distancia, lat: 18.48, lng: -69.91, viewers: 0, likes: 0, imagen }; allKeTeteos.unshift(nuevoKe); currentLikes[nuevoKe.id] = 0; currentComments[nuevoKe.id] = []; currentShares[nuevoKe.id] = 0; currentReports[nuevoKe.id] = []; saveKeTeteos(); renderCarousel(); closeCreateModal(); alert('✅ KeTeteo publicado'); document.getElementById('newTitulo').value = ''; document.getElementById('newCategoria').value = ''; document.getElementById('newUbicacion').value = ''; document.getElementById('newDistancia').value = ''; document.getElementById('newImagen').value = ''; document.getElementById('newImagenFile').value = ''; }
     function showMainScreen() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
     function showHomeScreenClean() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
     function showProfileScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
