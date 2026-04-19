@@ -30,7 +30,6 @@
             --azul: #007AFF;
         }
 
-        /* ========== ICONOS SVG ========== */
         .icon-svg {
             display: inline-flex;
             align-items: center;
@@ -47,27 +46,14 @@
             fill: none;
         }
         
-        .icon-svg.fill svg {
-            fill: #FF6B00;
-            stroke: none;
-        }
-        
-        /* Tamaños específicos */
         .nav-icon .icon-svg { width: 28px; height: 28px; }
         .action-btn .icon-svg { width: 18px; height: 18px; }
         .live-badge .icon-svg { width: 10px; height: 10px; }
-        .side-menu button .icon-svg { width: 24px; height: 24px; margin-right: 12px; }
         .password-toggle .icon-svg { width: 20px; height: 20px; }
         .profile-btn .icon-svg { width: 16px; height: 16px; margin-right: 6px; }
         .contact-icon .icon-svg { width: 20px; height: 20px; }
-        
-        /* Botón hamburguesa más grande */
-        .hamburger .icon-svg {
-            width: 32px;
-            height: 32px;
-        }
+        .hamburger .icon-svg { width: 32px; height: 32px; }
 
-        /* ========== HEADER ========== */
         .header {
             position: fixed;
             top: 0;
@@ -108,7 +94,6 @@
             width: 40px;
         }
 
-        /* ========== COMPENSACIÓN PARA TODAS LAS PANTALLAS ========== */
         #mainScreen,
         #profileScreen,
         #configScreen,
@@ -118,7 +103,6 @@
             padding-top: 96px;
         }
 
-        /* ========== DIVISORES ========== */
         .divider-naranja {
             margin: 8px 0;
             border: none;
@@ -127,7 +111,6 @@
             width: 100%;
         }
 
-        /* ========== CARRUSEL 1 ========== */
         .patrocinios-superior {
             overflow-x: auto;
             scroll-behavior: smooth;
@@ -168,7 +151,6 @@
             letter-spacing: 4px;
         }
         
-        /* ========== CARRUSEL 2 ========== */
         .carousel-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -249,7 +231,6 @@
         .send-comment { background: var(--rojo-logo); border: none; border-radius: 20px; padding: 8px 16px; color: white; font-weight: 600; cursor: pointer; font-size: 12px; }
         .comments-list { margin-top: 8px; font-size: 11px; color: var(--gris-claro); max-height: 80px; overflow-y: auto; }
 
-        /* ========== CARRUSEL 3 ========== */
         .patrocinios-inferior {
             overflow-x: auto;
             scroll-behavior: smooth;
@@ -277,7 +258,6 @@
         .patrocinio-card-inferior:active { transform: scale(0.96); }
         .patrocinio-card-inferior img { width: 100%; height: 80px; object-fit: cover; border-radius: 10px; }
 
-        /* ========== PANTALLA COMPLETA ========== */
         .fullscreen-stream {
             position: fixed;
             top: 0;
@@ -318,7 +298,6 @@
             padding: 24px 16px 40px;
         }
 
-        /* ========== BOTTOM NAV ========== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -344,12 +323,10 @@
         .nav-icon { font-size: 22px; }
         .nav-label { font-size: 10px; color: var(--gris-claro); }
 
-        /* Ocultar barra inferior en pantalla de bienvenida */
         body:has(#welcomeScreen[style*="flex"]) .bottom-nav {
             display: none;
         }
 
-        /* ========== MODALES ========== */
         .modal {
             position: fixed;
             top: 0;
@@ -456,7 +433,6 @@
         }
         .btn-gris:active { transform: scale(0.97); background: var(--rojo-logo); color: white; }
 
-        /* ========== PERFIL ========== */
         .profile-modern { margin-top: 0; padding: 20px; }
         .avatar-wrapper {
             position: relative;
@@ -724,7 +700,6 @@
         }
         .horiz-btn:active { transform: scale(0.97); background: var(--rojo-logo); }
         
-        /* Pantalla de grupos */
         .groups-container {
             padding: 20px;
         }
@@ -737,7 +712,9 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            cursor: pointer;
         }
+        .group-card:active { transform: scale(0.98); background: var(--gris-medio); }
         .group-avatar {
             width: 50px;
             height: 50px;
@@ -817,49 +794,36 @@
 </head>
 <body>
 
-<!-- BIENVENIDA -->
 <div id="welcomeScreen" class="welcome">
     <div class="logo-container" style="margin-bottom: 30px;">
         <img src="ketelogo.jpg" alt="KeTeteoLive" style="max-height: 80px; width: auto; object-fit: contain;">
     </div>
-    <button class="btn-primary" onclick="openRegister()">
-        Crear cuenta
-    </button>
-    <button class="btn-secondary" onclick="openLogin()">
-        Iniciar sesión
-    </button>
+    <button class="btn-primary" onclick="openRegister()">Crear cuenta</button>
+    <button class="btn-secondary" onclick="openLogin()">Iniciar sesión</button>
 </div>
 
-<!-- PANTALLA PRINCIPAL -->
 <div id="mainScreen" class="screen">
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()">
             <span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span>
         </button>
         <div class="logo-container">
-            <img src="ketelogo.jpg" alt="KeTeteoLive" class="logo-img" onerror="this.src='https://placehold.co/200x60/FF2D55/white?text=KeTeteoLive'">
+            <img src="ketelogo.jpg" alt="KeTeteoLive" class="logo-img">
         </div>
         <div class="header-spacer"></div>
     </div>
-
     <hr class="divider-naranja">
-
     <div class="patrocinios-superior" id="patrociniosSuperior">
         <div class="patrocinios-track-superior" id="patrociniosTrackSuperior"></div>
     </div>
-
     <hr class="divider-naranja">
-
     <div id="carouselContainer" class="carousel-container"></div>
-
     <hr class="divider-naranja">
-
     <div class="patrocinios-inferior" id="patrociniosInferior">
         <div class="patrocinios-track-inferior" id="patrociniosTrackInferior"></div>
     </div>
 </div>
 
-<!-- PANTALLA DE GRUPOS -->
 <div id="groupsScreen" class="screen">
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()">
@@ -875,12 +839,11 @@
     </div>
 </div>
 
-<!-- MODAL CREAR GRUPO -->
 <div id="createGroupModal" class="modal">
     <div class="modal-content">
         <h3>➕ Crear Grupo</h3>
         <div class="foto-preview" onclick="document.getElementById('groupPhotoInput').click()">
-            <img id="groupFotoPreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E" style="width:100%; height:100%; object-fit:cover;">
+            <img id="groupFotoPreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E">
         </div>
         <input type="file" id="groupPhotoInput" accept="image/*" style="display:none;" onchange="previewGroupPhoto(event)">
         <input type="text" id="groupNombre" placeholder="Nombre del grupo *" required>
@@ -898,7 +861,6 @@
     </div>
 </div>
 
-<!-- MODAL UNIRSE A GRUPO -->
 <div id="joinGroupModal" class="modal">
     <div class="modal-content">
         <h3>🔗 Unirse a Grupo</h3>
@@ -911,39 +873,17 @@
     </div>
 </div>
 
-<!-- MENÚ LATERAL ACTUALIZADO (SIN ICONOS NO NARANJA) -->
 <div id="sideMenu" class="side-menu">
-    <button onclick="openRegister(); closeMenu()">
-        Registrarse
-    </button>
-    <button onclick="openLogin(); closeMenu()">
-        Iniciar sesión
-    </button>
-    <button id="createKeTeteoBtn" onclick="openCreateKeTeteoModal(); closeMenu()">
-        Crear KeTeteoLive
-    </button>
-    <button onclick="showProfileScreen(); closeMenu()">
-        Mi perfil
-    </button>
-    <button onclick="showMyStreamsScreen(); closeMenu()">
-         Mis KeTeteos
-    </button>
-    <button onclick="showGroupsScreen(); closeMenu()">
-         Mis Grupos KeTeteoLive
-    </button>
-    <button onclick="showConfigScreen(); closeMenu()">
-        Configuración
-    </button>
-    <button onclick="showLanguageScreen(); closeMenu()">
-        Idioma
-    </button>
-    <button onclick="logout(); closeMenu()" id="logoutMenuBtn" style="display:none;">
-        Cerrar sesión
-    </button>
+    <button id="createKeTeteoBtn" onclick="openCreateKeTeteoModal(); closeMenu()">Crear KeTeteoLive</button>
+    <button onclick="showProfileScreen(); closeMenu()">Mi perfil</button>
+    <button onclick="showMyStreamsScreen(); closeMenu()">📋 Mis KeTeteos</button>
+    <button onclick="showGroupsScreen(); closeMenu()">👥 Mis Grupos KeTeteoLive</button>
+    <button onclick="showConfigScreen(); closeMenu()">Configuración</button>
+    <button onclick="showLanguageScreen(); closeMenu()">Idioma</button>
+    <button onclick="logout(); closeMenu()" id="logoutMenuBtn" style="display:none;">Cerrar sesión</button>
 </div>
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
-<!-- MODALES EXISTENTES (se mantienen igual) -->
 <div id="registerModal" class="modal">
     <div class="modal-content">
         <h3>Crear cuenta</h3>
@@ -1034,7 +974,6 @@
     <button class="btn-gris" onclick="closeLegalModal()">Cerrar</button>
 </div></div>
 
-<!-- PERFIL -->
 <div id="profileScreen" class="screen">
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button>
@@ -1043,12 +982,12 @@
     </div>
     <div class="profile-modern">
         <div class="avatar-wrapper" onclick="uploadProfilePhoto()"><div class="avatar-ring"></div><img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7"><div class="avatar-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span></div></div>
-        <div class="user-info"><div class="user-name" id="profileName">Jomany</div><div class="user-handle" id="profileUsername">@jomany</div><div class="user-status" id="userStatus"><div class="status-dot status-online"></div><span class="status-text" id="statusText">En línea</span></div><div class="user-bio" id="profileBio">Amante de los eventos en vivo</div></div>
-        <div class="stats-modern"><div class="stat-card"><div class="stat-value" id="followersCount">1.2K</div><div class="stat-label">seguidores</div></div><div class="stat-card"><div class="stat-value" id="followingCount">567</div><div class="stat-label">siguiendo</div></div><div class="stat-card"><div class="stat-value" id="teteosCount">12</div><div class="stat-label">teteos</div></div></div>
+        <div class="user-info"><div class="user-name" id="profileName"></div><div class="user-handle" id="profileUsername"></div><div class="user-status" id="userStatus"><div class="status-dot status-online"></div><span class="status-text" id="statusText">En línea</span></div><div class="user-bio" id="profileBio"></div></div>
+        <div class="stats-modern"><div class="stat-card"><div class="stat-value" id="followersCount">0</div><div class="stat-label">seguidores</div></div><div class="stat-card"><div class="stat-value" id="followingCount">0</div><div class="stat-label">siguiendo</div></div><div class="stat-card"><div class="stat-value" id="teteosCount">0</div><div class="stat-label">teteos</div></div></div>
         <div class="profile-buttons"><button class="profile-btn" onclick="openEditProfile()">Editar perfil</button><button class="profile-btn" onclick="shareProfile()">Compartir</button></div>
         <div class="contact-modern"><div style="font-size:13px; font-weight:600; color:var(--gris-claro); margin-bottom:12px;">Contacto</div>
-            <div class="contact-row" onclick="copyEmail()"><div class="contact-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span></div><div class="contact-value" id="userEmail">jomanicompanygroup@gmail.com</div><div class="contact-copy">copiar</div></div>
-            <div class="contact-row" onclick="copyPhone()"><div class="contact-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></span></div><div class="contact-value" id="userPhone">+1 809 555 1234</div><div class="contact-copy">copiar</div></div>
+            <div class="contact-row" onclick="copyEmail()"><div class="contact-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span></div><div class="contact-value" id="userEmail"></div><div class="contact-copy">copiar</div></div>
+            <div class="contact-row" onclick="copyPhone()"><div class="contact-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></span></div><div class="contact-value" id="userPhone"></div><div class="contact-copy">copiar</div></div>
         </div>
     </div>
 </div>
@@ -1083,7 +1022,6 @@
 
 <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
-<!-- BOTTOM NAV (BOTÓN INICIO CORREGIDO) -->
 <div class="bottom-nav">
     <div class="nav-item" onclick="scrollToTop()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-7H9v7H5a2 2 0 0 1-2-2z"/></svg></span></div><div class="nav-label">Inicio</div></div>
     <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span></div><div class="nav-label">Buscar</div></div>
@@ -1093,7 +1031,6 @@
 </div>
 
 <script>
-    // ================= DATOS GLOBALES =================
     let loggedIn = false;
     let currentUser = null;
     let allKeTeteos = [];
@@ -1112,12 +1049,8 @@
     let allGroups = [];
     let currentGroupCode = "";
 
-    // ================= FUNCIÓN SCROLL TO TOP (NUEVA) =================
     function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
         document.getElementById('mainScreen').classList.add('active');
     }
@@ -1128,7 +1061,6 @@
         document.getElementById('mainScreen').classList.add('active');
     }
 
-    // ================= FUNCIONES DE GRUPOS =================
     function loadGroups() {
         const stored = localStorage.getItem('keTeteoGroups');
         if (stored) {
@@ -1311,7 +1243,6 @@
         }
     });
 
-    // ================= ESTADO DEL USUARIO =================
     let userStatusInterval = null;
     let lastActivity = Date.now();
     let userStatus = "online";
@@ -1344,6 +1275,7 @@
     }
 
     function actualizarActividad() { lastActivity = Date.now(); actualizarEstadoUsuario(); }
+    
     function iniciarSeguimientoEstado() {
         if (userStatusInterval) clearInterval(userStatusInterval);
         userStatusInterval = setInterval(actualizarEstadoUsuario, 10000);
@@ -1356,7 +1288,6 @@
         actualizarEstadoUsuario();
     }
 
-    // ANUNCIOS CARRUSEL 3
     const anunciosCarrusel3 = [
         { id: 1, imagen: "https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png", link: "https://www.instagram.com/chefdonmarco/" },
         { id: 2, imagen: "yobuskologo.jpg", link: "https://yobusko.com" },
@@ -1366,7 +1297,6 @@
         { id: 6, imagen: "https://placehold.co/100x80/FF6B00/white?text=Anuncio2", link: "#" }
     ];
 
-    // Próximos KeTeteos
     const proximosKeTeteos = [
         { titulo: "🎵 Concierto Juan Luis Guerra", ubicacion: "Estadio Olímpico", fecha: "15/05/2025", destacado: true },
         { titulo: "🎉 Fiesta 90's en Azotea", ubicacion: "Gazcue", fecha: "20/05/2025", destacado: false },
@@ -1374,7 +1304,6 @@
         { titulo: "⚽ Final de Fútbol", ubicacion: "Estadio Quisqueya", fecha: "25/05/2025", destacado: true }
     ];
 
-    // Eventos iniciales
     const initialKeTeteos = [
         { id: 1, titulo: "Concierto Rock", nombreCreador: "Juan Luis Guerra", usuario: "@juanluis", ubicacion: "Estadio Olímpico", distancia: "0.8 km", categoria: "Concierto", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, imagen: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400&h=300&fit=crop" },
         { id: 2, titulo: "Fiesta 90's", nombreCreador: "Maria Garcia", usuario: "@maria_garcia", ubicacion: "Gazcue", distancia: "0.3 km", categoria: "Fiesta", lat: 18.47, lng: -69.91, viewers: 3452, likes: 567, imagen: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=300&fit=crop" },
@@ -1410,9 +1339,28 @@
             if (!currentComments[item.id]) currentComments[item.id] = [];
         });
     }
+    
     function saveKeTeteos() { localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
-    function getUserLocation() { return new Promise((resolve, reject) => { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((pos) => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(userLocation); }, () => { reject(null); }); } else { reject(null); } }); }
-    function calcularDistancia(lat1, lng1, lat2, lng2) { const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLng = (lng2 - lng1) * Math.PI / 180; const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2); const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); return R * c; }
+    
+    function getUserLocation() { 
+        return new Promise((resolve, reject) => { 
+            if (navigator.geolocation) { 
+                navigator.geolocation.getCurrentPosition((pos) => { 
+                    userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; 
+                    resolve(userLocation); 
+                }, () => { reject(null); }); 
+            } else { reject(null); } 
+        }); 
+    }
+    
+    function calcularDistancia(lat1, lng1, lat2, lng2) { 
+        const R = 6371; 
+        const dLat = (lat2 - lat1) * Math.PI / 180; 
+        const dLng = (lng2 - lng1) * Math.PI / 180; 
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2); 
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        return R * c; 
+    }
     
     async function ordenarKeTeteosPorCercania() {
         if (!userLocation) {
@@ -1437,8 +1385,6 @@
         }
     }
 
-    function mostrarKeTeteosFiltrados(keTeteosFiltrados) { const container = document.getElementById('carouselContainer'); container.innerHTML = ''; keTeteosFiltrados.forEach(item => { const card = crearCardKeTeteo(item); container.appendChild(card); if (!item.esRadar) attachCardEvents(card, item.id); else attachRadarEvents(card, item.id); }); }
-    
     function crearCardKeTeteo(item) {
         const card = document.createElement('div');
         card.className = 'ke-teteo-card';
@@ -1578,21 +1524,101 @@
     }
     
     function attachCardEvents(card, id) {
-        const likeBtn = card.querySelector('.like-btn'); if (likeBtn) { likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; const likeSpan = likeBtn.querySelector('.like-count'); if (likeSpan) likeSpan.innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); }); }
-        const commentToggle = card.querySelector('.comment-toggle'); const commentRow = card.querySelector(`#comment-row-${id}`); if (commentToggle && commentRow) { commentToggle.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } commentRow.style.display = commentRow.style.display === 'flex' ? 'none' : 'flex'; }); }
-        const sendBtn = card.querySelector('.send-comment'); if (sendBtn) { sendBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } const input = document.getElementById(`comment-input-${id}`); const text = input.value.trim(); if (text) { if (!currentComments[id]) currentComments[id] = []; currentComments[id].unshift({ user: currentUser ? currentUser.username : '@anonimo', text: text, time: new Date().toLocaleTimeString() }); input.value = ''; updateCommentsUI(id); localStorage.setItem(`comments_${id}`, JSON.stringify(currentComments[id])); } }); }
-        const shareBtn = card.querySelector('.share-btn'); if (shareBtn) { shareBtn.addEventListener('click', (e) => { e.stopPropagation(); alert(`Compartir KeTeteo`); }); }
-        const reportBtn = card.querySelector('.report-btn'); if (reportBtn) { reportBtn.addEventListener('click', (e) => { e.stopPropagation(); reporteKeTeteoId = id; document.getElementById('reporteModal').classList.add('show'); }); }
+        const likeBtn = card.querySelector('.like-btn'); 
+        if (likeBtn) { 
+            likeBtn.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                if (!loggedIn) { alert('Inicia sesión'); return; } 
+                currentLikes[id] = (currentLikes[id] || 0) + 1; 
+                const likeSpan = likeBtn.querySelector('.like-count'); 
+                if (likeSpan) likeSpan.innerText = currentLikes[id]; 
+                const ke = allKeTeteos.find(k => k.id == id); 
+                if (ke) ke.likes = currentLikes[id]; 
+                saveKeTeteos(); 
+            }); 
+        }
+        const commentToggle = card.querySelector('.comment-toggle'); 
+        const commentRow = card.querySelector(`#comment-row-${id}`); 
+        if (commentToggle && commentRow) { 
+            commentToggle.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                if (!loggedIn) { alert('Inicia sesión'); return; } 
+                commentRow.style.display = commentRow.style.display === 'flex' ? 'none' : 'flex'; 
+            }); 
+        }
+        const sendBtn = card.querySelector('.send-comment'); 
+        if (sendBtn) { 
+            sendBtn.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                if (!loggedIn) { alert('Inicia sesión'); return; } 
+                const input = document.getElementById(`comment-input-${id}`); 
+                const text = input.value.trim(); 
+                if (text) { 
+                    if (!currentComments[id]) currentComments[id] = []; 
+                    currentComments[id].unshift({ user: currentUser ? currentUser.username : '@anonimo', text: text, time: new Date().toLocaleTimeString() }); 
+                    input.value = ''; 
+                    updateCommentsUI(id); 
+                    localStorage.setItem(`comments_${id}`, JSON.stringify(currentComments[id])); 
+                } 
+            }); 
+        }
+        const shareBtn = card.querySelector('.share-btn'); 
+        if (shareBtn) { 
+            shareBtn.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                alert(`Compartir KeTeteo`); 
+            }); 
+        }
+        const reportBtn = card.querySelector('.report-btn'); 
+        if (reportBtn) { 
+            reportBtn.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                reporteKeTeteoId = id; 
+                document.getElementById('reporteModal').classList.add('show'); 
+            }); 
+        }
         updateCommentsUI(id);
-        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn') || e.target.closest('.send-comment') || e.target.closest('.comment-input')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) openFullscreenStream(item); });
+        card.addEventListener('click', (e) => { 
+            if (e.target.closest('.action-btn') || e.target.closest('.send-comment') || e.target.closest('.comment-input')) return; 
+            const item = allKeTeteos.find(k => k.id == id); 
+            if (item && !item.esRadar) openFullscreenStream(item); 
+        });
     }
     
-    function updateCommentsUI(id) { const container = document.getElementById(`comments-list-${id}`); if (!container) return; const commentsList = currentComments[id] || []; if (commentsList.length === 0) { container.innerHTML = ''; return; } container.innerHTML = commentsList.map(c => `<div style="margin-bottom: 6px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 12px;"><strong style="color: #FF2D55; font-size: 10px;">${c.user}</strong> <span style="font-size: 9px; color:#8E8E93;">${c.time || ''}</span><br><span style="font-size: 10px;">${c.text}</span></div>`).join(''); }
-    function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
-    function enviarReporte(motivo) { if (!loggedIn) { alert('Inicia sesión'); cerrarReporteModal(); return; } alert(`✅ Reporte enviado: ${motivo}`); cerrarReporteModal(); }
-    function cerrarReporteModal() { document.getElementById('reporteModal').classList.remove('show'); reporteKeTeteoId = null; }
+    function updateCommentsUI(id) { 
+        const container = document.getElementById(`comments-list-${id}`); 
+        if (!container) return; 
+        const commentsList = currentComments[id] || []; 
+        if (commentsList.length === 0) { 
+            container.innerHTML = ''; 
+            return; 
+        } 
+        container.innerHTML = commentsList.map(c => `<div style="margin-bottom: 6px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 12px;"><strong style="color: #FF2D55; font-size: 10px;">${c.user}</strong> <span style="font-size: 9px; color:#8E8E93;">${c.time || ''}</span><br><span style="font-size: 10px;">${c.text}</span></div>`).join(''); 
+    }
+    
+    function openFullscreenStream(item) { 
+        const fullDiv = document.createElement('div'); 
+        fullDiv.className = 'fullscreen-stream'; 
+        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; 
+        document.body.appendChild(fullDiv); 
+        fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); 
+    }
+    
+    function enviarReporte(motivo) { 
+        if (!loggedIn) { 
+            alert('Inicia sesión'); 
+            cerrarReporteModal(); 
+            return; 
+        } 
+        alert(`✅ Reporte enviado: ${motivo}`); 
+        cerrarReporteModal(); 
+    }
+    
+    function cerrarReporteModal() { 
+        document.getElementById('reporteModal').classList.remove('show'); 
+        reporteKeTeteoId = null; 
+    }
 
-    // PATROCINIOS
     function renderPatrociniosSuperior() { 
         const track = document.getElementById('patrociniosTrackSuperior'); 
         track.innerHTML = ''; 
@@ -1697,56 +1723,433 @@
     }
     
     function closeProximosEventos() { document.getElementById('proximosEventosModal').classList.remove('show'); }
-    function abrirConfirmarEliminar(id, titulo) { eliminarId = id; document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`; document.getElementById('confirmarEliminarModal').classList.add('show'); }
-    function confirmarEliminar() { if (eliminarId) { const index = allKeTeteos.findIndex(k => k.id == eliminarId); if (index !== -1 && !allKeTeteos[index].esRadar) { allKeTeteos.splice(index, 1); saveKeTeteos(); renderCarousel(); renderMyStreams(); alert('✅ Eliminado'); } } cerrarConfirmarEliminar(); }
-    function cerrarConfirmarEliminar() { eliminarId = null; document.getElementById('confirmarEliminarModal').classList.remove('show'); }
-    function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${ke.titulo}</strong><br>👁️ ${ke.viewers || 0} vistas</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">Eliminar</button>`; container.appendChild(div); }); }
+    
+    function abrirConfirmarEliminar(id, titulo) { 
+        eliminarId = id; 
+        document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`; 
+        document.getElementById('confirmarEliminarModal').classList.add('show'); 
+    }
+    
+    function confirmarEliminar() { 
+        if (eliminarId) { 
+            const index = allKeTeteos.findIndex(k => k.id == eliminarId); 
+            if (index !== -1 && !allKeTeteos[index].esRadar) { 
+                allKeTeteos.splice(index, 1); 
+                saveKeTeteos(); 
+                renderCarousel(); 
+                renderMyStreams(); 
+                alert('✅ Eliminado'); 
+            } 
+        } 
+        cerrarConfirmarEliminar(); 
+    }
+    
+    function cerrarConfirmarEliminar() { 
+        eliminarId = null; 
+        document.getElementById('confirmarEliminarModal').classList.remove('show'); 
+    }
+    
+    function renderMyStreams() { 
+        const container = document.getElementById('myStreamsList'); 
+        const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); 
+        if (misKeTeteos.length === 0) { 
+            container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; 
+            return; 
+        } 
+        container.innerHTML = ''; 
+        misKeTeteos.forEach(ke => { 
+            const div = document.createElement('div'); 
+            div.className = 'my-stream-card'; 
+            div.innerHTML = `<div><strong>${ke.titulo}</strong><br>👁️ ${ke.viewers || 0} vistas</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">Eliminar</button>`; 
+            container.appendChild(div); 
+        }); 
+    }
 
-    // BÚSQUEDA
-    function openSearchModal() { document.getElementById('searchModal').classList.add('show'); document.getElementById('searchInputModal').focus(); }
-    function closeSearchModal() { document.getElementById('searchModal').classList.remove('show'); document.getElementById('searchResultsModal').innerHTML = ''; document.getElementById('searchInputModal').value = ''; }
-    document.getElementById('searchInputModal')?.addEventListener('input', function(e) { const term = e.target.value.toLowerCase(); const results = allKeTeteos.filter(k => k.titulo.toLowerCase().includes(term) || k.nombreCreador.toLowerCase().includes(term)); const container = document.getElementById('searchResultsModal'); if (!term) { container.innerHTML = ''; return; } if (results.length === 0) { container.innerHTML = '<div class="search-result"><div class="title">❌ Sin resultados</div></div>'; return; } container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${k.titulo}</div><div class="desc">${k.nombreCreador} · ${k.ubicacion}</div></div>`).join(''); });
-    function selectSearchResult(id) { closeSearchModal(); const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) openFullscreenStream(item); else if (item && item.esRadar) openFullscreenRadar(item); }
+    function openSearchModal() { 
+        document.getElementById('searchModal').classList.add('show'); 
+        document.getElementById('searchInputModal').focus(); 
+    }
+    
+    function closeSearchModal() { 
+        document.getElementById('searchModal').classList.remove('show'); 
+        document.getElementById('searchResultsModal').innerHTML = ''; 
+        document.getElementById('searchInputModal').value = ''; 
+    }
+    
+    document.getElementById('searchInputModal')?.addEventListener('input', function(e) { 
+        const term = e.target.value.toLowerCase(); 
+        const results = allKeTeteos.filter(k => k.titulo.toLowerCase().includes(term) || k.nombreCreador.toLowerCase().includes(term)); 
+        const container = document.getElementById('searchResultsModal'); 
+        if (!term) { 
+            container.innerHTML = ''; 
+            return; 
+        } 
+        if (results.length === 0) { 
+            container.innerHTML = '<div class="search-result"><div class="title">❌ Sin resultados</div></div>'; 
+            return; 
+        } 
+        container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${k.titulo}</div><div class="desc">${k.nombreCreador} · ${k.ubicacion}</div></div>`).join(''); 
+    });
+    
+    function selectSearchResult(id) { 
+        closeSearchModal(); 
+        const item = allKeTeteos.find(k => k.id == id); 
+        if (item && !item.esRadar) openFullscreenStream(item); 
+        else if (item && item.esRadar) openFullscreenRadar(item); 
+    }
 
-    // AUTENTICACIÓN
-    function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
-    function closeMenu() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
-    function togglePassword(id) { const input = document.getElementById(id); if (input.type === 'password') { input.type = 'text'; } else { input.type = 'password'; } }
-    function openRegister() { closeModals(); document.getElementById('registerModal').classList.add('show'); }
-    function openLogin() { closeModals(); document.getElementById('loginModal').classList.add('show'); }
-    function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('show')); }
-    function register() { const name = document.getElementById('regName').value; const user = document.getElementById('regUser').value; const email = document.getElementById('regEmail').value; const pass = document.getElementById('regPass').value; const confirm = document.getElementById('regConfirmPass').value; if (!name || !user || !email || !pass || !confirm) { alert('Completa todos los campos'); return; } if (pass !== confirm) { alert('Contraseñas no coinciden'); return; } if (pass.length < 6) { alert('La contraseña debe tener al menos 6 caracteres'); return; } currentUser = { name, username: user.startsWith('@') ? user : '@'+user, email, bio: 'Amante de los eventos en vivo 🎉' }; localStorage.setItem('user', JSON.stringify(currentUser)); loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); alert('✅ Cuenta creada'); }
-    function login() { const email = document.getElementById('loginEmail').value; const pass = document.getElementById('loginPass').value; if (email && pass) { const stored = localStorage.getItem('user'); if (stored) currentUser = JSON.parse(stored); else currentUser = { name: 'Usuario', username: '@usuario', email, bio: 'Amante de los eventos en vivo 🎉' }; loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); } else alert('Ingresa email y contraseña'); }
-    function logout() { loggedIn = false; currentUser = null; localStorage.removeItem('user'); localStorage.removeItem('userStatus'); localStorage.removeItem('lastActivity'); if (userStatusInterval) clearInterval(userStatusInterval); if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); document.getElementById('welcomeScreen').style.display = 'flex'; document.getElementById('mainScreen').classList.remove('active'); document.getElementById('logoutMenuBtn').style.display = 'none'; document.getElementById('createKeTeteoBtn').style.display = 'none'; closeMenu(); showHomeScreenClean(); }
-    function openCreateKeTeteoModal() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } document.getElementById('createKeTeteoModal').classList.add('show'); }
-    function closeCreateModal() { document.getElementById('createKeTeteoModal').classList.remove('show'); }
-    function publicarKeTeteo() { if (!loggedIn) { alert('Inicia sesión'); return; } const titulo = document.getElementById('newTitulo').value.trim(); const ubicacion = document.getElementById('newUbicacion').value.trim(); const distancia = document.getElementById('newDistancia').value.trim(); let imagen = document.getElementById('newImagen').value.trim(); const fileInput = document.getElementById('newImagenFile'); if (!titulo || !ubicacion || !distancia) { alert('Completa título, ubicación y distancia'); return; } const nuevoId = Date.now(); if (!imagen && fileInput.files.length > 0) { const reader = new FileReader(); reader.onload = function(e) { imagen = e.target.result; crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen); }; reader.readAsDataURL(fileInput.files[0]); } else { crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen || 'https://via.placeholder.com/400x300?text=KeTeteo'); } }
-    function crearKeTeteoFinal(id, titulo, ubicacion, distancia, imagen) { const nuevoKe = { id: id, titulo: titulo, nombreCreador: currentUser.name, usuario: currentUser.username, ubicacion: ubicacion, distancia: distancia, categoria: "Otros", lat: 18.48, lng: -69.91, viewers: 0, likes: 0, imagen: imagen }; allKeTeteos.unshift(nuevoKe); currentLikes[nuevoKe.id] = 0; currentComments[nuevoKe.id] = []; saveKeTeteos(); renderCarousel(); closeCreateModal(); alert('✅ KeTeteo publicado'); document.getElementById('newTitulo').value = ''; document.getElementById('newUbicacion').value = ''; document.getElementById('newDistancia').value = ''; document.getElementById('newImagen').value = ''; document.getElementById('newImagenFile').value = ''; }
-    function showMainScreen() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
+    function toggleMenu() { 
+        document.getElementById('sideMenu').classList.toggle('open'); 
+        document.getElementById('overlay').classList.toggle('show'); 
+    }
+    
+    function closeMenu() { 
+        document.getElementById('sideMenu').classList.remove('open'); 
+        document.getElementById('overlay').classList.remove('show'); 
+    }
+    
+    function togglePassword(id) { 
+        const input = document.getElementById(id); 
+        if (input.type === 'password') { 
+            input.type = 'text'; 
+        } else { 
+            input.type = 'password'; 
+        } 
+    }
+    
+    function openRegister() { 
+        closeModals(); 
+        document.getElementById('registerModal').classList.add('show'); 
+    }
+    
+    function openLogin() { 
+        closeModals(); 
+        document.getElementById('loginModal').classList.add('show'); 
+    }
+    
+    function closeModals() { 
+        document.querySelectorAll('.modal').forEach(m => m.classList.remove('show')); 
+    }
+    
+    function register() { 
+        const name = document.getElementById('regName').value; 
+        const user = document.getElementById('regUser').value; 
+        const email = document.getElementById('regEmail').value; 
+        const pass = document.getElementById('regPass').value; 
+        const confirm = document.getElementById('regConfirmPass').value; 
+        if (!name || !user || !email || !pass || !confirm) { 
+            alert('Completa todos los campos'); 
+            return; 
+        } 
+        if (pass !== confirm) { 
+            alert('Contraseñas no coinciden'); 
+            return; 
+        } 
+        if (pass.length < 6) { 
+            alert('La contraseña debe tener al menos 6 caracteres'); 
+            return; 
+        } 
+        currentUser = { 
+            name: name, 
+            username: user.startsWith('@') ? user : '@'+user, 
+            email: email, 
+            bio: 'Amante de los eventos en vivo 🎉',
+            phone: ''
+        }; 
+        localStorage.setItem('user', JSON.stringify(currentUser)); 
+        localStorage.setItem('userPhone', '');
+        loggedIn = true; 
+        closeModals(); 
+        showMainScreen(); 
+        document.getElementById('logoutMenuBtn').style.display = 'block'; 
+        document.getElementById('createKeTeteoBtn').style.display = 'block'; 
+        loadProfileData(); 
+        iniciarSeguimientoEstado(); 
+        alert('✅ Cuenta creada'); 
+    }
+    
+    function login() { 
+        const email = document.getElementById('loginEmail').value; 
+        const pass = document.getElementById('loginPass').value; 
+        if (email && pass) { 
+            const stored = localStorage.getItem('user'); 
+            if (stored) {
+                currentUser = JSON.parse(stored);
+            } else { 
+                currentUser = { 
+                    name: 'Usuario', 
+                    username: '@usuario', 
+                    email: email, 
+                    bio: 'Amante de los eventos en vivo 🎉',
+                    phone: ''
+                }; 
+                localStorage.setItem('user', JSON.stringify(currentUser));
+            } 
+            loggedIn = true; 
+            closeModals(); 
+            showMainScreen(); 
+            document.getElementById('logoutMenuBtn').style.display = 'block'; 
+            document.getElementById('createKeTeteoBtn').style.display = 'block'; 
+            loadProfileData(); 
+            iniciarSeguimientoEstado(); 
+        } else alert('Ingresa email y contraseña'); 
+    }
+    
+    function logout() { 
+        loggedIn = false; 
+        currentUser = null; 
+        localStorage.removeItem('user'); 
+        localStorage.removeItem('userStatus'); 
+        localStorage.removeItem('lastActivity'); 
+        if (userStatusInterval) clearInterval(userStatusInterval); 
+        if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); 
+        document.getElementById('welcomeScreen').style.display = 'flex'; 
+        document.getElementById('mainScreen').classList.remove('active'); 
+        document.getElementById('logoutMenuBtn').style.display = 'none'; 
+        document.getElementById('createKeTeteoBtn').style.display = 'none'; 
+        closeMenu(); 
+        showHomeScreenClean(); 
+    }
+    
+    function openCreateKeTeteoModal() { 
+        if (!loggedIn) { 
+            alert('Debes iniciar sesión'); 
+            return; 
+        } 
+        document.getElementById('createKeTeteoModal').classList.add('show'); 
+    }
+    
+    function closeCreateModal() { 
+        document.getElementById('createKeTeteoModal').classList.remove('show'); 
+    }
+    
+    function publicarKeTeteo() { 
+        if (!loggedIn) { 
+            alert('Inicia sesión'); 
+            return; 
+        } 
+        const titulo = document.getElementById('newTitulo').value.trim(); 
+        const ubicacion = document.getElementById('newUbicacion').value.trim(); 
+        const distancia = document.getElementById('newDistancia').value.trim(); 
+        let imagen = document.getElementById('newImagen').value.trim(); 
+        const fileInput = document.getElementById('newImagenFile'); 
+        if (!titulo || !ubicacion || !distancia) { 
+            alert('Completa título, ubicación y distancia'); 
+            return; 
+        } 
+        const nuevoId = Date.now(); 
+        if (!imagen && fileInput.files.length > 0) { 
+            const reader = new FileReader(); 
+            reader.onload = function(e) { 
+                imagen = e.target.result; 
+                crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen); 
+            }; 
+            reader.readAsDataURL(fileInput.files[0]); 
+        } else { 
+            crearKeTeteoFinal(nuevoId, titulo, ubicacion, distancia, imagen || 'https://via.placeholder.com/400x300?text=KeTeteo'); 
+        } 
+    }
+    
+    function crearKeTeteoFinal(id, titulo, ubicacion, distancia, imagen) { 
+        const nuevoKe = { 
+            id: id, 
+            titulo: titulo, 
+            nombreCreador: currentUser.name, 
+            usuario: currentUser.username, 
+            ubicacion: ubicacion, 
+            distancia: distancia, 
+            categoria: "Otros", 
+            lat: 18.48, 
+            lng: -69.91, 
+            viewers: 0, 
+            likes: 0, 
+            imagen: imagen 
+        }; 
+        allKeTeteos.unshift(nuevoKe); 
+        currentLikes[nuevoKe.id] = 0; 
+        currentComments[nuevoKe.id] = []; 
+        saveKeTeteos(); 
+        renderCarousel(); 
+        closeCreateModal(); 
+        alert('✅ KeTeteo publicado'); 
+        document.getElementById('newTitulo').value = ''; 
+        document.getElementById('newUbicacion').value = ''; 
+        document.getElementById('newDistancia').value = ''; 
+        document.getElementById('newImagen').value = ''; 
+        document.getElementById('newImagenFile').value = ''; 
+    }
+    
+    function showMainScreen() { 
+        document.getElementById('welcomeScreen').style.display = 'none'; 
+        document.getElementById('mainScreen').classList.add('active'); 
+        renderCarousel(); 
+        ordenarKeTeteosPorCercania(); 
+    }
+    
     function showHomeScreenClean() { 
         document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
         document.getElementById('mainScreen').classList.add('active'); 
         renderCarousel(); 
         ordenarKeTeteosPorCercania(); 
     }
-    function showProfileScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
-    function showAlertsScreen() { alert('🔔 Próximamente tendrás notificaciones en tiempo real'); }
-    function showMyStreamsScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('myStreamsScreen').classList.add('active'); renderMyStreams(); }
-    function showConfigScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('configScreen').classList.add('active'); }
-    function showLanguageScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('languageScreen').classList.add('active'); }
-    function setLanguage(lang) { alert('Idioma cambiado a ' + lang); }
-    function uploadProfilePhoto() { document.getElementById('photoUpload').click(); }
-    function handlePhotoUpload(e) { const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = ev => { document.getElementById('profileImg').src = ev.target.result; localStorage.setItem('profilePhoto', ev.target.result); }; reader.readAsDataURL(file); } }
-    function openEditProfile() { document.getElementById('editProfileModal').classList.add('show'); const user = JSON.parse(localStorage.getItem('user')); if (user) { document.getElementById('editName').value = user.name || ''; document.getElementById('editUsername').value = user.username?.replace('@', '') || ''; document.getElementById('editBio').value = user.bio || ''; document.getElementById('editEmail').value = user.email || ''; } }
-    function saveProfile() { const name = document.getElementById('editName').value; const username = document.getElementById('editUsername').value; const bio = document.getElementById('editBio').value; const email = document.getElementById('editEmail').value; const phone = document.getElementById('editPhone').value; if (name) document.getElementById('profileName').innerText = name; if (username) document.getElementById('profileUsername').innerText = username.startsWith('@') ? username : '@'+username; if (bio) document.getElementById('profileBio').innerText = bio; if (email) document.getElementById('userEmail').innerText = email; if (currentUser) { currentUser.name = name || currentUser.name; currentUser.username = (username.startsWith('@') ? username : '@'+username) || currentUser.username; currentUser.bio = bio || currentUser.bio; currentUser.email = email || currentUser.email; localStorage.setItem('user', JSON.stringify(currentUser)); } alert('Perfil actualizado'); closeEditModal(); }
-    function closeEditModal() { document.getElementById('editProfileModal').classList.remove('show'); }
-    function loadProfileData() { const savedPhoto = localStorage.getItem('profilePhoto'); if (savedPhoto) document.getElementById('profileImg').src = savedPhoto; const user = JSON.parse(localStorage.getItem('user')); if (user) { document.getElementById('profileName').innerText = user.name; document.getElementById('profileUsername').innerText = user.username; document.getElementById('profileBio').innerText = user.bio || 'Amante de los eventos en vivo 🎉'; document.getElementById('userEmail').innerText = user.email; } const savedStatus = localStorage.getItem('userStatus'); const savedLastActivity = localStorage.getItem('lastActivity'); if (savedStatus && savedLastActivity) { lastActivity = parseInt(savedLastActivity); userStatus = savedStatus; actualizarEstadoUsuario(); } }
-    function copyEmail() { const email = document.getElementById('userEmail').innerText; navigator.clipboard.writeText(email); alert('Correo copiado'); }
-    function copyPhone() { alert('Teléfono copiado'); }
-    function shareProfile() { navigator.clipboard.writeText(window.location.href); alert('Perfil copiado'); }
-    function openLegalModal() { document.getElementById('legalModal').classList.add('show'); }
-    function closeLegalModal() { document.getElementById('legalModal').classList.remove('show'); }
-    function openLegalContent(type) { let title = '', content = ''; if (type === 'terms') { title = '⚖️ Términos y Condiciones'; content = 'Al usar KeTeteoLive aceptas nuestras normas de uso. Todo el contenido es responsabilidad de sus creadores. No está permitido: spam, acoso, contenido ilegal o inapropiado. KeTeteoLive se reserva el derecho de eliminar contenido que viole estas normas.'; } else if (type === 'privacy') { title = '🔒 Política de Privacidad'; content = 'Protegemos tus datos personales. La información que compartes (ubicación, correo, nombre) solo se usa para mejorar tu experiencia. No vendemos tu información a terceros. Puedes solicitar la eliminación de tus datos en cualquier momento.'; } else if (type === 'cookies') { title = '🍪 Política de Cookies'; content = 'Usamos cookies para recordar tus preferencias y mejorar el rendimiento de la plataforma. No usamos cookies de terceros para publicidad. Puedes deshabilitarlas desde la configuración de tu navegador.'; } alert(`${title}\n\n${content}`); }
+    
+    function showProfileScreen() { 
+        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
+        document.getElementById('profileScreen').classList.add('active'); 
+        loadProfileData(); 
+    }
+    
+    function showAlertsScreen() { 
+        alert('🔔 Próximamente tendrás notificaciones en tiempo real'); 
+    }
+    
+    function showMyStreamsScreen() { 
+        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
+        document.getElementById('myStreamsScreen').classList.add('active'); 
+        renderMyStreams(); 
+    }
+    
+    function showConfigScreen() { 
+        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
+        document.getElementById('configScreen').classList.add('active'); 
+    }
+    
+    function showLanguageScreen() { 
+        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
+        document.getElementById('languageScreen').classList.add('active'); 
+    }
+    
+    function showGroupsScreen() { 
+        document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
+        document.getElementById('groupsScreen').classList.add('active'); 
+        renderGroupsList(); 
+    }
+    
+    function setLanguage(lang) { 
+        alert('Idioma cambiado a ' + lang); 
+    }
+    
+    function uploadProfilePhoto() { 
+        document.getElementById('photoUpload').click(); 
+    }
+    
+    function handlePhotoUpload(e) { 
+        const file = e.target.files[0]; 
+        if (file) { 
+            const reader = new FileReader(); 
+            reader.onload = ev => { 
+                document.getElementById('profileImg').src = ev.target.result; 
+                localStorage.setItem('profilePhoto', ev.target.result); 
+            }; 
+            reader.readAsDataURL(file); 
+        } 
+    }
+    
+    function openEditProfile() { 
+        document.getElementById('editProfileModal').classList.add('show'); 
+        const user = JSON.parse(localStorage.getItem('user')); 
+        const savedPhone = localStorage.getItem('userPhone') || '';
+        if (user) { 
+            document.getElementById('editName').value = user.name || ''; 
+            document.getElementById('editUsername').value = (user.username || '@usuario').replace('@', ''); 
+            document.getElementById('editBio').value = user.bio || ''; 
+            document.getElementById('editEmail').value = user.email || ''; 
+            document.getElementById('editPhone').value = savedPhone;
+        } 
+    }
+    
+    function saveProfile() { 
+        const name = document.getElementById('editName').value; 
+        const username = document.getElementById('editUsername').value; 
+        const bio = document.getElementById('editBio').value; 
+        const email = document.getElementById('editEmail').value; 
+        const phone = document.getElementById('editPhone').value; 
+        
+        if (name) document.getElementById('profileName').innerText = name; 
+        if (username) document.getElementById('profileUsername').innerText = username.startsWith('@') ? username : '@'+username; 
+        if (bio) document.getElementById('profileBio').innerText = bio; 
+        if (email) document.getElementById('userEmail').innerText = email; 
+        if (phone) document.getElementById('userPhone').innerText = phone; 
+        
+        if (currentUser) { 
+            currentUser.name = name || currentUser.name; 
+            currentUser.username = (username.startsWith('@') ? username : '@'+username) || currentUser.username; 
+            currentUser.bio = bio || currentUser.bio; 
+            currentUser.email = email || currentUser.email; 
+            currentUser.phone = phone || currentUser.phone; 
+            localStorage.setItem('user', JSON.stringify(currentUser)); 
+        } 
+        
+        if (phone) localStorage.setItem('userPhone', phone);
+        
+        alert('Perfil actualizado correctamente'); 
+        closeEditModal(); 
+    }
+    
+    function closeEditModal() { 
+        document.getElementById('editProfileModal').classList.remove('show'); 
+    }
+    
+    function loadProfileData() { 
+        const savedPhoto = localStorage.getItem('profilePhoto'); 
+        if (savedPhoto) document.getElementById('profileImg').src = savedPhoto; 
+        const user = JSON.parse(localStorage.getItem('user')); 
+        if (user) { 
+            document.getElementById('profileName').innerText = user.name || 'Usuario'; 
+            document.getElementById('profileUsername').innerText = user.username || '@usuario'; 
+            document.getElementById('profileBio').innerText = user.bio || 'Amante de los eventos en vivo 🎉'; 
+            document.getElementById('userEmail').innerText = user.email || 'correo@ejemplo.com'; 
+            const savedPhone = localStorage.getItem('userPhone') || user.phone || '';
+            document.getElementById('userPhone').innerText = savedPhone || '+1 809 555 1234';
+        } 
+        const savedStatus = localStorage.getItem('userStatus'); 
+        const savedLastActivity = localStorage.getItem('lastActivity'); 
+        if (savedStatus && savedLastActivity) { 
+            lastActivity = parseInt(savedLastActivity); 
+            userStatus = savedStatus; 
+            actualizarEstadoUsuario(); 
+        } 
+    }
+    
+    function copyEmail() { 
+        const email = document.getElementById('userEmail').innerText; 
+        navigator.clipboard.writeText(email); 
+        alert('Correo copiado'); 
+    }
+    
+    function copyPhone() { 
+        const phone = document.getElementById('userPhone').innerText;
+        navigator.clipboard.writeText(phone); 
+        alert('Teléfono copiado'); 
+    }
+    
+    function shareProfile() { 
+        navigator.clipboard.writeText(window.location.href); 
+        alert('Perfil copiado'); 
+    }
+    
+    function openLegalModal() { 
+        document.getElementById('legalModal').classList.add('show'); 
+    }
+    
+    function closeLegalModal() { 
+        document.getElementById('legalModal').classList.remove('show'); 
+    }
+    
+    function openLegalContent(type) { 
+        let title = '', content = ''; 
+        if (type === 'terms') { 
+            title = '⚖️ Términos y Condiciones'; 
+            content = 'Al usar KeTeteoLive aceptas nuestras normas de uso. Todo el contenido es responsabilidad de sus creadores. No está permitido: spam, acoso, contenido ilegal o inapropiado. KeTeteoLive se reserva el derecho de eliminar contenido que viole estas normas.'; 
+        } else if (type === 'privacy') { 
+            title = '🔒 Política de Privacidad'; 
+            content = 'Protegemos tus datos personales. La información que compartes (ubicación, correo, nombre) solo se usa para mejorar tu experiencia. No vendemos tu información a terceros. Puedes solicitar la eliminación de tus datos en cualquier momento.'; 
+        } else if (type === 'cookies') { 
+            title = '🍪 Política de Cookies'; 
+            content = 'Usamos cookies para recordar tus preferencias y mejorar el rendimiento de la plataforma. No usamos cookies de terceros para publicidad. Puedes deshabilitarlas desde la configuración de tu navegador.'; 
+        } 
+        alert(`${title}\n\n${content}`); 
+    }
 
     window.onload = () => {
         loadKeTeteos();
@@ -1764,7 +2167,11 @@
             showMainScreen();
             iniciarSeguimientoEstado();
         }
-        allKeTeteos.forEach(k => { const savedComments = localStorage.getItem(`comments_${k.id}`); if (savedComments) currentComments[k.id] = JSON.parse(savedComments); else currentComments[k.id] = []; });
+        allKeTeteos.forEach(k => { 
+            const savedComments = localStorage.getItem(`comments_${k.id}`); 
+            if (savedComments) currentComments[k.id] = JSON.parse(savedComments); 
+            else currentComments[k.id] = []; 
+        });
         setTimeout(() => {
             if (loggedIn) ordenarKeTeteosPorCercania();
         }, 1000);
