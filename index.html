@@ -1324,7 +1324,6 @@
             tempConfig = { ...parsed };
         }
         
-        // Cargar email y teléfono del usuario
         if (currentUser) {
             tempConfig.email = currentUser.email || '';
             tempConfig.phone = currentUser.phone || '';
@@ -1336,7 +1335,6 @@
     }
     
     function updateConfigUI() {
-        // Actualizar toggles
         document.getElementById('toggleProfilePublic').className = 'config-toggle ' + (tempConfig.profilePublic ? 'active' : '');
         document.getElementById('toggleShowLocation').className = 'config-toggle ' + (tempConfig.showLocation ? 'active' : '');
         document.getElementById('togglePushNotifications').className = 'config-toggle ' + (tempConfig.pushNotifications ? 'active' : '');
@@ -1344,19 +1342,16 @@
         document.getElementById('togglePostComments').className = 'config-toggle ' + (tempConfig.postComments ? 'active' : '');
         document.getElementById('toggleDarkMode').className = 'config-toggle ' + (tempConfig.darkMode ? 'active' : '');
         
-        // Actualizar selects
         document.getElementById('selectWhoCanComment').value = tempConfig.whoCanComment;
         document.getElementById('selectFontSize').value = tempConfig.fontSize;
         document.getElementById('selectLanguage').value = tempConfig.language;
         document.getElementById('selectDistanceUnit').value = tempConfig.distanceUnit;
         
-        // Actualizar inputs
         document.getElementById('configEmail').value = tempConfig.email || '';
         document.getElementById('configPhone').value = tempConfig.phone || '';
     }
     
     function applyConfigChanges() {
-        // Aplicar modo oscuro
         if (!tempConfig.darkMode) {
             document.body.style.background = '#FFFFFF';
             document.body.style.color = '#000000';
@@ -1365,14 +1360,12 @@
             document.body.style.color = '#FFFFFF';
         }
         
-        // Aplicar tamaño de fuente
         let fontSizeValue = '16px';
         if (tempConfig.fontSize === 'pequeño') fontSizeValue = '12px';
         if (tempConfig.fontSize === 'mediano') fontSizeValue = '16px';
         if (tempConfig.fontSize === 'grande') fontSizeValue = '20px';
         document.body.style.fontSize = fontSizeValue;
         
-        // Guardar en currentUser
         if (currentUser) {
             currentUser.email = tempConfig.email;
             currentUser.phone = tempConfig.phone;
@@ -1381,7 +1374,6 @@
             loadProfileData();
         }
         
-        // Actualizar el título de configuración según idioma
         if (tempConfig.language === 'es') {
             document.querySelector('#configScreen .logo-container div').innerHTML = '⚙️ Configuración';
         } else if (tempConfig.language === 'en') {
@@ -1392,26 +1384,18 @@
     }
     
     function saveConfigChanges() {
-        // Guardar configuración permanentemente
         savedConfig = { ...tempConfig };
         localStorage.setItem('userConfig', JSON.stringify(savedConfig));
-        
-        // Aplicar cambios visuales
         applyConfigChanges();
-        
         alert('✅ Configuración guardada correctamente');
     }
     
     function cancelConfigChanges() {
-        // Restaurar desde savedConfig
         tempConfig = { ...savedConfig };
-        
-        // Restaurar email y teléfono desde currentUser
         if (currentUser) {
             tempConfig.email = currentUser.email || '';
             tempConfig.phone = currentUser.phone || '';
         }
-        
         updateConfigUI();
         alert('❌ Cambios descartados');
     }
@@ -1428,7 +1412,6 @@
         updateConfigUI();
     }
     
-    // Event listeners para cambios en tiempo real (solo actualizan tempConfig)
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('selectWhoCanComment')?.addEventListener('change', () => {
             tempConfig.whoCanComment = document.getElementById('selectWhoCanComment').value;
@@ -1811,6 +1794,17 @@
         }
     }
 
+    // Función para incrementar views
+    function incrementViews(keId) {
+        const ke = allKeTeteos.find(k => k.id == keId);
+        if (ke) {
+            ke.viewers = (ke.viewers || 0) + 1;
+            saveKeTeteos();
+            const viewsSpan = document.querySelector(`.ke-teteo-card[data-id="${keId}"] .views-count`);
+            if (viewsSpan) viewsSpan.innerText = ke.viewers;
+        }
+    }
+
     function crearCardKeTeteo(item) {
         const card = document.createElement('div');
         card.className = 'ke-teteo-card';
@@ -1828,6 +1822,7 @@
                     <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
                     <div class="event-meta"><span>${item.ubicacion} · ${item.distancia}</span></div>
                     <div class="action-buttons">
+                        <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
                         <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
                         <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></button>
                         <button class="action-btn share-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span></button>
@@ -1848,6 +1843,7 @@
                     <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
                     <div class="event-meta"><span>${item.ubicacion} · ${item.distancia}</span></div>
                     <div class="action-buttons">
+                        <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
                         <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
                         <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></button>
                         <button class="action-btn share-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span></button>
@@ -1876,6 +1872,7 @@
     }
     
     function openFullscreenRadar(item) {
+        incrementViews(item.id);
         const fullDiv = document.createElement('div');
         fullDiv.className = 'fullscreen-stream';
         fullDiv.innerHTML = `
@@ -1888,7 +1885,7 @@
                     <div style="font-size:20px; font-weight:800;">${item.titulo}</div>
                     <div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div>
                     <div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div>
-                    <div style="font-size:12px; margin-top:8px;">❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div>
+                    <div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div>
                 </div>
             </div>
         `;
@@ -2007,7 +2004,10 @@
         card.addEventListener('click', (e) => { 
             if (e.target.closest('.action-btn') || e.target.closest('.send-comment') || e.target.closest('.comment-input')) return; 
             const item = allKeTeteos.find(k => k.id == id); 
-            if (item && !item.esRadar) openFullscreenStream(item); 
+            if (item && !item.esRadar) {
+                incrementViews(id);
+                openFullscreenStream(item);
+            }
         });
     }
     
@@ -2025,7 +2025,7 @@
     function openFullscreenStream(item) { 
         const fullDiv = document.createElement('div'); 
         fullDiv.className = 'fullscreen-stream'; 
-        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; 
+        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; 
         document.body.appendChild(fullDiv); 
         fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); 
     }
@@ -2220,8 +2220,13 @@
     function selectSearchResult(id) { 
         closeSearchModal(); 
         const item = allKeTeteos.find(k => k.id == id); 
-        if (item && !item.esRadar) openFullscreenStream(item); 
-        else if (item && item.esRadar) openFullscreenRadar(item); 
+        if (item && !item.esRadar) {
+            incrementViews(id);
+            openFullscreenStream(item);
+        } else if (item && item.esRadar) {
+            incrementViews(id);
+            openFullscreenRadar(item);
+        }
     }
 
     function toggleMenu() { 
@@ -2509,7 +2514,6 @@
             localStorage.setItem('user', JSON.stringify(currentUser)); 
             localStorage.setItem('userPhone', phone || '');
             
-            // También actualizar tempConfig
             if (tempConfig) {
                 tempConfig.email = email || currentUser.email;
                 tempConfig.phone = phone || currentUser.phone;
@@ -2537,7 +2541,6 @@
             const savedPhone = localStorage.getItem('userPhone') || user.phone || '';
             document.getElementById('userPhone').innerText = savedPhone || '+1 809 555 1234';
             
-            // Sincronizar tempConfig
             if (tempConfig) {
                 tempConfig.email = user.email || '';
                 tempConfig.phone = savedPhone;
@@ -2618,7 +2621,6 @@
             if (loggedIn) ordenarKeTeteosPorCercania();
         }, 1000);
         
-        // Inicializar event listeners para toggles de configuración
         document.getElementById('toggleProfilePublic')?.addEventListener('click', () => toggleSetting('profilePublic'));
         document.getElementById('toggleShowLocation')?.addEventListener('click', () => toggleSetting('showLocation'));
         document.getElementById('togglePushNotifications')?.addEventListener('click', () => toggleSetting('pushNotifications'));
