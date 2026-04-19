@@ -1010,7 +1010,7 @@
             height: 100%;
             object-fit: cover;
         }
-        .codigo-invitacion {
+                .codigo-invitacion {
             background: var(--negro);
             padding: 10px;
             border-radius: 12px;
@@ -1020,6 +1020,24 @@
             font-size: 14px;
             letter-spacing: 2px;
             color: var(--naranja);
+        }
+
+        /* Asegurar que el modal de comentarios sea editable */
+        #commentsModal .comment-modal-input {
+            pointer-events: auto !important;
+            background: var(--gris-oscuro) !important;
+            color: white !important;
+            border: 0.5px solid var(--gris-medio) !important;
+        }
+        #commentsModal .comment-modal-input:focus {
+            outline: none;
+            border-color: var(--naranja) !important;
+        }
+        #commentsModal .comment-modal-send {
+            pointer-events: auto !important;
+        }
+        #commentsModal .comment-modal-emoji {
+            pointer-events: auto !important;
         }
     </style>
 </head>
@@ -1358,8 +1376,10 @@
         <div class="config-option" onclick="setLanguage('pt')"><span>Português</span><span></span></div>
         <div class="config-option" onclick="setLanguage('zh')"><span>🇨🇳 中文</span><span></span></div>
         <div class="config-option" onclick="setLanguage('fr')"><span>🇫🇷 Français</span><span></span></div>
+        <div class="config-option" onclick="setLanguage('ht')"><span>🇭🇹 Kreyòl Ayisyen</span><span></span></div>
     </div>
 </div>
+    
 
 <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
@@ -1553,13 +1573,30 @@
         const ke = allKeTeteos.find(k => k.id == currentShareKeId);
         if (ke) { navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}?ke=${ke.id}`); alert('✅ Enlace copiado'); incrementShares(currentShareKeId); }
         closeShareModal();
+   
     }
-    function shareExternal() {
-        const ke = allKeTeteos.find(k => k.id == currentShareKeId);
-        if (ke && navigator.share) { navigator.share({ title: ke.titulo, text: `¡Mira este KeTeteo! ${ke.titulo}`, url: `${window.location.origin}${window.location.pathname}?ke=${ke.id}` }).then(() => incrementShares(currentShareKeId)).catch(() => {}); }
-        else shareCopyLink();
-        closeShareModal();
+    
+function shareExternal() {
+    const ke = allKeTeteos.find(k => k.id == currentShareKeId);
+    if (ke) {
+        const shareData = {
+            title: ke.titulo,
+            text: `${ke.titulo} en KeTeteoLive`,
+            url: `${window.location.origin}${window.location.pathname}?ke=${ke.id}`
+        };
+        if (navigator.share) {
+            navigator.share(shareData).then(() => {
+                incrementShares(currentShareKeId);
+            }).catch(() => {});
+        } else {
+            navigator.clipboard.writeText(shareData.url);
+            alert('✅ Enlace copiado al portapapeles');
+            incrementShares(currentShareKeId);
+        }
     }
+    closeShareModal();
+}
+    
     function shareToGroup() {
         const grupos = allGroups.filter(g => g.miembros.includes(currentUser?.username));
         if (grupos.length === 0) { alert('No tienes grupos'); closeShareModal(); return; }
@@ -1694,7 +1731,7 @@
         }); 
     }
     
-    function openFullscreenRadar(item) {
+    function openFullscreenRadar(item) {card
         incrementViews(item.id);
         const fullDiv = document.createElement('div');
         fullDiv.className = 'fullscreen-stream';
@@ -1704,26 +1741,41 @@
     }
     
     function attachRadarEvents(card, id) {
-        const likeBtn = card.querySelector('.like-btn');
-        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; saveKeTeteos(); });
-        const shareBtn = card.querySelector('.share-btn');
-        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
-        const commentBtn = card.querySelector('.comment-toggle');
-        if (commentBtn) commentBtn.addEventListener('click', (e) => { e.stopPropagation(); openCommentsModal(id); });
-        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && item.esRadar) openFullscreenRadar(item); });
+    const likeBtn = card.querySelector('.like-btn');
+    if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; saveKeTeteos(); });
+    const shareBtn = card.querySelector('.share-btn');
+    if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
+    const commentBtn = card.querySelector('.comment-toggle');
+    if (commentBtn) {
+        commentBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            e.preventDefault();
+            openCommentsModal(id); 
+        });
     }
-    
+    card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && item.esRadar) openFullscreenRadar(item); });
+}
+
+
     function attachCardEvents(card, id) {
-        const likeBtn = card.querySelector('.like-btn');
-        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); });
-        const shareBtn = card.querySelector('.share-btn');
-        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
-        const reportBtn = card.querySelector('.report-btn');
-        if (reportBtn) reportBtn.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
-        const commentBtn = card.querySelector('.comment-toggle');
-        if (commentBtn) commentBtn.addEventListener('click', (e) => { e.stopPropagation(); openCommentsModal(id); });
-        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } });
+    const likeBtn = card.querySelector('.like-btn');
+    if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); });
+    const shareBtn = card.querySelector('.share-btn');
+    if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
+    const reportBtn = card.querySelector('.report-btn');
+    if (reportBtn) reportBtn.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
+    const commentBtn = card.querySelector('.comment-toggle');
+    if (commentBtn) {
+        commentBtn.removeEventListener('click', () => {});
+        commentBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            e.preventDefault();
+            console.log("Abriendo comentarios Card ID:", id);
+            openCommentsModal(id); 
+        });
     }
+    card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } });
+}
     
     function openFullscreenStream(item) { 
         incrementViews(item.id);
