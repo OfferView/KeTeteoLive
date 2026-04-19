@@ -666,7 +666,7 @@
             margin-bottom: 16px;
         }
         
-        /* Estilos nuevos para configuración profesional */
+        /* Estilos configuración profesional */
         .config-section {
             margin-bottom: 24px;
         }
@@ -740,13 +740,28 @@
             font-size: 13px;
             width: 180px;
         }
-        .config-btn-small {
+        .config-buttons {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .config-btn-save {
+            flex: 1;
             background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
             border: none;
-            border-radius: 20px;
-            padding: 6px 12px;
+            border-radius: 30px;
+            padding: 12px;
             color: white;
-            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .config-btn-cancel {
+            flex: 1;
+            background: var(--gris-medio);
+            border: 1px solid var(--gris-claro);
+            border-radius: 30px;
+            padding: 12px;
+            color: var(--gris-claro);
             font-weight: 600;
             cursor: pointer;
         }
@@ -948,7 +963,7 @@
     </div>
 </div>
 
-<!-- MENÚ LATERAL CON ICONOS COLOR NARANJA -->
+<!-- MENÚ LATERAL -->
 <div id="sideMenu" class="side-menu">
     <button id="createKeTeteoBtn" onclick="openCreateKeTeteoModal(); closeMenu()">
         <span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span> Crear KeTeteoLive
@@ -1091,7 +1106,7 @@
     <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()">Nueva transmisión</button>
 </div>
 
-<!-- PANTALLA DE CONFIGURACIÓN PROFESIONAL ACTUALIZADA -->
+<!-- PANTALLA DE CONFIGURACIÓN PROFESIONAL CON GUARDAR/CANCELAR -->
 <div id="configScreen" class="screen">
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button>
@@ -1121,15 +1136,15 @@
             </div>
             <div class="config-item">
                 <div class="config-item-label">Perfil público</div>
-                <div class="config-toggle" id="toggleProfilePublic" onclick="toggleSetting('profilePublic')"></div>
+                <div class="config-toggle" id="toggleProfilePublic"></div>
             </div>
             <div class="config-item">
                 <div class="config-item-label">Mostrar ubicación</div>
-                <div class="config-toggle" id="toggleShowLocation" onclick="toggleSetting('showLocation')"></div>
+                <div class="config-toggle" id="toggleShowLocation"></div>
             </div>
             <div class="config-item">
                 <div class="config-item-label">Quién puede comentar</div>
-                <select id="selectWhoCanComment" class="config-select" onchange="saveConfig()">
+                <select id="selectWhoCanComment" class="config-select">
                     <option value="todos">Todos</option>
                     <option value="seguidores">Solo seguidores</option>
                     <option value="nadie">Nadie</option>
@@ -1144,15 +1159,15 @@
             </div>
             <div class="config-item">
                 <div class="config-item-label">Push notifications</div>
-                <div class="config-toggle" id="togglePushNotifications" onclick="toggleSetting('pushNotifications')"></div>
+                <div class="config-toggle" id="togglePushNotifications"></div>
             </div>
             <div class="config-item">
                 <div class="config-item-label">Nuevos seguidores</div>
-                <div class="config-toggle" id="toggleNewFollowers" onclick="toggleSetting('newFollowers')"></div>
+                <div class="config-toggle" id="toggleNewFollowers"></div>
             </div>
             <div class="config-item">
                 <div class="config-item-label">Comentarios en mis posts</div>
-                <div class="config-toggle" id="togglePostComments" onclick="toggleSetting('postComments')"></div>
+                <div class="config-toggle" id="togglePostComments"></div>
             </div>
         </div>
 
@@ -1163,11 +1178,11 @@
             </div>
             <div class="config-item">
                 <div class="config-item-label">Modo oscuro</div>
-                <div class="config-toggle" id="toggleDarkMode" onclick="toggleSetting('darkMode')"></div>
+                <div class="config-toggle" id="toggleDarkMode"></div>
             </div>
             <div class="config-item">
                 <div class="config-item-label">Tamaño de fuente</div>
-                <select id="selectFontSize" class="config-select" onchange="saveConfig()">
+                <select id="selectFontSize" class="config-select">
                     <option value="pequeño">Pequeño</option>
                     <option value="mediano">Mediano</option>
                     <option value="grande">Grande</option>
@@ -1182,7 +1197,7 @@
             </div>
             <div class="config-item">
                 <div class="config-item-label">Idioma</div>
-                <select id="selectLanguage" class="config-select" onchange="saveConfig(); updateLanguage()">
+                <select id="selectLanguage" class="config-select">
                     <option value="es">Español</option>
                     <option value="en">English</option>
                     <option value="pt">Português</option>
@@ -1190,7 +1205,7 @@
             </div>
             <div class="config-item">
                 <div class="config-item-label">Unidad de distancia</div>
-                <select id="selectDistanceUnit" class="config-select" onchange="saveConfig()">
+                <select id="selectDistanceUnit" class="config-select">
                     <option value="km">Kilómetros (km)</option>
                     <option value="mi">Millas (mi)</option>
                 </select>
@@ -1204,6 +1219,12 @@
             </div>
             <button class="config-danger-btn" onclick="exportUserData()">📥 Exportar mis datos</button>
             <button class="config-danger-btn" onclick="deleteAccount()" style="margin-top: 8px;">🗑️ Eliminar mi cuenta</button>
+        </div>
+
+        <!-- BOTONES GUARDAR Y CANCELAR -->
+        <div class="config-buttons">
+            <button class="config-btn-save" onclick="saveConfigChanges()">💾 GUARDAR CAMBIOS</button>
+            <button class="config-btn-cancel" onclick="cancelConfigChanges()">❌ DESCARTAR</button>
         </div>
 
         <div class="config-version">
@@ -1252,8 +1273,24 @@
     let allGroups = [];
     let currentGroupCode = "";
     
-    // Configuración del usuario
-    let userConfig = {
+    // Configuración temporal (para cambios no guardados)
+    let tempConfig = {
+        email: '',
+        phone: '',
+        profilePublic: true,
+        showLocation: true,
+        whoCanComment: "todos",
+        pushNotifications: true,
+        newFollowers: false,
+        postComments: true,
+        darkMode: true,
+        fontSize: "mediano",
+        language: "es",
+        distanceUnit: "km"
+    };
+    
+    // Configuración guardada permanentemente
+    let savedConfig = {
         profilePublic: true,
         showLocation: true,
         whoCanComment: "todos",
@@ -1279,27 +1316,48 @@
     }
 
     // ================= FUNCIONES DE CONFIGURACIÓN =================
-    function loadConfig() {
-        const savedConfig = localStorage.getItem('userConfig');
-        if (savedConfig) {
-            userConfig = JSON.parse(savedConfig);
+    function loadConfigToTemp() {
+        const saved = localStorage.getItem('userConfig');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            savedConfig = parsed;
+            tempConfig = { ...parsed };
         }
         
-        // Aplicar a la UI
-        document.getElementById('toggleProfilePublic').className = 'config-toggle ' + (userConfig.profilePublic ? 'active' : '');
-        document.getElementById('toggleShowLocation').className = 'config-toggle ' + (userConfig.showLocation ? 'active' : '');
-        document.getElementById('togglePushNotifications').className = 'config-toggle ' + (userConfig.pushNotifications ? 'active' : '');
-        document.getElementById('toggleNewFollowers').className = 'config-toggle ' + (userConfig.newFollowers ? 'active' : '');
-        document.getElementById('togglePostComments').className = 'config-toggle ' + (userConfig.postComments ? 'active' : '');
-        document.getElementById('toggleDarkMode').className = 'config-toggle ' + (userConfig.darkMode ? 'active' : '');
+        // Cargar email y teléfono del usuario
+        if (currentUser) {
+            tempConfig.email = currentUser.email || '';
+            tempConfig.phone = currentUser.phone || '';
+            savedConfig.email = currentUser.email || '';
+            savedConfig.phone = currentUser.phone || '';
+        }
         
-        document.getElementById('selectWhoCanComment').value = userConfig.whoCanComment;
-        document.getElementById('selectFontSize').value = userConfig.fontSize;
-        document.getElementById('selectLanguage').value = userConfig.language;
-        document.getElementById('selectDistanceUnit').value = userConfig.distanceUnit;
+        updateConfigUI();
+    }
+    
+    function updateConfigUI() {
+        // Actualizar toggles
+        document.getElementById('toggleProfilePublic').className = 'config-toggle ' + (tempConfig.profilePublic ? 'active' : '');
+        document.getElementById('toggleShowLocation').className = 'config-toggle ' + (tempConfig.showLocation ? 'active' : '');
+        document.getElementById('togglePushNotifications').className = 'config-toggle ' + (tempConfig.pushNotifications ? 'active' : '');
+        document.getElementById('toggleNewFollowers').className = 'config-toggle ' + (tempConfig.newFollowers ? 'active' : '');
+        document.getElementById('togglePostComments').className = 'config-toggle ' + (tempConfig.postComments ? 'active' : '');
+        document.getElementById('toggleDarkMode').className = 'config-toggle ' + (tempConfig.darkMode ? 'active' : '');
         
+        // Actualizar selects
+        document.getElementById('selectWhoCanComment').value = tempConfig.whoCanComment;
+        document.getElementById('selectFontSize').value = tempConfig.fontSize;
+        document.getElementById('selectLanguage').value = tempConfig.language;
+        document.getElementById('selectDistanceUnit').value = tempConfig.distanceUnit;
+        
+        // Actualizar inputs
+        document.getElementById('configEmail').value = tempConfig.email || '';
+        document.getElementById('configPhone').value = tempConfig.phone || '';
+    }
+    
+    function applyConfigChanges() {
         // Aplicar modo oscuro
-        if (!userConfig.darkMode) {
+        if (!tempConfig.darkMode) {
             document.body.style.background = '#FFFFFF';
             document.body.style.color = '#000000';
         } else {
@@ -1309,85 +1367,88 @@
         
         // Aplicar tamaño de fuente
         let fontSizeValue = '16px';
-        if (userConfig.fontSize === 'pequeño') fontSizeValue = '12px';
-        if (userConfig.fontSize === 'mediano') fontSizeValue = '16px';
-        if (userConfig.fontSize === 'grande') fontSizeValue = '20px';
+        if (tempConfig.fontSize === 'pequeño') fontSizeValue = '12px';
+        if (tempConfig.fontSize === 'mediano') fontSizeValue = '16px';
+        if (tempConfig.fontSize === 'grande') fontSizeValue = '20px';
         document.body.style.fontSize = fontSizeValue;
         
-        // Cargar email y teléfono del usuario
+        // Guardar en currentUser
         if (currentUser) {
-            document.getElementById('configEmail').value = currentUser.email || '';
-            document.getElementById('configPhone').value = currentUser.phone || '';
-        }
-    }
-    
-    function saveConfig() {
-        userConfig.profilePublic = document.getElementById('toggleProfilePublic').classList.contains('active');
-        userConfig.showLocation = document.getElementById('toggleShowLocation').classList.contains('active');
-        userConfig.pushNotifications = document.getElementById('togglePushNotifications').classList.contains('active');
-        userConfig.newFollowers = document.getElementById('toggleNewFollowers').classList.contains('active');
-        userConfig.postComments = document.getElementById('togglePostComments').classList.contains('active');
-        userConfig.darkMode = document.getElementById('toggleDarkMode').classList.contains('active');
-        userConfig.whoCanComment = document.getElementById('selectWhoCanComment').value;
-        userConfig.fontSize = document.getElementById('selectFontSize').value;
-        userConfig.language = document.getElementById('selectLanguage').value;
-        userConfig.distanceUnit = document.getElementById('selectDistanceUnit').value;
-        
-        localStorage.setItem('userConfig', JSON.stringify(userConfig));
-        
-        // Guardar email y teléfono en currentUser
-        if (currentUser) {
-            currentUser.email = document.getElementById('configEmail').value;
-            currentUser.phone = document.getElementById('configPhone').value;
+            currentUser.email = tempConfig.email;
+            currentUser.phone = tempConfig.phone;
             localStorage.setItem('user', JSON.stringify(currentUser));
-            localStorage.setItem('userPhone', currentUser.phone);
+            localStorage.setItem('userPhone', tempConfig.phone);
             loadProfileData();
         }
         
+        // Actualizar el título de configuración según idioma
+        if (tempConfig.language === 'es') {
+            document.querySelector('#configScreen .logo-container div').innerHTML = '⚙️ Configuración';
+        } else if (tempConfig.language === 'en') {
+            document.querySelector('#configScreen .logo-container div').innerHTML = '⚙️ Settings';
+        } else if (tempConfig.language === 'pt') {
+            document.querySelector('#configScreen .logo-container div').innerHTML = '⚙️ Configuração';
+        }
+    }
+    
+    function saveConfigChanges() {
+        // Guardar configuración permanentemente
+        savedConfig = { ...tempConfig };
+        localStorage.setItem('userConfig', JSON.stringify(savedConfig));
+        
         // Aplicar cambios visuales
-        if (!userConfig.darkMode) {
-            document.body.style.background = '#FFFFFF';
-            document.body.style.color = '#000000';
-        } else {
-            document.body.style.background = '#000000';
-            document.body.style.color = '#FFFFFF';
+        applyConfigChanges();
+        
+        alert('✅ Configuración guardada correctamente');
+    }
+    
+    function cancelConfigChanges() {
+        // Restaurar desde savedConfig
+        tempConfig = { ...savedConfig };
+        
+        // Restaurar email y teléfono desde currentUser
+        if (currentUser) {
+            tempConfig.email = currentUser.email || '';
+            tempConfig.phone = currentUser.phone || '';
         }
         
-        let fontSizeValue = '16px';
-        if (userConfig.fontSize === 'pequeño') fontSizeValue = '12px';
-        if (userConfig.fontSize === 'mediano') fontSizeValue = '16px';
-        if (userConfig.fontSize === 'grande') fontSizeValue = '20px';
-        document.body.style.fontSize = fontSizeValue;
-        
-        // Actualizar idioma
-        updateLanguage();
-        
-        alert('✅ Configuración guardada');
+        updateConfigUI();
+        alert('❌ Cambios descartados');
     }
     
     function toggleSetting(setting) {
         switch(setting) {
-            case 'profilePublic': userConfig.profilePublic = !userConfig.profilePublic; break;
-            case 'showLocation': userConfig.showLocation = !userConfig.showLocation; break;
-            case 'pushNotifications': userConfig.pushNotifications = !userConfig.pushNotifications; break;
-            case 'newFollowers': userConfig.newFollowers = !userConfig.newFollowers; break;
-            case 'postComments': userConfig.postComments = !userConfig.postComments; break;
-            case 'darkMode': userConfig.darkMode = !userConfig.darkMode; break;
+            case 'profilePublic': tempConfig.profilePublic = !tempConfig.profilePublic; break;
+            case 'showLocation': tempConfig.showLocation = !tempConfig.showLocation; break;
+            case 'pushNotifications': tempConfig.pushNotifications = !tempConfig.pushNotifications; break;
+            case 'newFollowers': tempConfig.newFollowers = !tempConfig.newFollowers; break;
+            case 'postComments': tempConfig.postComments = !tempConfig.postComments; break;
+            case 'darkMode': tempConfig.darkMode = !tempConfig.darkMode; break;
         }
-        saveConfig();
-        loadConfig();
+        updateConfigUI();
     }
     
-    function updateLanguage() {
-        const lang = userConfig.language;
-        if (lang === 'es') {
-            document.querySelector('#configScreen .logo-container div').innerHTML = '⚙️ Configuración';
-        } else if (lang === 'en') {
-            document.querySelector('#configScreen .logo-container div').innerHTML = '⚙️ Settings';
-        } else if (lang === 'pt') {
-            document.querySelector('#configScreen .logo-container div').innerHTML = '⚙️ Configuração';
-        }
-    }
+    // Event listeners para cambios en tiempo real (solo actualizan tempConfig)
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('selectWhoCanComment')?.addEventListener('change', () => {
+            tempConfig.whoCanComment = document.getElementById('selectWhoCanComment').value;
+        });
+        document.getElementById('selectFontSize')?.addEventListener('change', () => {
+            tempConfig.fontSize = document.getElementById('selectFontSize').value;
+        });
+        document.getElementById('selectLanguage')?.addEventListener('change', () => {
+            tempConfig.language = document.getElementById('selectLanguage').value;
+        });
+        document.getElementById('selectDistanceUnit')?.addEventListener('change', () => {
+            tempConfig.distanceUnit = document.getElementById('selectDistanceUnit').value;
+        });
+        document.getElementById('configEmail')?.addEventListener('input', (e) => {
+            tempConfig.email = e.target.value;
+        });
+        document.getElementById('configPhone')?.addEventListener('input', (e) => {
+            tempConfig.phone = e.target.value;
+        });
+    });
     
     function exportUserData() {
         if (!currentUser) {
@@ -1396,7 +1457,7 @@
         }
         const userData = {
             perfil: currentUser,
-            configuracion: userConfig,
+            configuracion: savedConfig,
             fechaExportacion: new Date().toISOString()
         };
         const blob = new Blob([JSON.stringify(userData, null, 2)], {type: 'application/json'});
@@ -2230,7 +2291,7 @@
         document.getElementById('createKeTeteoBtn').style.display = 'block'; 
         loadProfileData(); 
         iniciarSeguimientoEstado(); 
-        loadConfig();
+        loadConfigToTemp();
         alert('✅ Cuenta creada'); 
     }
     
@@ -2258,7 +2319,7 @@
             document.getElementById('createKeTeteoBtn').style.display = 'block'; 
             loadProfileData(); 
             iniciarSeguimientoEstado(); 
-            loadConfig();
+            loadConfigToTemp();
         } else alert('Ingresa email y contraseña'); 
     }
     
@@ -2379,7 +2440,7 @@
     function showConfigScreen() { 
         document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); 
         document.getElementById('configScreen').classList.add('active'); 
-        loadConfig();
+        loadConfigToTemp();
     }
     
     function showLanguageScreen() { 
@@ -2446,12 +2507,18 @@
             currentUser.email = email || currentUser.email; 
             currentUser.phone = phone || currentUser.phone; 
             localStorage.setItem('user', JSON.stringify(currentUser)); 
+            localStorage.setItem('userPhone', phone || '');
+            
+            // También actualizar tempConfig
+            if (tempConfig) {
+                tempConfig.email = email || currentUser.email;
+                tempConfig.phone = phone || currentUser.phone;
+            }
         } 
-        
-        if (phone) localStorage.setItem('userPhone', phone);
         
         alert('Perfil actualizado correctamente'); 
         closeEditModal(); 
+        loadProfileData();
     }
     
     function closeEditModal() { 
@@ -2469,6 +2536,13 @@
             document.getElementById('userEmail').innerText = user.email || 'correo@ejemplo.com'; 
             const savedPhone = localStorage.getItem('userPhone') || user.phone || '';
             document.getElementById('userPhone').innerText = savedPhone || '+1 809 555 1234';
+            
+            // Sincronizar tempConfig
+            if (tempConfig) {
+                tempConfig.email = user.email || '';
+                tempConfig.phone = savedPhone;
+                updateConfigUI();
+            }
         } 
         const savedStatus = localStorage.getItem('userStatus'); 
         const savedLastActivity = localStorage.getItem('lastActivity'); 
@@ -2526,7 +2600,6 @@
         renderPatrociniosInferior();
         loadGroups();
         renderGroupsList();
-        loadConfig();
         document.getElementById('welcomeScreen').style.display = 'flex';
         if (localStorage.getItem('user')) {
             currentUser = JSON.parse(localStorage.getItem('user'));
@@ -2544,6 +2617,14 @@
         setTimeout(() => {
             if (loggedIn) ordenarKeTeteosPorCercania();
         }, 1000);
+        
+        // Inicializar event listeners para toggles de configuración
+        document.getElementById('toggleProfilePublic')?.addEventListener('click', () => toggleSetting('profilePublic'));
+        document.getElementById('toggleShowLocation')?.addEventListener('click', () => toggleSetting('showLocation'));
+        document.getElementById('togglePushNotifications')?.addEventListener('click', () => toggleSetting('pushNotifications'));
+        document.getElementById('toggleNewFollowers')?.addEventListener('click', () => toggleSetting('newFollowers'));
+        document.getElementById('togglePostComments')?.addEventListener('click', () => toggleSetting('postComments'));
+        document.getElementById('toggleDarkMode')?.addEventListener('click', () => toggleSetting('darkMode'));
     };
 </script>
 </body>
