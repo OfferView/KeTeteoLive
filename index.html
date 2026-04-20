@@ -36,7 +36,7 @@
             justify-content: center;
             width: 24px;
             height: 24px;
-        } 
+        }
         
         .icon-svg svg {
             width: 100%;
@@ -227,13 +227,16 @@
         }
         .action-btn:active { transform: scale(0.96); color: var(--rojo-logo); }
 
-        /* Modal de comentarios estilo Instagram */
+        /* Modal de comentarios estilo Instagram - CORREGIDO */
         .comment-modal-content {
             max-width: 400px;
             width: 90%;
             max-height: 85vh;
             display: flex;
             flex-direction: column;
+            background: var(--gris-oscuro);
+            border-radius: 28px;
+            padding: 20px;
         }
         .comment-modal-header {
             display: flex;
@@ -259,6 +262,7 @@
             flex: 1;
             overflow-y: auto;
             margin-bottom: 16px;
+            max-height: 50vh;
         }
         .comment-modal-item {
             margin-bottom: 16px;
@@ -300,7 +304,7 @@
         }
         .comment-modal-input-container {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 8px;
             background: var(--gris-oscuro);
             border-radius: 24px;
@@ -309,18 +313,23 @@
             margin-bottom: 12px;
         }
         .comment-modal-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 10px 0;
+            width: 100%;
+            background: var(--negro);
+            border: 0.5px solid var(--gris-medio);
+            border-radius: 24px;
+            padding: 10px 16px;
             color: white;
             font-size: 13px;
             outline: none;
+        }
+        .comment-modal-input:focus {
+            border-color: var(--naranja);
         }
         .comment-modal-emoji-picker {
             display: flex;
             gap: 12px;
             padding: 6px 0;
+            justify-content: center;
         }
         .comment-modal-emoji {
             background: transparent;
@@ -332,13 +341,14 @@
         .comment-modal-send {
             background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
             border: none;
-            border-radius: 20px;
-            padding: 6px 16px;
+            border-radius: 24px;
+            padding: 10px 16px;
             color: white;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 14px;
             cursor: pointer;
             opacity: 0.5;
+            transition: opacity 0.2s;
         }
         .comment-modal-send.active {
             opacity: 1;
@@ -1010,7 +1020,7 @@
             height: 100%;
             object-fit: cover;
         }
-                .codigo-invitacion {
+        .codigo-invitacion {
             background: var(--negro);
             padding: 10px;
             border-radius: 12px;
@@ -1020,24 +1030,6 @@
             font-size: 14px;
             letter-spacing: 2px;
             color: var(--naranja);
-        }
-
-        /* Asegurar que el modal de comentarios sea editable */
-        #commentsModal .comment-modal-input {
-            pointer-events: auto !important;
-            background: var(--gris-oscuro) !important;
-            color: white !important;
-            border: 0.5px solid var(--gris-medio) !important;
-        }
-        #commentsModal .comment-modal-input:focus {
-            outline: none;
-            border-color: var(--naranja) !important;
-        }
-        #commentsModal .comment-modal-send {
-            pointer-events: auto !important;
-        }
-        #commentsModal .comment-modal-emoji {
-            pointer-events: auto !important;
         }
     </style>
 </head>
@@ -1122,7 +1114,7 @@
     </div>
 </div>
 
-<!-- MODAL COMENTARIOS (ESTILO INSTAGRAM) -->
+<!-- MODAL COMENTARIOS CORREGIDO -->
 <div id="commentsModal" class="modal">
     <div class="modal-content comment-modal-content">
         <div class="comment-modal-header">
@@ -1130,7 +1122,7 @@
             <button class="close-modal-btn" onclick="closeCommentsModal()">✕</button>
         </div>
         <div class="comments-modal-list" id="commentsModalList">
-            <!-- Los comentarios se cargarán dinámicamente -->
+            <div style="text-align:center; padding:20px; color:var(--gris-claro);">Cargando comentarios...</div>
         </div>
         <div class="comment-modal-input-container">
             <input type="text" class="comment-modal-input" id="commentModalInput" placeholder="Añade un comentario...">
@@ -1146,33 +1138,22 @@
         </div>
     </div>
 </div>
-    
+
 <!-- MODAL COMPARTIR PROFESIONAL -->
 <div id="shareModal" class="modal">
     <div class="modal-content">
         <h3>📤 Compartir</h3>
         <div class="share-options">
-            <div class="share-option" onclick="shareCopyLink()">
-                <span>🔗</span>
-                <span>Copiar Enlace</span>
-            </div>
-            <div class="share-option" onclick="shareExternal()">
-                <span>📱</span>
-                <span>Compartir externo o Red Social</span>
-            </div>
-            <div class="share-option" onclick="shareToGroup()">
-                <span>👥</span>
-                <span>Enviar a un Grupo</span>
-            </div>
-            <div class="share-option" onclick="shareToUser()">
-                <span>👤</span>
-                <span>Enviar a un Usuario</span>
-            </div>
+            <div class="share-option" onclick="shareCopyLink()"><span>🔗</span><span>Copiar enlace</span></div>
+            <div class="share-option" onclick="shareExternal()"><span>📱</span><span>Compartir externo</span></div>
+            <div class="share-option" onclick="shareToGroup()"><span>👥</span><span>Enviar a un grupo</span></div>
+            <div class="share-option" onclick="shareToUser()"><span>👤</span><span>Enviar a un usuario</span></div>
+            <div class="share-option" onclick="shareToWhatsApp()"><span>💬</span><span>Compartir por WhatsApp</span></div>
         </div>
         <button class="btn-gris" onclick="closeShareModal()" style="margin-top: 16px;">❌ Cancelar</button>
     </div>
 </div>
-    
+
 <!-- MODAL REPORTAR PROFESIONAL -->
 <div id="reportModal" class="modal">
     <div class="modal-content">
@@ -1441,7 +1422,7 @@
     
     let savedConfig = { ...tempConfig };
 
-    // ================= FUNCIÓN REFRESCAR INICIO (ACTUALIZA TODAS LAS PUBLICACIONES) =================
+    // ================= FUNCIÓN REFRESCAR INICIO =================
     function refreshHomeScreen() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1450,7 +1431,7 @@
         renderCarousel();
     }
 
-    // ================= FUNCIONES DE COMENTARIOS MODAL (ESTILO INSTAGRAM) =================
+    // ================= FUNCIONES DE COMENTARIOS MODAL CORREGIDAS =================
     function openCommentsModal(keId) {
         if (!loggedIn) {
             alert('Inicia sesión para ver comentarios');
@@ -1460,52 +1441,75 @@
         const ke = allKeTeteos.find(k => k.id == keId);
         if (!ke) return;
         
-        document.getElementById('commentModalInput').value = '';
-        document.getElementById('commentModalSendBtn').classList.remove('active');
+        // Limpiar y cargar comentarios
         loadCommentsToModal(keId);
-        document.getElementById('commentsModal').classList.add('show');
         
-        const sendBtn = document.getElementById('commentModalSendBtn');
+        // Limpiar input
         const input = document.getElementById('commentModalInput');
+        const sendBtn = document.getElementById('commentModalSendBtn');
+        if (input) input.value = '';
+        if (sendBtn) sendBtn.classList.remove('active');
         
-        const newSendHandler = () => {
-            if (input.value.trim()) {
-                if (addCommentToModal()) {
-                    input.value = '';
-                    sendBtn.classList.remove('active');
-                }
-            }
-        };
+        // Mostrar modal
+        const modal = document.getElementById('commentsModal');
+        modal.classList.add('show');
         
-        const newInputHandler = () => {
-            if (input.value.trim()) {
-                sendBtn.classList.add('active');
+        // Configurar eventos
+        setupCommentModalEvents();
+    }
+    
+    function setupCommentModalEvents() {
+        const input = document.getElementById('commentModalInput');
+        const sendBtn = document.getElementById('commentModalSendBtn');
+        
+        if (!input || !sendBtn) return;
+        
+        // Remover eventos anteriores para evitar duplicados
+        const newSendBtn = sendBtn.cloneNode(true);
+        sendBtn.parentNode.replaceChild(newSendBtn, sendBtn);
+        const newInput = input.cloneNode(true);
+        input.parentNode.replaceChild(newInput, input);
+        
+        const finalSendBtn = document.getElementById('commentModalSendBtn');
+        const finalInput = document.getElementById('commentModalInput');
+        
+        finalInput.addEventListener('input', function() {
+            if (finalInput.value.trim()) {
+                finalSendBtn.classList.add('active');
             } else {
-                sendBtn.classList.remove('active');
+                finalSendBtn.classList.remove('active');
             }
-        };
+        });
         
-        sendBtn.removeEventListener('click', newSendHandler);
-        input.removeEventListener('input', newInputHandler);
-        sendBtn.addEventListener('click', newSendHandler);
-        input.addEventListener('input', newInputHandler);
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && input.value.trim()) {
+        finalSendBtn.addEventListener('click', function() {
+            if (finalInput.value.trim()) {
                 if (addCommentToModal()) {
-                    input.value = '';
-                    sendBtn.classList.remove('active');
+                    finalInput.value = '';
+                    finalSendBtn.classList.remove('active');
                 }
             }
         });
         
+        finalInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && finalInput.value.trim()) {
+                e.preventDefault();
+                if (addCommentToModal()) {
+                    finalInput.value = '';
+                    finalSendBtn.classList.remove('active');
+                }
+            }
+        });
+        
+        // Emojis
         document.querySelectorAll('.comment-modal-emoji').forEach(btn => {
-            btn.removeEventListener('click', () => {});
-            btn.addEventListener('click', () => {
-                const emoji = btn.getAttribute('data-emoji');
-                input.value += emoji;
-                input.focus();
-                if (input.value.trim()) {
-                    sendBtn.classList.add('active');
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', () => {
+                const emoji = newBtn.getAttribute('data-emoji');
+                finalInput.value += emoji;
+                finalInput.focus();
+                if (finalInput.value.trim()) {
+                    finalSendBtn.classList.add('active');
                 }
             });
         });
@@ -1519,19 +1523,18 @@
     function loadCommentsToModal(keId) {
         const container = document.getElementById('commentsModalList');
         const comments = currentComments[keId] || [];
-        const ke = allKeTeteos.find(k => k.id == keId);
         
         if (comments.length === 0) {
             container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--gris-claro);">No hay comentarios aún. Sé el primero en comentar 💬</div>';
             return;
         }
         
-        container.innerHTML = comments.map(c => `
-            <div class="comment-modal-item" data-comment-user="${c.user}" data-comment-text="${escapeHtml(c.text)}" data-comment-timestamp="${c.timestamp}">
+        container.innerHTML = comments.map((c, index) => `
+            <div class="comment-modal-item" data-comment-index="${index}">
                 <div class="comment-modal-header-info">
                     <span class="comment-modal-user">${escapeHtml(c.user)}</span>
                     <span class="comment-modal-time">${c.timeAgo || formatCommentTime(new Date(c.timestamp))}</span>
-                    ${(c.user === currentUser?.username || ke?.usuario === currentUser?.username) ? `<button class="delete-comment-btn" onclick="deleteCommentFromModal('${keId}', '${c.timestamp}')">Eliminar</button>` : ''}
+                    ${(c.user === currentUser?.username) ? `<button class="delete-comment-btn" onclick="deleteCommentFromModal('${keId}', ${index})">Eliminar</button>` : ''}
                 </div>
                 <div class="comment-modal-text">${escapeHtml(c.text)}</div>
             </div>
@@ -1558,22 +1561,35 @@
         
         loadCommentsToModal(currentCommentsKeId);
         
-        const commentCountSpan = document.querySelector(`.ke-teteo-card[data-id="${currentCommentsKeId}"] .comment-count`);
-        if (commentCountSpan) commentCountSpan.innerText = currentComments[currentCommentsKeId].length;
+        // Actualizar contador en la tarjeta
+        updateCommentCountInCard(currentCommentsKeId);
         
         return true;
     }
     
-    function deleteCommentFromModal(keId, timestamp) {
+    function deleteCommentFromModal(keId, index) {
         if (!currentComments[keId]) return;
-        const commentIndex = currentComments[keId].findIndex(c => c.timestamp === timestamp);
-        if (commentIndex !== -1) {
-            currentComments[keId].splice(commentIndex, 1);
-            localStorage.setItem(`comments_${keId}`, JSON.stringify(currentComments[keId]));
-            loadCommentsToModal(keId);
-            const commentCountSpan = document.querySelector(`.ke-teteo-card[data-id="${keId}"] .comment-count`);
-            if (commentCountSpan) commentCountSpan.innerText = currentComments[keId].length;
+        currentComments[keId].splice(index, 1);
+        localStorage.setItem(`comments_${keId}`, JSON.stringify(currentComments[keId]));
+        loadCommentsToModal(keId);
+        updateCommentCountInCard(keId);
+    }
+    
+    function updateCommentCountInCard(keId) {
+        const commentCountSpan = document.querySelector(`.ke-teteo-card[data-id="${keId}"] .comment-count`);
+        if (commentCountSpan) {
+            commentCountSpan.innerText = (currentComments[keId] || []).length;
         }
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
     }
 
     // ================= FUNCIONES DE COMPARTIR =================
@@ -1662,7 +1678,7 @@
 
     function loadKeTeteos() {
         const stored = localStorage.getItem('keTeteos');
-        if (stored) { allKeTeteos = JSON.parse(stored); if (!allKeTeteos.find(k => k.id === 999)) allKeTeteos.push(initialKeTeteos.find(k => k.id === 999)); }
+        if (stored) { allKeTeteos = JSON.parse(stored); }
         else { allKeTeteos = [...initialKeTeteos]; localStorage.setItem('keTeteos', JSON.stringify(allKeTeteos)); }
         allKeTeteos.forEach(item => {
             if (currentLikes[item.id] === undefined) currentLikes[item.id] = item.likes || 0;
@@ -1701,9 +1717,9 @@
                 <div class="stream-media"><iframe class="radar-iframe" src="https://www.flightradar24.com/18.46,-69.90/6" allow="geolocation" loading="lazy"></iframe></div>
                 <div class="card-content">
                     <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
-                    <div class="event-title">${item.titulo}</div>
-                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
-                    <div class="event-meta"><span>${item.ubicacion} · ${item.distancia}</span></div>
+                    <div class="event-title">${escapeHtml(item.titulo)}</div>
+                    <div class="event-creator">${escapeHtml(item.nombreCreador)} <span>${escapeHtml(item.usuario)}</span></div>
+                    <div class="event-meta"><span>${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</span></div>
                     <div class="action-buttons">
                         <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
                         <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
@@ -1714,12 +1730,12 @@
             `;
         } else {
             card.innerHTML = `
-                <div class="stream-media"><img src="${item.imagen}" alt="${item.titulo}" loading="lazy"></div>
+                <div class="stream-media"><img src="${item.imagen}" alt="${escapeHtml(item.titulo)}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300?text=KeTeteo'"></div>
                 <div class="card-content">
                     <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
-                    <div class="event-title">${item.titulo}</div>
-                    <div class="event-creator">${item.nombreCreador} <span>${item.usuario}</span></div>
-                    <div class="event-meta"><span>${item.ubicacion} · ${item.distancia}</span>${item.categoria ? ` · 🏷️ ${item.categoria}` : ''}</div>
+                    <div class="event-title">${escapeHtml(item.titulo)}</div>
+                    <div class="event-creator">${escapeHtml(item.nombreCreador)} <span>${escapeHtml(item.usuario)}</span></div>
+                    <div class="event-meta"><span>${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</span>${item.categoria ? ` · 🏷️ ${escapeHtml(item.categoria)}` : ''}</div>
                     <div class="action-buttons">
                         <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
                         <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
@@ -1748,118 +1764,50 @@
         incrementViews(item.id);
         const fullDiv = document.createElement('div');
         fullDiv.className = 'fullscreen-stream';
-        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`;
+        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`;
         document.body.appendChild(fullDiv);
         fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove());
     }
     
     function attachRadarEvents(card, id) {
-    // Botón LIKE
-    const likeBtn = card.querySelector('.like-btn');
-    if (likeBtn) {
-        likeBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            if (!loggedIn) { alert('Inicia sesión'); return; } 
-            currentLikes[id] = (currentLikes[id] || 0) + 1; 
-            const likeSpan = likeBtn.querySelector('.like-count');
-            if (likeSpan) likeSpan.innerText = currentLikes[id]; 
-            saveKeTeteos(); 
-        });
+        const likeBtn = card.querySelector('.like-btn');
+        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; saveKeTeteos(); });
+        const shareBtn = card.querySelector('.share-btn');
+        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
+        const commentBtn = card.querySelector('.comment-toggle');
+        if (commentBtn) {
+            commentBtn.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                e.preventDefault();
+                openCommentsModal(id); 
+            });
+        }
+        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && item.esRadar) openFullscreenRadar(item); });
     }
-    
-    // Botón COMPARTIR
-    const shareBtn = card.querySelector('.share-btn');
-    if (shareBtn) {
-        shareBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            openShareModal(id); 
-        });
-    }
-    
-    // Botón COMENTARIOS - CORREGIDO (SIN CLONAR PARA EVITAR PROBLEMAS)
-    const commentBtn = card.querySelector('.comment-toggle');
-    if (commentBtn) {
-        // Remover event listener anterior si existe
-        commentBtn.removeEventListener('click', () => {});
-        commentBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            e.preventDefault();
-            console.log("Abriendo comentarios RADAR para ID:", id);
-            openCommentsModal(id); 
-        });
-    }
-    
-    // Click en la tarjeta
-    card.addEventListener('click', (e) => { 
-        if (e.target.closest('.action-btn')) return; 
-        const item = allKeTeteos.find(k => k.id == id); 
-        if (item && item.esRadar) openFullscreenRadar(item); 
-    });
-}
 
-function attachCardEvents(card, id) {
-    // Botón LIKE
-    const likeBtn = card.querySelector('.like-btn');
-    if (likeBtn) {
-        likeBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            if (!loggedIn) { alert('Inicia sesión'); return; } 
-            currentLikes[id] = (currentLikes[id] || 0) + 1; 
-            const likeSpan = likeBtn.querySelector('.like-count');
-            if (likeSpan) likeSpan.innerText = currentLikes[id]; 
-            const ke = allKeTeteos.find(k => k.id == id); 
-            if (ke) ke.likes = currentLikes[id]; 
-            saveKeTeteos(); 
-        });
+    function attachCardEvents(card, id) {
+        const likeBtn = card.querySelector('.like-btn');
+        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); });
+        const shareBtn = card.querySelector('.share-btn');
+        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
+        const reportBtn = card.querySelector('.report-btn');
+        if (reportBtn) reportBtn.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
+        const commentBtn = card.querySelector('.comment-toggle');
+        if (commentBtn) {
+            commentBtn.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                e.preventDefault();
+                openCommentsModal(id); 
+            });
+        }
+        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } });
     }
-    
-    // Botón COMPARTIR
-    const shareBtn = card.querySelector('.share-btn');
-    if (shareBtn) {
-        shareBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            openShareModal(id); 
-        });
-    }
-    
-    // Botón REPORTAR
-    const reportBtn = card.querySelector('.report-btn');
-    if (reportBtn) {
-        reportBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            openReportModal(id); 
-        });
-    }
-    
-    // Botón COMENTARIOS - CORREGIDO (SIN CLONAR PARA EVITAR PROBLEMAS)
-    const commentBtn = card.querySelector('.comment-toggle');
-    if (commentBtn) {
-        // Remover event listener anterior si existe
-        commentBtn.removeEventListener('click', () => {});
-        commentBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            e.preventDefault();
-            console.log("Abriendo comentarios para ID:", id);
-            openCommentsModal(id); 
-        });
-    }
-    
-    // Click en la tarjeta
-    card.addEventListener('click', (e) => { 
-        if (e.target.closest('.action-btn')) return; 
-        const item = allKeTeteos.find(k => k.id == id); 
-        if (item && !item.esRadar) { 
-            incrementViews(id); 
-            openFullscreenStream(item); 
-        } 
-    });
-}
     
     function openFullscreenStream(item) { 
         incrementViews(item.id);
         const fullDiv = document.createElement('div'); 
         fullDiv.className = 'fullscreen-stream'; 
-        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${item.titulo}" style="width:100%; height:70%; object-fit:contain;"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${item.titulo}</div><div style="font-size:14px; color:#aaa;">${item.nombreCreador} ${item.usuario}</div><div style="font-size:12px; color:#8E8E93;">${item.ubicacion} · ${item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; 
+        fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><img src="${item.imagen}" alt="${escapeHtml(item.titulo)}" style="width:100%; height:70%; object-fit:contain;" onerror="this.src='https://via.placeholder.com/400x300?text=KeTeteo'"><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id] || []).length} comentarios</div></div></div>`; 
         document.body.appendChild(fullDiv); 
         fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); 
     }
@@ -1885,7 +1833,7 @@ function attachCardEvents(card, id) {
         ); 
         const container = document.getElementById('searchResultsModal'); 
         if (results.length === 0) { container.innerHTML = '<div class="search-result"><div class="title">❌ Sin resultados</div></div>'; return; } 
-        container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${k.titulo}</div><div class="desc">${k.nombreCreador} · ${k.ubicacion}${k.categoria ? ` · 🏷️ ${k.categoria}` : ''}</div></div>`).join(''); 
+        container.innerHTML = results.map(k => `<div class="search-result" onclick="selectSearchResult(${k.id})"><div class="title">${escapeHtml(k.titulo)}</div><div class="desc">${escapeHtml(k.nombreCreador)} · ${escapeHtml(k.ubicacion)}${k.categoria ? ` · 🏷️ ${escapeHtml(k.categoria)}` : ''}</div></div>`).join(''); 
     });
     function selectSearchResult(id) { 
         closeSearchModal(); 
@@ -1946,7 +1894,7 @@ function attachCardEvents(card, id) {
     function closeCreateGroupModal() { document.getElementById('createGroupModal').classList.remove('show'); }
     function previewGroupPhoto(event) { const file = event.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = (e) => { document.getElementById('groupFotoPreview').src = e.target.result; }; reader.readAsDataURL(file); } }
     function createGroup() { const nombre = document.getElementById('groupNombre').value.trim(); if (!nombre) { alert('El nombre del grupo es requerido'); return; } const descripcion = document.getElementById('groupDescripcion').value.trim(); const tipo = document.getElementById('groupTipo').value; const password = document.getElementById('groupPassword').value; const foto = document.getElementById('groupFotoPreview').src; const nuevoGrupo = { id: Date.now().toString(), nombre, descripcion, tipo, foto, creador: currentUser.username, miembros: [currentUser.username], codigoInvitacion: currentGroupCode, password: tipo === 'privado' ? password : null, fechaCreacion: new Date().toISOString() }; allGroups.push(nuevoGrupo); saveGroups(); renderGroupsList(); closeCreateGroupModal(); alert('✅ Grupo creado exitosamente'); }
-    function renderGroupsList() { const container = document.getElementById('groupsList'); if (!container) return; const misGrupos = allGroups.filter(g => g.miembros.includes(currentUser?.username)); if (misGrupos.length === 0) { container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--gris-claro);">📭 No tienes grupos aún.<br>Crea uno o únete con un código</div>'; return; } container.innerHTML = ''; misGrupos.forEach(grupo => { const div = document.createElement('div'); div.className = 'group-card'; div.innerHTML = `<div class="group-avatar"><img src="${grupo.foto}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%238E8E93\' stroke-width=\'2\'%3E%3Cpath d=\'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\'/%3E%3Ccircle cx=\'9\' cy=\'7\' r=\'4\'/%3E%3Cpath d=\'M23 21v-2a4 4 0 0 0-3-3.87\'/%3E%3Cpath d=\'M16 3.13a4 4 0 0 1 0 7.75\'/%3E%3C/svg%3E'"></div><div class="group-info"><div class="group-name">${grupo.nombre}</div><div class="group-meta"> ${grupo.miembros.length} miembros • ${grupo.tipo === 'publico' ? '🌍 Público' : '🔒 Privado'}</div>${grupo.descripcion ? `<div class="group-meta" style="font-size:10px;">📝 ${grupo.descripcion.substring(0, 50)}</div>` : ''}</div>`; container.appendChild(div); }); }
+    function renderGroupsList() { const container = document.getElementById('groupsList'); if (!container) return; const misGrupos = allGroups.filter(g => g.miembros.includes(currentUser?.username)); if (misGrupos.length === 0) { container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--gris-claro);">📭 No tienes grupos aún.<br>Crea uno o únete con un código</div>'; return; } container.innerHTML = ''; misGrupos.forEach(grupo => { const div = document.createElement('div'); div.className = 'group-card'; div.innerHTML = `<div class="group-avatar"><img src="${grupo.foto}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%238E8E93\' stroke-width=\'2\'%3E%3Cpath d=\'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\'/%3E%3Ccircle cx=\'9\' cy=\'7\' r=\'4\'/%3E%3Cpath d=\'M23 21v-2a4 4 0 0 0-3-3.87\'/%3E%3Cpath d=\'M16 3.13a4 4 0 0 1 0 7.75\'/%3E%3C/svg%3E'"></div><div class="group-info"><div class="group-name">${escapeHtml(grupo.nombre)}</div><div class="group-meta"> ${grupo.miembros.length} miembros • ${grupo.tipo === 'publico' ? '🌍 Público' : '🔒 Privado'}</div>${grupo.descripcion ? `<div class="group-meta" style="font-size:10px;">📝 ${escapeHtml(grupo.descripcion.substring(0, 50))}</div>` : ''}</div>`; container.appendChild(div); }); }
     function openJoinGroupModal() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } document.getElementById('joinCode').value = ''; document.getElementById('joinPassword').value = ''; document.getElementById('joinPasswordContainer').style.display = 'none'; document.getElementById('joinGroupModal').classList.add('show'); }
     function closeJoinGroupModal() { document.getElementById('joinGroupModal').classList.remove('show'); }
     function joinGroup() { const codigo = document.getElementById('joinCode').value.trim().toUpperCase(); const grupo = allGroups.find(g => g.codigoInvitacion === codigo); if (!grupo) { alert('Código de invitación inválido'); return; } if (grupo.tipo === 'privado') { const password = document.getElementById('joinPassword').value; if (password !== grupo.password) { alert('Contraseña incorrecta'); return; } } if (grupo.miembros.includes(currentUser.username)) { alert('Ya eres miembro de este grupo'); closeJoinGroupModal(); return; } grupo.miembros.push(currentUser.username); saveGroups(); renderGroupsList(); closeJoinGroupModal(); alert(`✅ Te has unido a ${grupo.nombre}`); }
@@ -2016,15 +1964,15 @@ function attachCardEvents(card, id) {
     function openProximosKeTeteo() { 
         const container = document.getElementById('proximosEventosList'); if (!container) return;
         container.innerHTML = ''; 
-        proximosKeTeteos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--gris-oscuro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${e.titulo}</div><div style="font-size:12px; color:var(--gris-claro);">${e.ubicacion} · ${e.fecha}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">PRÓXIMAMENTE</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Recibirás una notificación cuando esté disponible\')">Recordar</button>`; container.appendChild(div); }); 
+        proximosKeTeteos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--gris-oscuro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${escapeHtml(e.titulo)}</div><div style="font-size:12px; color:var(--gris-claro);">${escapeHtml(e.ubicacion)} · ${escapeHtml(e.fecha)}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">PRÓXIMAMENTE</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Recibirás una notificación cuando esté disponible\')">Recordar</button>`; container.appendChild(div); }); 
         const modal = document.getElementById('proximosEventosModal');
         if (modal) { modal.querySelector('h3').innerHTML = 'PRÓXIMOS KETETEOS'; modal.classList.add('show'); }
     }
     function closeProximosEventos() { document.getElementById('proximosEventosModal').classList.remove('show'); }
-    function abrirConfirmarEliminar(id, titulo) { eliminarId = id; document.getElementById('eliminarInfo').innerHTML = `<strong>${titulo}</strong>`; document.getElementById('confirmarEliminarModal').classList.add('show'); }
+    function abrirConfirmarEliminar(id, titulo) { eliminarId = id; document.getElementById('eliminarInfo').innerHTML = `<strong>${escapeHtml(titulo)}</strong>`; document.getElementById('confirmarEliminarModal').classList.add('show'); }
     function confirmarEliminar() { if (eliminarId) { const index = allKeTeteos.findIndex(k => k.id == eliminarId); if (index !== -1 && !allKeTeteos[index].esRadar) { allKeTeteos.splice(index, 1); saveKeTeteos(); renderCarousel(); renderMyStreams(); alert('✅ Eliminado'); } } cerrarConfirmarEliminar(); }
     function cerrarConfirmarEliminar() { eliminarId = null; document.getElementById('confirmarEliminarModal').classList.remove('show'); }
-    function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${ke.titulo}</strong><br>👁️ ${ke.viewers || 0} vistas | ❤️ ${ke.likes || 0} | 💬 ${(currentComments[ke.id] || []).length}</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">Eliminar</button>`; container.appendChild(div); }); }
+    function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${escapeHtml(ke.titulo)}</strong><br>👁️ ${ke.viewers || 0} vistas | ❤️ ${ke.likes || 0} | 💬 ${(currentComments[ke.id] || []).length}</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">Eliminar</button>`; container.appendChild(div); }); }
 
     function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
     function closeMenu() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
