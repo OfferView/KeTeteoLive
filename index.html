@@ -1356,7 +1356,15 @@
             <div class="config-item"><div class="config-item-label">Tamaño de fuente</div><select id="selectFontSize" class="config-select"><option value="pequeño">Pequeño</option><option value="mediano">Mediano</option><option value="grande">Grande</option></select></div>
         </div>
         <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span> Idioma y Región</div>
-            <div class="config-item"><div class="config-item-label">Idioma</div><select id="selectLanguage" class="config-select"><option value="es">Español</option><option value="en">English</option><option value="pt">Português</option></select></div>
+            <div class="config-item"><div class="config-item-label">Idioma</div>
+                <select id="selectLanguage" class="config-select">
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="en">🇬🇧 English</option>
+                    <option value="pt">🇵🇹 Português</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="ht">🇭🇹 Kreyòl Ayisyen</option>
+                </select>
+            </div>
             <div class="config-item"><div class="config-item-label">Unidad de distancia</div><select id="selectDistanceUnit" class="config-select"><option value="km">Kilómetros (km)</option><option value="mi">Millas (mi)</option></select></div>
         </div>
         <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span> Datos y Seguridad</div>
@@ -1371,10 +1379,9 @@
 <div id="languageScreen" class="screen">
     <div class="header"><button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Idioma</div></div><div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div></div>
     <div style="padding: 20px;">
-        <div class="config-option" onclick="setLanguage('es')"><span>Español</span><span>✅</span></div>
-        <div class="config-option" onclick="setLanguage('en')"><span>English</span><span></span></div>
-        <div class="config-option" onclick="setLanguage('pt')"><span>Português</span><span></span></div>
-        <div class="config-option" onclick="setLanguage('zh')"><span>🇨🇳 中文</span><span></span></div>
+        <div class="config-option" onclick="setLanguage('es')"><span>🇪🇸 Español</span><span>✅</span></div>
+        <div class="config-option" onclick="setLanguage('en')"><span>🇬🇧 English</span><span></span></div>
+        <div class="config-option" onclick="setLanguage('pt')"><span>🇵🇹 Português</span><span></span></div>
         <div class="config-option" onclick="setLanguage('fr')"><span>🇫🇷 Français</span><span></span></div>
         <div class="config-option" onclick="setLanguage('ht')"><span>🇭🇹 Kreyòl Ayisyen</span><span></span></div>
     </div>
@@ -1447,7 +1454,6 @@
         loadCommentsToModal(keId);
         document.getElementById('commentsModal').classList.add('show');
         
-        // Configurar evento del botón de envío
         const sendBtn = document.getElementById('commentModalSendBtn');
         const input = document.getElementById('commentModalInput');
         
@@ -1481,7 +1487,6 @@
             }
         });
         
-        // Configurar emojis
         document.querySelectorAll('.comment-modal-emoji').forEach(btn => {
             btn.removeEventListener('click', () => {});
             btn.addEventListener('click', () => {
@@ -1540,10 +1545,8 @@
         currentComments[currentCommentsKeId].unshift(newComment);
         localStorage.setItem(`comments_${currentCommentsKeId}`, JSON.stringify(currentComments[currentCommentsKeId]));
         
-        // Actualizar UI del modal
         loadCommentsToModal(currentCommentsKeId);
         
-        // Actualizar contador en la tarjeta
         const commentCountSpan = document.querySelector(`.ke-teteo-card[data-id="${currentCommentsKeId}"] .comment-count`);
         if (commentCountSpan) commentCountSpan.innerText = currentComments[currentCommentsKeId].length;
         
@@ -1573,29 +1576,28 @@
         const ke = allKeTeteos.find(k => k.id == currentShareKeId);
         if (ke) { navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}?ke=${ke.id}`); alert('✅ Enlace copiado'); incrementShares(currentShareKeId); }
         closeShareModal();
-   
     }
     
-function shareExternal() {
-    const ke = allKeTeteos.find(k => k.id == currentShareKeId);
-    if (ke) {
-        const shareData = {
-            title: ke.titulo,
-            text: `${ke.titulo} en KeTeteoLive`,
-            url: `${window.location.origin}${window.location.pathname}?ke=${ke.id}`
-        };
-        if (navigator.share) {
-            navigator.share(shareData).then(() => {
+    function shareExternal() {
+        const ke = allKeTeteos.find(k => k.id == currentShareKeId);
+        if (ke) {
+            const shareData = {
+                title: ke.titulo,
+                text: `${ke.titulo} en KeTeteoLive`,
+                url: `${window.location.origin}${window.location.pathname}?ke=${ke.id}`
+            };
+            if (navigator.share) {
+                navigator.share(shareData).then(() => {
+                    incrementShares(currentShareKeId);
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(shareData.url);
+                alert('✅ Enlace copiado al portapapeles');
                 incrementShares(currentShareKeId);
-            }).catch(() => {});
-        } else {
-            navigator.clipboard.writeText(shareData.url);
-            alert('✅ Enlace copiado al portapapeles');
-            incrementShares(currentShareKeId);
+            }
         }
+        closeShareModal();
     }
-    closeShareModal();
-}
     
     function shareToGroup() {
         const grupos = allGroups.filter(g => g.miembros.includes(currentUser?.username));
@@ -1731,7 +1733,7 @@ function shareExternal() {
         }); 
     }
     
-    function openFullscreenRadar(item) {card
+    function openFullscreenRadar(item) {
         incrementViews(item.id);
         const fullDiv = document.createElement('div');
         fullDiv.className = 'fullscreen-stream';
@@ -1741,41 +1743,38 @@ function shareExternal() {
     }
     
     function attachRadarEvents(card, id) {
-    const likeBtn = card.querySelector('.like-btn');
-    if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; saveKeTeteos(); });
-    const shareBtn = card.querySelector('.share-btn');
-    if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
-    const commentBtn = card.querySelector('.comment-toggle');
-    if (commentBtn) {
-        commentBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            e.preventDefault();
-            openCommentsModal(id); 
-        });
+        const likeBtn = card.querySelector('.like-btn');
+        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; saveKeTeteos(); });
+        const shareBtn = card.querySelector('.share-btn');
+        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
+        const commentBtn = card.querySelector('.comment-toggle');
+        if (commentBtn) {
+            commentBtn.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                e.preventDefault();
+                openCommentsModal(id); 
+            });
+        }
+        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && item.esRadar) openFullscreenRadar(item); });
     }
-    card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && item.esRadar) openFullscreenRadar(item); });
-}
-
 
     function attachCardEvents(card, id) {
-    const likeBtn = card.querySelector('.like-btn');
-    if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); });
-    const shareBtn = card.querySelector('.share-btn');
-    if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
-    const reportBtn = card.querySelector('.report-btn');
-    if (reportBtn) reportBtn.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
-    const commentBtn = card.querySelector('.comment-toggle');
-    if (commentBtn) {
-        commentBtn.removeEventListener('click', () => {});
-        commentBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            e.preventDefault();
-            console.log("Abriendo comentarios Card ID:", id);
-            openCommentsModal(id); 
-        });
+        const likeBtn = card.querySelector('.like-btn');
+        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); });
+        const shareBtn = card.querySelector('.share-btn');
+        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
+        const reportBtn = card.querySelector('.report-btn');
+        if (reportBtn) reportBtn.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
+        const commentBtn = card.querySelector('.comment-toggle');
+        if (commentBtn) {
+            commentBtn.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                e.preventDefault();
+                openCommentsModal(id); 
+            });
+        }
+        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } });
     }
-    card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } });
-}
     
     function openFullscreenStream(item) { 
         incrementViews(item.id);
@@ -1969,7 +1968,11 @@ function shareExternal() {
     function showConfigScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('configScreen').classList.add('active'); loadConfigToTemp(); }
     function showLanguageScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('languageScreen').classList.add('active'); }
     function showGroupsScreen() { document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active')); document.getElementById('groupsScreen').classList.add('active'); renderGroupsList(); }
-    function setLanguage(lang) { alert('Idioma cambiado a ' + lang); }
+    function setLanguage(lang) { 
+        tempConfig.language = lang;
+        updateConfigUI();
+        alert('Idioma cambiado');
+    }
     function uploadProfilePhoto() { document.getElementById('photoUpload').click(); }
     function handlePhotoUpload(e) { const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = ev => { document.getElementById('profileImg').src = ev.target.result; localStorage.setItem('profilePhoto', ev.target.result); }; reader.readAsDataURL(file); } }
     function openEditProfile() { document.getElementById('editProfileModal').classList.add('show'); const user = JSON.parse(localStorage.getItem('user')); const savedPhone = localStorage.getItem('userPhone') || ''; if (user) { document.getElementById('editName').value = user.name || ''; document.getElementById('editUsername').value = (user.username || '@usuario').replace('@', ''); document.getElementById('editBio').value = user.bio || ''; document.getElementById('editEmail').value = user.email || ''; document.getElementById('editPhone').value = savedPhone; } }
