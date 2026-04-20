@@ -36,7 +36,7 @@
             justify-content: center;
             width: 24px;
             height: 24px;
-        }
+        } 
         
         .icon-svg svg {
             width: 100%;
@@ -1776,14 +1776,12 @@
         });
     }
     
-    // Botón COMENTARIOS - VERSIÓN CORREGIDA
+    // Botón COMENTARIOS - CORREGIDO (SIN CLONAR PARA EVITAR PROBLEMAS)
     const commentBtn = card.querySelector('.comment-toggle');
     if (commentBtn) {
-        // Eliminar event listeners anteriores para evitar duplicados
-        const newCommentBtn = commentBtn.cloneNode(true);
-        commentBtn.parentNode.replaceChild(newCommentBtn, commentBtn);
-        
-        newCommentBtn.addEventListener('click', (e) => { 
+        // Remover event listener anterior si existe
+        commentBtn.removeEventListener('click', () => {});
+        commentBtn.addEventListener('click', (e) => { 
             e.stopPropagation(); 
             e.preventDefault();
             console.log("Abriendo comentarios RADAR para ID:", id);
@@ -1799,7 +1797,7 @@
     });
 }
 
-    function attachCardEvents(card, id) {
+function attachCardEvents(card, id) {
     // Botón LIKE
     const likeBtn = card.querySelector('.like-btn');
     if (likeBtn) {
@@ -1833,14 +1831,12 @@
         });
     }
     
-    // Botón COMENTARIOS - VERSIÓN CORREGIDA
+    // Botón COMENTARIOS - CORREGIDO (SIN CLONAR PARA EVITAR PROBLEMAS)
     const commentBtn = card.querySelector('.comment-toggle');
     if (commentBtn) {
-        // Eliminar event listeners anteriores para evitar duplicados
-        const newCommentBtn = commentBtn.cloneNode(true);
-        commentBtn.parentNode.replaceChild(newCommentBtn, commentBtn);
-        
-        newCommentBtn.addEventListener('click', (e) => { 
+        // Remover event listener anterior si existe
+        commentBtn.removeEventListener('click', () => {});
+        commentBtn.addEventListener('click', (e) => { 
             e.stopPropagation(); 
             e.preventDefault();
             console.log("Abriendo comentarios para ID:", id);
