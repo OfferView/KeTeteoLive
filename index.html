@@ -1146,22 +1146,33 @@
         </div>
     </div>
 </div>
-
+    
 <!-- MODAL COMPARTIR PROFESIONAL -->
 <div id="shareModal" class="modal">
     <div class="modal-content">
         <h3>📤 Compartir</h3>
         <div class="share-options">
-            <div class="share-option" onclick="shareCopyLink()"><span>🔗</span><span>Copiar enlace</span></div>
-            <div class="share-option" onclick="shareExternal()"><span>📱</span><span>Compartir externo</span></div>
-            <div class="share-option" onclick="shareToGroup()"><span>👥</span><span>Enviar a un grupo</span></div>
-            <div class="share-option" onclick="shareToUser()"><span>👤</span><span>Enviar a un usuario</span></div>
-            <div class="share-option" onclick="shareToWhatsApp()"><span>💬</span><span>Compartir por WhatsApp</span></div>
+            <div class="share-option" onclick="shareCopyLink()">
+                <span>🔗</span>
+                <span>Copiar Enlace</span>
+            </div>
+            <div class="share-option" onclick="shareExternal()">
+                <span>📱</span>
+                <span>Compartir externo o Red Social</span>
+            </div>
+            <div class="share-option" onclick="shareToGroup()">
+                <span>👥</span>
+                <span>Enviar a un Grupo</span>
+            </div>
+            <div class="share-option" onclick="shareToUser()">
+                <span>👤</span>
+                <span>Enviar a un Usuario</span>
+            </div>
         </div>
         <button class="btn-gris" onclick="closeShareModal()" style="margin-top: 16px;">❌ Cancelar</button>
     </div>
 </div>
-
+    
 <!-- MODAL REPORTAR PROFESIONAL -->
 <div id="reportModal" class="modal">
     <div class="modal-content">
@@ -1743,38 +1754,110 @@
     }
     
     function attachRadarEvents(card, id) {
-        const likeBtn = card.querySelector('.like-btn');
-        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; saveKeTeteos(); });
-        const shareBtn = card.querySelector('.share-btn');
-        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
-        const commentBtn = card.querySelector('.comment-toggle');
-        if (commentBtn) {
-            commentBtn.addEventListener('click', (e) => { 
-                e.stopPropagation(); 
-                e.preventDefault();
-                openCommentsModal(id); 
-            });
-        }
-        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && item.esRadar) openFullscreenRadar(item); });
+    // Botón LIKE
+    const likeBtn = card.querySelector('.like-btn');
+    if (likeBtn) {
+        likeBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            if (!loggedIn) { alert('Inicia sesión'); return; } 
+            currentLikes[id] = (currentLikes[id] || 0) + 1; 
+            const likeSpan = likeBtn.querySelector('.like-count');
+            if (likeSpan) likeSpan.innerText = currentLikes[id]; 
+            saveKeTeteos(); 
+        });
     }
+    
+    // Botón COMPARTIR
+    const shareBtn = card.querySelector('.share-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            openShareModal(id); 
+        });
+    }
+    
+    // Botón COMENTARIOS - VERSIÓN CORREGIDA
+    const commentBtn = card.querySelector('.comment-toggle');
+    if (commentBtn) {
+        // Eliminar event listeners anteriores para evitar duplicados
+        const newCommentBtn = commentBtn.cloneNode(true);
+        commentBtn.parentNode.replaceChild(newCommentBtn, commentBtn);
+        
+        newCommentBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            e.preventDefault();
+            console.log("Abriendo comentarios RADAR para ID:", id);
+            openCommentsModal(id); 
+        });
+    }
+    
+    // Click en la tarjeta
+    card.addEventListener('click', (e) => { 
+        if (e.target.closest('.action-btn')) return; 
+        const item = allKeTeteos.find(k => k.id == id); 
+        if (item && item.esRadar) openFullscreenRadar(item); 
+    });
+}
 
     function attachCardEvents(card, id) {
-        const likeBtn = card.querySelector('.like-btn');
-        if (likeBtn) likeBtn.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id] || 0) + 1; likeBtn.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k => k.id == id); if (ke) ke.likes = currentLikes[id]; saveKeTeteos(); });
-        const shareBtn = card.querySelector('.share-btn');
-        if (shareBtn) shareBtn.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
-        const reportBtn = card.querySelector('.report-btn');
-        if (reportBtn) reportBtn.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
-        const commentBtn = card.querySelector('.comment-toggle');
-        if (commentBtn) {
-            commentBtn.addEventListener('click', (e) => { 
-                e.stopPropagation(); 
-                e.preventDefault();
-                openCommentsModal(id); 
-            });
-        }
-        card.addEventListener('click', (e) => { if (e.target.closest('.action-btn')) return; const item = allKeTeteos.find(k => k.id == id); if (item && !item.esRadar) { incrementViews(id); openFullscreenStream(item); } });
+    // Botón LIKE
+    const likeBtn = card.querySelector('.like-btn');
+    if (likeBtn) {
+        likeBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            if (!loggedIn) { alert('Inicia sesión'); return; } 
+            currentLikes[id] = (currentLikes[id] || 0) + 1; 
+            const likeSpan = likeBtn.querySelector('.like-count');
+            if (likeSpan) likeSpan.innerText = currentLikes[id]; 
+            const ke = allKeTeteos.find(k => k.id == id); 
+            if (ke) ke.likes = currentLikes[id]; 
+            saveKeTeteos(); 
+        });
     }
+    
+    // Botón COMPARTIR
+    const shareBtn = card.querySelector('.share-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            openShareModal(id); 
+        });
+    }
+    
+    // Botón REPORTAR
+    const reportBtn = card.querySelector('.report-btn');
+    if (reportBtn) {
+        reportBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            openReportModal(id); 
+        });
+    }
+    
+    // Botón COMENTARIOS - VERSIÓN CORREGIDA
+    const commentBtn = card.querySelector('.comment-toggle');
+    if (commentBtn) {
+        // Eliminar event listeners anteriores para evitar duplicados
+        const newCommentBtn = commentBtn.cloneNode(true);
+        commentBtn.parentNode.replaceChild(newCommentBtn, commentBtn);
+        
+        newCommentBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            e.preventDefault();
+            console.log("Abriendo comentarios para ID:", id);
+            openCommentsModal(id); 
+        });
+    }
+    
+    // Click en la tarjeta
+    card.addEventListener('click', (e) => { 
+        if (e.target.closest('.action-btn')) return; 
+        const item = allKeTeteos.find(k => k.id == id); 
+        if (item && !item.esRadar) { 
+            incrementViews(id); 
+            openFullscreenStream(item); 
+        } 
+    });
+}
     
     function openFullscreenStream(item) { 
         incrementViews(item.id);
