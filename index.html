@@ -1128,44 +1128,97 @@
             text-align: center;
             margin-bottom: 10px;
         }
-        .camera-controls {
-            position: fixed;
+        .live-stats-bar {
+            position: absolute;
             bottom: 100px;
-            right: 20px;
+            left: 0;
+            right: 0;
             display: flex;
-            gap: 10px;
+            justify-content: space-around;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
             z-index: 10000;
         }
-        .camera-btn {
+        .live-stat {
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .live-stat span {
+            font-size: 18px;
+        }
+        .live-comments-area {
+            position: absolute;
+            bottom: 180px;
+            left: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+            padding: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10000;
+        }
+        .live-comment {
+            font-size: 12px;
+            margin-bottom: 4px;
+            color: white;
+        }
+        .live-comment.creator-highlight {
+            color: #FF2D55;
+            font-weight: bold;
+        }
+        .live-like-animation {
+            position: fixed;
+            pointer-events: none;
+            font-size: 28px;
+            animation: liveLikeFloat 1s ease-out forwards;
+            z-index: 10002;
+        }
+        @keyframes liveLikeFloat {
+            0% { transform: scale(1) translateY(0); opacity: 1; }
+            100% { transform: scale(1.5) translateY(-150px); opacity: 0; }
+        }
+        .live-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 10001;
+        }
+        .live-btn {
+            background: rgba(0,0,0,0.7);
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+        .live-btn.stop {
+            background: #FF2D55;
+        }
+        .viewer-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 10001;
+        }
+        .viewer-btn {
             background: rgba(0,0,0,0.7);
             border: none;
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            font-size: 24px;
+            font-size: 22px;
             cursor: pointer;
             color: white;
-        }
-        .like-animation {
-            position: fixed;
-            pointer-events: none;
-            font-size: 24px;
-            animation: likeFloat 1s ease-out forwards;
-            z-index: 10001;
-        }
-        @keyframes likeFloat {
-            0% { transform: scale(1) translateY(0); opacity: 1; }
-            100% { transform: scale(1.5) translateY(-100px); opacity: 0; }
-        }
-        .live-viewers {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.7);
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 12px;
-            z-index: 10;
         }
     </style>
 </head>
@@ -1175,8 +1228,8 @@
     <div class="logo-container" style="margin-bottom: 30px;">
         <img src="ketelogo.jpg" alt="KeTeteoLive" style="max-height: 80px; width: auto; object-fit: contain;" onerror="this.src='https://placehold.co/200x80/FF2D55/white?text=KeTeteoLive'">
     </div>
-    <button class="btn-primary" onclick="openRegister()" data-i18n="create_account">Crear cuenta</button>
-    <button class="btn-secondary" onclick="openLogin()" data-i18n="login">Iniciar sesión</button>
+    <button class="btn-primary" onclick="openRegister()">Crear cuenta</button>
+    <button class="btn-secondary" onclick="openLogin()">Iniciar sesión</button>
 </div>
 
 <div id="mainScreen" class="screen">
@@ -1206,19 +1259,19 @@
         <button class="hamburger" onclick="toggleMenu()">
             <span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span>
         </button>
-        <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);" data-i18n="my_groups">👥 Mis Grupos KeTeteoLive</div></div>
+        <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">👥 Mis Grupos KeTeteoLive</div></div>
         <div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
     </div>
     <div class="groups-container">
-        <button class="btn-create-group" onclick="openCreateGroupModal()" data-i18n="create_group">➕ Crear grupo</button>
-        <button class="btn-join-group" onclick="openJoinGroupModal()" data-i18n="join_group">🔗 Unirse a grupo</button>
+        <button class="btn-create-group" onclick="openCreateGroupModal()">➕ Crear grupo</button>
+        <button class="btn-join-group" onclick="openJoinGroupModal()">🔗 Unirse a grupo</button>
         <div id="groupsList" style="margin-top: 20px;"></div>
     </div>
 </div>
 
 <div id="createGroupModal" class="modal">
     <div class="modal-content">
-        <h3 data-i18n="create_group_title">➕ Crear Grupo</h3>
+        <h3>➕ Crear Grupo</h3>
         <div class="foto-preview" onclick="document.getElementById('groupPhotoInput').click()">
             <img id="groupFotoPreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E">
         </div>
@@ -1233,31 +1286,31 @@
             <input type="text" id="groupPassword" placeholder="Contraseña del grupo">
         </div>
         <div class="codigo-invitacion" id="codigoInvitacionDisplay">Código: KETEO-XXXXXX</div>
-        <button class="btn-rojo" onclick="createGroup()" data-i18n="create">✅ Crear Grupo</button>
-        <button class="btn-gris" onclick="closeCreateGroupModal()" data-i18n="cancel">❌ Cancelar</button>
+        <button class="btn-rojo" onclick="createGroup()">✅ Crear Grupo</button>
+        <button class="btn-gris" onclick="closeCreateGroupModal()">❌ Cancelar</button>
     </div>
 </div>
 
 <div id="joinGroupModal" class="modal">
     <div class="modal-content">
-        <h3 data-i18n="join_group_title">🔗 Unirse a Grupo</h3>
+        <h3>🔗 Unirse a Grupo</h3>
         <input type="text" id="joinCode" placeholder="Código de invitación (KETEO-XXXXXX)">
         <div id="joinPasswordContainer" style="display:none;">
             <input type="password" id="joinPassword" placeholder="Contraseña del grupo">
         </div>
-        <button class="btn-rojo" onclick="joinGroup()" data-i18n="join">🔗 Unirse</button>
-        <button class="btn-gris" onclick="closeJoinGroupModal()" data-i18n="cancel">❌ Cancelar</button>
+        <button class="btn-rojo" onclick="joinGroup()">🔗 Unirse</button>
+        <button class="btn-gris" onclick="closeJoinGroupModal()">❌ Cancelar</button>
     </div>
 </div>
 
 <div id="commentsModal" class="modal">
     <div class="modal-content comment-modal-content">
         <div class="comment-modal-header">
-            <span class="comment-modal-title" data-i18n="comments">💬 Comentarios</span>
+            <span class="comment-modal-title">💬 Comentarios</span>
             <button class="close-modal-btn" onclick="closeCommentsModal()">✕</button>
         </div>
         <div class="comments-modal-list" id="commentsModalList">
-            <div style="text-align:center; padding:20px; color:var(--gris-claro);" data-i18n="loading_comments">Cargando comentarios...</div>
+            <div style="text-align:center; padding:20px; color:var(--gris-claro);">Cargando comentarios...</div>
         </div>
         <div class="comment-modal-input-container">
             <input type="text" class="comment-modal-input" id="commentModalInput" placeholder="Añade un comentario...">
@@ -1269,56 +1322,56 @@
                 <button class="comment-modal-emoji" data-emoji="😢">😢</button>
                 <button class="comment-modal-emoji" data-emoji="🎉">🎉</button>
             </div>
-            <button class="comment-modal-send" id="commentModalSendBtn" data-i18n="post">Publicar</button>
+            <button class="comment-modal-send" id="commentModalSendBtn">Publicar</button>
         </div>
     </div>
 </div>
 
 <div id="shareModal" class="modal">
     <div class="modal-content">
-        <h3 data-i18n="share">📤 Compartir</h3>
+        <h3>📤 Compartir</h3>
         <div class="share-options">
-            <div class="share-option" onclick="shareCopyLink()"><span>🔗</span><span data-i18n="copy_link">Copiar enlace</span></div>
-            <div class="share-option" onclick="shareNative()"><span>📱</span><span data-i18n="share_native">Compartir</span></div>
-            <div class="share-option" onclick="shareToGroup()"><span>👥</span><span data-i18n="share_to_group">Enviar a un grupo</span></div>
-            <div class="share-option" onclick="shareToUser()"><span>👤</span><span data-i18n="share_to_user">Enviar a un usuario</span></div>
+            <div class="share-option" onclick="shareCopyLink()"><span>🔗</span><span>Copiar enlace</span></div>
+            <div class="share-option" onclick="shareNative()"><span>📱</span><span>Compartir</span></div>
+            <div class="share-option" onclick="shareToGroup()"><span>👥</span><span>Enviar a un grupo</span></div>
+            <div class="share-option" onclick="shareToUser()"><span>👤</span><span>Enviar a un usuario</span></div>
         </div>
-        <button class="btn-gris" onclick="closeShareModal()" style="margin-top: 16px;" data-i18n="cancel">❌ Cancelar</button>
+        <button class="btn-gris" onclick="closeShareModal()" style="margin-top: 16px;">❌ Cancelar</button>
     </div>
 </div>
 
 <div id="reportModal" class="modal">
     <div class="modal-content">
-        <h3 data-i18n="report">🚨 Reportar</h3>
+        <h3>🚨 Reportar</h3>
         <div class="report-options">
-            <div class="report-option" onclick="submitReport('Contenido inapropiado')"><span>⚠️</span><span data-i18n="report_inappropriate">Contenido inapropiado</span></div>
-            <div class="report-option" onclick="submitReport('Spam')"><span>📧</span><span data-i18n="report_spam">Spam</span></div>
-            <div class="report-option" onclick="submitReport('Acoso')"><span>😡</span><span data-i18n="report_harassment">Acoso</span></div>
-            <div class="report-option" onclick="submitReport('Falsa información')"><span>❌</span><span data-i18n="report_false_info">Falsa información</span></div>
-            <div class="report-option" onclick="submitReport('Violencia')"><span>🔪</span><span data-i18n="report_violence">Violencia</span></div>
+            <div class="report-option" onclick="submitReport('Contenido inapropiado')"><span>⚠️</span><span>Contenido inapropiado</span></div>
+            <div class="report-option" onclick="submitReport('Spam')"><span>📧</span><span>Spam</span></div>
+            <div class="report-option" onclick="submitReport('Acoso')"><span>😡</span><span>Acoso</span></div>
+            <div class="report-option" onclick="submitReport('Falsa información')"><span>❌</span><span>Falsa información</span></div>
+            <div class="report-option" onclick="submitReport('Violencia')"><span>🔪</span><span>Violencia</span></div>
         </div>
-        <button class="btn-gris" onclick="closeReportModal()" style="margin-top: 16px;" data-i18n="cancel">❌ Cancelar</button>
+        <button class="btn-gris" onclick="closeReportModal()" style="margin-top: 16px;">❌ Cancelar</button>
     </div>
 </div>
 
 <div id="sideMenu" class="side-menu">
     <button id="createKeTeteoBtn" onclick="openCreateKeTeteoModal(); closeMenu()">
-        <span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span> <span data-i18n="create_keteteo">Crear KeTeteoLive</span>
+        <span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span> Crear KeTeteoLive
     </button>
     <button onclick="showProfileScreen(); closeMenu()">
-        <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> <span data-i18n="my_profile">Mi perfil</span>
+        <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Mi perfil
     </button>
     <button onclick="showMyStreamsScreen(); closeMenu()">
-        <span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span> <span data-i18n="my_streams">Mis KeTeteos</span>
+        <span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span> Mis KeTeteos
     </button>
     <button onclick="showGroupsScreen(); closeMenu()">
-        <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> <span data-i18n="my_groups_menu">Mis Grupos KeTeteoLive</span>
+        <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Mis Grupos KeTeteoLive
     </button>
     <button onclick="showConfigScreen(); closeMenu()">
-        <span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> <span data-i18n="settings">Configuración</span>
+        <span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Configuración
     </button>
     <button onclick="logout(); closeMenu()" id="logoutMenuBtn" style="display:none;">
-        <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> <span data-i18n="logout">Cerrar sesión</span>
+        <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Cerrar sesión
     </button>
 </div>
 
@@ -1326,7 +1379,7 @@
 
 <div id="registerModal" class="modal">
     <div class="modal-content">
-        <h3 data-i18n="create_account">Crear cuenta</h3>
+        <h3>Crear cuenta</h3>
         <input type="text" id="regName" placeholder="Nombre completo">
         <input type="text" id="regUser" placeholder="Usuario (@ejemplo)">
         <input type="email" id="regEmail" placeholder="Correo electrónico">
@@ -1343,14 +1396,14 @@
             </span>
         </div>
         <select id="regYear"><option value="">Año de nacimiento</option><script>for(let y=2024;y>=1960;y--) document.write(`<option>${y}</option>`);</script></select>
-        <button class="btn-rojo" onclick="register()" data-i18n="register">Registrarse</button>
-        <button class="btn-gris" onclick="closeModals()" data-i18n="cancel">Cancelar</button>
+        <button class="btn-rojo" onclick="register()">Registrarse</button>
+        <button class="btn-gris" onclick="closeModals()">Cancelar</button>
     </div>
 </div>
 
 <div id="loginModal" class="modal">
     <div class="modal-content">
-        <h3 data-i18n="login">Iniciar sesión</h3>
+        <h3>Iniciar sesión</h3>
         <input type="email" id="loginEmail" placeholder="Correo electrónico">
         <div class="password-field">
             <input type="password" id="loginPass" placeholder="Contraseña">
@@ -1358,14 +1411,14 @@
                 <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
             </span>
         </div>
-        <button class="btn-rojo" onclick="login()" data-i18n="login_btn">Entrar</button>
-        <button class="btn-gris" onclick="closeModals()" data-i18n="cancel">Cancelar</button>
+        <button class="btn-rojo" onclick="login()">Entrar</button>
+        <button class="btn-gris" onclick="closeModals()">Cancelar</button>
     </div>
 </div>
 
-<!-- MODAL CREAR KETETEO REDISEÑADO CON UBICACIÓN AUTOMÁTICA -->
+<!-- MODAL CREAR KETETEO REDISEÑADO -->
 <div id="createKeTeteoModal" class="modal"><div class="modal-content">
-    <h3 data-i18n="create_keteteo_title">🎥 Crear mi KeTeteoLive</h3>
+    <h3>🎥 Crear mi KeTeteoLive</h3>
     <input type="text" id="newTitulo" placeholder="Título del evento *" required>
     <textarea id="newDescripcion" rows="2" placeholder="Descripción (opcional, máximo 300 caracteres)" maxlength="300"></textarea>
     <select id="newCategoria" class="config-select" style="width:100%; margin-bottom:12px;">
@@ -1388,7 +1441,7 @@
     </select>
     
     <!-- UBICACIÓN AUTOMÁTICA CON BOTÓN -->
-    <button type="button" class="location-btn" id="activarUbicacionBtn" onclick="activarUbicacionManual()" data-i18n="activate_location">🌍 ACTIVAR UBICACIÓN</button>
+    <button type="button" class="location-btn" id="activarUbicacionBtn" onclick="activarUbicacionManual()">🌍 ACTIVAR UBICACIÓN</button>
     <div class="location-status" id="ubicacionStatus">📍 Ubicación no activada</div>
     <input type="hidden" id="newUbicacion" value="">
     <input type="hidden" id="newLat" value="">
@@ -1398,72 +1451,72 @@
         <img id="newImagenPreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2'%3E%3Crect x='2' y='2' width='20' height='20' rx='2' ry='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='2.5'/%3E%3Cpath d='M21 15l-5-4-3 3-4-4-5 6'/%3E%3C/svg%3E" style="width:100%; height:100%; object-fit:cover;">
     </div>
     <input type="file" id="newImagenFileInput" accept="image/*" style="display:none;" onchange="previewKeTeteoImage(event)">
-    <label style="color:var(--gris-claro); font-size:12px;" data-i18n="cover_image">Imagen de portada (opcional)</label>
+    <label style="color:var(--gris-claro); font-size:12px;">Imagen de portada (opcional)</label>
     
     <div class="radio-group">
-        <label><input type="radio" name="usarCamara" value="si" checked> 📹 <span data-i18n="use_camera">Usar cámara</span></label>
-        <label><input type="radio" name="usarCamara" value="no"> 🔗 <span data-i18n="use_link">Usar enlace</span></label>
+        <label><input type="radio" name="usarCamara" value="si" checked> 📹 Usar cámara</label>
+        <label><input type="radio" name="usarCamara" value="no"> 🔗 Usar enlace</label>
     </div>
     <div id="enlaceContainer" style="display:none;">
         <input type="url" id="newEnlace" placeholder="Enlace de YouTube Live o RTMP">
     </div>
     
     <div style="display: flex; gap: 10px; margin-top: 20px;">
-        <button class="btn-rojo" style="flex:1;" onclick="crearKeTeteo()" data-i18n="create_keteteo_btn">📝 Crear mi KeTeteoLive</button>
-        <button class="btn-rojo" style="flex:1; background: linear-gradient(135deg, #FF6B00, #FF2D55);" onclick="empezarTransmision()" data-i18n="start_stream">🎥 Empezar a transmitir</button>
+        <button class="btn-rojo" style="flex:1;" onclick="crearKeTeteo()">📝 Crear mi KeTeteoLive</button>
+        <button class="btn-rojo" style="flex:1; background: linear-gradient(135deg, #FF6B00, #FF2D55);" onclick="empezarTransmision()">🎥 Empezar a transmitir</button>
     </div>
-    <button class="btn-gris" onclick="closeCreateModal()" data-i18n="cancel">❌ Cancelar</button>
+    <button class="btn-gris" onclick="closeCreateModal()">❌ Cancelar</button>
 </div></div>
 
 <div id="searchModal" class="modal"><div class="modal-content">
-    <h3 data-i18n="search_events">Buscar eventos</h3>
+    <h3>Buscar eventos</h3>
     <input type="text" id="searchInputModal" class="search-input-modal" placeholder="Buscar por título, creador, ubicación o categoría...">
     <div id="searchResultsModal" style="max-height: 400px; overflow-y: auto;"></div>
-    <button class="btn-gris" onclick="closeSearchModal()" data-i18n="close">Cerrar</button>
+    <button class="btn-gris" onclick="closeSearchModal()">Cerrar</button>
 </div></div>
 
 <div id="proximosEventosModal" class="modal"><div class="modal-content">
-    <h3 data-i18n="upcoming_keteteos">PRÓXIMOS KETETEOS</h3>
+    <h3>PRÓXIMOS KETETEOS</h3>
     <div id="proximosEventosList"></div>
-    <button class="btn-gris" onclick="closeProximosEventos()" data-i18n="close">Cerrar</button>
+    <button class="btn-gris" onclick="closeProximosEventos()">Cerrar</button>
 </div></div>
 
 <div id="confirmarEliminarModal" class="modal"><div class="modal-content">
-    <h3 data-i18n="delete_title">ELIMINAR</h3>
-    <p data-i18n="delete_confirm">¿Estás seguro?</p>
+    <h3>ELIMINAR</h3>
+    <p>¿Estás seguro?</p>
     <div id="eliminarInfo"></div>
-    <button class="btn-rojo" onclick="confirmarEliminar()" data-i18n="delete_btn">ELIMINAR</button>
-    <button class="btn-gris" onclick="cerrarConfirmarEliminar()" data-i18n="cancel">Cancelar</button>
+    <button class="btn-rojo" onclick="confirmarEliminar()">ELIMINAR</button>
+    <button class="btn-gris" onclick="cerrarConfirmarEliminar()">Cancelar</button>
 </div></div>
 
 <div id="legalModal" class="modal"><div class="modal-content">
-    <h3 data-i18n="legal_info">Información Legal</h3>
+    <h3>Información Legal</h3>
     <div class="contact-info-legal"><a href="mailto:soporte.keteteolive@gmail.com">soporte.keteteolive@gmail.com</a></div>
-    <div class="legal-option" onclick="openLegalContent('terms')" data-i18n="terms">Términos y Condiciones</div>
-    <div class="legal-option" onclick="openLegalContent('privacy')" data-i18n="privacy">Política de Privacidad</div>
-    <div class="legal-option" onclick="openLegalContent('cookies')" data-i18n="cookies">Política de Cookies</div>
+    <div class="legal-option" onclick="openLegalContent('terms')">Términos y Condiciones</div>
+    <div class="legal-option" onclick="openLegalContent('privacy')">Política de Privacidad</div>
+    <div class="legal-option" onclick="openLegalContent('cookies')">Política de Cookies</div>
     <div class="copyright-legal">© 2025 KeTeteoLive</div>
-    <button class="btn-gris" onclick="closeLegalModal()" data-i18n="close">Cerrar</button>
+    <button class="btn-gris" onclick="closeLegalModal()">Cerrar</button>
 </div></div>
 
 <div id="profileScreen" class="screen">
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button>
-        <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);" data-i18n="profile">Perfil</div></div>
+        <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">Perfil</div></div>
         <div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
     </div>
     <div class="profile-modern">
         <div class="avatar-wrapper" onclick="uploadProfilePhoto()"><div class="avatar-ring"></div><img id="profileImg" class="avatar-modern" src="https://i.pravatar.cc/150?img=7"><div class="avatar-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span></div></div>
-        <div class="user-info"><div class="user-name" id="profileName"></div><div class="user-handle" id="profileUsername"></div><div class="user-status" id="userStatus"><div class="status-dot status-online"></div><span class="status-text" id="statusText" data-i18n="online">En línea</span></div><div class="user-bio" id="profileBio"></div></div>
+        <div class="user-info"><div class="user-name" id="profileName"></div><div class="user-handle" id="profileUsername"></div><div class="user-status" id="userStatus"><div class="status-dot status-online"></div><span class="status-text" id="statusText">En línea</span></div><div class="user-bio" id="profileBio"></div></div>
         <div class="stats-modern">
-            <div class="stat-card" onclick="verSeguidores()"><div class="stat-value" id="followersCount">0</div><div class="stat-label" data-i18n="followers">seguidores</div></div>
-            <div class="stat-card" onclick="verSiguiendo()"><div class="stat-value" id="followingCount">0</div><div class="stat-label" data-i18n="following">siguiendo</div></div>
-            <div class="stat-card"><div class="stat-value" id="teteosCount">0</div><div class="stat-label" data-i18n="teteos">teteos</div></div>
+            <div class="stat-card" onclick="verSeguidores()"><div class="stat-value" id="followersCount">0</div><div class="stat-label">seguidores</div></div>
+            <div class="stat-card" onclick="verSiguiendo()"><div class="stat-value" id="followingCount">0</div><div class="stat-label">siguiendo</div></div>
+            <div class="stat-card"><div class="stat-value" id="teteosCount">0</div><div class="stat-label">teteos</div></div>
         </div>
-        <div class="profile-buttons"><button class="profile-btn" onclick="openEditProfile()" data-i18n="edit_profile">Editar perfil</button><button class="profile-btn" onclick="shareProfile()" data-i18n="share">Compartir</button></div>
-        <div class="contact-modern"><div style="font-size:13px; font-weight:600; color:var(--gris-claro); margin-bottom:12px;" data-i18n="contact">Contacto</div>
-            <div class="contact-row" onclick="copyEmail()"><div class="contact-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span></div><div class="contact-value" id="userEmail"></div><div class="contact-copy" data-i18n="copy">copiar</div></div>
-            <div class="contact-row" onclick="copyPhone()"><div class="contact-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></span></div><div class="contact-value" id="userPhone"></div><div class="contact-copy" data-i18n="copy">copiar</div></div>
+        <div class="profile-buttons"><button class="profile-btn" onclick="openEditProfile()">Editar perfil</button><button class="profile-btn" onclick="shareProfile()">Compartir</button></div>
+        <div class="contact-modern"><div style="font-size:13px; font-weight:600; color:var(--gris-claro); margin-bottom:12px;">Contacto</div>
+            <div class="contact-row" onclick="copyEmail()"><div class="contact-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span></div><div class="contact-value" id="userEmail"></div><div class="contact-copy">copiar</div></div>
+            <div class="contact-row" onclick="copyPhone()"><div class="contact-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></span></div><div class="contact-value" id="userPhone"></div><div class="contact-copy">copiar</div></div>
         </div>
         <div id="perfilAjenoBotones" style="display:none; margin-top: 20px;">
             <button class="profile-btn" id="followPerfilBtn" onclick="seguirUsuarioPerfil()" style="background:var(--naranja); color:white;">🔔 Seguir</button>
@@ -1471,47 +1524,47 @@
     </div>
 </div>
 
-<div id="editProfileModal" class="modal"><div class="modal-content"><h3 data-i18n="edit_profile">Editar perfil</h3><input type="text" id="editName" placeholder="Nombre"><input type="text" id="editUsername" placeholder="Usuario"><textarea id="editBio" rows="2" placeholder="Biografía"></textarea><input type="url" id="editLink" placeholder="Enlace"><input type="email" id="editEmail" placeholder="Correo"><input type="tel" id="editPhone" placeholder="Teléfono"><button class="btn-rojo" onclick="saveProfile()" data-i18n="save">Guardar</button><button class="btn-gris" onclick="closeEditModal()" data-i18n="cancel">Cancelar</button></div></div>
+<div id="editProfileModal" class="modal"><div class="modal-content"><h3>Editar perfil</h3><input type="text" id="editName" placeholder="Nombre"><input type="text" id="editUsername" placeholder="Usuario"><textarea id="editBio" rows="2" placeholder="Biografía"></textarea><input type="url" id="editLink" placeholder="Enlace"><input type="email" id="editEmail" placeholder="Correo"><input type="tel" id="editPhone" placeholder="Teléfono"><button class="btn-rojo" onclick="saveProfile()">Guardar</button><button class="btn-gris" onclick="closeEditModal()">Cancelar</button></div></div>
 
 <div id="myStreamsScreen" class="screen">
-    <div class="header"><button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);" data-i18n="my_streams">📋 Mis KeTeteos</div></div><div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div></div>
+    <div class="header"><button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button><div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">📋 Mis KeTeteos</div></div><div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div></div>
     <div id="myStreamsList" class="streams-list"></div>
-    <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()" data-i18n="new_stream">Nueva transmisión</button>
+    <button class="btn-primary" style="margin:16px; width:calc(100% - 32px);" onclick="openCreateKeTeteoModal()">Nueva transmisión</button>
 </div>
 
 <div id="configScreen" class="screen">
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span></button>
-        <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);" data-i18n="settings">⚙️ Configuración</div></div>
+        <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">⚙️ Configuración</div></div>
         <div class="header-spacer" onclick="refreshHomeScreen()" style="cursor:pointer;"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
     </div>
     <div style="padding: 20px;">
-        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> <span data-i18n="account">Cuenta</span></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="email">Correo electrónico</div><input type="email" id="configEmail" class="config-edit" placeholder="correo@ejemplo.com"></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="phone">Teléfono</div><input type="tel" id="configPhone" class="config-edit" placeholder="+1 809 555 1234"></div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Cuenta</div>
+            <div class="config-item"><div class="config-item-label">Correo electrónico</div><input type="email" id="configEmail" class="config-edit" placeholder="correo@ejemplo.com"></div>
+            <div class="config-item"><div class="config-item-label">Teléfono</div><input type="tel" id="configPhone" class="config-edit" placeholder="+1 809 555 1234"></div>
         </div>
-        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span> <span data-i18n="privacy">Privacidad</span></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="public_profile">Perfil público</div><div class="config-toggle" id="toggleProfilePublic"></div></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="show_location">Mostrar ubicación</div><div class="config-toggle" id="toggleShowLocation"></div></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="who_can_comment">Quién puede comentar</div><select id="selectWhoCanComment" class="config-select"><option value="todos" data-i18n="everyone">Todos</option><option value="seguidores" data-i18n="only_followers">Solo seguidores</option><option value="nadie" data-i18n="no_one">Nadie</option></select></div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span> Privacidad</div>
+            <div class="config-item"><div class="config-item-label">Perfil público</div><div class="config-toggle" id="toggleProfilePublic"></div></div>
+            <div class="config-item"><div class="config-item-label">Mostrar ubicación</div><div class="config-toggle" id="toggleShowLocation"></div></div>
+            <div class="config-item"><div class="config-item-label">Quién puede comentar</div><select id="selectWhoCanComment" class="config-select"><option value="todos">Todos</option><option value="seguidores">Solo seguidores</option><option value="nadie">Nadie</option></select></div>
         </div>
-        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span> <span data-i18n="notifications">Notificaciones</span></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="push_notifications">Push notifications</div><div class="config-toggle" id="togglePushNotifications"></div></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="new_followers">Nuevos seguidores</div><div class="config-toggle" id="toggleNewFollowers"></div></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="post_comments">Comentarios en mis posts</div><div class="config-toggle" id="togglePostComments"></div></div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span> Notificaciones</div>
+            <div class="config-item"><div class="config-item-label">Push notifications</div><div class="config-toggle" id="togglePushNotifications"></div></div>
+            <div class="config-item"><div class="config-item-label">Nuevos seguidores</div><div class="config-toggle" id="toggleNewFollowers"></div></div>
+            <div class="config-item"><div class="config-item-label">Comentarios en mis posts</div><div class="config-toggle" id="togglePostComments"></div></div>
         </div>
-        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="22"/></svg></span> <span data-i18n="appearance">Apariencia</span></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="dark_mode">Modo oscuro</div><div class="config-toggle" id="toggleDarkMode"></div></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="font_size">Tamaño de fuente</div><select id="selectFontSize" class="config-select"><option value="pequeño" data-i18n="small">Pequeño</option><option value="mediano" data-i18n="medium">Mediano</option><option value="grande" data-i18n="large">Grande</option></select></div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="22"/></svg></span> Apariencia</div>
+            <div class="config-item"><div class="config-item-label">Modo oscuro</div><div class="config-toggle" id="toggleDarkMode"></div></div>
+            <div class="config-item"><div class="config-item-label">Tamaño de fuente</div><select id="selectFontSize" class="config-select"><option value="pequeño">Pequeño</option><option value="mediano">Mediano</option><option value="grande">Grande</option></select></div>
         </div>
-        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span> <span data-i18n="language_region">Idioma y Región</span></div>
-            <div class="config-item"><div class="config-item-label" data-i18n="distance_unit">Unidad de distancia</div><select id="selectDistanceUnit" class="config-select"><option value="km" data-i18n="km">Kilómetros (km)</option><option value="mi" data-i18n="mi">Millas (mi)</option></select></div>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span> Idioma y Región</div>
+            <div class="config-item"><div class="config-item-label">Unidad de distancia</div><select id="selectDistanceUnit" class="config-select"><option value="km">Kilómetros (km)</option><option value="mi">Millas (mi)</option></select></div>
         </div>
-        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span> <span data-i18n="data_security">Datos y Seguridad</span></div>
-            <button class="config-danger-btn" onclick="exportUserData()" data-i18n="export_data">📥 Exportar mis datos</button>
-            <button class="config-danger-btn" onclick="deleteAccount()" style="margin-top: 8px;" data-i18n="delete_account">🗑️ Eliminar mi cuenta</button>
+        <div class="config-section"><div class="config-section-title"><span class="icon-svg"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span> Datos y Seguridad</div>
+            <button class="config-danger-btn" onclick="exportUserData()">📥 Exportar mis datos</button>
+            <button class="config-danger-btn" onclick="deleteAccount()" style="margin-top: 8px;">🗑️ Eliminar mi cuenta</button>
         </div>
-        <div class="config-buttons"><button class="config-btn-save" onclick="saveConfigChanges()" data-i18n="save_changes">💾 GUARDAR CAMBIOS</button><button class="config-btn-cancel" onclick="cancelConfigChanges()" data-i18n="discard">❌ DESCARTAR</button></div>
+        <div class="config-buttons"><button class="config-btn-save" onclick="saveConfigChanges()">💾 GUARDAR CAMBIOS</button><button class="config-btn-cancel" onclick="cancelConfigChanges()">❌ DESCARTAR</button></div>
         <div class="config-version">Versión 2.0.0</div>
     </div>
 </div>
@@ -1519,14 +1572,22 @@
 <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
 
 <div class="bottom-nav">
-    <div class="nav-item" onclick="refreshHomeScreen()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-7H9v7H5a2 2 0 0 1-2-2z"/></svg></span></div><div class="nav-label" data-i18n="home">Inicio</div></div>
-    <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span></div><div class="nav-label" data-i18n="search">Buscar</div></div>
-    <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span></div><div class="nav-label" data-i18n="alerts">Alertas</div></div>
-    <div class="nav-item" onclick="openProximosKeTeteo()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span></div><div class="nav-label" data-i18n="next_keteteo">Próximo KeTeteo</div></div>
-    <div class="nav-item" onclick="openLegalModal()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span></div><div class="nav-label" data-i18n="legal">Legal</div></div>
+    <div class="nav-item" onclick="refreshHomeScreen()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-7H9v7H5a2 2 0 0 1-2-2z"/></svg></span></div><div class="nav-label">Inicio</div></div>
+    <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span></div><div class="nav-label">Buscar</div></div>
+    <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span></div><div class="nav-label">Alertas</div></div>
+    <div class="nav-item" onclick="openProximosKeTeteo()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span></div><div class="nav-label">Próximo KeTeteo</div></div>
+    <div class="nav-item" onclick="openLegalModal()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span></div><div class="nav-label">Legal</div></div>
 </div>
 
 <script>
+    // ================= CONFIGURACIÓN =================
+    const CONFIG = {
+        USAR_BACKEND: false,
+        USAR_FIREBASE: false,
+        USAR_AGORA: false,
+        ADMIN_EMAILS: ["admin@keteteo.com", "offerview@gmail.com"]
+    };
+
     let loggedIn = false;
     let currentUser = null;
     let allKeTeteos = [];
@@ -1551,8 +1612,9 @@
     let mediaStream = null;
     let currentFacingMode = "user";
     let liveViewersInterval = null;
-    let liveLikesInterval = null;
-    let currentLiveKeId = null;
+    let currentLiveStreamId = null;
+    let liveComments = [];
+    let liveLikesCount = 0;
     
     let followers = {};
     let following = {};
@@ -1566,108 +1628,8 @@
     };
     
     let savedConfig = { ...tempConfig };
-    let currentLanguage = "es";
 
-    // ================= SISTEMA DE IDIOMAS (MODO INSTAGRAM - SIN IA) =================
-    const translationsData = {
-        es: {
-            create_account: "Crear cuenta", login: "Iniciar sesión", cancel: "Cancelar", save: "Guardar",
-            close: "Cerrar", delete_btn: "ELIMINAR", delete_confirm: "¿Estás seguro?", home: "Inicio",
-            search: "Buscar", alerts: "Alertas", next_keteteo: "Próximo KeTeteo", legal: "Legal",
-            profile: "Perfil", edit_profile: "Editar perfil", share: "Compartir", contact: "Contacto",
-            followers: "seguidores", following: "siguiendo", teteos: "teteos", copy: "copiar",
-            online: "En línea", away: "Ausente", offline: "Desconectado", comments: "💬 Comentarios",
-            add_comment: "Añade un comentario...", post: "Publicar", no_comments: "No hay comentarios aún. Sé el primero en comentar 💬",
-            loading_comments: "Cargando comentarios...", share_native: "Compartir", copy_link: "Copiar enlace",
-            share_to_group: "Enviar a un grupo", share_to_user: "Enviar a un usuario", report: "🚨 Reportar",
-            report_inappropriate: "Contenido inapropiado", report_spam: "Spam", report_harassment: "Acoso",
-            report_false_info: "Falsa información", report_violence: "Violencia", my_groups: "👥 Mis Grupos KeTeteoLive",
-            create_group: "➕ Crear grupo", join_group: "🔗 Unirse a grupo", create_group_title: "➕ Crear Grupo",
-            join_group_title: "🔗 Unirse a Grupo", create: "✅ Crear Grupo", join: "🔗 Unirse",
-            my_profile: "Mi perfil", my_streams: "Mis KeTeteos", settings: "Configuración", logout: "Cerrar sesión",
-            create_keteteo: "Crear KeTeteoLive", create_keteteo_title: "🎥 Crear mi KeTeteoLive", cover_image: "Imagen de portada (opcional)",
-            use_camera: "Usar cámara", use_link: "Usar enlace", create_keteteo_btn: "📝 Crear mi KeTeteoLive",
-            start_stream: "🎥 Empezar a transmitir", activate_location: "🌍 ACTIVAR UBICACIÓN", location_not_activated: "📍 Ubicación no activada",
-            account: "Cuenta", email: "Correo electrónico", phone: "Teléfono", privacy: "Privacidad",
-            public_profile: "Perfil público", show_location: "Mostrar ubicación", who_can_comment: "Quién puede comentar",
-            everyone: "Todos", only_followers: "Solo seguidores", no_one: "Nadie", notifications: "Notificaciones",
-            push_notifications: "Push notifications", new_followers: "Nuevos seguidores", post_comments: "Comentarios en mis posts",
-            appearance: "Apariencia", dark_mode: "Modo oscuro", font_size: "Tamaño de fuente", small: "Pequeño",
-            medium: "Mediano", large: "Grande", language_region: "Idioma y Región", distance_unit: "Unidad de distancia",
-            km: "Kilómetros (km)", mi: "Millas (mi)", data_security: "Datos y Seguridad", export_data: "📥 Exportar mis datos",
-            delete_account: "🗑️ Eliminar mi cuenta", save_changes: "💾 GUARDAR CAMBIOS", discard: "❌ DESCARTAR",
-            search_events: "Buscar eventos", upcoming_keteteos: "PRÓXIMOS KETETEOS", delete_title: "ELIMINAR",
-            legal_info: "Información Legal", terms: "Términos y Condiciones", privacy_policy: "Política de Privacidad",
-            cookies: "Política de Cookies", new_stream: "Nueva transmisión", register: "Registrarse",
-            login_btn: "Entrar", follow: "Seguir", following_btn: "Siguiendo", unfollow: "Dejar de seguir",
-            viewers: "viendo", live: "EN VIVO", rotate_camera: "Girar cámara", stop_stream: "Detener transmisión"
-        },
-        en: {
-            create_account: "Create account", login: "Login", cancel: "Cancel", save: "Save",
-            close: "Close", delete_btn: "DELETE", delete_confirm: "Are you sure?", home: "Home",
-            search: "Search", alerts: "Alerts", next_keteteo: "Next KeTeteo", legal: "Legal",
-            profile: "Profile", edit_profile: "Edit profile", share: "Share", contact: "Contact",
-            followers: "followers", following: "following", teteos: "teteos", copy: "copy",
-            online: "Online", away: "Away", offline: "Offline", comments: "💬 Comments",
-            add_comment: "Add a comment...", post: "Post", no_comments: "No comments yet. Be the first to comment 💬",
-            loading_comments: "Loading comments...", share_native: "Share", copy_link: "Copy link",
-            share_to_group: "Send to a group", share_to_user: "Send to a user", report: "🚨 Report",
-            report_inappropriate: "Inappropriate content", report_spam: "Spam", report_harassment: "Harassment",
-            report_false_info: "False information", report_violence: "Violence", my_groups: "👥 My KeTeteoLive Groups",
-            create_group: "➕ Create group", join_group: "🔗 Join group", create_group_title: "➕ Create Group",
-            join_group_title: "🔗 Join Group", create: "✅ Create Group", join: "🔗 Join",
-            my_profile: "My profile", my_streams: "My KeTeteos", settings: "Settings", logout: "Logout",
-            create_keteteo: "Create KeTeteoLive", create_keteteo_title: "🎥 Create my KeTeteoLive", cover_image: "Cover image (optional)",
-            use_camera: "Use camera", use_link: "Use link", create_keteteo_btn: "📝 Create my KeTeteoLive",
-            start_stream: "🎥 Start streaming", activate_location: "🌍 ACTIVATE LOCATION", location_not_activated: "📍 Location not activated",
-            account: "Account", email: "Email", phone: "Phone", privacy: "Privacy",
-            public_profile: "Public profile", show_location: "Show location", who_can_comment: "Who can comment",
-            everyone: "Everyone", only_followers: "Only followers", no_one: "No one", notifications: "Notifications",
-            push_notifications: "Push notifications", new_followers: "New followers", post_comments: "Comments on my posts",
-            appearance: "Appearance", dark_mode: "Dark mode", font_size: "Font size", small: "Small",
-            medium: "Medium", large: "Large", language_region: "Language & Region", distance_unit: "Distance unit",
-            km: "Kilometers (km)", mi: "Miles (mi)", data_security: "Data & Security", export_data: "📥 Export my data",
-            delete_account: "🗑️ Delete my account", save_changes: "💾 SAVE CHANGES", discard: "❌ DISCARD",
-            search_events: "Search events", upcoming_keteteos: "UPCOMING KETETEOS", delete_title: "DELETE",
-            legal_info: "Legal Information", terms: "Terms and Conditions", privacy_policy: "Privacy Policy",
-            cookies: "Cookie Policy", new_stream: "New stream", register: "Register",
-            login_btn: "Login", follow: "Follow", following_btn: "Following", unfollow: "Unfollow",
-            viewers: "watching", live: "LIVE", rotate_camera: "Rotate camera", stop_stream: "Stop stream"
-        },
-        fr: {
-            create_account: "Créer un compte", login: "Se connecter", cancel: "Annuler", save: "Enregistrer",
-            close: "Fermer", delete_btn: "SUPPRIMER", delete_confirm: "Êtes-vous sûr?", home: "Accueil",
-            search: "Rechercher", alerts: "Alertes", next_keteteo: "Prochain KeTeteo", legal: "Juridique",
-            profile: "Profil", edit_profile: "Modifier le profil", share: "Partager", contact: "Contact",
-            followers: "abonnés", following: "abonnements", teteos: "teteos", copy: "copier",
-            online: "En ligne", away: "Absent", offline: "Déconnecté", comments: "💬 Commentaires",
-            add_comment: "Ajouter un commentaire...", post: "Publier", no_comments: "Aucun commentaire pour le moment. Soyez le premier à commenter 💬",
-            loading_comments: "Chargement des commentaires...", share_native: "Partager", copy_link: "Copier le lien",
-            share_to_group: "Envoyer à un groupe", share_to_user: "Envoyer à un utilisateur", report: "🚨 Signaler",
-            report_inappropriate: "Contenu inapproprié", report_spam: "Spam", report_harassment: "Harcèlement",
-            report_false_info: "Fausse information", report_violence: "Violence", my_groups: "👥 Mes Groupes KeTeteoLive",
-            create_group: "➕ Créer un groupe", join_group: "🔗 Rejoindre un groupe", create_group_title: "➕ Créer un Groupe",
-            join_group_title: "🔗 Rejoindre un Groupe", create: "✅ Créer le Groupe", join: "🔗 Rejoindre",
-            my_profile: "Mon profil", my_streams: "Mes KeTeteos", settings: "Paramètres", logout: "Déconnexion",
-            create_keteteo: "Créer KeTeteoLive", create_keteteo_title: "🎥 Créer mon KeTeteoLive", cover_image: "Image de couverture (optionnel)",
-            use_camera: "Utiliser la caméra", use_link: "Utiliser un lien", create_keteteo_btn: "📝 Créer mon KeTeteoLive",
-            start_stream: "🎥 Commencer la diffusion", activate_location: "🌍 ACTIVER LA LOCALISATION", location_not_activated: "📍 Localisation non activée",
-            account: "Compte", email: "E-mail", phone: "Téléphone", privacy: "Confidentialité",
-            public_profile: "Profil public", show_location: "Afficher la position", who_can_comment: "Qui peut commenter",
-            everyone: "Tout le monde", only_followers: "Abonnés uniquement", no_one: "Personne", notifications: "Notifications",
-            push_notifications: "Notifications push", new_followers: "Nouveaux abonnés", post_comments: "Commentaires sur mes posts",
-            appearance: "Apparence", dark_mode: "Mode sombre", font_size: "Taille de police", small: "Petite",
-            medium: "Moyenne", large: "Grande", language_region: "Langue et Région", distance_unit: "Unité de distance",
-            km: "Kilomètres (km)", mi: "Miles (mi)", data_security: "Données et Sécurité", export_data: "📥 Exporter mes données",
-            delete_account: "🗑️ Supprimer mon compte", save_changes: "💾 ENREGISTRER", discard: "❌ ANNULER",
-            search_events: "Rechercher des événements", upcoming_keteteos: "PROCHAINS KETETEOS", delete_title: "SUPPRIMER",
-            legal_info: "Informations Légales", terms: "Termes et Conditions", privacy_policy: "Politique de Confidentialité",
-            cookies: "Politique de Cookies", new_stream: "Nouvelle diffusion", register: "S'inscrire",
-            login_btn: "Se connecter", follow: "Suivre", following_btn: "Abonné", unfollow: "Se désabonner",
-            viewers: "regardent", live: "EN DIRECT", rotate_camera: "Pivoter la caméra", stop_stream: "Arrêter la diffusion"
-        }
-    };
-    
+    // ================= SISTEMA DE IDIOMAS =================
     function aplicarIdioma() {
         const idiomaNavegador = (navigator.language || navigator.userLanguage || 'es').split('-')[0];
         let lang = 'es';
@@ -1675,49 +1637,28 @@
         else if (idiomaNavegador === 'fr') lang = 'fr';
         else lang = 'es';
         
-        currentLanguage = lang;
         localStorage.setItem('keteteo_idioma', lang);
         
+        const textos = {
+            es: { create_account: "Crear cuenta", login: "Iniciar sesión", cancel: "Cancelar", save: "Guardar", close: "Cerrar", delete_btn: "ELIMINAR", home: "Inicio", search: "Buscar", alerts: "Alertas", next_keteteo: "Próximo KeTeteo", legal: "Legal", profile: "Perfil", edit_profile: "Editar perfil", share: "Compartir", contact: "Contacto", followers: "seguidores", following: "siguiendo", teteos: "teteos", copy: "copiar", online: "En línea", away: "Ausente", offline: "Desconectado", comments: "💬 Comentarios", add_comment: "Añade un comentario...", post: "Publicar", live: "EN VIVO", viewers: "viendo", rotate_camera: "Girar cámara", stop_stream: "Detener transmisión", follow: "Seguir", following_btn: "Siguiendo" },
+            en: { create_account: "Create account", login: "Login", cancel: "Cancel", save: "Save", close: "Close", delete_btn: "DELETE", home: "Home", search: "Search", alerts: "Alerts", next_keteteo: "Next KeTeteo", legal: "Legal", profile: "Profile", edit_profile: "Edit profile", share: "Share", contact: "Contact", followers: "followers", following: "following", teteos: "teteos", copy: "copy", online: "Online", away: "Away", offline: "Offline", comments: "💬 Comments", add_comment: "Add a comment...", post: "Post", live: "LIVE", viewers: "watching", rotate_camera: "Rotate camera", stop_stream: "Stop stream", follow: "Follow", following_btn: "Following" },
+            fr: { create_account: "Créer un compte", login: "Se connecter", cancel: "Annuler", save: "Enregistrer", close: "Fermer", delete_btn: "SUPPRIMER", home: "Accueil", search: "Rechercher", alerts: "Alertes", next_keteteo: "Prochain KeTeteo", legal: "Juridique", profile: "Profil", edit_profile: "Modifier le profil", share: "Partager", contact: "Contact", followers: "abonnés", following: "abonnements", teteos: "teteos", copy: "copier", online: "En ligne", away: "Absent", offline: "Déconnecté", comments: "💬 Commentaires", add_comment: "Ajouter un commentaire...", post: "Publier", live: "EN DIRECT", viewers: "regardent", rotate_camera: "Pivoter la caméra", stop_stream: "Arrêter la diffusion", follow: "Suivre", following_btn: "Abonné" }
+        };
+        
+        const t = textos[lang] || textos.es;
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            if (translationsData[lang][key]) {
-                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                    if (el.placeholder !== undefined) el.placeholder = translationsData[lang][key];
-                    else el.innerText = translationsData[lang][key];
-                } else {
-                    el.innerText = translationsData[lang][key];
-                }
-            }
+            if (t[key]) el.innerText = t[key];
         });
-        
-        document.querySelectorAll('.config-select option').forEach(opt => {
-            const key = opt.getAttribute('data-i18n');
-            if (key && translationsData[lang][key]) opt.innerText = translationsData[lang][key];
-        });
-        
-        const locationStatus = document.getElementById('ubicacionStatus');
-        if (locationStatus && locationStatus.innerText.includes('no activada')) {
-            locationStatus.innerText = translationsData[lang].location_not_activated;
-        }
     }
-    
-    function traducirTexto(texto, idioma) { return texto; }
 
-    // ================= VIDEOS DE YOUTUBE CON LOOP AUTOMÁTICO =================
+    // ================= VIDEOS (SOLO 5 + RADAR) =================
     const youtubeStreams = [
-        { id: 1, titulo: "🎤 Concierto Callejero", nombreCreador: "Music Live", usuario: "@musiclive", ubicacion: "España", distancia: "1.2 km", categoria: "Concierto", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, url: "https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk" },
-        { id: 2, titulo: "🎵 Música Relajante", nombreCreador: "Urban Music", usuario: "@urbanmusic", ubicacion: "México", distancia: "2.5 km", categoria: "Concierto", lat: 18.47, lng: -69.91, viewers: 892, likes: 412, url: "https://www.youtube.com/embed/5yx6BWlEVcY?autoplay=1&mute=1&loop=1&playlist=5yx6BWlEVcY" },
+        { id: 1, titulo: "🎮 Gamer en vivo", nombreCreador: "GamerZone", usuario: "@gamerzone", ubicacion: "Global", distancia: "1.2 km", categoria: "Gaming", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, url: "https://www.youtube.com/embed/2g811Eo7K8U?autoplay=1&mute=1&loop=1&playlist=2g811Eo7K8U" },
+        { id: 2, titulo: "🎤 Concierto Callejero", nombreCreador: "Music Live", usuario: "@musiclive", ubicacion: "España", distancia: "2.5 km", categoria: "Concierto", lat: 18.47, lng: -69.91, viewers: 892, likes: 412, url: "https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk" },
         { id: 3, titulo: "🎤 Juan Luis Guerra", nombreCreador: "Bachata Live", usuario: "@bachatalive", ubicacion: "Santo Domingo", distancia: "0.5 km", categoria: "Concierto", lat: 18.466, lng: -69.9, viewers: 3452, likes: 567, url: "https://www.youtube.com/embed/aqz-KE-bpKQ?autoplay=1&mute=1&loop=1&playlist=aqz-KE-bpKQ" },
         { id: 4, titulo: "🎧 DJ Marshmello", nombreCreador: "EDM Live", usuario: "@edmlive", ubicacion: "USA", distancia: "3.4 km", categoria: "Concierto", lat: 18.5, lng: -69.88, viewers: 2156, likes: 890, url: "https://www.youtube.com/embed/21qNxnCS8WU?autoplay=1&mute=1&loop=1&playlist=21qNxnCS8WU" },
-        { id: 5, titulo: "🎤 Harry Styles", nombreCreador: "Pop Live", usuario: "@poplive", ubicacion: "Inglaterra", distancia: "4.2 km", categoria: "Concierto", lat: 18.49, lng: -69.92, viewers: 3421, likes: 1234, url: "https://www.youtube.com/embed/DWcJFNfaw9c?autoplay=1&mute=1&loop=1&playlist=DWcJFNfaw9c" },
-        { id: 6, titulo: "🎤 Taylor Swift", nombreCreador: "Pop Star", usuario: "@popstar", ubicacion: "USA", distancia: "5.0 km", categoria: "Concierto", lat: 18.47, lng: -69.89, viewers: 1876, likes: 654, url: "https://www.youtube.com/embed/Scxs7L0vhZ4?autoplay=1&mute=1&loop=1&playlist=Scxs7L0vhZ4" },
-        { id: 7, titulo: "🏝️ Playa en Vivo", nombreCreador: "Beach Live", usuario: "@beachlive", ubicacion: "Caribe", distancia: "1.8 km", categoria: "Aventura", lat: 18.46, lng: -69.87, viewers: 2341, likes: 567, url: "https://www.youtube.com/embed/7X8II6J-6mU?autoplay=1&mute=1&loop=1&playlist=7X8II6J-6mU" },
-        { id: 8, titulo: "👶 Actividad Infantil", nombreCreador: "Kids World", usuario: "@kidsworld", ubicacion: "Miami", distancia: "2.3 km", categoria: "Infantil", lat: 18.45, lng: -69.86, viewers: 567, likes: 234, url: "https://www.youtube.com/embed/hHW1oY26kxQ?autoplay=1&mute=1&loop=1&playlist=hHW1oY26kxQ" },
-        { id: 9, titulo: "🚴 Bicicleta MTB", nombreCreador: "Extreme Sports", usuario: "@extremesports", ubicacion: "Colombia", distancia: "3.1 km", categoria: "Deporte", lat: 18.48, lng: -69.91, viewers: 2341, likes: 567, url: "https://www.youtube.com/embed/Scxs7L0vhZ4?autoplay=1&mute=1&loop=1&playlist=Scxs7L0vhZ4" },
-        { id: 10, titulo: "🏀 Básquet Callejero", nombreCreador: "Sports Live", usuario: "@sportslive", ubicacion: "Santo Domingo", distancia: "0.8 km", categoria: "Deporte", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, url: "https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&mute=1&loop=1&playlist=5qap5aO4i9A" },
-        { id: 11, titulo: "⚽ Partido Fútbol", nombreCreador: "Futbol Mundial", usuario: "@futbolmundial", ubicacion: "Madrid", distancia: "6.2 km", categoria: "Deporte", lat: 18.47, lng: -69.91, viewers: 3452, likes: 567, url: "https://www.youtube.com/embed/hHW1oY26kxQ?autoplay=1&mute=1&loop=1&playlist=hHW1oY26kxQ" },
-        { id: 12, titulo: "⚾ Béisbol MLB", nombreCreador: "MLB Live", usuario: "@mlblive", ubicacion: "USA", distancia: "7.5 km", categoria: "Deporte", lat: 18.49, lng: -69.92, viewers: 3421, likes: 1234, url: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ" },
-        { id: 13, titulo: "🎾 Tenis Abierto", nombreCreador: "Tennis World", usuario: "@tennisworld", ubicacion: "Australia", distancia: "8.1 km", categoria: "Deporte", lat: 18.46, lng: -69.87, viewers: 2341, likes: 567, url: "https://www.youtube.com/embed/ysz5S6PUM-U?autoplay=1&mute=1&loop=1&playlist=ysz5S6PUM-U" }
+        { id: 5, titulo: "🏀 Básquet Callejero", nombreCreador: "Sports Live", usuario: "@sportslive", ubicacion: "Santo Domingo", distancia: "0.8 km", categoria: "Deporte", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, url: "https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&mute=1&loop=1&playlist=5qap5aO4i9A" }
     ];
 
     function refreshHomeScreen() {
@@ -1730,7 +1671,7 @@
 
     // ================= FUNCIONES DE COMENTARIOS =================
     function openCommentsModal(keId) {
-        if (!loggedIn) { alert(translationsData[currentLanguage].login_first || 'Inicia sesión para ver comentarios'); return; }
+        if (!loggedIn) { alert('Inicia sesión para ver comentarios'); return; }
         currentCommentsKeId = keId;
         loadCommentsToModal(keId);
         const input = document.getElementById('commentModalInput');
@@ -1753,9 +1694,6 @@
         
         const finalSendBtn = document.getElementById('commentModalSendBtn');
         const finalInput = document.getElementById('commentModalInput');
-        
-        finalInput.placeholder = translationsData[currentLanguage].add_comment || "Añade un comentario...";
-        finalSendBtn.innerText = translationsData[currentLanguage].post || "Publicar";
         
         finalInput.addEventListener('input', function() {
             finalSendBtn.classList.toggle('active', finalInput.value.trim().length > 0);
@@ -1792,7 +1730,7 @@
         const container = document.getElementById('commentsModalList');
         const comments = currentComments[keId] || [];
         if (comments.length === 0) {
-            container.innerHTML = `<div style="text-align:center; padding:20px; color:var(--gris-claro);">${translationsData[currentLanguage].no_comments}</div>`;
+            container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--gris-claro);">No hay comentarios aún. Sé el primero en comentar 💬</div>';
             return;
         }
         container.innerHTML = comments.map((c, index) => `
@@ -1800,7 +1738,7 @@
                 <div class="comment-modal-header-info">
                     <span class="comment-modal-user">${escapeHtml(c.user)}</span>
                     <span class="comment-modal-time">${c.timeAgo || formatCommentTime(new Date(c.timestamp))}</span>
-                    ${(c.user === currentUser?.username) ? `<button class="delete-comment-btn" onclick="deleteCommentFromModal('${keId}', ${index})">${translationsData[currentLanguage].delete_btn || 'Eliminar'}</button>` : ''}
+                    ${(c.user === currentUser?.username) ? `<button class="delete-comment-btn" onclick="deleteCommentFromModal('${keId}', ${index})">Eliminar</button>` : ''}
                 </div>
                 <div class="comment-modal-text">${escapeHtml(c.text)}</div>
             </div>
@@ -1817,6 +1755,11 @@
         localStorage.setItem(`comments_${currentCommentsKeId}`, JSON.stringify(currentComments[currentCommentsKeId]));
         loadCommentsToModal(currentCommentsKeId);
         updateCommentCountInCard(currentCommentsKeId);
+        
+        // Si hay una transmisión en vivo activa, agregar comentario en vivo
+        if (currentLiveStreamId === currentCommentsKeId) {
+            agregarComentarioEnVivo(currentUser.username, text);
+        }
         return true;
     }
     
@@ -1837,7 +1780,7 @@
     function formatCommentTime(date) { const d = new Date(), diff = d - date, mins = Math.floor(diff/60000), hours = Math.floor(diff/3600000), days = Math.floor(diff/86400000); if (mins<1) return 'ahora'; if (mins<60) return `hace ${mins} min`; if (hours<24) return `hace ${hours} h`; if (days===1) return 'ayer'; return `hace ${days} días`; }
 
     // ================= FUNCIONES DE COMPARTIR =================
-    function openShareModal(keId) { if (!loggedIn) { alert(translationsData[currentLanguage].login_first || 'Inicia sesión para compartir'); return; } currentShareKeId = keId; document.getElementById('shareModal').classList.add('show'); }
+    function openShareModal(keId) { if (!loggedIn) { alert('Inicia sesión para compartir'); return; } currentShareKeId = keId; document.getElementById('shareModal').classList.add('show'); }
     function closeShareModal() { document.getElementById('shareModal').classList.remove('show'); currentShareKeId = null; }
     function shareCopyLink() { const ke = allKeTeteos.find(k => k.id == currentShareKeId); if (ke) { navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}?ke=${ke.id}`); alert('✅ Enlace copiado'); incrementShares(currentShareKeId); } closeShareModal(); }
     
@@ -1848,19 +1791,19 @@
         closeShareModal();
     }
     
-    function shareToGroup() { const grupos = allGroups.filter(g => g.miembros.includes(currentUser?.username)); if (grupos.length===0) { alert(translationsData[currentLanguage].no_groups || 'No tienes grupos'); closeShareModal(); return; } const grupoSeleccionado = prompt(`Selecciona un grupo:\n${grupos.map(g=>g.nombre).join('\n')}\n\nEscribe el nombre exacto:`); const grupo = grupos.find(g => g.nombre === grupoSeleccionado); if (grupo) { alert(`✅ Compartido en "${grupo.nombre}"`); incrementShares(currentShareKeId); } else alert(translationsData[currentLanguage].group_not_found || 'Grupo no encontrado'); closeShareModal(); }
-    function shareToUser() { const username = prompt(translationsData[currentLanguage].enter_username || 'Ingresa el nombre de usuario (@ejemplo):'); if (username && username.trim()) { alert(`✅ Enviado a ${username.trim()}`); incrementShares(currentShareKeId); } closeShareModal(); }
+    function shareToGroup() { const grupos = allGroups.filter(g => g.miembros.includes(currentUser?.username)); if (grupos.length===0) { alert('No tienes grupos'); closeShareModal(); return; } const grupoSeleccionado = prompt(`Selecciona un grupo:\n${grupos.map(g=>g.nombre).join('\n')}\n\nEscribe el nombre exacto:`); const grupo = grupos.find(g => g.nombre === grupoSeleccionado); if (grupo) { alert(`✅ Compartido en "${grupo.nombre}"`); incrementShares(currentShareKeId); } else alert('Grupo no encontrado'); closeShareModal(); }
+    function shareToUser() { const username = prompt('Ingresa el nombre de usuario (@ejemplo):'); if (username && username.trim()) { alert(`✅ Enviado a ${username.trim()}`); incrementShares(currentShareKeId); } closeShareModal(); }
     function incrementShares(keId) { if (!currentShares[keId]) currentShares[keId] = 0; currentShares[keId]++; localStorage.setItem(`shares_${keId}`, currentShares[keId]); }
     function loadShares() { allKeTeteos.forEach(ke => { const saved = localStorage.getItem(`shares_${ke.id}`); currentShares[ke.id] = saved ? parseInt(saved) : 0; }); }
 
     // ================= FUNCIONES DE REPORTAR =================
-    function openReportModal(keId) { if (!loggedIn) { alert(translationsData[currentLanguage].login_first || 'Inicia sesión para reportar'); return; } currentReportKeId = keId; document.getElementById('reportModal').classList.add('show'); }
+    function openReportModal(keId) { if (!loggedIn) { alert('Inicia sesión para reportar'); return; } currentReportKeId = keId; document.getElementById('reportModal').classList.add('show'); }
     function closeReportModal() { document.getElementById('reportModal').classList.remove('show'); currentReportKeId = null; }
     function submitReport(motivo) { if (!currentReportKeId) return; if (!currentReports[currentReportKeId]) currentReports[currentReportKeId] = []; currentReports[currentReportKeId].push({ usuario: currentUser.username, motivo: motivo, fecha: new Date().toISOString() }); localStorage.setItem(`reports_${currentReportKeId}`, JSON.stringify(currentReports[currentReportKeId])); alert(`✅ Reporte enviado: ${motivo}`); closeReportModal(); }
     function loadReports() { allKeTeteos.forEach(ke => { const saved = localStorage.getItem(`reports_${ke.id}`); currentReports[ke.id] = saved ? JSON.parse(saved) : []; }); }
 
     // ================= FUNCIONES DE GEOLOCALIZACIÓN =================
-    function getUserLocation() { return new Promise((resolve, reject) => { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((pos) => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(userLocation); }, () => reject(null), { enableHighAccuracy: true }); } else { reject(null); } }); }
+    function getUserLocation() { return new Promise((resolve, reject) => { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((pos) => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(userLocation); }, (err) => reject(err), { enableHighAccuracy: true }); } else { reject('Geolocalización no soportada'); } }); }
     function calcularDistancia(lat1, lng1, lat2, lng2) { const R = 6371, dLat = (lat2-lat1)*Math.PI/180, dLng = (lng2-lng1)*Math.PI/180, a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2; return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); }
     async function ordenarKeTeteosPorCercania() { if (!userLocation) { try { await getUserLocation(); } catch(e) { return; } } if (userLocation) { allKeTeteos = allKeTeteos.map(ke => ke.esRadar ? ke : { ...ke, distanciaReal: calcularDistancia(userLocation.lat, userLocation.lng, ke.lat || 18.48, ke.lng || -69.9) }); allKeTeteos.sort((a,b) => (a.distanciaReal||999) - (b.distanciaReal||999)); saveKeTeteos(); renderCarousel(); } }
 
@@ -1885,19 +1828,19 @@
             const username = btn.getAttribute('data-user'); 
             if (username && isFollowing(username)) { 
                 btn.classList.add('following'); 
-                btn.innerHTML = `<span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> ${translationsData[currentLanguage].following_btn || 'Siguiendo'}`; 
+                btn.innerHTML = `<span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Siguiendo`; 
             } else if (username) { 
                 btn.classList.remove('following'); 
-                btn.innerHTML = `<span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> ${translationsData[currentLanguage].follow || 'Seguir'}`; 
+                btn.innerHTML = `<span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Seguir`; 
             } 
         });
         const followPerfilBtn = document.getElementById('followPerfilBtn');
         if (followPerfilBtn && perfilAjenoUsername) {
             if (isFollowing(perfilAjenoUsername)) {
-                followPerfilBtn.innerText = translationsData[currentLanguage].following_btn || 'Siguiendo';
+                followPerfilBtn.innerText = 'Siguiendo';
                 followPerfilBtn.style.background = 'var(--gris-medio)';
             } else {
-                followPerfilBtn.innerText = translationsData[currentLanguage].follow || 'Seguir';
+                followPerfilBtn.innerText = 'Seguir';
                 followPerfilBtn.style.background = 'var(--naranja)';
             }
         }
@@ -1908,13 +1851,41 @@
     function verSeguidores() { if (perfilAjenoUsername) { alert(`@${perfilAjenoUsername} tiene ${getFollowersCount(perfilAjenoUsername)} seguidores`); } else { alert(`Tienes ${getFollowersCount(currentUser?.username)} seguidores`); } }
     function verSiguiendo() { if (perfilAjenoUsername) { alert(`@${perfilAjenoUsername} sigue a ${getFollowingCount(perfilAjenoUsername)} personas`); } else { alert(`Sigues a ${getFollowingCount(currentUser?.username)} personas`); } }
 
-    // ================= FUNCIONES DE TRANSMISIÓN CON CÁMARA Y GIRAR =================
+    // ================= TRANSMISIÓN EN VIVO CON INTERFAZ COMPLETA =================
+    let liveStatsElement = null;
+    let liveCommentsElement = null;
+    let liveControlsElement = null;
+    
+    function agregarComentarioEnVivo(usuario, texto, esCreador = false) {
+        const comentariosDiv = document.getElementById('liveCommentsList');
+        if (!comentariosDiv) return;
+        const commentDiv = document.createElement('div');
+        commentDiv.className = 'live-comment' + (esCreador ? ' creator-highlight' : '');
+        commentDiv.innerHTML = `<strong>${escapeHtml(usuario)}</strong>: ${escapeHtml(texto)}`;
+        comentariosDiv.appendChild(commentDiv);
+        comentariosDiv.scrollTop = comentariosDiv.scrollHeight;
+    }
+    
+    function mostrarLikeEnVivo(usuario) {
+        const likeAnim = document.createElement('div');
+        likeAnim.className = 'live-like-animation';
+        likeAnim.innerHTML = `❤️ ${usuario}`;
+        likeAnim.style.left = (window.innerWidth / 2) + 'px';
+        likeAnim.style.top = (window.innerHeight / 2) + 'px';
+        document.body.appendChild(likeAnim);
+        setTimeout(() => likeAnim.remove(), 1000);
+        
+        liveLikesCount++;
+        const likesSpan = document.getElementById('liveLikesCount');
+        if (likesSpan) likesSpan.innerText = liveLikesCount;
+    }
+    
     async function iniciarTransmisionCamara(keId = null) {
         try {
             const constraints = { video: { facingMode: { exact: currentFacingMode } }, audio: true };
             const stream = await navigator.mediaDevices.getUserMedia(constraints);
             mediaStream = stream;
-            currentLiveKeId = keId || Date.now();
+            currentLiveStreamId = keId || Date.now();
             
             const videoElement = document.createElement('video');
             videoElement.srcObject = stream;
@@ -1928,38 +1899,56 @@
             videoElement.style.backgroundColor = '#000';
             document.body.appendChild(videoElement);
             
-            // Controles de cámara
-            const controlsDiv = document.createElement('div');
-            controlsDiv.className = 'camera-controls';
-            controlsDiv.innerHTML = `
-                <button class="camera-btn" id="rotateCameraBtn" title="${translationsData[currentLanguage].rotate_camera || 'Girar cámara'}">🔄</button>
-                <button class="camera-btn" id="stopStreamBtn" title="${translationsData[currentLanguage].stop_stream || 'Detener transmisión'}" style="background:#FF2D55;">🔴</button>
+            // Barra de estadísticas en vivo
+            liveStatsElement = document.createElement('div');
+            liveStatsElement.className = 'live-stats-bar';
+            liveStatsElement.innerHTML = `
+                <div class="live-stat"><span>❤️</span> <span id="liveLikesCount">0</span></div>
+                <div class="live-stat"><span>💬</span> <span id="liveCommentsCount">0</span></div>
+                <div class="live-stat"><span>📤</span> <span id="liveSharesCount">0</span></div>
+                <div class="live-stat"><span>👁️</span> <span id="liveViewersCount">1</span></div>
             `;
-            document.body.appendChild(controlsDiv);
+            document.body.appendChild(liveStatsElement);
             
-            // Contador de viewers
-            const viewersDiv = document.createElement('div');
-            viewersDiv.className = 'live-viewers';
-            viewersDiv.id = 'liveViewersCount';
-            viewersDiv.innerHTML = `👁️ 1 ${translationsData[currentLanguage].viewers || 'viendo'}`;
-            document.body.appendChild(viewersDiv);
+            // Área de comentarios en vivo
+            liveCommentsElement = document.createElement('div');
+            liveCommentsElement.className = 'live-comments-area';
+            liveCommentsElement.innerHTML = `<div id="liveCommentsList" style="max-height:120px; overflow-y:auto;"></div>`;
+            document.body.appendChild(liveCommentsElement);
             
-            // Simular viewers en vivo
+            // Controles del creador
+            liveControlsElement = document.createElement('div');
+            liveControlsElement.className = 'live-controls';
+            liveControlsElement.innerHTML = `
+                <button class="live-btn" id="liveRotateBtn">🔄</button>
+                <button class="live-btn" id="liveLikeBtn">❤️</button>
+                <button class="live-btn stop" id="liveStopBtn">🔴</button>
+            `;
+            document.body.appendChild(liveControlsElement);
+            
+            document.getElementById('liveRotateBtn')?.addEventListener('click', () => girarCamaraEnVivo(videoElement));
+            document.getElementById('liveLikeBtn')?.addEventListener('click', () => {
+                mostrarLikeEnVivo(currentUser.username);
+                currentLikes[currentLiveStreamId] = (currentLikes[currentLiveStreamId] || 0) + 1;
+                saveKeTeteos();
+            });
+            document.getElementById('liveStopBtn')?.addEventListener('click', () => detenerTransmisionCompleta());
+            
+            // Simular viewers
             let viewers = 1;
-            if (liveViewersInterval) clearInterval(liveViewersInterval);
-            liveViewersInterval = setInterval(() => {
-                viewers += Math.floor(Math.random() * 5);
-                viewersDiv.innerHTML = `👁️ ${viewers} ${translationsData[currentLanguage].viewers || 'viendo'}`;
+            const viewersSpan = document.getElementById('liveViewersCount');
+            const viewersInterval = setInterval(() => {
+                viewers += Math.floor(Math.random() * 3);
+                if (viewersSpan) viewersSpan.innerText = viewers;
             }, 5000);
             
-            document.getElementById('rotateCameraBtn')?.addEventListener('click', () => girarCamara(videoElement));
-            document.getElementById('stopStreamBtn')?.addEventListener('click', () => detenerTransmision(videoElement, controlsDiv, viewersDiv));
+            window.liveViewersInterval = viewersInterval;
             
-            alert('🎥 Transmisión iniciada. Puedes girar la cámara y ver cuántas personas te ven en vivo.');
+            alert('🎥 Transmisión iniciada. Puedes ver likes y comentarios en tiempo real.');
         } catch(err) { alert('❌ No se pudo acceder a la cámara. Permisos requeridos.'); }
     }
     
-    async function girarCamara(videoElement) {
+    async function girarCamaraEnVivo(videoElement) {
         currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
         if (mediaStream) {
             mediaStream.getTracks().forEach(track => track.stop());
@@ -1970,15 +1959,16 @@
         }
     }
     
-    function detenerTransmision(videoElement, controlsDiv, viewersDiv) {
+    function detenerTransmisionCompleta() {
         if (mediaStream) { mediaStream.getTracks().forEach(track => track.stop()); mediaStream = null; }
-        if (videoElement) videoElement.remove();
-        if (controlsDiv) controlsDiv.remove();
-        if (viewersDiv) viewersDiv.remove();
-        if (liveViewersInterval) clearInterval(liveViewersInterval);
-        if (liveLikesInterval) clearInterval(liveLikesInterval);
+        if (liveStatsElement) liveStatsElement.remove();
+        if (liveCommentsElement) liveCommentsElement.remove();
+        if (liveControlsElement) liveControlsElement.remove();
+        if (window.liveViewersInterval) clearInterval(window.liveViewersInterval);
+        document.querySelectorAll('.fullscreen-stream, .live-stats-bar, .live-comments-area, .live-controls').forEach(el => el.remove());
         alert('🔴 Transmisión finalizada.');
-        currentLiveKeId = null;
+        currentLiveStreamId = null;
+        liveLikesCount = 0;
     }
     
     function empezarTransmision() {
@@ -1988,21 +1978,29 @@
     }
     
     function activarUbicacionManual() {
+        if (location.protocol === 'file:') {
+            alert('⚠️ Para usar ubicación, sube la app a GitHub Pages o usa un servidor HTTPS.\n\nEnlace actual: https://offerview.github.io/KeTeteoLive/');
+            document.getElementById('ubicacionStatus').innerHTML = '⚠️ Usa GitHub Pages para ubicación';
+            return;
+        }
         if (navigator.geolocation) {
             document.getElementById('ubicacionStatus').innerHTML = '📍 Obteniendo ubicación...';
             navigator.geolocation.getCurrentPosition(
                 (pos) => {
                     userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-                    const ciudad = pos.coords.latitude.toFixed(4) + ', ' + pos.coords.longitude.toFixed(4);
-                    document.getElementById('newUbicacion').value = ciudad;
+                    document.getElementById('newUbicacion').value = `${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
                     document.getElementById('newLat').value = pos.coords.latitude;
                     document.getElementById('newLng').value = pos.coords.longitude;
-                    document.getElementById('ubicacionStatus').innerHTML = `📍 Ubicación detectada: ${ciudad}`;
+                    document.getElementById('ubicacionStatus').innerHTML = `📍 Ubicación detectada: ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
                     alert('✅ Ubicación activada correctamente');
                 },
                 (error) => {
-                    document.getElementById('ubicacionStatus').innerHTML = '❌ Error al obtener ubicación';
-                    alert('No se pudo obtener la ubicación. Activa los permisos de ubicación.');
+                    let msg = '';
+                    if (error.code === 1) msg = 'Permiso denegado. Actívalo en configuración del navegador.';
+                    else if (error.code === 2) msg = 'Ubicación no disponible.';
+                    else msg = 'Error al obtener ubicación.';
+                    document.getElementById('ubicacionStatus').innerHTML = `❌ ${msg}`;
+                    alert(msg);
                 },
                 { enableHighAccuracy: true, timeout: 10000 }
             );
@@ -2012,7 +2010,7 @@
     }
     
     function crearKeTeteo() {
-        if (!loggedIn) { alert(translationsData[currentLanguage].login_first || 'Inicia sesión'); return; }
+        if (!loggedIn) { alert('Inicia sesión'); return; }
         const titulo = document.getElementById('newTitulo').value.trim();
         const categoria = document.getElementById('newCategoria').value;
         const ubicacion = document.getElementById('newUbicacion').value;
@@ -2050,11 +2048,11 @@
             if (item.esRadar) card.classList.add('radar-card');
             card.setAttribute('data-id', item.id);
             const commentsCount = (currentComments[item.id] || []).length;
-            const seguirBtn = !item.esRadar && item.usuario !== currentUser?.username ? `<button class="follow-btn-card" data-user="${item.usuario}" onclick="event.stopPropagation(); ${isFollowing(item.usuario) ? 'dejarDeSeguir' : 'seguirUsuario'}('${item.usuario}')"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> ${isFollowing(item.usuario) ? (translationsData[currentLanguage].following_btn || 'Siguiendo') : (translationsData[currentLanguage].follow || 'Seguir')}</button>` : '';
+            const seguirBtn = !item.esRadar && item.usuario !== currentUser?.username ? `<button class="follow-btn-card" data-user="${item.usuario}" onclick="event.stopPropagation(); ${isFollowing(item.usuario) ? 'dejarDeSeguir' : 'seguirUsuario'}('${item.usuario}')"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> ${isFollowing(item.usuario) ? 'Siguiendo' : 'Seguir'}</button>` : '';
             card.innerHTML = item.esRadar ? `
                 <div class="stream-media"><iframe class="radar-iframe" src="https://www.flightradar24.com/18.46,-69.90/6" allow="geolocation" loading="lazy"></iframe></div>
                 <div class="card-content">
-                    <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>${translationsData[currentLanguage].live || 'EN VIVO'}</div>
+                    <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
                     <div class="event-title">${escapeHtml(item.titulo)}</div>
                     <div class="event-creator">${escapeHtml(item.nombreCreador)} <span>${escapeHtml(item.usuario)}</span></div>
                     <div class="event-meta"><span>${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</span></div>
@@ -2068,7 +2066,7 @@
             ` : `
                 <div class="stream-media"><iframe src="${item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk'}" allow="autoplay; encrypted-media" style="width:100%; height:100%; border:none;"></iframe></div>
                 <div class="card-content">
-                    <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>${translationsData[currentLanguage].live || 'EN VIVO'}</div>
+                    <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
                     <div class="event-title">${escapeHtml(item.titulo)}</div>
                     <div class="event-creator"><div class="event-creator-left">${escapeHtml(item.nombreCreador)} <span>${escapeHtml(item.usuario)}</span></div>${seguirBtn}</div>
                     <div class="event-meta"><span>${escapeHtml(item.ubicacion)} · ${item.distanciaReal ? item.distanciaReal.toFixed(1) + ' km' : item.distancia}</span>${item.categoria ? ` · 🏷️ ${escapeHtml(item.categoria)}` : ''}</div>
@@ -2088,15 +2086,9 @@
     }
     
     function attachCardEvents(card, id) {
-        card.querySelector('.like-btn')?.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert(translationsData[currentLanguage].login_first || 'Inicia sesión'); return; } currentLikes[id] = (currentLikes[id]||0)+1; card.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k=>k.id==id); if(ke) ke.likes = currentLikes[id]; saveKeTeteos(); 
-            // Animación de like
-            const likeAnim = document.createElement('div');
-            likeAnim.className = 'like-animation';
-            likeAnim.innerHTML = '❤️';
-            likeAnim.style.left = (e.clientX || window.innerWidth/2) + 'px';
-            likeAnim.style.top = (e.clientY || window.innerHeight/2) + 'px';
-            document.body.appendChild(likeAnim);
-            setTimeout(() => likeAnim.remove(), 1000);
+        card.querySelector('.like-btn')?.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id]||0)+1; card.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k=>k.id==id); if(ke) ke.likes = currentLikes[id]; saveKeTeteos(); 
+            const likeAnim = document.createElement('div'); likeAnim.className = 'like-animation'; likeAnim.innerHTML = '❤️'; likeAnim.style.left = (e.clientX || window.innerWidth/2) + 'px'; likeAnim.style.top = (e.clientY || window.innerHeight/2) + 'px'; document.body.appendChild(likeAnim); setTimeout(() => likeAnim.remove(), 1000);
+            if (currentLiveStreamId === id) mostrarLikeEnVivo(currentUser.username);
         });
         card.querySelector('.share-btn')?.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
         card.querySelector('.report-btn')?.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
@@ -2104,8 +2096,8 @@
         card.addEventListener('click', (e) => { if(e.target.closest('.action-btn') || e.target.closest('.follow-btn-card')) return; const item = allKeTeteos.find(k=>k.id==id); if(item) { incrementViews(id); if(item.esRadar) openFullscreenRadar(item); else openFullscreenStream(item); } });
     }
     
-    function openFullscreenRadar(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> ${translationsData[currentLanguage].close || 'Volver'}</button></div><div class="fullscreen-content"><iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id]||[]).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
-    function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> ${translationsData[currentLanguage].close || 'Volver'}</button></div><div class="fullscreen-content"><iframe src="${item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk'}" allow="autoplay; encrypted-media" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${item.distanciaReal ? item.distanciaReal.toFixed(1)+' km' : item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id]||[]).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
+    function openFullscreenRadar(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id]||[]).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
+    function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk'}" allow="autoplay; encrypted-media" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${item.distanciaReal ? item.distanciaReal.toFixed(1)+' km' : item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id]||[]).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
 
     function openSearchModal() { document.getElementById('searchModal').classList.add('show'); document.getElementById('searchInputModal').focus(); }
     function closeSearchModal() { document.getElementById('searchModal').classList.remove('show'); document.getElementById('searchResultsModal').innerHTML = ''; document.getElementById('searchInputModal').value = ''; }
@@ -2141,7 +2133,7 @@
     document.getElementById('joinCode')?.addEventListener('input', function(e) { const codigo = e.target.value.trim().toUpperCase(); const grupo = allGroups.find(g => g.codigoInvitacion === codigo); document.getElementById('joinPasswordContainer').style.display = (grupo && grupo.tipo === 'privado') ? 'block' : 'none'; });
 
     let userStatusInterval = null, lastActivity = Date.now(), userStatus = "online";
-    function actualizarEstadoUsuario() { if (!loggedIn) return; const timeSinceLastActivity = Date.now() - lastActivity; if (timeSinceLastActivity < 30000) { userStatus = "online"; const statusDot = document.querySelector('.status-dot'); if (statusDot) statusDot.className = 'status-dot status-online'; const statusText = document.getElementById('statusText'); if (statusText) statusText.innerText = translationsData[currentLanguage].online; } else if (timeSinceLastActivity < 300000) { userStatus = "away"; const statusDot = document.querySelector('.status-dot'); if (statusDot) statusDot.className = 'status-dot status-away'; const statusText = document.getElementById('statusText'); if (statusText) statusText.innerText = translationsData[currentLanguage].away; } else { userStatus = "offline"; const statusDot = document.querySelector('.status-dot'); if (statusDot) statusDot.className = 'status-dot status-offline'; const statusText = document.getElementById('statusText'); if (statusText) statusText.innerText = translationsData[currentLanguage].offline; } localStorage.setItem('userStatus', userStatus); localStorage.setItem('lastActivity', lastActivity); }
+    function actualizarEstadoUsuario() { if (!loggedIn) return; const timeSinceLastActivity = Date.now() - lastActivity; if (timeSinceLastActivity < 30000) { userStatus = "online"; const statusDot = document.querySelector('.status-dot'); if (statusDot) statusDot.className = 'status-dot status-online'; const statusText = document.getElementById('statusText'); if (statusText) statusText.innerText = 'En línea'; } else if (timeSinceLastActivity < 300000) { userStatus = "away"; const statusDot = document.querySelector('.status-dot'); if (statusDot) statusDot.className = 'status-dot status-away'; const statusText = document.getElementById('statusText'); if (statusText) statusText.innerText = 'Ausente'; } else { userStatus = "offline"; const statusDot = document.querySelector('.status-dot'); if (statusDot) statusDot.className = 'status-dot status-offline'; const statusText = document.getElementById('statusText'); if (statusText) statusText.innerText = 'Desconectado'; } localStorage.setItem('userStatus', userStatus); localStorage.setItem('lastActivity', lastActivity); }
     function actualizarActividad() { lastActivity = Date.now(); actualizarEstadoUsuario(); }
     function iniciarSeguimientoEstado() { if (userStatusInterval) clearInterval(userStatusInterval); userStatusInterval = setInterval(actualizarEstadoUsuario, 10000); window.addEventListener('click', actualizarActividad); window.addEventListener('scroll', actualizarActividad); window.addEventListener('keydown', actualizarActividad); window.addEventListener('touchstart', actualizarActividad); window.addEventListener('beforeunload', () => { if (loggedIn) { localStorage.setItem('userStatus', 'offline'); localStorage.setItem('lastActivity', Date.now()); } }); document.addEventListener('visibilitychange', () => { lastActivity = document.hidden ? Date.now() - 60000 : Date.now(); actualizarEstadoUsuario(); }); actualizarEstadoUsuario(); }
 
@@ -2168,12 +2160,12 @@
     function configurarAutoScrollSuperior() { const c = document.querySelector('.patrocinios-superior'); if (!c) return; c.addEventListener('touchstart', () => { isUserInteractingSuperior = true; if (autoScrollTimeoutSuperior) clearTimeout(autoScrollTimeoutSuperior); }); c.addEventListener('touchend', () => { autoScrollTimeoutSuperior = setTimeout(() => { isUserInteractingSuperior = false; }, 5000); }); }
     function configurarAutoScrollInferior() { const c = document.querySelector('.patrocinios-inferior'); if (!c) return; c.addEventListener('touchstart', () => { isUserInteractingInferior = true; if (autoScrollTimeoutInferior) clearTimeout(autoScrollTimeoutInferior); }); c.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); }); }
     
-    function openProximosKeTeteo() { const container = document.getElementById('proximosEventosList'); if (!container) return; container.innerHTML = ''; proximosKeTeteos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--gris-oscuro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${escapeHtml(e.titulo)}</div><div style="font-size:12px; color:var(--gris-claro);">${escapeHtml(e.ubicacion)} · ${escapeHtml(e.fecha)}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">PRÓXIMAMENTE</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Recibirás una notificación cuando esté disponible\')">${translationsData[currentLanguage].remind || 'Recordar'}</button>`; container.appendChild(div); }); document.getElementById('proximosEventosModal').classList.add('show'); }
+    function openProximosKeTeteo() { const container = document.getElementById('proximosEventosList'); if (!container) return; container.innerHTML = ''; proximosKeTeteos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--gris-oscuro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${escapeHtml(e.titulo)}</div><div style="font-size:12px; color:var(--gris-claro);">${escapeHtml(e.ubicacion)} · ${escapeHtml(e.fecha)}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">PRÓXIMAMENTE</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Recibirás una notificación cuando esté disponible\')">Recordar</button>`; container.appendChild(div); }); document.getElementById('proximosEventosModal').classList.add('show'); }
     function closeProximosEventos() { document.getElementById('proximosEventosModal').classList.remove('show'); }
     function abrirConfirmarEliminar(id, titulo) { eliminarId = id; document.getElementById('eliminarInfo').innerHTML = `<strong>${escapeHtml(titulo)}</strong>`; document.getElementById('confirmarEliminarModal').classList.add('show'); }
     function confirmarEliminar() { if (eliminarId) { const index = allKeTeteos.findIndex(k => k.id == eliminarId); if (index !== -1 && !allKeTeteos[index].esRadar) { allKeTeteos.splice(index, 1); saveKeTeteos(); renderCarousel(); renderMyStreams(); alert('✅ Eliminado'); } } cerrarConfirmarEliminar(); }
     function cerrarConfirmarEliminar() { eliminarId = null; document.getElementById('confirmarEliminarModal').classList.remove('show'); }
-    function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${escapeHtml(ke.titulo)}</strong><br>👁️ ${ke.viewers || 0} vistas | ❤️ ${ke.likes || 0} | 💬 ${(currentComments[ke.id]||[]).length}</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">${translationsData[currentLanguage].delete_btn || 'Eliminar'}</button>`; container.appendChild(div); }); }
+    function renderMyStreams() { const container = document.getElementById('myStreamsList'); const misKeTeteos = allKeTeteos.filter(ke => ke.usuario === currentUser?.username && !ke.esRadar); if (misKeTeteos.length === 0) { container.innerHTML = '<div class="my-stream-card" style="text-align:center;">📭 Sin transmisiones</div>'; return; } container.innerHTML = ''; misKeTeteos.forEach(ke => { const div = document.createElement('div'); div.className = 'my-stream-card'; div.innerHTML = `<div><strong>${escapeHtml(ke.titulo)}</strong><br>👁️ ${ke.viewers || 0} vistas | ❤️ ${ke.likes || 0} | 💬 ${(currentComments[ke.id]||[]).length}</div><button class="delete-btn" onclick="abrirConfirmarEliminar(${ke.id}, '${ke.titulo.replace(/'/g, "\\'")}')">Eliminar</button>`; container.appendChild(div); }); }
 
     function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
     function closeMenu() { document.getElementById('sideMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
@@ -2184,7 +2176,7 @@
     function register() { const name = document.getElementById('regName').value, user = document.getElementById('regUser').value, email = document.getElementById('regEmail').value, pass = document.getElementById('regPass').value, confirm = document.getElementById('regConfirmPass').value; if (!name||!user||!email||!pass||!confirm) { alert('Completa todos los campos'); return; } if (pass !== confirm) { alert('Contraseñas no coinciden'); return; } if (pass.length < 6) { alert('La contraseña debe tener al menos 6 caracteres'); return; } currentUser = { name, username: user.startsWith('@') ? user : '@'+user, email, bio: 'Amante de los eventos en vivo 🎉', phone: '' }; localStorage.setItem('user', JSON.stringify(currentUser)); localStorage.setItem('userPhone', ''); loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); loadConfigToTemp(); loadFollowers(); alert('✅ Cuenta creada'); }
     function login() { const email = document.getElementById('loginEmail').value, pass = document.getElementById('loginPass').value; if (email && pass) { const stored = localStorage.getItem('user'); if (stored) currentUser = JSON.parse(stored); else currentUser = { name: 'Usuario', username: '@usuario', email, bio: 'Amante de los eventos en vivo 🎉', phone: '' }; localStorage.setItem('user', JSON.stringify(currentUser)); loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); loadConfigToTemp(); loadFollowers(); } else alert('Ingresa email y contraseña'); }
     function logout() { loggedIn = false; currentUser = null; localStorage.removeItem('user'); localStorage.removeItem('userStatus'); localStorage.removeItem('lastActivity'); if (userStatusInterval) clearInterval(userStatusInterval); if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); document.getElementById('welcomeScreen').style.display = 'flex'; document.getElementById('mainScreen').classList.remove('active'); document.getElementById('logoutMenuBtn').style.display = 'none'; document.getElementById('createKeTeteoBtn').style.display = 'none'; closeMenu(); showHomeScreenClean(); }
-    function openCreateKeTeteoModal() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } document.getElementById('createKeTeteoModal').classList.add('show'); document.querySelectorAll('input[name="usarCamara"]').forEach(r => r.addEventListener('change', function() { document.getElementById('enlaceContainer').style.display = this.value === 'no' ? 'block' : 'none'; })); document.getElementById('enlaceContainer').style.display = 'none'; document.getElementById('newTitulo').value = ''; document.getElementById('newDescripcion').value = ''; document.getElementById('newCategoria').value = ''; document.getElementById('newImagenPreview').src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2'%3E%3Crect x='2' y='2' width='20' height='20' rx='2' ry='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='2.5'/%3E%3Cpath d='M21 15l-5-4-3 3-4-4-5 6'/%3E%3C/svg%3E"; document.getElementById('newEnlace').value = ''; document.getElementById('ubicacionStatus').innerHTML = translationsData[currentLanguage].location_not_activated; document.getElementById('newUbicacion').value = ''; document.getElementById('newLat').value = ''; document.getElementById('newLng').value = ''; }
+    function openCreateKeTeteoModal() { if (!loggedIn) { alert('Debes iniciar sesión'); return; } document.getElementById('createKeTeteoModal').classList.add('show'); document.querySelectorAll('input[name="usarCamara"]').forEach(r => r.addEventListener('change', function() { document.getElementById('enlaceContainer').style.display = this.value === 'no' ? 'block' : 'none'; })); document.getElementById('enlaceContainer').style.display = 'none'; document.getElementById('newTitulo').value = ''; document.getElementById('newDescripcion').value = ''; document.getElementById('newCategoria').value = ''; document.getElementById('newImagenPreview').src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2'%3E%3Crect x='2' y='2' width='20' height='20' rx='2' ry='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='2.5'/%3E%3Cpath d='M21 15l-5-4-3 3-4-4-5 6'/%3E%3C/svg%3E"; document.getElementById('newEnlace').value = ''; document.getElementById('ubicacionStatus').innerHTML = '📍 Ubicación no activada'; document.getElementById('newUbicacion').value = ''; document.getElementById('newLat').value = ''; document.getElementById('newLng').value = ''; }
     function closeCreateModal() { document.getElementById('createKeTeteoModal').classList.remove('show'); }
     function showMainScreen() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
     function showHomeScreenClean() { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
