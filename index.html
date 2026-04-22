@@ -1129,30 +1129,41 @@
             margin-bottom: 10px;
         }
         .live-stats-bar {
-            position: absolute;
-            bottom: 100px;
+            position: fixed;
+            top: 60px;
             left: 0;
             right: 0;
             display: flex;
             justify-content: space-around;
             background: rgba(0,0,0,0.7);
-            padding: 10px;
+            padding: 8px;
             z-index: 10000;
         }
         .live-stat {
             text-align: center;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
         }
         .live-stat span {
-            font-size: 18px;
+            font-size: 16px;
+        }
+        .live-time {
+            position: fixed;
+            top: 60px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 10000;
+            font-weight: bold;
         }
         .live-comments-area {
-            position: absolute;
-            bottom: 180px;
+            position: fixed;
+            bottom: 100px;
             left: 10px;
             right: 10px;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             border-radius: 10px;
             padding: 8px;
             max-height: 150px;
@@ -1202,24 +1213,21 @@
         .live-btn.stop {
             background: #FF2D55;
         }
-        .viewer-controls {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-            z-index: 10001;
-        }
-        .viewer-btn {
-            background: rgba(0,0,0,0.7);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 22px;
-            cursor: pointer;
+        
+        /* Botones naranja sólido */
+        .btn-naranja {
+            background: var(--naranja);
             color: white;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: all 0.2s ease;
         }
+        .btn-naranja:active { transform: scale(0.97); opacity: 0.9; }
     </style>
 </head>
 <body>
@@ -1416,7 +1424,7 @@
     </div>
 </div>
 
-<!-- MODAL CREAR KETETEO REDISEÑADO -->
+<!-- MODAL CREAR KETETEO REDISEÑADO CON BOTONES NARANJA -->
 <div id="createKeTeteoModal" class="modal"><div class="modal-content">
     <h3>🎥 Crear mi KeTeteoLive</h3>
     <input type="text" id="newTitulo" placeholder="Título del evento *" required>
@@ -1462,8 +1470,8 @@
     </div>
     
     <div style="display: flex; gap: 10px; margin-top: 20px;">
-        <button class="btn-rojo" style="flex:1;" onclick="crearKeTeteo()">📝 Crear mi KeTeteoLive</button>
-        <button class="btn-rojo" style="flex:1; background: linear-gradient(135deg, #FF6B00, #FF2D55);" onclick="empezarTransmision()">🎥 Empezar a transmitir</button>
+        <button class="btn-naranja" style="flex:1;" onclick="crearKeTeteo()">📝 Crear mi KeTeteoLive</button>
+        <button class="btn-naranja" style="flex:1; background: var(--naranja);" onclick="empezarTransmision()">🎥 Empezar a transmitir</button>
     </div>
     <button class="btn-gris" onclick="closeCreateModal()">❌ Cancelar</button>
 </div></div>
@@ -1613,8 +1621,9 @@
     let currentFacingMode = "user";
     let liveViewersInterval = null;
     let currentLiveStreamId = null;
-    let liveComments = [];
     let liveLikesCount = 0;
+    let liveStreamStartTime = null;
+    let liveTimerInterval = null;
     
     let followers = {};
     let following = {};
@@ -1756,7 +1765,6 @@
         loadCommentsToModal(currentCommentsKeId);
         updateCommentCountInCard(currentCommentsKeId);
         
-        // Si hay una transmisión en vivo activa, agregar comentario en vivo
         if (currentLiveStreamId === currentCommentsKeId) {
             agregarComentarioEnVivo(currentUser.username, text);
         }
@@ -1851,10 +1859,32 @@
     function verSeguidores() { if (perfilAjenoUsername) { alert(`@${perfilAjenoUsername} tiene ${getFollowersCount(perfilAjenoUsername)} seguidores`); } else { alert(`Tienes ${getFollowersCount(currentUser?.username)} seguidores`); } }
     function verSiguiendo() { if (perfilAjenoUsername) { alert(`@${perfilAjenoUsername} sigue a ${getFollowingCount(perfilAjenoUsername)} personas`); } else { alert(`Sigues a ${getFollowingCount(currentUser?.username)} personas`); } }
 
-    // ================= TRANSMISIÓN EN VIVO CON INTERFAZ COMPLETA =================
+    // ================= TRANSMISIÓN EN VIVO CON CONTADOR DE TIEMPO =================
     let liveStatsElement = null;
     let liveCommentsElement = null;
     let liveControlsElement = null;
+    let liveTimerElement = null;
+    
+    function formatLiveTime(seconds) {
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        if (hrs > 0) {
+            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    function iniciarLiveTimer() {
+        if (liveTimerInterval) clearInterval(liveTimerInterval);
+        liveStreamStartTime = Date.now();
+        liveTimerInterval = setInterval(() => {
+            if (liveTimerElement) {
+                const elapsed = Math.floor((Date.now() - liveStreamStartTime) / 1000);
+                liveTimerElement.innerText = formatLiveTime(elapsed);
+            }
+        }, 1000);
+    }
     
     function agregarComentarioEnVivo(usuario, texto, esCreador = false) {
         const comentariosDiv = document.getElementById('liveCommentsList');
@@ -1899,12 +1929,19 @@
             videoElement.style.backgroundColor = '#000';
             document.body.appendChild(videoElement);
             
+            // Contador de tiempo
+            liveTimerElement = document.createElement('div');
+            liveTimerElement.className = 'live-time';
+            liveTimerElement.innerHTML = '🔴 00:00';
+            document.body.appendChild(liveTimerElement);
+            iniciarLiveTimer();
+            
             // Barra de estadísticas en vivo
             liveStatsElement = document.createElement('div');
             liveStatsElement.className = 'live-stats-bar';
             liveStatsElement.innerHTML = `
                 <div class="live-stat"><span>❤️</span> <span id="liveLikesCount">0</span></div>
-                <div class="live-stat"><span>💬</span> <span id="liveCommentsCount">0</span></div>
+                <div class="live-stat"><span>💬</span> <span id="liveCommentsCount">${(currentComments[currentLiveStreamId] || []).length}</span></div>
                 <div class="live-stat"><span>📤</span> <span id="liveSharesCount">0</span></div>
                 <div class="live-stat"><span>👁️</span> <span id="liveViewersCount">1</span></div>
             `;
@@ -1944,7 +1981,7 @@
             
             window.liveViewersInterval = viewersInterval;
             
-            alert('🎥 Transmisión iniciada. Puedes ver likes y comentarios en tiempo real.');
+            alert('🎥 Transmisión iniciada. Puedes ver likes, comentarios y el tiempo en vivo.');
         } catch(err) { alert('❌ No se pudo acceder a la cámara. Permisos requeridos.'); }
     }
     
@@ -1964,11 +2001,14 @@
         if (liveStatsElement) liveStatsElement.remove();
         if (liveCommentsElement) liveCommentsElement.remove();
         if (liveControlsElement) liveControlsElement.remove();
+        if (liveTimerElement) liveTimerElement.remove();
         if (window.liveViewersInterval) clearInterval(window.liveViewersInterval);
-        document.querySelectorAll('.fullscreen-stream, .live-stats-bar, .live-comments-area, .live-controls').forEach(el => el.remove());
+        if (liveTimerInterval) clearInterval(liveTimerInterval);
+        document.querySelectorAll('.fullscreen-stream, .live-stats-bar, .live-comments-area, .live-controls, .live-time').forEach(el => el.remove());
         alert('🔴 Transmisión finalizada.');
         currentLiveStreamId = null;
         liveLikesCount = 0;
+        liveStreamStartTime = null;
     }
     
     function empezarTransmision() {
@@ -2049,6 +2089,14 @@
             card.setAttribute('data-id', item.id);
             const commentsCount = (currentComments[item.id] || []).length;
             const seguirBtn = !item.esRadar && item.usuario !== currentUser?.username ? `<button class="follow-btn-card" data-user="${item.usuario}" onclick="event.stopPropagation(); ${isFollowing(item.usuario) ? 'dejarDeSeguir' : 'seguirUsuario'}('${item.usuario}')"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> ${isFollowing(item.usuario) ? 'Siguiendo' : 'Seguir'}</button>` : '';
+            
+            // Calcular distancia real para el espectador
+            let distanciaMostrada = item.distancia;
+            if (!item.esRadar && userLocation && item.lat && item.lng) {
+                const dist = calcularDistancia(userLocation.lat, userLocation.lng, item.lat, item.lng);
+                distanciaMostrada = dist.toFixed(1) + ' km';
+            }
+            
             card.innerHTML = item.esRadar ? `
                 <div class="stream-media"><iframe class="radar-iframe" src="https://www.flightradar24.com/18.46,-69.90/6" allow="geolocation" loading="lazy"></iframe></div>
                 <div class="card-content">
@@ -2069,7 +2117,7 @@
                     <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
                     <div class="event-title">${escapeHtml(item.titulo)}</div>
                     <div class="event-creator"><div class="event-creator-left">${escapeHtml(item.nombreCreador)} <span>${escapeHtml(item.usuario)}</span></div>${seguirBtn}</div>
-                    <div class="event-meta"><span>${escapeHtml(item.ubicacion)} · ${item.distanciaReal ? item.distanciaReal.toFixed(1) + ' km' : item.distancia}</span>${item.categoria ? ` · 🏷️ ${escapeHtml(item.categoria)}` : ''}</div>
+                    <div class="event-meta"><span>📍 ${escapeHtml(item.ubicacion)} · ${distanciaMostrada}</span>${item.categoria ? ` · 🏷️ ${escapeHtml(item.categoria)}` : ''}</div>
                     <div class="action-buttons">
                         <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
                         <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
