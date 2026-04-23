@@ -99,7 +99,8 @@
         #profileScreen,
         #configScreen,
         #myStreamsScreen,
-        #groupsScreen {
+        #groupsScreen,
+        #mapScreen {
             padding-top: 96px;
         }
 
@@ -179,8 +180,28 @@
         .radar-card { cursor: pointer; }
         .radar-card:active { transform: scale(0.98); }
 
-        .stream-media { width: 100%; height: 180px; overflow: hidden; background: #000; position: relative; }
-        .stream-media iframe { width: 100%; height: 100%; border: none; }
+        .stream-media { 
+            width: 100%; 
+            height: 220px; 
+            overflow: hidden; 
+            background: #000; 
+            position: relative; 
+        }
+        .stream-media iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+        }
+        .stream-media::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+            pointer-events: none;
+        }
         .stream-media img { width: 100%; height: 100%; object-fit: cover; }
         .radar-iframe { width: 100%; height: 160px; border: none; background: #0a1a2a; pointer-events: none; }
         .card-content { padding: 12px; }
@@ -227,27 +248,34 @@
         }
         .event-creator span { color: #6c6c70; }
         .event-meta { display: flex; gap: 8px; font-size: 10px; color: var(--gris-claro); margin-bottom: 10px; flex-wrap: wrap; }
-        .action-buttons { display: flex; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+        .action-buttons { 
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 10px; 
+            flex-wrap: wrap; 
+            justify-content: flex-start;
+        }
         .action-btn {
             background: transparent;
             border: none;
             color: var(--gris-claro);
-            padding: 6px 0;
-            font-size: 12px;
+            padding: 4px 0;
+            font-size: 11px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .action-btn:active { transform: scale(0.96); color: var(--rojo-logo); }
+        .action-btn .icon-svg { width: 16px; height: 16px; }
+        .action-btn:active { transform: scale(0.96); color: var(--naranja); }
         
         .follow-btn-card {
             background: var(--naranja);
             border: none;
             border-radius: 20px;
-            padding: 4px 12px;
+            padding: 4px 10px;
             font-size: 10px;
             font-weight: 600;
             color: white;
@@ -488,6 +516,41 @@
             right: 0;
             background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
             padding: 24px 16px 40px;
+        }
+
+        /* Mapa Leaflet */
+        #map {
+            height: calc(100vh - 180px);
+            width: 100%;
+            border-radius: 16px;
+            margin: 12px;
+            width: calc(100% - 24px);
+        }
+        .map-container {
+            padding: 12px;
+        }
+        .map-controls {
+            display: flex;
+            gap: 10px;
+            margin: 10px;
+            justify-content: center;
+        }
+        .map-btn {
+            background: var(--naranja);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 16px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .map-btn.active {
+            background: var(--rojo-logo);
+        }
+        .no-events-message {
+            text-align: center;
+            padding: 40px;
+            color: var(--gris-claro);
         }
 
         .bottom-nav {
@@ -1129,7 +1192,6 @@
             margin-bottom: 10px;
         }
         
-        /* Botones naranja sólido */
         .btn-naranja {
             background: var(--naranja);
             color: white;
@@ -1144,38 +1206,42 @@
         }
         .btn-naranja:active { transform: scale(0.97); opacity: 0.9; }
         
-        /* Botones de transmisión en vivo estilo carrusel 2 */
-        .live-action-buttons {
+        /* Botones de transmisión en vivo estilo carrusel 2 - COMPACTOS */
+        .live-controls-bar {
             position: fixed;
             bottom: 20px;
             left: 0;
             right: 0;
             display: flex;
             justify-content: center;
-            gap: 15px;
-            z-index: 10001;
-            background: rgba(0,0,0,0.8);
-            padding: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 8px;
+            background: rgba(0,0,0,0.85);
             border-radius: 30px;
-            margin: 0 20px;
+            margin: 0 10px;
+            z-index: 10001;
         }
-        .live-action-btn {
+        .live-control-btn {
             background: var(--naranja);
             border: none;
-            border-radius: 40px;
-            padding: 10px 20px;
+            border-radius: 30px;
+            padding: 8px 12px;
             color: white;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 11px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .live-action-btn:active { transform: scale(0.95); }
-        .live-action-btn.pause-play {
+        .live-control-btn:active { transform: scale(0.95); }
+        .live-control-btn.pause {
             background: var(--gris-medio);
+        }
+        .live-control-btn.stop {
+            background: #FF2D55;
         }
         .live-top-bar {
             position: fixed;
@@ -1203,39 +1269,39 @@
             font-weight: bold;
             font-family: monospace;
         }
-        .live-stats {
+        .live-stats-bar {
             position: fixed;
-            bottom: 100px;
+            top: 110px;
             left: 0;
             right: 0;
             display: flex;
             justify-content: space-around;
             background: rgba(0,0,0,0.7);
-            padding: 8px;
+            padding: 6px;
             z-index: 10000;
         }
         .live-stat {
             text-align: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
         }
         .live-stat span {
-            font-size: 16px;
+            font-size: 14px;
         }
         .live-comments-area {
             position: fixed;
-            bottom: 180px;
+            bottom: 100px;
             left: 10px;
             right: 10px;
             background: rgba(0,0,0,0.6);
             border-radius: 10px;
             padding: 8px;
-            max-height: 120px;
+            max-height: 100px;
             overflow-y: auto;
             z-index: 10000;
         }
         .live-comment {
-            font-size: 12px;
+            font-size: 11px;
             margin-bottom: 4px;
             color: white;
         }
@@ -1250,7 +1316,24 @@
             0% { transform: scale(1) translateY(0); opacity: 1; }
             100% { transform: scale(1.5) translateY(-150px); opacity: 0; }
         }
+        
+        /* Estilos para marcadores del mapa */
+        .custom-marker {
+            background: var(--naranja);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
     </style>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -1281,6 +1364,27 @@
     <hr class="divider-naranja">
     <div class="patrocinios-inferior" id="patrociniosInferior">
         <div class="patrocinios-track-inferior" id="patrociniosTrackInferior"></div>
+    </div>
+</div>
+
+<!-- Pantalla del Mapa -->
+<div id="mapScreen" class="screen">
+    <div class="header">
+        <button class="hamburger" onclick="toggleMenu()">
+            <span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span>
+        </button>
+        <div class="logo-container"><div style="font-size:18px; font-weight:700; color:var(--rojo-logo);">🗺️ KeTeteo Cerca de Mí</div></div>
+        <div class="header-spacer"></div>
+    </div>
+    <div class="map-container">
+        <div id="map"></div>
+        <div class="map-controls">
+            <button class="map-btn" onclick="centrarMapaEnMiUbicacion()">📍 Mi ubicación</button>
+            <button class="map-btn" onclick="cambiarRadioMapa(5)">5 km</button>
+            <button class="map-btn active" onclick="cambiarRadioMapa(8)">8 km</button>
+            <button class="map-btn" onclick="cambiarRadioMapa(10)">10 km</button>
+            <button class="map-btn" onclick="volverAListaDesdeMapa()">📋 Ver lista</button>
+        </div>
     </div>
 </div>
 
@@ -1446,7 +1550,7 @@
     </div>
 </div>
 
-<!-- MODAL CREAR KETETEO CORREGIDO -->
+<!-- MODAL CREAR KETETEO -->
 <div id="createKeTeteoModal" class="modal"><div class="modal-content">
     <h3>🎥 Crear Mi KeTeteoLive</h3>
     <input type="text" id="newTitulo" placeholder="Título del evento *" required>
@@ -1470,7 +1574,6 @@
         <option value="Viaje">✈️ Viaje</option>
     </select>
     
-    <!-- UBICACIÓN AUTOMÁTICA CON BOTÓN -->
     <button type="button" class="location-btn" id="activarUbicacionBtn" onclick="activarUbicacionManual()">🌍 ACTIVAR UBICACIÓN</button>
     <div class="location-status" id="ubicacionStatus">📍 Ubicación no activada</div>
     <input type="hidden" id="newUbicacion" value="">
@@ -1482,12 +1585,10 @@
         <label><input type="radio" name="usarCamara" value="no"> 🔗 Usar enlace</label>
     </div>
     
-    <!-- Campo de enlace (solo visible si "Usar enlace") -->
     <div id="enlaceContainer" style="display:none;">
         <input type="url" id="newEnlace" placeholder="Agregar Enlace, Link o RTMP *">
     </div>
     
-    <!-- Botones dinámicos según selección -->
     <div id="botonesCamara" style="margin-top: 20px;">
         <button class="btn-naranja" style="width:100%;" onclick="iniciarTransmisionCamara()">🎥 Iniciar Mi KeTeteoLive</button>
     </div>
@@ -1605,6 +1706,7 @@
 <div class="bottom-nav">
     <div class="nav-item" onclick="refreshHomeScreen()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-7H9v7H5a2 2 0 0 1-2-2z"/></svg></span></div><div class="nav-label">Inicio</div></div>
     <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span></div><div class="nav-label">Buscar</div></div>
+    <div class="nav-item" onclick="mostrarMapaCercaDeMi()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span></div><div class="nav-label">KeTeteo Cerca de Mí</div></div>
     <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span></div><div class="nav-label">Alertas</div></div>
     <div class="nav-item" onclick="openProximosKeTeteo()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span></div><div class="nav-label">Próximo KeTeteo</div></div>
     <div class="nav-item" onclick="openLegalModal()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span></div><div class="nav-label">Legal</div></div>
@@ -1647,8 +1749,10 @@
     let liveLikesCount = 0;
     let liveStreamStartTime = null;
     let liveTimerInterval = null;
-    let livePaused = false;
     let liveVideoElement = null;
+    let map = null;
+    let currentMapRadio = 8;
+    let mapMarkers = [];
     
     let followers = {};
     let following = {};
@@ -1686,13 +1790,13 @@
         });
     }
 
-    // ================= VIDEOS (SOLO 5 + RADAR) =================
+    // ================= VIDEOS HD (720p) =================
     const youtubeStreams = [
-        { id: 1, titulo: "🎮 Gamer en vivo", nombreCreador: "GamerZone", usuario: "@gamerzone", ubicacion: "Global", distancia: "1.2 km", categoria: "Gaming", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, url: "https://www.youtube.com/embed/2g811Eo7K8U?autoplay=1&mute=1&loop=1&playlist=2g811Eo7K8U" },
-        { id: 2, titulo: "🎤 Concierto Callejero", nombreCreador: "Music Live", usuario: "@musiclive", ubicacion: "España", distancia: "2.5 km", categoria: "Concierto", lat: 18.47, lng: -69.91, viewers: 892, likes: 412, url: "https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk" },
-        { id: 3, titulo: "🎤 Juan Luis Guerra", nombreCreador: "Bachata Live", usuario: "@bachatalive", ubicacion: "Santo Domingo", distancia: "0.5 km", categoria: "Concierto", lat: 18.466, lng: -69.9, viewers: 3452, likes: 567, url: "https://www.youtube.com/embed/aqz-KE-bpKQ?autoplay=1&mute=1&loop=1&playlist=aqz-KE-bpKQ" },
-        { id: 4, titulo: "🎧 DJ Marshmello", nombreCreador: "EDM Live", usuario: "@edmlive", ubicacion: "USA", distancia: "3.4 km", categoria: "Concierto", lat: 18.5, lng: -69.88, viewers: 2156, likes: 890, url: "https://www.youtube.com/embed/21qNxnCS8WU?autoplay=1&mute=1&loop=1&playlist=21qNxnCS8WU" },
-        { id: 5, titulo: "🏀 Básquet Callejero", nombreCreador: "Sports Live", usuario: "@sportslive", ubicacion: "Santo Domingo", distancia: "0.8 km", categoria: "Deporte", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, url: "https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&mute=1&loop=1&playlist=5qap5aO4i9A" }
+        { id: 1, titulo: "🎮 Gamer en vivo", nombreCreador: "GamerZone", usuario: "@gamerzone", ubicacion: "Global", distancia: "1.2 km", categoria: "Gaming", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, url: "https://www.youtube.com/embed/2g811Eo7K8U?autoplay=1&mute=1&loop=1&playlist=2g811Eo7K8U&vq=hd720&modestbranding=1&rel=0&controls=0&showinfo=0" },
+        { id: 2, titulo: "🎤 Concierto Callejero", nombreCreador: "Music Live", usuario: "@musiclive", ubicacion: "España", distancia: "2.5 km", categoria: "Concierto", lat: 18.47, lng: -69.91, viewers: 892, likes: 412, url: "https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk&vq=hd720&modestbranding=1&rel=0&controls=0&showinfo=0" },
+        { id: 3, titulo: "🎤 Juan Luis Guerra", nombreCreador: "Bachata Live", usuario: "@bachatalive", ubicacion: "Santo Domingo", distancia: "0.5 km", categoria: "Concierto", lat: 18.466, lng: -69.9, viewers: 3452, likes: 567, url: "https://www.youtube.com/embed/aqz-KE-bpKQ?autoplay=1&mute=1&loop=1&playlist=aqz-KE-bpKQ&vq=hd720&modestbranding=1&rel=0&controls=0&showinfo=0" },
+        { id: 4, titulo: "🎧 DJ Marshmello", nombreCreador: "EDM Live", usuario: "@edmlive", ubicacion: "USA", distancia: "3.4 km", categoria: "Concierto", lat: 18.5, lng: -69.88, viewers: 2156, likes: 890, url: "https://www.youtube.com/embed/21qNxnCS8WU?autoplay=1&mute=1&loop=1&playlist=21qNxnCS8WU&vq=hd720&modestbranding=1&rel=0&controls=0&showinfo=0" },
+        { id: 5, titulo: "🏀 Básquet Callejero", nombreCreador: "Sports Live", usuario: "@sportslive", ubicacion: "Santo Domingo", distancia: "0.8 km", categoria: "Deporte", lat: 18.48, lng: -69.91, viewers: 1247, likes: 234, url: "https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&mute=1&loop=1&playlist=5qap5aO4i9A&vq=hd720&modestbranding=1&rel=0&controls=0&showinfo=0" }
     ];
 
     function refreshHomeScreen() {
@@ -1884,12 +1988,11 @@
     function verSeguidores() { if (perfilAjenoUsername) { alert(`@${perfilAjenoUsername} tiene ${getFollowersCount(perfilAjenoUsername)} seguidores`); } else { alert(`Tienes ${getFollowersCount(currentUser?.username)} seguidores`); } }
     function verSiguiendo() { if (perfilAjenoUsername) { alert(`@${perfilAjenoUsername} sigue a ${getFollowingCount(perfilAjenoUsername)} personas`); } else { alert(`Sigues a ${getFollowingCount(currentUser?.username)} personas`); } }
 
-    // ================= FUNCIONES DEL MODAL (CORREGIDAS) =================
+    // ================= FUNCIONES DEL FORMULARIO =================
     function openCreateKeTeteoModal() {
         if (!loggedIn) { alert('Debes iniciar sesión'); return; }
         document.getElementById('createKeTeteoModal').classList.add('show');
         
-        // Limpiar campos
         document.getElementById('newTitulo').value = '';
         document.getElementById('newDescripcion').value = '';
         document.getElementById('newCategoria').value = '';
@@ -1899,7 +2002,6 @@
         document.getElementById('newLat').value = '';
         document.getElementById('newLng').value = '';
         
-        // Configurar eventos de radio button
         const radioSi = document.querySelector('input[name="usarCamara"][value="si"]');
         const radioNo = document.querySelector('input[name="usarCamara"][value="no"]');
         
@@ -1942,22 +2044,11 @@
         const lng = parseFloat(document.getElementById('newLng').value) || userLocation?.lng || -69.9;
         
         const nuevoKe = {
-            id: nuevoId,
-            titulo: titulo,
-            categoria: categoria,
-            descripcion: document.getElementById('newDescripcion').value,
-            nombreCreador: currentUser.name,
-            usuario: currentUser.username,
-            ubicacion: document.getElementById('newUbicacion').value,
-            distancia: "0 km",
-            lat: lat,
-            lng: lng,
-            viewers: 0,
-            likes: 0,
+            id: nuevoId, titulo, categoria, descripcion: document.getElementById('newDescripcion').value,
+            nombreCreador: currentUser.name, usuario: currentUser.username, ubicacion: document.getElementById('newUbicacion').value,
+            distancia: "0 km", lat, lng, viewers: 0, likes: 0,
             imagen: 'https://placehold.co/400x300/FF2D55/white?text=KeTeteoLive',
-            esRadar: false,
-            usarCamara: false,
-            enlace: enlace
+            esRadar: false, usarCamara: false, enlace: enlace
         };
         
         allKeTeteos.unshift(nuevoKe);
@@ -1974,11 +2065,8 @@
     
     function abrirEnlaceExterno() {
         const enlace = document.getElementById('newEnlace').value.trim();
-        if (enlace) {
-            window.open(enlace, '_blank');
-        } else {
-            alert('❌ No hay enlace para abrir');
-        }
+        if (enlace) { window.open(enlace, '_blank'); } 
+        else { alert('❌ No hay enlace para abrir'); }
     }
     
     function activarUbicacionManual() {
@@ -2016,20 +2104,12 @@
     
     function closeCreateModal() { document.getElementById('createKeTeteoModal').classList.remove('show'); }
 
-    // ================= TRANSMISIÓN EN VIVO CON ESTILO CARRUSEL 2 =================
-    let liveTopBar = null;
-    let liveStatsBar = null;
-    let liveCommentsArea = null;
-    let liveActionsBar = null;
-    let livePausePlayBtn = null;
+    // ================= TRANSMISIÓN EN VIVO CON BOTONES ESTILO CARRUSEL =================
+    let liveTopBar = null, liveStatsBar = null, liveCommentsArea = null, liveControlsBar = null;
     
     function formatLiveTime(seconds) {
-        const hrs = Math.floor(seconds / 3600);
-        const mins = Math.floor((seconds % 3600) / 60);
+        const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
-        if (hrs > 0) {
-            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
     
@@ -2037,7 +2117,7 @@
         if (liveTimerInterval) clearInterval(liveTimerInterval);
         liveStreamStartTime = Date.now();
         liveTimerInterval = setInterval(() => {
-            if (liveTopBar && !livePaused) {
+            if (liveTopBar) {
                 const elapsed = Math.floor((Date.now() - liveStreamStartTime) / 1000);
                 const timerSpan = liveTopBar.querySelector('.live-timer');
                 if (timerSpan) timerSpan.innerText = formatLiveTime(elapsed);
@@ -2055,10 +2135,7 @@
         comentariosDiv.scrollTop = comentariosDiv.scrollHeight;
         
         const commentsSpan = liveStatsBar?.querySelector('#liveCommentsCount');
-        if (commentsSpan) {
-            const current = parseInt(commentsSpan.innerText) || 0;
-            commentsSpan.innerText = current + 1;
-        }
+        if (commentsSpan) commentsSpan.innerText = (parseInt(commentsSpan.innerText) || 0) + 1;
     }
     
     function mostrarLikeEnVivo(usuario) {
@@ -2075,19 +2152,17 @@
         if (likesSpan) likesSpan.innerText = liveLikesCount;
     }
     
-    function pausarReanudarTransmision() {
+    function pausarReanudarTransmision(btn) {
         if (liveVideoElement) {
-            if (livePaused) {
+            if (liveVideoElement.paused) {
                 liveVideoElement.play();
-                livePausePlayBtn.innerHTML = '⏸️ PAUSA';
-                livePausePlayBtn.style.background = 'var(--gris-medio)';
-                livePaused = false;
+                btn.innerHTML = '⏸️ PAUSA';
+                btn.classList.remove('pause');
                 iniciarLiveTimer();
             } else {
                 liveVideoElement.pause();
-                livePausePlayBtn.innerHTML = '▶️ PLAY';
-                livePausePlayBtn.style.background = 'var(--naranja)';
-                livePaused = true;
+                btn.innerHTML = '▶️ PLAY';
+                btn.classList.add('pause');
                 if (liveTimerInterval) clearInterval(liveTimerInterval);
             }
         }
@@ -2112,45 +2187,50 @@
             liveVideoElement.style.backgroundColor = '#000';
             document.body.appendChild(liveVideoElement);
             
-            // Barra superior con indicador EN VIVO y tiempo
+            // Barra superior
             liveTopBar = document.createElement('div');
             liveTopBar.className = 'live-top-bar';
-            liveTopBar.innerHTML = `
-                <div class="live-badge-red">🔴 EN VIVO</div>
-                <div class="live-timer">00:00</div>
-            `;
+            liveTopBar.innerHTML = `<div class="live-badge-red">🔴 EN VIVO</div><div class="live-timer">00:00</div>`;
             document.body.appendChild(liveTopBar);
             iniciarLiveTimer();
             
-            // Barra de estadísticas (likes, comentarios, shares, views)
+            // Barra de estadísticas
             liveStatsBar = document.createElement('div');
-            liveStatsBar.className = 'live-stats';
-            liveStatsBar.innerHTML = `
-                <div class="live-stat"><span>❤️</span> <span id="liveLikesCount">0</span></div>
+            liveStatsBar.className = 'live-stats-bar';
+            liveStatsBar.innerHTML = `<div class="live-stat"><span>❤️</span> <span id="liveLikesCount">0</span></div>
                 <div class="live-stat"><span>💬</span> <span id="liveCommentsCount">0</span></div>
                 <div class="live-stat"><span>📤</span> <span id="liveSharesCount">0</span></div>
-                <div class="live-stat"><span>👁️</span> <span id="liveViewersCount">1</span></div>
-            `;
+                <div class="live-stat"><span>👁️</span> <span id="liveViewersCount">1</span></div>`;
             document.body.appendChild(liveStatsBar);
             
             // Área de comentarios
             liveCommentsArea = document.createElement('div');
             liveCommentsArea.className = 'live-comments-area';
-            liveCommentsArea.innerHTML = `<div id="liveCommentsList" style="max-height:100px; overflow-y:auto;"></div>`;
+            liveCommentsArea.innerHTML = `<div id="liveCommentsList" style="max-height:80px; overflow-y:auto;"></div>`;
             document.body.appendChild(liveCommentsArea);
             
-            // Botones de acción estilo carrusel 2
-            liveActionsBar = document.createElement('div');
-            liveActionsBar.className = 'live-action-buttons';
-            liveActionsBar.innerHTML = `
-                <button class="live-action-btn" id="liveLikeBtn">❤️ LIKE</button>
-                <button class="live-action-btn" id="liveCommentBtn">💬 COMENT</button>
-                <button class="live-action-btn" id="liveShareBtn">📤 COMPARTIR</button>
-                <button class="live-action-btn pause-play" id="livePausePlayBtn">⏸️ PAUSA</button>
-                <button class="live-action-btn" id="liveStopBtn" style="background:#FF2D55;">🔴 DETENER</button>
+            // Barra de controles estilo carrusel 2 (compacta)
+            liveControlsBar = document.createElement('div');
+            liveControlsBar.className = 'live-controls-bar';
+            liveControlsBar.innerHTML = `
+                <button class="live-control-btn" id="liveRotateBtn">🔄 GIRAR</button>
+                <button class="live-control-btn" id="liveLikeBtn">❤️ LIKE</button>
+                <button class="live-control-btn" id="liveCommentBtn">💬 COMENT</button>
+                <button class="live-control-btn" id="liveShareBtn">📤 COMPARTIR</button>
+                <button class="live-control-btn" id="livePauseBtn">⏸️ PAUSA</button>
+                <button class="live-control-btn stop" id="liveStopBtn">🔴 DETENER</button>
             `;
-            document.body.appendChild(liveActionsBar);
+            document.body.appendChild(liveControlsBar);
             
+            document.getElementById('liveRotateBtn')?.addEventListener('click', async () => {
+                currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(track => track.stop());
+                    const newStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: currentFacingMode } }, audio: true });
+                    mediaStream = newStream;
+                    liveVideoElement.srcObject = newStream;
+                }
+            });
             document.getElementById('liveLikeBtn')?.addEventListener('click', () => {
                 mostrarLikeEnVivo(currentUser.username);
                 currentLikes[currentLiveStreamId] = (currentLikes[currentLiveStreamId] || 0) + 1;
@@ -2162,41 +2242,25 @@
             });
             document.getElementById('liveShareBtn')?.addEventListener('click', () => {
                 if (navigator.share) navigator.share({ title: 'KeTeteoLive', text: 'Mira esta transmisión en vivo' });
-                else alert('Comparte el enlace de la transmisión');
                 const sharesSpan = liveStatsBar?.querySelector('#liveSharesCount');
                 if (sharesSpan) sharesSpan.innerText = (parseInt(sharesSpan.innerText) || 0) + 1;
             });
-            livePausePlayBtn = document.getElementById('livePausePlayBtn');
-            livePausePlayBtn?.addEventListener('click', pausarReanudarTransmision);
+            const pauseBtn = document.getElementById('livePauseBtn');
+            pauseBtn?.addEventListener('click', () => pausarReanudarTransmision(pauseBtn));
             document.getElementById('liveStopBtn')?.addEventListener('click', () => detenerTransmisionCompleta());
             
-            // Simular viewers
             let viewers = 1;
             const viewersSpan = liveStatsBar?.querySelector('#liveViewersCount');
-            const viewersInterval = setInterval(() => {
-                viewers += Math.floor(Math.random() * 3);
-                if (viewersSpan) viewersSpan.innerText = viewers;
-            }, 5000);
+            const viewersInterval = setInterval(() => { viewers += Math.floor(Math.random() * 3); if (viewersSpan) viewersSpan.innerText = viewers; }, 5000);
             window.liveViewersInterval = viewersInterval;
             
-            // Crear tarjeta en el carrusel
             const nuevoKe = {
-                id: currentLiveStreamId,
-                titulo: document.getElementById('newTitulo').value.trim() || 'Transmisión en vivo',
-                categoria: document.getElementById('newCategoria').value || 'Teteo',
-                descripcion: document.getElementById('newDescripcion').value,
-                nombreCreador: currentUser.name,
-                usuario: currentUser.username,
-                ubicacion: document.getElementById('newUbicacion').value || 'Ubicación no disponible',
-                distancia: "0 km",
-                lat: parseFloat(document.getElementById('newLat').value) || userLocation?.lat || 18.48,
-                lng: parseFloat(document.getElementById('newLng').value) || userLocation?.lng || -69.9,
-                viewers: 0,
-                likes: 0,
-                imagen: 'https://placehold.co/400x300/FF2D55/white?text=En+Vivo',
-                esRadar: false,
-                usarCamara: true,
-                enlace: null
+                id: currentLiveStreamId, titulo: document.getElementById('newTitulo').value.trim() || 'Transmisión en vivo',
+                categoria: document.getElementById('newCategoria').value || 'Teteo', descripcion: document.getElementById('newDescripcion').value,
+                nombreCreador: currentUser.name, usuario: currentUser.username, ubicacion: document.getElementById('newUbicacion').value || 'Ubicación no disponible',
+                distancia: "0 km", lat: parseFloat(document.getElementById('newLat').value) || userLocation?.lat || 18.48,
+                lng: parseFloat(document.getElementById('newLng').value) || userLocation?.lng || -69.9, viewers: 0, likes: 0,
+                imagen: 'https://placehold.co/400x300/FF2D55/white?text=En+Vivo', esRadar: false, usarCamara: true, enlace: null
             };
             allKeTeteos.unshift(nuevoKe);
             currentLikes[nuevoKe.id] = 0;
@@ -2205,8 +2269,7 @@
             ordenarKeTeteosPorCercania();
             renderCarousel();
             closeCreateModal();
-            
-            alert('🎥 Transmisión iniciada. Puedes ver likes, comentarios y el tiempo en vivo.');
+            alert('🎥 Transmisión iniciada');
         } catch(err) { alert('❌ No se pudo acceder a la cámara. Permisos requeridos.'); }
     }
     
@@ -2215,15 +2278,71 @@
         if (liveTopBar) liveTopBar.remove();
         if (liveStatsBar) liveStatsBar.remove();
         if (liveCommentsArea) liveCommentsArea.remove();
-        if (liveActionsBar) liveActionsBar.remove();
+        if (liveControlsBar) liveControlsBar.remove();
         if (liveVideoElement) liveVideoElement.remove();
         if (window.liveViewersInterval) clearInterval(window.liveViewersInterval);
         if (liveTimerInterval) clearInterval(liveTimerInterval);
         alert('🔴 Transmisión finalizada.');
         currentLiveStreamId = null;
         liveLikesCount = 0;
-        livePaused = false;
     }
+
+    // ================= FUNCIONES DEL MAPA =================
+    function mostrarMapaCercaDeMi() {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('mapScreen').classList.add('active');
+        
+        if (!userLocation) {
+            activarUbicacionManual();
+            setTimeout(() => { if(userLocation) inicializarMapa(); else alert('Activa la ubicación primero'); }, 1000);
+        } else {
+            inicializarMapa();
+        }
+    }
+    
+    function inicializarMapa() {
+        if (map) map.remove();
+        map = L.map('map').setView([userLocation.lat, userLocation.lng], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+        
+        L.marker([userLocation.lat, userLocation.lng], { icon: L.divIcon({ className: 'custom-marker', html: '📍', iconSize: [30,30] }) }).addTo(map).bindPopup('<b>Tu ubicación</b>');
+        actualizarMarcadoresMapa();
+    }
+    
+    function actualizarMarcadoresMapa() {
+        if (!map || !userLocation) return;
+        mapMarkers.forEach(marker => map.removeLayer(marker));
+        mapMarkers = [];
+        
+        const cercanos = allKeTeteos.filter(ke => {
+            if (ke.esRadar) return false;
+            const dist = calcularDistancia(userLocation.lat, userLocation.lng, ke.lat || 18.48, ke.lng || -69.9);
+            ke.distanciaReal = dist;
+            return dist <= currentMapRadio;
+        });
+        
+        if (cercanos.length === 0) {
+            document.getElementById('map').style.height = 'calc(100vh - 250px)';
+            return;
+        }
+        
+        cercanos.forEach(ke => {
+            const color = '#FF6B00';
+            const marker = L.marker([ke.lat, ke.lng], {
+                icon: L.divIcon({ className: 'custom-marker', html: ke.categoria === 'Concierto' ? '🎤' : ke.categoria === 'Deportiva' ? '⚽' : ke.categoria === 'Teteo' ? '🎉' : '📍', iconSize: [30,30], popupAnchor: [0, -15] })
+            }).addTo(map);
+            marker.bindPopup(`
+                <b>${ke.titulo}</b><br>${ke.nombreCreador}<br>📍 ${ke.distanciaReal.toFixed(1)} km<br>
+                <button onclick="verTransmisionDesdeMapa(${ke.id})" style="background:#FF6B00; border:none; padding:5px 10px; border-radius:20px; color:white;">▶️ Ver en vivo</button>
+            `);
+            mapMarkers.push(marker);
+        });
+    }
+    
+    function verTransmisionDesdeMapa(id) { volverAListaDesdeMapa(); const item = allKeTeteos.find(k => k.id == id); if(item) { incrementViews(id); openFullscreenStream(item); } }
+    function volverAListaDesdeMapa() { refreshHomeScreen(); }
+    function centrarMapaEnMiUbicacion() { if(map && userLocation) map.setView([userLocation.lat, userLocation.lng], 13); }
+    function cambiarRadioMapa(radio) { currentMapRadio = radio; actualizarMarcadoresMapa(); document.querySelectorAll('.map-btn').forEach(btn => btn.classList.remove('active')); event.target.classList.add('active'); }
 
     function renderCarousel() {
         const container = document.getElementById('carouselContainer');
@@ -2257,7 +2376,7 @@
                     </div>
                 </div>
             ` : `
-                <div class="stream-media"><iframe src="${item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk'}" allow="autoplay; encrypted-media" style="width:100%; height:100%; border:none;"></iframe></div>
+                <div class="stream-media"><iframe src="${item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk&vq=hd720&modestbranding=1&rel=0&controls=0&showinfo=0'}" allow="autoplay; encrypted-media" style="width:100%; height:100%; border:none;"></iframe></div>
                 <div class="card-content">
                     <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
                     <div class="event-title">${escapeHtml(item.titulo)}</div>
@@ -2290,7 +2409,7 @@
     }
     
     function openFullscreenRadar(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id]||[]).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
-    function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk'}" allow="autoplay; encrypted-media" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${item.distanciaReal ? item.distanciaReal.toFixed(1)+' km' : item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id]||[]).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
+    function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk&vq=hd720&modestbranding=1&rel=0&controls=0&showinfo=0'}" allow="autoplay; encrypted-media" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${item.distanciaReal ? item.distanciaReal.toFixed(1)+' km' : item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id]||[]).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
 
     function openSearchModal() { document.getElementById('searchModal').classList.add('show'); document.getElementById('searchInputModal').focus(); }
     function closeSearchModal() { document.getElementById('searchModal').classList.remove('show'); document.getElementById('searchResultsModal').innerHTML = ''; document.getElementById('searchInputModal').value = ''; }
@@ -2432,6 +2551,9 @@
         document.getElementById('toggleNewFollowers')?.addEventListener('click', () => toggleSetting('newFollowers'));
         document.getElementById('togglePostComments')?.addEventListener('click', () => toggleSetting('postComments'));
         document.getElementById('toggleDarkMode')?.addEventListener('click', () => toggleSetting('darkMode'));
+        
+        // Solicitar ubicación al iniciar para mejor experiencia
+        setTimeout(() => { if (loggedIn && !userLocation) activarUbicacionManual(); }, 2000);
     };
 </script>
 </body>
