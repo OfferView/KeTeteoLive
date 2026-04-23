@@ -47,7 +47,7 @@
         }
         
         .nav-icon .icon-svg { width: 28px; height: 28px; }
-        .action-btn .icon-svg { width: 18px; height: 18px; }
+        .action-btn .icon-svg { width: 16px; height: 16px; }
         .live-badge .icon-svg { width: 10px; height: 10px; }
         .password-toggle .icon-svg { width: 20px; height: 20px; }
         .profile-btn .icon-svg { width: 16px; height: 16px; margin-right: 6px; }
@@ -175,6 +175,7 @@
             transition: all 0.2s ease;
             border: 0.5px solid var(--gris-medio);
             margin-bottom: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
         .ke-teteo-card:active { transform: scale(0.98); }
         .radar-card { cursor: pointer; }
@@ -182,10 +183,11 @@
 
         .stream-media { 
             width: 100%; 
-            height: 220px; 
+            height: 260px; 
             overflow: hidden; 
             background: #000; 
             position: relative; 
+            aspect-ratio: 16/9;
         }
         .stream-media iframe { 
             width: 100%; 
@@ -199,7 +201,7 @@
             left: 0;
             right: 0;
             height: 60px;
-            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
             pointer-events: none;
         }
         .stream-media img { width: 100%; height: 100%; object-fit: cover; }
@@ -250,8 +252,8 @@
         .event-meta { display: flex; gap: 8px; font-size: 10px; color: var(--gris-claro); margin-bottom: 10px; flex-wrap: wrap; }
         .action-buttons { 
             display: flex; 
-            gap: 8px; 
-            margin-bottom: 10px; 
+            gap: 12px; 
+            margin-bottom: 8px; 
             flex-wrap: wrap; 
             justify-content: flex-start;
         }
@@ -518,13 +520,14 @@
             padding: 24px 16px 40px;
         }
 
-        /* Mapa Leaflet */
+        /* Mapa Leaflet Moderno */
         #map {
             height: calc(100vh - 180px);
             width: 100%;
-            border-radius: 16px;
+            border-radius: 20px;
             margin: 12px;
             width: calc(100% - 24px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .map-container {
             padding: 12px;
@@ -534,6 +537,7 @@
             gap: 10px;
             margin: 10px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         .map-btn {
             background: var(--naranja);
@@ -543,14 +547,11 @@
             color: white;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
+        .map-btn:active { transform: scale(0.95); }
         .map-btn.active {
             background: var(--rojo-logo);
-        }
-        .no-events-message {
-            text-align: center;
-            padding: 40px;
-            color: var(--gris-claro);
         }
 
         .bottom-nav {
@@ -1206,7 +1207,7 @@
         }
         .btn-naranja:active { transform: scale(0.97); opacity: 0.9; }
         
-        /* Botones de transmisión en vivo estilo carrusel 2 - COMPACTOS */
+        /* Botones de transmisión en vivo - TODOS NARANJA */
         .live-controls-bar {
             position: fixed;
             bottom: 20px;
@@ -1214,7 +1215,7 @@
             right: 0;
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
             padding: 8px;
             background: rgba(0,0,0,0.85);
@@ -1225,23 +1226,23 @@
         .live-control-btn {
             background: var(--naranja);
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             padding: 8px 12px;
             color: white;
             font-weight: 600;
             font-size: 11px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .live-control-btn:active { transform: scale(0.95); }
         .live-control-btn.pause {
-            background: var(--gris-medio);
+            background: var(--naranja);
         }
         .live-control-btn.stop {
-            background: #FF2D55;
+            background: var(--naranja);
         }
         .live-top-bar {
             position: fixed;
@@ -1276,17 +1277,18 @@
             right: 0;
             display: flex;
             justify-content: space-around;
-            background: rgba(0,0,0,0.7);
-            padding: 6px;
+            background: rgba(0,0,0,0.75);
+            padding: 8px;
             z-index: 10000;
         }
         .live-stat {
             text-align: center;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
         }
         .live-stat span {
-            font-size: 14px;
+            font-size: 16px;
+            color: var(--naranja);
         }
         .live-comments-area {
             position: fixed;
@@ -1294,7 +1296,7 @@
             left: 10px;
             right: 10px;
             background: rgba(0,0,0,0.6);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 8px;
             max-height: 100px;
             overflow-y: auto;
@@ -1320,15 +1322,27 @@
         /* Estilos para marcadores del mapa */
         .custom-marker {
             background: var(--naranja);
-            width: 30px;
-            height: 30px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 18px;
             border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .like-animation {
+            position: fixed;
+            pointer-events: none;
+            font-size: 24px;
+            animation: likeFloat 1s ease-out forwards;
+            z-index: 10002;
+        }
+        @keyframes likeFloat {
+            0% { transform: scale(1) translateY(0); opacity: 1; }
+            100% { transform: scale(1.5) translateY(-100px); opacity: 0; }
         }
     </style>
     <!-- Leaflet CSS -->
@@ -1367,7 +1381,7 @@
     </div>
 </div>
 
-<!-- Pantalla del Mapa -->
+<!-- Pantalla del Mapa Moderna -->
 <div id="mapScreen" class="screen">
     <div class="header">
         <button class="hamburger" onclick="toggleMenu()">
@@ -1503,6 +1517,9 @@
     </button>
     <button onclick="showConfigScreen(); closeMenu()">
         <span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Configuración
+    </button>
+    <button onclick="showProximosKeTeteo(); closeMenu()">
+        <span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Próximo KeTeteo
     </button>
     <button onclick="logout(); closeMenu()" id="logoutMenuBtn" style="display:none;">
         <span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Cerrar sesión
@@ -1708,7 +1725,6 @@
     <div class="nav-item" onclick="openSearchModal()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span></div><div class="nav-label">Buscar</div></div>
     <div class="nav-item" onclick="mostrarMapaCercaDeMi()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span></div><div class="nav-label">KeTeteo Cerca de Mí</div></div>
     <div class="nav-item" onclick="showAlertsScreen()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span></div><div class="nav-label">Alertas</div></div>
-    <div class="nav-item" onclick="openProximosKeTeteo()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span></div><div class="nav-label">Próximo KeTeteo</div></div>
     <div class="nav-item" onclick="openLegalModal()"><div class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span></div><div class="nav-label">Legal</div></div>
 </div>
 
@@ -1718,7 +1734,8 @@
         USAR_BACKEND: false,
         USAR_FIREBASE: false,
         USAR_AGORA: false,
-        ADMIN_EMAILS: ["admin@keteteo.com", "offerview@gmail.com"]
+        ADMIN_EMAILS: ["admin@keteteo.com", "offerview@gmail.com"],
+        GOOGLE_API_KEY: "" // Dejar vacío por ahora, luego se puede agregar
     };
 
     let loggedIn = false;
@@ -1778,9 +1795,9 @@
         localStorage.setItem('keteteo_idioma', lang);
         
         const textos = {
-            es: { create_account: "Crear cuenta", login: "Iniciar sesión", cancel: "Cancelar", save: "Guardar", close: "Cerrar", delete_btn: "ELIMINAR", home: "Inicio", search: "Buscar", alerts: "Alertas", next_keteteo: "Próximo KeTeteo", legal: "Legal", profile: "Perfil", edit_profile: "Editar perfil", share: "Compartir", contact: "Contacto", followers: "seguidores", following: "siguiendo", teteos: "teteos", copy: "copiar", online: "En línea", away: "Ausente", offline: "Desconectado", comments: "💬 Comentarios", add_comment: "Añade un comentario...", post: "Publicar", live: "EN VIVO", viewers: "viendo", rotate_camera: "Girar cámara", stop_stream: "Detener transmisión", follow: "Seguir", following_btn: "Siguiendo" },
-            en: { create_account: "Create account", login: "Login", cancel: "Cancel", save: "Save", close: "Close", delete_btn: "DELETE", home: "Home", search: "Search", alerts: "Alerts", next_keteteo: "Next KeTeteo", legal: "Legal", profile: "Profile", edit_profile: "Edit profile", share: "Share", contact: "Contact", followers: "followers", following: "following", teteos: "teteos", copy: "copy", online: "Online", away: "Away", offline: "Offline", comments: "💬 Comments", add_comment: "Add a comment...", post: "Post", live: "LIVE", viewers: "watching", rotate_camera: "Rotate camera", stop_stream: "Stop stream", follow: "Follow", following_btn: "Following" },
-            fr: { create_account: "Créer un compte", login: "Se connecter", cancel: "Annuler", save: "Enregistrer", close: "Fermer", delete_btn: "SUPPRIMER", home: "Accueil", search: "Rechercher", alerts: "Alertes", next_keteteo: "Prochain KeTeteo", legal: "Juridique", profile: "Profil", edit_profile: "Modifier le profil", share: "Partager", contact: "Contact", followers: "abonnés", following: "abonnements", teteos: "teteos", copy: "copier", online: "En ligne", away: "Absent", offline: "Déconnecté", comments: "💬 Commentaires", add_comment: "Ajouter un commentaire...", post: "Publier", live: "EN DIRECT", viewers: "regardent", rotate_camera: "Pivoter la caméra", stop_stream: "Arrêter la diffusion", follow: "Suivre", following_btn: "Abonné" }
+            es: { create_account: "Crear cuenta", login: "Iniciar sesión", cancel: "Cancelar", save: "Guardar", close: "Cerrar", delete_btn: "ELIMINAR", home: "Inicio", search: "Buscar", alerts: "Alertas", legal: "Legal", profile: "Perfil", edit_profile: "Editar perfil", share: "Compartir", contact: "Contacto", followers: "seguidores", following: "siguiendo", teteos: "teteos", copy: "copiar", online: "En línea", away: "Ausente", offline: "Desconectado", comments: "💬 Comentarios", add_comment: "Añade un comentario...", post: "Publicar", live: "EN VIVO", viewers: "viendo", rotate_camera: "Girar cámara", stop_stream: "Detener transmisión", follow: "Seguir", following_btn: "Siguiendo" },
+            en: { create_account: "Create account", login: "Login", cancel: "Cancel", save: "Save", close: "Close", delete_btn: "DELETE", home: "Home", search: "Search", alerts: "Alerts", legal: "Legal", profile: "Profile", edit_profile: "Edit profile", share: "Share", contact: "Contact", followers: "followers", following: "following", teteos: "teteos", copy: "copy", online: "Online", away: "Away", offline: "Offline", comments: "💬 Comments", add_comment: "Add a comment...", post: "Post", live: "LIVE", viewers: "watching", rotate_camera: "Rotate camera", stop_stream: "Stop stream", follow: "Follow", following_btn: "Following" },
+            fr: { create_account: "Créer un compte", login: "Se connecter", cancel: "Annuler", save: "Enregistrer", close: "Fermer", delete_btn: "SUPPRIMER", home: "Accueil", search: "Rechercher", alerts: "Alertes", legal: "Juridique", profile: "Profil", edit_profile: "Modifier le profil", share: "Partager", contact: "Contact", followers: "abonnés", following: "abonnements", teteos: "teteos", copy: "copier", online: "En ligne", away: "Absent", offline: "Déconnecté", comments: "💬 Commentaires", add_comment: "Ajouter un commentaire...", post: "Publier", live: "EN DIRECT", viewers: "regardent", rotate_camera: "Pivoter la caméra", stop_stream: "Arrêter la diffusion", follow: "Suivre", following_btn: "Abonné" }
         };
         
         const t = textos[lang] || textos.es;
@@ -1805,6 +1822,11 @@
         document.getElementById('mainScreen').classList.add('active');
         ordenarKeTeteosPorCercania();
         renderCarousel();
+    }
+
+    function showProximosKeTeteo() {
+        openProximosKeTeteo();
+        closeMenu();
     }
 
     // ================= FUNCIONES DE COMENTARIOS =================
@@ -1940,7 +1962,7 @@
     function loadReports() { allKeTeteos.forEach(ke => { const saved = localStorage.getItem(`reports_${ke.id}`); currentReports[ke.id] = saved ? JSON.parse(saved) : []; }); }
 
     // ================= FUNCIONES DE GEOLOCALIZACIÓN =================
-    function getUserLocation() { return new Promise((resolve, reject) => { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((pos) => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(userLocation); }, (err) => reject(err), { enableHighAccuracy: true }); } else { reject('Geolocalización no soportada'); } }); }
+    function getUserLocation() { return new Promise((resolve, reject) => { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((pos) => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(userLocation); }, (err) => reject(err), { enableHighAccuracy: true, timeout: 10000 }); } else { reject('Geolocalización no soportada'); } }); }
     function calcularDistancia(lat1, lng1, lat2, lng2) { const R = 6371, dLat = (lat2-lat1)*Math.PI/180, dLng = (lng2-lng1)*Math.PI/180, a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2; return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); }
     async function ordenarKeTeteosPorCercania() { if (!userLocation) { try { await getUserLocation(); } catch(e) { return; } } if (userLocation) { allKeTeteos = allKeTeteos.map(ke => ke.esRadar ? ke : { ...ke, distanciaReal: calcularDistancia(userLocation.lat, userLocation.lng, ke.lat || 18.48, ke.lng || -69.9) }); allKeTeteos.sort((a,b) => (a.distanciaReal||999) - (b.distanciaReal||999)); saveKeTeteos(); renderCarousel(); } }
 
@@ -2091,11 +2113,12 @@
                     let msg = '';
                     if (error.code === 1) msg = 'Permiso denegado. Actívalo en configuración del navegador.';
                     else if (error.code === 2) msg = 'Ubicación no disponible.';
+                    else if (error.code === 3) msg = 'Tiempo de espera agotado. Intenta de nuevo.';
                     else msg = 'Error al obtener ubicación.';
                     document.getElementById('ubicacionStatus').innerHTML = `❌ ${msg}`;
-                    alert(msg);
+                    alert(msg + ' Para usar ubicación, permite el acceso en la configuración del navegador.');
                 },
-                { enableHighAccuracy: true, timeout: 10000 }
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
             );
         } else {
             alert('Tu navegador no soporta geolocalización');
@@ -2108,8 +2131,12 @@
     let liveTopBar = null, liveStatsBar = null, liveCommentsArea = null, liveControlsBar = null;
     
     function formatLiveTime(seconds) {
-        const mins = Math.floor(seconds / 60);
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
         const secs = seconds % 60;
+        if (hrs > 0) {
+            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
     
@@ -2157,12 +2184,12 @@
             if (liveVideoElement.paused) {
                 liveVideoElement.play();
                 btn.innerHTML = '⏸️ PAUSA';
-                btn.classList.remove('pause');
+                btn.style.background = 'var(--naranja)';
                 iniciarLiveTimer();
             } else {
                 liveVideoElement.pause();
                 btn.innerHTML = '▶️ PLAY';
-                btn.classList.add('pause');
+                btn.style.background = 'var(--naranja)';
                 if (liveTimerInterval) clearInterval(liveTimerInterval);
             }
         }
@@ -2170,10 +2197,17 @@
     
     async function iniciarTransmisionCamara() {
         try {
+            if (liveControlsBar) {
+                detenerTransmisionCompleta();
+            }
+            
             const constraints = { video: { facingMode: { exact: currentFacingMode } }, audio: true };
             const stream = await navigator.mediaDevices.getUserMedia(constraints);
             mediaStream = stream;
             currentLiveStreamId = Date.now();
+            
+            // Eliminar elementos anteriores si existen
+            if (liveVideoElement) liveVideoElement.remove();
             
             liveVideoElement = document.createElement('video');
             liveVideoElement.srcObject = stream;
@@ -2209,7 +2243,7 @@
             liveCommentsArea.innerHTML = `<div id="liveCommentsList" style="max-height:80px; overflow-y:auto;"></div>`;
             document.body.appendChild(liveCommentsArea);
             
-            // Barra de controles estilo carrusel 2 (compacta)
+            // Barra de controles - TODOS NARANJA
             liveControlsBar = document.createElement('div');
             liveControlsBar.className = 'live-controls-bar';
             liveControlsBar.innerHTML = `
@@ -2217,8 +2251,9 @@
                 <button class="live-control-btn" id="liveLikeBtn">❤️ LIKE</button>
                 <button class="live-control-btn" id="liveCommentBtn">💬 COMENT</button>
                 <button class="live-control-btn" id="liveShareBtn">📤 COMPARTIR</button>
+                <button class="live-control-btn" id="liveViewersBtn">👁️ VISTAS</button>
                 <button class="live-control-btn" id="livePauseBtn">⏸️ PAUSA</button>
-                <button class="live-control-btn stop" id="liveStopBtn">🔴 DETENER</button>
+                <button class="live-control-btn" id="liveStopBtn">🔴 DETENER</button>
             `;
             document.body.appendChild(liveControlsBar);
             
@@ -2228,7 +2263,7 @@
                     mediaStream.getTracks().forEach(track => track.stop());
                     const newStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: currentFacingMode } }, audio: true });
                     mediaStream = newStream;
-                    liveVideoElement.srcObject = newStream;
+                    if (liveVideoElement) liveVideoElement.srcObject = newStream;
                 }
             });
             document.getElementById('liveLikeBtn')?.addEventListener('click', () => {
@@ -2238,29 +2273,47 @@
             });
             document.getElementById('liveCommentBtn')?.addEventListener('click', () => {
                 const comentario = prompt('Escribe un comentario en vivo:');
-                if (comentario) agregarComentarioEnVivo(currentUser.username, comentario);
+                if (comentario && comentario.trim()) agregarComentarioEnVivo(currentUser.username, comentario);
             });
             document.getElementById('liveShareBtn')?.addEventListener('click', () => {
                 if (navigator.share) navigator.share({ title: 'KeTeteoLive', text: 'Mira esta transmisión en vivo' });
                 const sharesSpan = liveStatsBar?.querySelector('#liveSharesCount');
                 if (sharesSpan) sharesSpan.innerText = (parseInt(sharesSpan.innerText) || 0) + 1;
             });
+            document.getElementById('liveViewersBtn')?.addEventListener('click', () => {
+                const viewersSpan = liveStatsBar?.querySelector('#liveViewersCount');
+                if (viewersSpan) alert(`👁️ ${viewersSpan.innerText} personas están viendo esta transmisión`);
+            });
             const pauseBtn = document.getElementById('livePauseBtn');
-            pauseBtn?.addEventListener('click', () => pausarReanudarTransmision(pauseBtn));
+            if (pauseBtn) pauseBtn.addEventListener('click', () => pausarReanudarTransmision(pauseBtn));
             document.getElementById('liveStopBtn')?.addEventListener('click', () => detenerTransmisionCompleta());
             
             let viewers = 1;
             const viewersSpan = liveStatsBar?.querySelector('#liveViewersCount');
-            const viewersInterval = setInterval(() => { viewers += Math.floor(Math.random() * 3); if (viewersSpan) viewersSpan.innerText = viewers; }, 5000);
+            const viewersInterval = setInterval(() => { 
+                viewers += Math.floor(Math.random() * 3); 
+                if (viewersSpan) viewersSpan.innerText = viewers; 
+            }, 5000);
             window.liveViewersInterval = viewersInterval;
             
+            // Crear tarjeta en el carrusel
             const nuevoKe = {
-                id: currentLiveStreamId, titulo: document.getElementById('newTitulo').value.trim() || 'Transmisión en vivo',
-                categoria: document.getElementById('newCategoria').value || 'Teteo', descripcion: document.getElementById('newDescripcion').value,
-                nombreCreador: currentUser.name, usuario: currentUser.username, ubicacion: document.getElementById('newUbicacion').value || 'Ubicación no disponible',
-                distancia: "0 km", lat: parseFloat(document.getElementById('newLat').value) || userLocation?.lat || 18.48,
-                lng: parseFloat(document.getElementById('newLng').value) || userLocation?.lng || -69.9, viewers: 0, likes: 0,
-                imagen: 'https://placehold.co/400x300/FF2D55/white?text=En+Vivo', esRadar: false, usarCamara: true, enlace: null
+                id: currentLiveStreamId, 
+                titulo: document.getElementById('newTitulo').value.trim() || 'Transmisión en vivo',
+                categoria: document.getElementById('newCategoria').value || 'Teteo', 
+                descripcion: document.getElementById('newDescripcion').value,
+                nombreCreador: currentUser.name, 
+                usuario: currentUser.username, 
+                ubicacion: document.getElementById('newUbicacion').value || 'Ubicación no disponible',
+                distancia: "0 km", 
+                lat: parseFloat(document.getElementById('newLat').value) || userLocation?.lat || 18.48,
+                lng: parseFloat(document.getElementById('newLng').value) || userLocation?.lng || -69.9, 
+                viewers: 0, 
+                likes: 0,
+                imagen: 'https://placehold.co/400x300/FF2D55/white?text=En+Vivo', 
+                esRadar: false, 
+                usarCamara: true, 
+                enlace: null
             };
             allKeTeteos.unshift(nuevoKe);
             currentLikes[nuevoKe.id] = 0;
@@ -2285,9 +2338,15 @@
         alert('🔴 Transmisión finalizada.');
         currentLiveStreamId = null;
         liveLikesCount = 0;
+        liveStreamStartTime = null;
+        liveTopBar = null;
+        liveStatsBar = null;
+        liveCommentsArea = null;
+        liveControlsBar = null;
+        liveVideoElement = null;
     }
 
-    // ================= FUNCIONES DEL MAPA =================
+    // ================= FUNCIONES DEL MAPA MODERNO =================
     function mostrarMapaCercaDeMi() {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById('mapScreen').classList.add('active');
@@ -2303,9 +2362,15 @@
     function inicializarMapa() {
         if (map) map.remove();
         map = L.map('map').setView([userLocation.lat, userLocation.lng], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { 
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CartoDB',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
         
-        L.marker([userLocation.lat, userLocation.lng], { icon: L.divIcon({ className: 'custom-marker', html: '📍', iconSize: [30,30] }) }).addTo(map).bindPopup('<b>Tu ubicación</b>');
+        L.marker([userLocation.lat, userLocation.lng], { 
+            icon: L.divIcon({ className: 'custom-marker', html: '📍', iconSize: [36,36] }) 
+        }).addTo(map).bindPopup('<b>Tu ubicación</b>');
         actualizarMarcadoresMapa();
     }
     
@@ -2322,27 +2387,44 @@
         });
         
         if (cercanos.length === 0) {
-            document.getElementById('map').style.height = 'calc(100vh - 250px)';
             return;
         }
         
         cercanos.forEach(ke => {
-            const color = '#FF6B00';
+            let iconHtml = '📍';
+            if (ke.categoria === 'Concierto') iconHtml = '🎤';
+            else if (ke.categoria === 'Deportiva') iconHtml = '⚽';
+            else if (ke.categoria === 'Teteo') iconHtml = '🎉';
+            else if (ke.categoria === 'Fiesta') iconHtml = '🎊';
+            else if (ke.categoria === 'Boda') iconHtml = '💒';
+            
             const marker = L.marker([ke.lat, ke.lng], {
-                icon: L.divIcon({ className: 'custom-marker', html: ke.categoria === 'Concierto' ? '🎤' : ke.categoria === 'Deportiva' ? '⚽' : ke.categoria === 'Teteo' ? '🎉' : '📍', iconSize: [30,30], popupAnchor: [0, -15] })
+                icon: L.divIcon({ className: 'custom-marker', html: iconHtml, iconSize: [36,36], popupAnchor: [0, -18] })
             }).addTo(map);
             marker.bindPopup(`
                 <b>${ke.titulo}</b><br>${ke.nombreCreador}<br>📍 ${ke.distanciaReal.toFixed(1)} km<br>
-                <button onclick="verTransmisionDesdeMapa(${ke.id})" style="background:#FF6B00; border:none; padding:5px 10px; border-radius:20px; color:white;">▶️ Ver en vivo</button>
+                <button onclick="verTransmisionDesdeMapa(${ke.id})" style="background:#FF6B00; border:none; padding:8px 15px; border-radius:25px; color:white; margin-top:5px; cursor:pointer;">▶️ Ver en vivo</button>
             `);
             mapMarkers.push(marker);
         });
     }
     
-    function verTransmisionDesdeMapa(id) { volverAListaDesdeMapa(); const item = allKeTeteos.find(k => k.id == id); if(item) { incrementViews(id); openFullscreenStream(item); } }
+    function verTransmisionDesdeMapa(id) { 
+        volverAListaDesdeMapa(); 
+        const item = allKeTeteos.find(k => k.id == id); 
+        if(item) { 
+            incrementViews(id); 
+            openFullscreenStream(item); 
+        } 
+    }
     function volverAListaDesdeMapa() { refreshHomeScreen(); }
     function centrarMapaEnMiUbicacion() { if(map && userLocation) map.setView([userLocation.lat, userLocation.lng], 13); }
-    function cambiarRadioMapa(radio) { currentMapRadio = radio; actualizarMarcadoresMapa(); document.querySelectorAll('.map-btn').forEach(btn => btn.classList.remove('active')); event.target.classList.add('active'); }
+    function cambiarRadioMapa(radio) { 
+        currentMapRadio = radio; 
+        actualizarMarcadoresMapa(); 
+        document.querySelectorAll('.map-btn').forEach(btn => btn.classList.remove('active')); 
+        if(event && event.target) event.target.classList.add('active');
+    }
 
     function renderCarousel() {
         const container = document.getElementById('carouselContainer');
@@ -2552,7 +2634,6 @@
         document.getElementById('togglePostComments')?.addEventListener('click', () => toggleSetting('postComments'));
         document.getElementById('toggleDarkMode')?.addEventListener('click', () => toggleSetting('darkMode'));
         
-        // Solicitar ubicación al iniciar para mejor experiencia
         setTimeout(() => { if (loggedIn && !userLocation) activarUbicacionManual(); }, 2000);
     };
 </script>
