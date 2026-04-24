@@ -124,15 +124,15 @@
         .patrocinios-superior::-webkit-scrollbar { display: none; }
         .patrocinios-track-superior {
             display: inline-flex;
-            gap: 48px;
+            gap: 30px;
             padding: 0 16px;
             align-items: center;
         }
         .patrocinio-texto-superior {
             display: inline-block;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
-            letter-spacing: 4px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             color: transparent;
             background: linear-gradient(135deg, var(--rojo-logo), var(--naranja));
@@ -146,10 +146,10 @@
         .patrocinio-texto-superior:active { opacity: 0.7; }
         .separador-texto {
             display: inline-block;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
             color: var(--rojo-logo);
-            letter-spacing: 4px;
+            letter-spacing: 2px;
         }
         
         .carousel-container {
@@ -452,33 +452,6 @@
             font-size: 14px;
             font-weight: 600;
         }
-
-        .patrocinios-inferior {
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            cursor: grab;
-            margin: 12px 0 20px;
-        }
-        .patrocinios-inferior:active { cursor: grabbing; }
-        .patrocinios-inferior::-webkit-scrollbar { display: none; }
-        .patrocinios-track-inferior {
-            display: flex;
-            gap: 12px;
-            padding: 0 16px;
-            width: max-content;
-        }
-        .patrocinio-card-inferior {
-            flex: 0 0 auto;
-            width: 100px;
-            background: transparent;
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .patrocinio-card-inferior:active { transform: scale(0.96); }
-        .patrocinio-card-inferior img { width: 100%; height: 80px; object-fit: cover; border-radius: 10px; }
 
         .fullscreen-stream {
             position: fixed;
@@ -1376,9 +1349,6 @@
     <hr class="divider-naranja">
     <div id="carouselContainer" class="carousel-container"></div>
     <hr class="divider-naranja">
-    <div class="patrocinios-inferior" id="patrociniosInferior">
-        <div class="patrocinios-track-inferior" id="patrociniosTrackInferior"></div>
-    </div>
 </div>
 
 <!-- Pantalla del Mapa Moderna -->
@@ -1735,7 +1705,7 @@
         USAR_FIREBASE: false,
         USAR_AGORA: false,
         ADMIN_EMAILS: ["admin@keteteo.com", "offerview@gmail.com"],
-        GOOGLE_API_KEY: "" // Dejar vacío por ahora, luego se puede agregar
+        GOOGLE_API_KEY: ""
     };
 
     let loggedIn = false;
@@ -1748,12 +1718,8 @@
     let userLocation = null;
     let eliminarId = null;
     let autoScrollIntervalSuperior = null;
-    let autoScrollIntervalInferior = null;
     let isUserInteractingSuperior = false;
-    let isUserInteractingInferior = false;
     let autoScrollTimeoutSuperior = null;
-    let autoScrollTimeoutInferior = null;
-    let carousel3ScrollInterval = null;
     let allGroups = [];
     let currentGroupCode = "";
     let currentShareKeId = null;
@@ -2127,7 +2093,7 @@
     
     function closeCreateModal() { document.getElementById('createKeTeteoModal').classList.remove('show'); }
 
-    // ================= TRANSMISIÓN EN VIVO CON BOTONES ESTILO CARRUSEL =================
+    // ================= TRANSMISIÓN EN VIVO =================
     let liveTopBar = null, liveStatsBar = null, liveCommentsArea = null, liveControlsBar = null;
     
     function formatLiveTime(seconds) {
@@ -2206,7 +2172,6 @@
             mediaStream = stream;
             currentLiveStreamId = Date.now();
             
-            // Eliminar elementos anteriores si existen
             if (liveVideoElement) liveVideoElement.remove();
             
             liveVideoElement = document.createElement('video');
@@ -2221,14 +2186,12 @@
             liveVideoElement.style.backgroundColor = '#000';
             document.body.appendChild(liveVideoElement);
             
-            // Barra superior
             liveTopBar = document.createElement('div');
             liveTopBar.className = 'live-top-bar';
             liveTopBar.innerHTML = `<div class="live-badge-red">🔴 EN VIVO</div><div class="live-timer">00:00</div>`;
             document.body.appendChild(liveTopBar);
             iniciarLiveTimer();
             
-            // Barra de estadísticas
             liveStatsBar = document.createElement('div');
             liveStatsBar.className = 'live-stats-bar';
             liveStatsBar.innerHTML = `<div class="live-stat"><span>❤️</span> <span id="liveLikesCount">0</span></div>
@@ -2237,13 +2200,11 @@
                 <div class="live-stat"><span>👁️</span> <span id="liveViewersCount">1</span></div>`;
             document.body.appendChild(liveStatsBar);
             
-            // Área de comentarios
             liveCommentsArea = document.createElement('div');
             liveCommentsArea.className = 'live-comments-area';
             liveCommentsArea.innerHTML = `<div id="liveCommentsList" style="max-height:80px; overflow-y:auto;"></div>`;
             document.body.appendChild(liveCommentsArea);
             
-            // Barra de controles - TODOS NARANJA
             liveControlsBar = document.createElement('div');
             liveControlsBar.className = 'live-controls-bar';
             liveControlsBar.innerHTML = `
@@ -2296,7 +2257,6 @@
             }, 5000);
             window.liveViewersInterval = viewersInterval;
             
-            // Crear tarjeta en el carrusel
             const nuevoKe = {
                 id: currentLiveStreamId, 
                 titulo: document.getElementById('newTitulo').value.trim() || 'Transmisión en vivo',
@@ -2531,15 +2491,6 @@
     function actualizarActividad() { lastActivity = Date.now(); actualizarEstadoUsuario(); }
     function iniciarSeguimientoEstado() { if (userStatusInterval) clearInterval(userStatusInterval); userStatusInterval = setInterval(actualizarEstadoUsuario, 10000); window.addEventListener('click', actualizarActividad); window.addEventListener('scroll', actualizarActividad); window.addEventListener('keydown', actualizarActividad); window.addEventListener('touchstart', actualizarActividad); window.addEventListener('beforeunload', () => { if (loggedIn) { localStorage.setItem('userStatus', 'offline'); localStorage.setItem('lastActivity', Date.now()); } }); document.addEventListener('visibilitychange', () => { lastActivity = document.hidden ? Date.now() - 60000 : Date.now(); actualizarEstadoUsuario(); }); actualizarEstadoUsuario(); }
 
-    const anunciosCarrusel3 = [
-        { id: 1, imagen: "https://raw.githubusercontent.com/OfferView/KeTeteoLive/main/figurasteteo.png", link: "https://www.instagram.com/chefdonmarco/" },
-        { id: 2, imagen: "yobuskologo.jpg", link: "https://yobusko.com" },
-        { id: 3, imagen: "file_000000006ca871fdb0acac11566b0ed4.png", link: "https://nicovox.com" },
-        { id: 4, imagen: "file_00000000b6c8722faff83ddca70039d4.png", link: "https://nicovox.com" },
-        { id: 5, imagen: "https://placehold.co/100x80/FF2D55/white?text=Anuncio1", link: "#" },
-        { id: 6, imagen: "https://placehold.co/100x80/FF6B00/white?text=Anuncio2", link: "#" }
-    ];
-
     const proximosKeTeteos = [
         { titulo: "🎵 Concierto Juan Luis Guerra", ubicacion: "Estadio Olímpico", fecha: "15/05/2025", destacado: true },
         { titulo: "🎉 Fiesta 90's en Azotea", ubicacion: "Gazcue", fecha: "20/05/2025", destacado: false },
@@ -2547,12 +2498,60 @@
         { titulo: "⚽ Final de Fútbol", ubicacion: "Estadio Quisqueya", fecha: "25/05/2025", destacado: true }
     ];
 
-    function renderPatrociniosSuperior() { const track = document.getElementById('patrociniosTrackSuperior'); track.innerHTML = ''; const textos = ["OFERTA SUPER", "BANCO POPULAR", "CONCIERTO EXCLUSIVO", "COMIDA RÁPIDA", "ROPA DE MARCA", "DESCUENTOS ÚNICOS", "EVENTOS ESPECIALES"]; const textosInfinitos = [...textos,...textos,...textos,...textos]; textosInfinitos.forEach((texto, i) => { const span = document.createElement('span'); span.className = 'patrocinio-texto-superior'; span.innerText = texto; span.onclick = () => window.open('https://craftmktgroup.com', '_blank'); track.appendChild(span); if (i < textosInfinitos.length-1) { const sep = document.createElement('span'); sep.className = 'separador-texto'; sep.innerText = '•'; track.appendChild(sep); } }); setTimeout(() => { configurarAutoScrollSuperior(); iniciarAutoScrollSuperior(); }, 100); }
-    function renderPatrociniosInferior() { const track = document.getElementById('patrociniosTrackInferior'); track.innerHTML = ''; const anuncios = [...anunciosCarrusel3,...anunciosCarrusel3,...anunciosCarrusel3,...anunciosCarrusel3]; anuncios.forEach(a => { const card = document.createElement('div'); card.className = 'patrocinio-card-inferior'; card.onclick = () => { if (a.link && a.link !== '#') window.open(a.link, '_blank'); else alert('Anuncio'); }; card.innerHTML = `<img src="${a.imagen}" alt="Anuncio" onerror="this.src='https://placehold.co/100x80/FF2D55/white?text=Ad'">`; track.appendChild(card); }); setTimeout(() => { configurarAutoScrollInferior(); iniciarAutoScrollInferior(); }, 100); }
-    function iniciarAutoScrollSuperior() { const c = document.querySelector('.patrocinios-superior'); if (!c) return; if (autoScrollIntervalSuperior) clearInterval(autoScrollIntervalSuperior); autoScrollIntervalSuperior = setInterval(() => { if (!isUserInteractingSuperior && c) { c.scrollBy({ left: 2.5, behavior: 'smooth' }); if (c.scrollLeft + c.clientWidth >= c.scrollWidth - 10) c.scrollTo({ left: 0, behavior: 'smooth' }); } }, 16); }
-    function iniciarAutoScrollInferior() { const c = document.querySelector('.patrocinios-inferior'); if (!c) return; if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); carousel3ScrollInterval = setInterval(() => { if (!isUserInteractingInferior && c) { c.scrollBy({ left: 1.5, behavior: 'smooth' }); if (c.scrollLeft + c.clientWidth >= c.scrollWidth - 5) c.scrollTo({ left: 0, behavior: 'smooth' }); } }, 20); }
-    function configurarAutoScrollSuperior() { const c = document.querySelector('.patrocinios-superior'); if (!c) return; c.addEventListener('touchstart', () => { isUserInteractingSuperior = true; if (autoScrollTimeoutSuperior) clearTimeout(autoScrollTimeoutSuperior); }); c.addEventListener('touchend', () => { autoScrollTimeoutSuperior = setTimeout(() => { isUserInteractingSuperior = false; }, 5000); }); }
-    function configurarAutoScrollInferior() { const c = document.querySelector('.patrocinios-inferior'); if (!c) return; c.addEventListener('touchstart', () => { isUserInteractingInferior = true; if (autoScrollTimeoutInferior) clearTimeout(autoScrollTimeoutInferior); }); c.addEventListener('touchend', () => { autoScrollTimeoutInferior = setTimeout(() => { isUserInteractingInferior = false; }, 5000); }); }
+    // CARRUSEL 1 ACTUALIZADO con nuevos textos y más rápido
+    function renderPatrociniosSuperior() { 
+        const track = document.getElementById('patrociniosTrackSuperior'); 
+        track.innerHTML = ''; 
+        const textos = ["@Cheff Don Marco", "/@NicoVox", "/@AguGameroShop", "KeBusKa.com"]; 
+        const textosInfinitos = [...textos, ...textos, ...textos, ...textos, ...textos]; 
+        textosInfinitos.forEach((texto, i) => { 
+            const span = document.createElement('span'); 
+            span.className = 'patrocinio-texto-superior'; 
+            span.innerText = texto; 
+            span.onclick = () => window.open('https://craftmktgroup.com', '_blank'); 
+            track.appendChild(span); 
+            if (i < textosInfinitos.length - 1) { 
+                const sep = document.createElement('span'); 
+                sep.className = 'separador-texto'; 
+                sep.innerText = '•'; 
+                track.appendChild(sep); 
+            } 
+        }); 
+        setTimeout(() => { 
+            configurarAutoScrollSuperior(); 
+            iniciarAutoScrollSuperior(); 
+        }, 100); 
+    }
+    
+    // AutoScroll más rápido (velocidad aumentada)
+    function iniciarAutoScrollSuperior() { 
+        const c = document.querySelector('.patrocinios-superior'); 
+        if (!c) return; 
+        if (autoScrollIntervalSuperior) clearInterval(autoScrollIntervalSuperior); 
+        autoScrollIntervalSuperior = setInterval(() => { 
+            if (!isUserInteractingSuperior && c) { 
+                c.scrollBy({ left: 4, behavior: 'smooth' }); 
+                if (c.scrollLeft + c.clientWidth >= c.scrollWidth - 10) 
+                    c.scrollTo({ left: 0, behavior: 'smooth' }); 
+            } 
+        }, 16); 
+    }
+    
+    function configurarAutoScrollSuperior() { 
+        const c = document.querySelector('.patrocinios-superior'); 
+        if (!c) return; 
+        c.addEventListener('touchstart', () => { 
+            isUserInteractingSuperior = true; 
+            if (autoScrollTimeoutSuperior) clearTimeout(autoScrollTimeoutSuperior); 
+        }); 
+        c.addEventListener('touchend', () => { 
+            autoScrollTimeoutSuperior = setTimeout(() => { 
+                isUserInteractingSuperior = false; 
+            }, 5000); 
+        }); 
+    }
+    
+    // Carrusel 3 ELIMINADO - No hay funciones para patrocinios inferiores
     
     function openProximosKeTeteo() { const container = document.getElementById('proximosEventosList'); if (!container) return; container.innerHTML = ''; proximosKeTeteos.forEach(e => { const div = document.createElement('div'); div.style.background = 'var(--gris-oscuro)'; div.style.padding = '12px'; div.style.borderRadius = '12px'; div.style.marginBottom = '12px'; div.innerHTML = `<div style="font-weight:700;">${escapeHtml(e.titulo)}</div><div style="font-size:12px; color:var(--gris-claro);">${escapeHtml(e.ubicacion)} · ${escapeHtml(e.fecha)}</div>${e.destacado ? '<div style="color:var(--rojo-logo); font-size:11px; margin-top:4px;">PRÓXIMAMENTE</div>' : ''}<button class="horiz-btn" style="margin-top:8px; width:100%;" onclick="alert(\'Recibirás una notificación cuando esté disponible\')">Recordar</button>`; container.appendChild(div); }); document.getElementById('proximosEventosModal').classList.add('show'); }
     function closeProximosEventos() { document.getElementById('proximosEventosModal').classList.remove('show'); }
@@ -2569,7 +2568,7 @@
     function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('show')); }
     function register() { const name = document.getElementById('regName').value, user = document.getElementById('regUser').value, email = document.getElementById('regEmail').value, pass = document.getElementById('regPass').value, confirm = document.getElementById('regConfirmPass').value; if (!name||!user||!email||!pass||!confirm) { alert('Completa todos los campos'); return; } if (pass !== confirm) { alert('Contraseñas no coinciden'); return; } if (pass.length < 6) { alert('La contraseña debe tener al menos 6 caracteres'); return; } currentUser = { name, username: user.startsWith('@') ? user : '@'+user, email, bio: 'Amante de los eventos en vivo 🎉', phone: '' }; localStorage.setItem('user', JSON.stringify(currentUser)); localStorage.setItem('userPhone', ''); loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); loadConfigToTemp(); loadFollowers(); alert('✅ Cuenta creada'); }
     function login() { const email = document.getElementById('loginEmail').value, pass = document.getElementById('loginPass').value; if (email && pass) { const stored = localStorage.getItem('user'); if (stored) currentUser = JSON.parse(stored); else currentUser = { name: 'Usuario', username: '@usuario', email, bio: 'Amante de los eventos en vivo 🎉', phone: '' }; localStorage.setItem('user', JSON.stringify(currentUser)); loggedIn = true; closeModals(); showMainScreen(); document.getElementById('logoutMenuBtn').style.display = 'block'; document.getElementById('createKeTeteoBtn').style.display = 'block'; loadProfileData(); iniciarSeguimientoEstado(); loadConfigToTemp(); loadFollowers(); } else alert('Ingresa email y contraseña'); }
-    function logout() { loggedIn = false; currentUser = null; localStorage.removeItem('user'); localStorage.removeItem('userStatus'); localStorage.removeItem('lastActivity'); if (userStatusInterval) clearInterval(userStatusInterval); if (carousel3ScrollInterval) clearInterval(carousel3ScrollInterval); document.getElementById('welcomeScreen').style.display = 'flex'; document.getElementById('mainScreen').classList.remove('active'); document.getElementById('logoutMenuBtn').style.display = 'none'; document.getElementById('createKeTeteoBtn').style.display = 'none'; closeMenu(); showHomeScreenClean(); }
+    function logout() { loggedIn = false; currentUser = null; localStorage.removeItem('user'); localStorage.removeItem('userStatus'); localStorage.removeItem('lastActivity'); if (userStatusInterval) clearInterval(userStatusInterval); document.getElementById('welcomeScreen').style.display = 'flex'; document.getElementById('mainScreen').classList.remove('active'); document.getElementById('logoutMenuBtn').style.display = 'none'; document.getElementById('createKeTeteoBtn').style.display = 'none'; closeMenu(); showHomeScreenClean(); }
     function showMainScreen() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
     function showHomeScreenClean() { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById('mainScreen').classList.add('active'); renderCarousel(); ordenarKeTeteosPorCercania(); }
     function showProfileScreen() { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById('profileScreen').classList.add('active'); loadProfileData(); }
@@ -2613,7 +2612,6 @@
         loadKeTeteos();
         renderCarousel();
         renderPatrociniosSuperior();
-        renderPatrociniosInferior();
         loadGroups();
         renderGroupsList();
         document.getElementById('welcomeScreen').style.display = 'flex';
@@ -2639,4 +2637,3 @@
 </script>
 </body>
 </html>
-  
