@@ -152,6 +152,7 @@
             letter-spacing: 2px;
         }
         
+        /* CARRUSEL 2 - ESTILO SNAPCHAT (video protagonista, info superpuesta) */
         .carousel-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -165,10 +166,12 @@
 
         .carousel-container::-webkit-scrollbar { width: 4px; }
         .carousel-container::-webkit-scrollbar-track { background: var(--gris-medio); border-radius: 4px; }
-        .carousel-container::-webkit-scrollbar-thumb { background: var(--rojo-logo); border-radius: 4px; }
+        .carousel-container::-webkit-scrollbar-thumb { background: var(--naranja); border-radius: 4px; }
 
+        /* Tarjeta: video ocupa toda la tarjeta */
         .ke-teteo-card {
-            background: var(--gris-oscuro);
+            position: relative;
+            background: #000;
             border-radius: 16px;
             overflow: hidden;
             cursor: pointer;
@@ -176,18 +179,19 @@
             border: 0.5px solid var(--gris-medio);
             margin-bottom: 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            aspect-ratio: 16 / 9;
         }
         .ke-teteo-card:active { transform: scale(0.98); }
         .radar-card { cursor: pointer; }
         .radar-card:active { transform: scale(0.98); }
 
+        /* Video ocupa el 100% de la tarjeta */
         .stream-media { 
             width: 100%; 
-            height: 260px; 
+            height: 100%; 
             overflow: hidden; 
             background: #000; 
-            position: relative; 
-            aspect-ratio: 16/9;
+            position: relative;
         }
         .stream-media iframe { 
             width: 100%; 
@@ -200,13 +204,22 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 60px;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            height: 100px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
             pointer-events: none;
         }
         .stream-media img { width: 100%; height: 100%; object-fit: cover; }
-        .radar-iframe { width: 100%; height: 160px; border: none; background: #0a1a2a; pointer-events: none; }
-        .card-content { padding: 12px; }
+        .radar-iframe { width: 100%; height: 100%; border: none; background: #0a1a2a; pointer-events: none; }
+
+        /* Contenido superpuesto (parte inferior) */
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px;
+            z-index: 2;
+        }
 
         .live-badge {
             display: inline-flex;
@@ -217,7 +230,8 @@
             border-radius: 12px;
             font-size: 9px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            color: white;
         }
         .live-dot {
             width: 5px;
@@ -231,11 +245,22 @@
             50% { opacity: 0.5; transform: scale(0.8); }
             100% { opacity: 1; transform: scale(1); }
         }
-        .event-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+        
+        /* Título - superpuesto */
+        .event-title { 
+            font-size: 14px; 
+            font-weight: 700; 
+            margin-bottom: 2px; 
+            line-height: 1.3;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* Creador - superpuesto */
         .event-creator { 
             font-size: 11px; 
-            color: var(--gris-claro); 
-            margin-bottom: 6px;
+            color: rgba(255,255,255,0.85); 
+            margin-bottom: 2px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -248,30 +273,22 @@
             gap: 8px;
             flex-wrap: wrap;
         }
-        .event-creator span { color: #6c6c70; }
-        .event-meta { display: flex; gap: 8px; font-size: 10px; color: var(--gris-claro); margin-bottom: 10px; flex-wrap: wrap; }
-        .action-buttons { 
+        .event-creator span { color: rgba(255,255,255,0.7); }
+        
+        /* Ubicación - superpuesta */
+        .event-meta { 
             display: flex; 
-            gap: 12px; 
-            margin-bottom: 8px; 
+            gap: 8px; 
+            font-size: 10px; 
+            color: rgba(255,255,255,0.7); 
+            margin-bottom: 4px; 
             flex-wrap: wrap; 
-            justify-content: flex-start;
         }
-        .action-btn {
-            background: transparent;
-            border: none;
-            color: var(--gris-claro);
-            padding: 4px 0;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        
+        /* BOTONES OCULTOS en la tarjeta (solo aparecen en pantalla completa) */
+        .action-buttons {
+            display: none;
         }
-        .action-btn .icon-svg { width: 16px; height: 16px; }
-        .action-btn:active { transform: scale(0.96); color: var(--naranja); }
         
         .follow-btn-card {
             background: var(--naranja);
@@ -453,6 +470,7 @@
             font-weight: 600;
         }
 
+        /* PANTALLA COMPLETA - con botones naranja */
         .fullscreen-stream {
             position: fixed;
             top: 0;
@@ -472,26 +490,65 @@
             padding: 16px;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
             z-index: 1001;
+            display: flex;
+            justify-content: flex-end;
         }
         .close-fullscreen {
-            background: none;
+            background: rgba(0,0,0,0.6);
             border: none;
             color: white;
-            font-size: 24px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            padding: 8px;
+            padding: 8px 20px;
+            border-radius: 30px;
         }
         .fullscreen-content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #000; }
-        .fullscreen-content iframe { width: 100%; height: 70%; border: none; }
+        .fullscreen-content iframe { width: 100%; height: 80%; border: none; }
         .fullscreen-info {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
             padding: 24px 16px 40px;
         }
+        .fullscreen-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: white;
+        }
+        .fullscreen-creator {
+            font-size: 14px;
+            color: var(--gris-claro);
+            margin-bottom: 6px;
+        }
+        .fullscreen-meta {
+            font-size: 12px;
+            color: var(--gris-claro);
+            margin-bottom: 16px;
+        }
+        .fullscreen-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .fullscreen-btn {
+            background: var(--naranja);
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .fullscreen-btn:active { transform: scale(0.96); }
 
         /* Mapa Leaflet Moderno */
         #map {
@@ -2435,16 +2492,17 @@
         if(event && event.target) event.target.classList.add('active');
     }
 
+    // ================= RENDER CAROUSEL 2 - ESTILO SNAPCHAT =================
     function renderCarousel() {
         const container = document.getElementById('carouselContainer');
+        if (!container) return;
         container.innerHTML = '';
+        
         allKeTeteos.forEach(item => {
             const card = document.createElement('div');
             card.className = 'ke-teteo-card';
             if (item.esRadar) card.classList.add('radar-card');
             card.setAttribute('data-id', item.id);
-            const commentsCount = (currentComments[item.id] || []).length;
-            const seguirBtn = !item.esRadar && item.usuario !== currentUser?.username ? `<button class="follow-btn-card" data-user="${item.usuario}" onclick="event.stopPropagation(); ${isFollowing(item.usuario) ? 'dejarDeSeguir' : 'seguirUsuario'}('${item.usuario}')"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> ${isFollowing(item.usuario) ? 'Siguiendo' : 'Seguir'}</button>` : '';
             
             let distanciaMostrada = item.distancia;
             if (!item.esRadar && userLocation && item.lat && item.lng) {
@@ -2452,31 +2510,22 @@
                 distanciaMostrada = dist.toFixed(1) + ' km';
             }
             
-            card.innerHTML = item.esRadar ? `
-                <div class="stream-media"><iframe class="radar-iframe" src="https://www.flightradar24.com/18.46,-69.90/6" allow="geolocation" loading="lazy"></iframe></div>
+            // Obtener URL del video
+            let videoUrl = item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&vq=hd720';
+            
+            // Construir HTML de la tarjeta (video protagonista, info superpuesta)
+            card.innerHTML = `
+                <div class="stream-media">
+                    <iframe src="${videoUrl}" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+                </div>
                 <div class="card-content">
-                    <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
+                    <div class="live-badge"><span class="live-dot"></span>EN VIVO</div>
                     <div class="event-title">${escapeHtml(item.titulo)}</div>
                     <div class="event-creator">${escapeHtml(item.nombreCreador)} <span>${escapeHtml(item.usuario)}</span></div>
-                    <div class="event-meta"><span>${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</span></div>
+                    <div class="event-meta"><span>📍 ${escapeHtml(item.ubicacion)} · ${distanciaMostrada}</span></div>
                     <div class="action-buttons">
-                        <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
                         <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> <span class="comment-count">${commentsCount}</span></button>
-                        <button class="action-btn share-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span></button>
-                    </div>
-                </div>
-            ` : `
-                <div class="stream-media"><iframe src="${item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk&vq=hd720&modestbranding=1&rel=0&controls=0&showinfo=0'}" allow="autoplay; encrypted-media" style="width:100%; height:100%; border:none;"></iframe></div>
-                <div class="card-content">
-                    <div class="live-badge"><span class="icon-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></span><div class="live-dot"></div>EN VIVO</div>
-                    <div class="event-title">${escapeHtml(item.titulo)}</div>
-                    <div class="event-creator"><div class="event-creator-left">${escapeHtml(item.nombreCreador)} <span>${escapeHtml(item.usuario)}</span></div>${seguirBtn}</div>
-                    <div class="event-meta"><span>📍 ${escapeHtml(item.ubicacion)} · ${distanciaMostrada}</span>${item.categoria ? ` · 🏷️ ${escapeHtml(item.categoria)}` : ''}</div>
-                    <div class="action-buttons">
-                        <button class="action-btn views-btn"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> <span class="views-count">${item.viewers || 0}</span></button>
-                        <button class="action-btn like-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> <span class="like-count">${currentLikes[item.id] || 0}</span></button>
-                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> <span class="comment-count">${commentsCount}</span></button>
+                        <button class="action-btn comment-toggle" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> <span class="comment-count">${(currentComments[item.id] || []).length}</span></button>
                         <button class="action-btn share-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span></button>
                         <button class="action-btn report-btn" data-id="${item.id}"><span class="icon-svg"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span></button>
                     </div>
@@ -2489,18 +2538,148 @@
     }
     
     function attachCardEvents(card, id) {
-        card.querySelector('.like-btn')?.addEventListener('click', (e) => { e.stopPropagation(); if (!loggedIn) { alert('Inicia sesión'); return; } currentLikes[id] = (currentLikes[id]||0)+1; card.querySelector('.like-count').innerText = currentLikes[id]; const ke = allKeTeteos.find(k=>k.id==id); if(ke) ke.likes = currentLikes[id]; saveKeTeteos(); 
-            const likeAnim = document.createElement('div'); likeAnim.className = 'like-animation'; likeAnim.innerHTML = '❤️'; likeAnim.style.left = (e.clientX || window.innerWidth/2) + 'px'; likeAnim.style.top = (e.clientY || window.innerHeight/2) + 'px'; document.body.appendChild(likeAnim); setTimeout(() => likeAnim.remove(), 1000);
+        // Like
+        card.querySelector('.like-btn')?.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            if (!loggedIn) { alert('Inicia sesión'); return; } 
+            currentLikes[id] = (currentLikes[id]||0)+1; 
+            card.querySelector('.like-count').innerText = currentLikes[id]; 
+            const ke = allKeTeteos.find(k=>k.id==id); 
+            if(ke) ke.likes = currentLikes[id]; 
+            saveKeTeteos(); 
+            const likeAnim = document.createElement('div'); 
+            likeAnim.className = 'like-animation'; 
+            likeAnim.innerHTML = '❤️'; 
+            likeAnim.style.left = (e.clientX || window.innerWidth/2) + 'px'; 
+            likeAnim.style.top = (e.clientY || window.innerHeight/2) + 'px'; 
+            document.body.appendChild(likeAnim); 
+            setTimeout(() => likeAnim.remove(), 1000);
             if (currentLiveStreamId === id) mostrarLikeEnVivo(currentUser.username);
         });
-        card.querySelector('.share-btn')?.addEventListener('click', (e) => { e.stopPropagation(); openShareModal(id); });
-        card.querySelector('.report-btn')?.addEventListener('click', (e) => { e.stopPropagation(); openReportModal(id); });
-        card.querySelector('.comment-toggle')?.addEventListener('click', (e) => { e.stopPropagation(); e.preventDefault(); openCommentsModal(id); });
-        card.addEventListener('click', (e) => { if(e.target.closest('.action-btn') || e.target.closest('.follow-btn-card')) return; const item = allKeTeteos.find(k=>k.id==id); if(item) { incrementViews(id); if(item.esRadar) openFullscreenRadar(item); else openFullscreenStream(item); } });
+        
+        // Compartir
+        card.querySelector('.share-btn')?.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            openShareModal(id); 
+        });
+        
+        // Reportar
+        card.querySelector('.report-btn')?.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            openReportModal(id); 
+        });
+        
+        // Comentarios
+        card.querySelector('.comment-toggle')?.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            e.preventDefault(); 
+            openCommentsModal(id); 
+        });
+        
+        // Tocar la tarjeta → abre pantalla completa (con todos los botones)
+        card.addEventListener('click', (e) => { 
+            if(e.target.closest('.action-btn') || e.target.closest('.follow-btn-card')) return; 
+            const item = allKeTeteos.find(k => k.id == id); 
+            if(item) { 
+                incrementViews(id); 
+                if(item.esRadar) openFullscreenRadar(item); 
+                else openFullscreenStream(item); 
+            } 
+        });
     }
     
-    function openFullscreenRadar(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id]||[]).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
-    function openFullscreenStream(item) { const fullDiv = document.createElement('div'); fullDiv.className = 'fullscreen-stream'; fullDiv.innerHTML = `<div class="fullscreen-header"><button class="close-fullscreen"><span class="icon-svg"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span> Volver</button></div><div class="fullscreen-content"><iframe src="${item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk&vq=hd720&modestbranding=1&rel=0&controls=0&showinfo=0'}" allow="autoplay; encrypted-media" style="width:100%; height:70%; border:none;"></iframe><div class="fullscreen-info"><div style="font-size:20px; font-weight:800;">${escapeHtml(item.titulo)}</div><div style="font-size:14px; color:#aaa;">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div><div style="font-size:12px; color:#8E8E93;">${escapeHtml(item.ubicacion)} · ${item.distanciaReal ? item.distanciaReal.toFixed(1)+' km' : item.distancia}</div><div style="font-size:12px; margin-top:8px;">👁️ ${item.viewers} · ❤️ ${currentLikes[item.id]} · 💬 ${(currentComments[item.id]||[]).length} comentarios</div></div></div>`; document.body.appendChild(fullDiv); fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove()); }
+    // Pantalla completa para radar
+    function openFullscreenRadar(item) { 
+        const fullDiv = document.createElement('div'); 
+        fullDiv.className = 'fullscreen-stream'; 
+        fullDiv.innerHTML = `
+            <div class="fullscreen-header"><button class="close-fullscreen">✕ Cerrar</button></div>
+            <div class="fullscreen-content"><iframe src="${item.radarUrl}" allow="geolocation" style="width:100%; height:80%; border:none;"></iframe></div>
+            <div class="fullscreen-info">
+                <div class="fullscreen-title">${escapeHtml(item.titulo)}</div>
+                <div class="fullscreen-creator">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div>
+                <div class="fullscreen-meta">📍 ${escapeHtml(item.ubicacion)} · ${escapeHtml(item.distancia)}</div>
+                <div class="fullscreen-buttons">
+                    <button class="fullscreen-btn" id="fsLikeBtn">❤️ ${currentLikes[item.id] || 0}</button>
+                    <button class="fullscreen-btn" id="fsCommentBtn">💬 ${(currentComments[item.id]||[]).length}</button>
+                    <button class="fullscreen-btn" id="fsShareBtn">📤 Compartir</button>
+                    <button class="fullscreen-btn" id="fsViewsBtn">👁️ ${item.viewers || 0}</button>
+                    <button class="fullscreen-btn" id="fsReportBtn">🚨 Reportar</button>
+                </div>
+            </div>
+        `; 
+        document.body.appendChild(fullDiv); 
+        fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove());
+        
+        fullDiv.querySelector('#fsLikeBtn')?.addEventListener('click', () => {
+            currentLikes[item.id] = (currentLikes[item.id] || 0) + 1;
+            fullDiv.querySelector('#fsLikeBtn').innerHTML = `❤️ ${currentLikes[item.id]}`;
+            saveKeTeteos();
+        });
+        fullDiv.querySelector('#fsShareBtn')?.addEventListener('click', () => {
+            navigator.clipboard.writeText(window.location.href);
+            alert('✅ Enlace copiado');
+        });
+        fullDiv.querySelector('#fsReportBtn')?.addEventListener('click', () => {
+            alert('🚨 Reporte enviado');
+        });
+    }
+    
+    // Pantalla completa para streams normales (con todos los botones naranja)
+    function openFullscreenStream(item) { 
+        const fullDiv = document.createElement('div'); 
+        fullDiv.className = 'fullscreen-stream'; 
+        let videoUrl = item.url || (item.usarCamara ? '' : item.enlace) || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&vq=hd720';
+        fullDiv.innerHTML = `
+            <div class="fullscreen-header"><button class="close-fullscreen">✕ Cerrar</button></div>
+            <div class="fullscreen-content"><iframe src="${videoUrl}" allow="autoplay; encrypted-media" style="width:100%; height:80%; border:none;"></iframe></div>
+            <div class="fullscreen-info">
+                <div class="fullscreen-title">${escapeHtml(item.titulo)}</div>
+                <div class="fullscreen-creator">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div>
+                <div class="fullscreen-meta">📍 ${escapeHtml(item.ubicacion)} · ${item.distanciaReal ? item.distanciaReal.toFixed(1)+' km' : item.distancia}</div>
+                <div class="fullscreen-buttons">
+                    <button class="fullscreen-btn" id="fsLikeBtn">❤️ ${currentLikes[item.id] || 0}</button>
+                    <button class="fullscreen-btn" id="fsCommentBtn">💬 ${(currentComments[item.id]||[]).length}</button>
+                    <button class="fullscreen-btn" id="fsShareBtn">📤 Compartir</button>
+                    <button class="fullscreen-btn" id="fsViewsBtn">👁️ ${item.viewers || 0}</button>
+                    <button class="fullscreen-btn" id="fsReportBtn">🚨 Reportar</button>
+                </div>
+            </div>
+        `; 
+        document.body.appendChild(fullDiv); 
+        
+        // Cerrar pantalla completa
+        fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove());
+        
+        // Like
+        fullDiv.querySelector('#fsLikeBtn')?.addEventListener('click', () => {
+            currentLikes[item.id] = (currentLikes[item.id] || 0) + 1;
+            fullDiv.querySelector('#fsLikeBtn').innerHTML = `❤️ ${currentLikes[item.id]}`;
+            saveKeTeteos();
+        });
+        
+        // Comentarios (abre modal)
+        fullDiv.querySelector('#fsCommentBtn')?.addEventListener('click', () => {
+            fullDiv.remove();
+            openCommentsModal(item.id);
+        });
+        
+        // Compartir
+        fullDiv.querySelector('#fsShareBtn')?.addEventListener('click', () => {
+            navigator.clipboard.writeText(window.location.href);
+            alert('✅ Enlace copiado');
+        });
+        
+        // Vistas
+        fullDiv.querySelector('#fsViewsBtn')?.addEventListener('click', () => {
+            alert(`👁️ ${item.viewers || 0} vistas`);
+        });
+        
+        // Reportar
+        fullDiv.querySelector('#fsReportBtn')?.addEventListener('click', () => {
+            alert('🚨 Reporte enviado');
+        });
+    }
 
     function openSearchModal() { document.getElementById('searchModal').classList.add('show'); document.getElementById('searchInputModal').focus(); }
     function closeSearchModal() { document.getElementById('searchModal').classList.remove('show'); document.getElementById('searchResultsModal').innerHTML = ''; document.getElementById('searchInputModal').value = ''; }
@@ -2686,4 +2865,3 @@
 </script>
 </body>
 </html>
- 
