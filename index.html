@@ -152,61 +152,119 @@
             letter-spacing: 2px;
         }
         
-        /* ================= CARRUSEL 2 ESTILO SNAPCHAT ================= */
-        .carousel-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            padding: 12px;
-            max-height: 70vh;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
+/* ================= CARRUSEL 2 ESTILO SNAPCHAT ================= */
+.carousel-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 12px;
+    max-height: 70vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
 
-        .carousel-container::-webkit-scrollbar { width: 4px; }
-        .carousel-container::-webkit-scrollbar-track { background: var(--gris-medio); border-radius: 4px; }
-        .carousel-container::-webkit-scrollbar-thumb { background: var(--naranja); border-radius: 4px; }
+.carousel-container::-webkit-scrollbar { width: 4px; }
+.carousel-container::-webkit-scrollbar-track { background: var(--gris-medio); border-radius: 4px; }
+.carousel-container::-webkit-scrollbar-thumb { background: var(--naranja); border-radius: 4px; }
 
-        .ke-teteo-card {
-            position: relative;
-            background: #000;
-            border-radius: 16px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 0.5px solid var(--gris-medio);
-            aspect-ratio: 16 / 9;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-        .ke-teteo-card:active { transform: scale(0.98); }
-        .radar-card { cursor: pointer; }
-        .radar-card:active { transform: scale(0.98); }
+.ke-teteo-card {
+    position: relative;
+    background: #000;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 0.5px solid var(--gris-medio);
+    aspect-ratio: 16 / 9;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.ke-teteo-card:active { transform: scale(0.97); }
+.radar-card { cursor: pointer; }
+.radar-card:active { transform: scale(0.97); }
 
-        .stream-media { 
-            width: 100%; 
-            height: 100%; 
-            overflow: hidden; 
-            background: #000; 
-            position: relative;
-        }
-        .stream-media iframe { 
-            width: 100%; 
-            height: 100%; 
-            border: none; 
-        }
-        .stream-media::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-            pointer-events: none;
-        }
-        .stream-media img { width: 100%; height: 100%; object-fit: cover; }
-        .radar-iframe { width: 100%; height: 100%; border: none; background: #0a1a2a; pointer-events: none; }
+.stream-media { 
+    width: 100%; 
+    height: 100%; 
+    overflow: hidden; 
+    background: #000; 
+    position: relative;
+}
+.stream-media iframe { 
+    width: 100%; 
+    height: 100%; 
+    border: none; 
+}
+.stream-media::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 85px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.4), transparent);
+    pointer-events: none;
+}
+.stream-media img { width: 100%; height: 100%; object-fit: cover; }
+.radar-iframe { width: 100%; height: 100%; border: none; background: #0a1a2a; pointer-events: none; }
+
+/* Contenido superpuesto (SOLO título, usuario, distancia - como Snapchat) */
+.card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 10px 12px;
+    z-index: 2;
+}
+
+.event-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 3px;
+    line-height: 1.3;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.2px;
+}
+
+.event-creator {
+    font-size: 10px;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.event-creator-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.event-creator span {
+    color: rgba(255,255,255,0.75);
+}
+
+.event-meta {
+    font-size: 9px;
+    color: rgba(255,255,255,0.8);
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* OCULTAR todo lo que no debe aparecer en la tarjeta */
+.action-buttons,
+.live-badge,
+.follow-btn-card {
+    display: none !important;
+}
 
         /* Contenido superpuesto (solo título, usuario, distancia) */
         .card-content {
@@ -214,47 +272,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 8px 10px 10px;
-            z-index: 2;
-        }
 
-        .event-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 2px;
-            line-height: 1.3;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .event-creator {
-            font-size: 10px;
-            color: rgba(255,255,255,0.85);
-            margin-bottom: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .event-creator-left {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .event-creator span {
-            color: rgba(255,255,255,0.7);
-        }
-
-        .event-meta {
-            font-size: 9px;
-            color: rgba(255,255,255,0.7);
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-        }
 
         /* Ocultar botones y elementos no deseados en la tarjeta */
         .action-buttons,
@@ -1693,80 +1711,6 @@
     function cambiarRadioMapa(km) { if (map) map.setZoom(km === 5 ? 12 : km === 8 ? 11 : 10); }
     function volverAListaDesdeMapa() { refreshHomeScreen(); }
 
-    // ================= CARRUSEL 2 - ESTILO SNAPCHAT =================
-    function renderCarousel() {
-        const container = document.getElementById('carouselContainer');
-        if (!container) return;
-        container.innerHTML = '';
-        
-        let items = [...allKeTeteos];
-        if (userLocation) {
-            items = items.map(item => ({
-                ...item,
-                distanciaReal: calcularDistancia(userLocation.lat, userLocation.lng, item.lat, item.lng)
-            })).sort((a,b) => (a.distanciaReal||999) - (b.distanciaReal||999));
-        }
-        
-        items.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'ke-teteo-card';
-            card.setAttribute('data-id', item.id);
-            
-            const distanciaMostrada = item.distanciaReal ? item.distanciaReal.toFixed(1) + ' km' : (item.distancia || '0.5 km');
-            const videoUrl = item.url || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&vq=hd720';
-            
-            card.innerHTML = `
-                <div class="stream-media">
-                    <iframe src="${videoUrl}" allow="autoplay; encrypted-media" loading="lazy"></iframe>
-                </div>
-                <div class="card-content">
-                    <div class="event-title">${escapeHtml(item.titulo)}</div>
-                    <div class="event-creator">
-                        <div class="event-creator-left">${escapeHtml(item.nombreCreador)} <span>${escapeHtml(item.usuario)}</span></div>
-                        <div class="event-meta">📍 ${distanciaMostrada}</div>
-                    </div>
-                </div>
-            `;
-            container.appendChild(card);
-            
-            card.addEventListener('click', () => {
-                incrementViews(item.id);
-                openFullscreenStream(item);
-            });
-        });
-    }
-    
-    // Pantalla completa estilo Snapchat con botones naranja
-    function openFullscreenStream(item) {
-        const fullDiv = document.createElement('div');
-        fullDiv.className = 'fullscreen-stream';
-        const videoUrl = item.url || 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&vq=hd720';
-        const distanciaMostrada = item.distanciaReal ? item.distanciaReal.toFixed(1) + ' km' : (item.distancia || '0.5 km');
-        
-        fullDiv.innerHTML = `
-            <div class="fullscreen-header">
-                <button class="close-fullscreen">✕ Cerrar</button>
-            </div>
-            <div class="fullscreen-content">
-                <iframe src="${videoUrl}" allow="autoplay; encrypted-media" style="width:100%; height:80%; border:none;"></iframe>
-            </div>
-            <div class="fullscreen-info">
-                <div class="fullscreen-title">${escapeHtml(item.titulo)}</div>
-                <div class="fullscreen-creator">${escapeHtml(item.nombreCreador)} ${escapeHtml(item.usuario)}</div>
-                <div class="fullscreen-meta">📍 ${escapeHtml(item.ubicacion)} · ${distanciaMostrada}</div>
-                <div class="fullscreen-buttons">
-                    <button class="fullscreen-btn" id="fsLikeBtn">❤️ ${currentLikes[item.id] || 0}</button>
-                    <button class="fullscreen-btn" id="fsCommentBtn">💬 ${(currentComments[item.id] || []).length}</button>
-                    <button class="fullscreen-btn" id="fsShareBtn">📤 Compartir</button>
-                    <button class="fullscreen-btn" id="fsViewsBtn">👁️ ${item.viewers || 0}</button>
-                    <button class="fullscreen-btn" id="fsReportBtn">🚨 Reportar</button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(fullDiv);
-        
-        fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove());
-        fullDiv.querySelector('#fsLikeBtn')?.addEventListener('click', () => {
             currentLikes[item.id] = (currentLikes[item.id] || 0) + 1;
             fullDiv.querySelector('#fsLikeBtn').innerHTML = `❤️ ${currentLikes[item.id]}`;
             saveKeTeteos();
@@ -1783,7 +1727,168 @@
             alert('🚨 Reporte enviado');
         });
     }
+
+    // ================= CARRUSEL 2 - ESTILO SNAPCHAT =================
+function renderCarousel() {
+    const container = document.getElementById('carouselContainer');
+    if (!container) return;
+    container.innerHTML = '';
     
+    // Verificar que hay datos
+    if (!allKeTeteos || allKeTeteos.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--gris-claro);">🎥 No hay transmisiones en vivo</div>';
+        return;
+    }
+    
+    let items = [...allKeTeteos];
+    if (userLocation) {
+        items = items.map(item => ({
+            ...item,
+            distanciaReal: calcularDistancia(userLocation.lat, userLocation.lng, item.lat, item.lng)
+        })).sort((a,b) => (a.distanciaReal||999) - (b.distanciaReal||999));
+    }
+    
+    items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'ke-teteo-card';
+        card.setAttribute('data-id', item.id);
+        
+        // Calcular distancia
+        let distanciaMostrada = item.distancia || '0.5 km';
+        if (item.distanciaReal) {
+            distanciaMostrada = item.distanciaReal.toFixed(1) + ' km';
+        } else if (userLocation && item.lat && item.lng) {
+            const dist = calcularDistancia(userLocation.lat, userLocation.lng, item.lat, item.lng);
+            distanciaMostrada = dist.toFixed(1) + ' km';
+        }
+        
+        // Obtener URL del video
+        let videoUrl = item.url;
+        if (!videoUrl) {
+            videoUrl = 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&vq=hd720';
+        }
+        
+        // Asegurar que el título y creador no estén vacíos
+        const titulo = item.titulo || 'Transmisión en vivo';
+        const nombreCreador = item.nombreCreador || 'Streamer';
+        const usuario = item.usuario || '@usuario';
+        const ubicacion = item.ubicacion || 'Ubicación no disponible';
+        
+        card.innerHTML = `
+            <div class="stream-media">
+                <iframe src="${videoUrl}" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+            </div>
+            <div class="card-content">
+                <div class="event-title">${escapeHtml(titulo)}</div>
+                <div class="event-creator">
+                    <div class="event-creator-left">${escapeHtml(nombreCreador)} <span>${escapeHtml(usuario)}</span></div>
+                    <div class="event-meta">📍 ${escapeHtml(distanciaMostrada)}</div>
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+        
+        // Evento click en la tarjeta
+        card.addEventListener('click', (e) => {
+            e.stopPropagation();
+            incrementViews(item.id);
+            openFullscreenStream(item);
+        });
+    });
+}
+
+// Pantalla completa estilo Snapchat con botones naranja
+function openFullscreenStream(item) {
+    const fullDiv = document.createElement('div');
+    fullDiv.className = 'fullscreen-stream';
+    
+    // Obtener URL del video
+    let videoUrl = item.url;
+    if (!videoUrl) {
+        videoUrl = 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&vq=hd720';
+    }
+    
+    // Calcular distancia
+    let distanciaMostrada = item.distancia || '0.5 km';
+    if (item.distanciaReal) {
+        distanciaMostrada = item.distanciaReal.toFixed(1) + ' km';
+    } else if (userLocation && item.lat && item.lng) {
+        const dist = calcularDistancia(userLocation.lat, userLocation.lng, item.lat, item.lng);
+        distanciaMostrada = dist.toFixed(1) + ' km';
+    }
+    
+    // Asegurar datos
+    const titulo = item.titulo || 'Transmisión en vivo';
+    const nombreCreador = item.nombreCreador || 'Streamer';
+    const usuario = item.usuario || '@usuario';
+    const ubicacion = item.ubicacion || 'Ubicación no disponible';
+    
+    fullDiv.innerHTML = `
+        <div class="fullscreen-header">
+            <button class="close-fullscreen">✕ Cerrar</button>
+        </div>
+        <div class="fullscreen-content">
+            <iframe src="${videoUrl}" allow="autoplay; encrypted-media" style="width:100%; height:80%; border:none;"></iframe>
+        </div>
+        <div class="fullscreen-info">
+            <div class="fullscreen-title">${escapeHtml(titulo)}</div>
+            <div class="fullscreen-creator">${escapeHtml(nombreCreador)} ${escapeHtml(usuario)}</div>
+            <div class="fullscreen-meta">📍 ${escapeHtml(ubicacion)} · ${escapeHtml(distanciaMostrada)}</div>
+            <div class="fullscreen-buttons">
+                <button class="fullscreen-btn" id="fsLikeBtn">❤️ ${currentLikes[item.id] || 0}</button>
+                <button class="fullscreen-btn" id="fsCommentBtn">💬 ${(currentComments[item.id] || []).length}</button>
+                <button class="fullscreen-btn" id="fsShareBtn">📤 Compartir</button>
+                <button class="fullscreen-btn" id="fsViewsBtn">👁️ ${item.viewers || 0}</button>
+                <button class="fullscreen-btn" id="fsReportBtn">🚨 Reportar</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(fullDiv);
+    
+    // Cerrar pantalla completa
+    fullDiv.querySelector('.close-fullscreen').addEventListener('click', () => fullDiv.remove());
+    
+    // Botón Like
+    fullDiv.querySelector('#fsLikeBtn')?.addEventListener('click', () => {
+        currentLikes[item.id] = (currentLikes[item.id] || 0) + 1;
+        fullDiv.querySelector('#fsLikeBtn').innerHTML = `❤️ ${currentLikes[item.id]}`;
+        saveKeTeteos();
+        // Animación del like
+        const likeAnim = document.createElement('div');
+        likeAnim.className = 'like-animation';
+        likeAnim.innerHTML = '❤️';
+        likeAnim.style.left = '50%';
+        likeAnim.style.bottom = '100px';
+        likeAnim.style.position = 'fixed';
+        likeAnim.style.pointerEvents = 'none';
+        likeAnim.style.fontSize = '32px';
+        likeAnim.style.zIndex = '10002';
+        document.body.appendChild(likeAnim);
+        setTimeout(() => likeAnim.remove(), 1000);
+    });
+    
+    // Botón Comentarios
+    fullDiv.querySelector('#fsCommentBtn')?.addEventListener('click', () => {
+        fullDiv.remove();
+        openCommentsModal(item.id);
+    });
+    
+    // Botón Compartir
+    fullDiv.querySelector('#fsShareBtn')?.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href);
+        alert('✅ Enlace copiado al portapapeles');
+    });
+    
+    // Botón Vistas
+    fullDiv.querySelector('#fsViewsBtn')?.addEventListener('click', () => {
+        alert(`👁️ ${item.viewers || 0} personas están viendo esta transmisión`);
+    });
+    
+    // Botón Reportar
+    fullDiv.querySelector('#fsReportBtn')?.addEventListener('click', () => {
+        alert('🚨 Reporte enviado. Revisaremos el contenido.');
+    });
+}
     function openFullscreenRadar(item) {
         const fullDiv = document.createElement('div');
         fullDiv.className = 'fullscreen-stream';
